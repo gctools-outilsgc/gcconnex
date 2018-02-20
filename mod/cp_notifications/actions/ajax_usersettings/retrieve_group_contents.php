@@ -60,8 +60,13 @@ foreach ($group_contents as $key => $group_content) {
     	$content = get_entity($group_content->entity_guid);
 
     	$site = elgg_get_site_entity();
-    	// information about the group content
-    	$group_item_content = "<p><a href='{$site->getURL()}/gcforums/group/{$group_guid}/{$content->getGUID()}/hjforumtopic'>{$content->title}</a></p> <sup>".elgg_echo('cp_notifications:subtype:'.$group_content->entity_subtype)."</sup>";
+    	// information about the group content (forum topic else forum)
+    	if ($content->getSubtype() == 'hjforumtopic')
+    		$forum_url = "<p><a href='{$site->getURL()}gcforums/topic/view/{$content->getGUID()}'>{$content->title}</a></p>";
+    	else
+    		$forum_url = "<p><a href='{$site->getURL()}gcforums/view/{$content->getGUID()}'>{$content->title}</a></p>";
+
+    	$group_item_content = "{$forum_url} <sup>".elgg_echo('cp_notifications:subtype:'.$group_content->entity_subtype)."</sup>";
 		$group_item_left = "<div class='togglefield col-sm-10'>{$group_item_content}</div>";
 
 		$unsubscribe_button = elgg_view('input/button', array(

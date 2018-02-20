@@ -94,6 +94,12 @@ if ($user->canEdit()) {
                     var province = $('#provincial').val();
                     province = province.replace(/\s+/g, '-').toLowerCase();
                     $('#' + province + '-wrapper').fadeIn();
+                } else if (user_type == 'municipal') {
+                    $('#provincial-wrapper').fadeIn();
+                    var province = $('#provincial').val();
+                    province = province.replace(/\s+/g, '-').toLowerCase();
+                    $('#municipal').attr('list', 'municipal-'+province+'-list');
+                    $('#municipal-wrapper').fadeIn();
                 } else {
                     $('#' + user_type + '-wrapper').fadeIn();
                 }
@@ -119,6 +125,12 @@ if ($user->canEdit()) {
                         var province = $('#provincial').val();
                         province = province.replace(/\s+/g, '-').toLowerCase();
                         $('#' + province + '-wrapper').fadeIn();
+                    } else if (type == 'municipal') {
+                        $('#provincial-wrapper').fadeIn();
+                        var province = $('#provincial').val();
+                        province = province.replace(/\s+/g, '-').toLowerCase();
+                        $('#municipal').attr('list', 'municipal-'+province+'-list');
+                        $('#municipal-wrapper').fadeIn();
                     } else {
                         $('#' + type + '-wrapper').fadeIn();
                     }
@@ -131,10 +143,16 @@ if ($user->canEdit()) {
                 });
 
                 $("#provincial").change(function() {
+                    var type = $("#user_type").val();
                     var province = $(this).val();
                     province = province.replace(/\s+/g, '-').toLowerCase();
-                    $('.provincial-choices').hide();
-                    $('#' + province + '-wrapper').fadeIn();
+                    if( type == 'provincial' ){
+                        $('.provincial-choices').hide();
+                        $('#' + province + '-wrapper').fadeIn();
+                    } else if( type == 'municipal' ){
+                        $('.provincial-choices').hide();
+                        $('#municipal').attr('list', 'municipal-'+province+'-list');
+                    }
                 });
             });
         </script>
@@ -302,28 +320,30 @@ if ($user->canEdit()) {
             ));
             $municipals = get_entity($munObj[0]->guid);
 
-            $municipal = array();
-            if (get_current_language() == 'en'){
-                $municipal = json_decode($municipals->other_en, true);
-            } else {
-                $municipal = json_decode($municipals->other_fr, true);
-            }
-
             echo elgg_view('input/text', array(
                 'name' => $field,
                 'id' => $field,
                 'class' => "gcconnex-basic-{$field}",
                 'value' => $value,
-                'list' => $field . '-list'
+                'list' => ''
             ));
 
-            echo '<datalist id="municipal-list">';
-                if( !empty($municipal) ){
-                    foreach($municipal as $municipal_name => $value){
-                        echo '<option value="' . $municipal_name . '">' . $value . '</option>';
-                    }
+            if( !empty($provincial_departments) ){
+                foreach($provincial_departments as $province => $province_name){
+                    $municipal = json_decode($municipals->get($province), true);
+                    $prov_id = str_replace(" ", "-", strtolower($province));
+
+                    echo '<datalist id="municipal-'.$prov_id.'-list">';
+                            if( !empty($municipal) ){
+                                asort($municipal);
+                                
+                                foreach($municipal as $municipal_name => $value){
+                                    echo '<option value="' . $municipal_name . '">' . $value . '</option>';
+                                }
+                            }
+                    echo '</datalist>';
                 }
-            echo '</datalist>';
+            }
 
         } else if (strcmp($field, 'retired') == 0) {
 
@@ -617,6 +637,11 @@ if(strcmp($user->user_type, 'federal') == 0 ) {
     if($user->ministry && $user->ministry !== "default_invalid_value"){ $provString .= ' / ' . $ministries[$user->provincial][$user->ministry]; }
     echo '<div class="gcconnex-profile-dept">' . $provString . '</div>';
 
+// otherwise if user is municipal employee
+} else if (strcmp($user->user_type, 'municipal') == 0 ) {
+    echo '<h3 class="mrgn-tp-0">' . elgg_echo("gcconnex-profile-card:{$user->user_type}") . '</h3>';
+    echo '<div class="gcconnex-profile-dept">' . $user->{$user->user_type} . ', ' . $user->provincial . '</div>';
+    echo '<div class="gcconnex-profile-job">' . $user->job . '</div>';
 // otherwise show basic info
 } else {
     echo '<h3 class="mrgn-tp-0">' . elgg_echo("gcconnex-profile-card:{$user->user_type}") . '</h3>';

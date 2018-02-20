@@ -8,7 +8,7 @@ return array(
 	'thewire:everyone' => "All wire posts",
 	'thewire:user' => "%s's wire posts",
 	'thewire:friends' => "Friends' wire posts",
-	'thewire:replying' => "Replying to %s (@%s) who wrote",
+	'thewire:replying' => "Replying to %s (@%s) who wrote:",
 	'thewire:thread' => "Thread",
 	'thewire:charleft' => "characters remaining",
 	'thewire:tags' => "Wire posts tagged with '%s'",

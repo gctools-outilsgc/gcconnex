@@ -28,6 +28,7 @@ $french = array(
 	'gcRegister:highschool' => 'École secondaire',
 	'gcRegister:province' => 'Province / territoire',
 	'gcRegister:ministry' => 'Ministère',
+	'gcRegister:city' => 'Ville',
 
 	// labels
 	'gcRegister:form' => "Formulaire d'inscription",
@@ -36,7 +37,7 @@ $french = array(
 	'gcRegister:username' => 'Nom d\'utilisateur (généré automatiquement)',
 	'gcRegister:password_initial' => 'Mot de passe',
 	'gcRegister:password_secondary' => 'Confirmation du mot de passe',
-	'gcRegister:display_name' => 'Nom à afficher',
+	'gcRegister:display_name' => 'Nom au complet',
 	'gcRegister:display_name_notice' => "Veuillez écrire votre prénom et votre nom de famille, tel que l’on vous connaît au travail. Conformément aux Conditions d’utilisation, le nom affiché doit correspondre à votre vrai nom. Il n’est pas permis d’utiliser un pseudonyme.",
 	'gcRegister:please_enter_email' => 'Veuillez inscrire votre adresse de courriel',
 	'gcRegister:please_enter_name' => 'Veuillez inscrire votre nom à afficher',
@@ -87,14 +88,15 @@ $french = array(
 	'gcRegister:welcome_message' => "<p>GCcollab, un site qui est hébergé par le gouvernement du Canada, vient faciliter la collaboration entre les universitaires, les étudiants, les fonctionnaires canadiens, de même que d’autres collectivités importantes.</p>
 	<p class='ptm pbm'><strong>Qui peut s'inscrire?</strong></p>
 	<ul>
-		<li>Les fonctionnaires canadiens (fédéraux, provinciaux et territoriaux) peuvent s'inscrire en se servant de leurs adresses courriel gouvernementales.</li>
+		<li>Les fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux) peuvent s'inscrire en se servant de leurs adresses courriel gouvernementales.</li>
 		<li>Les universitaires et les étudiants de toutes les universités et collèges canadiens peuvent s'inscrire en utilisant les adresses courriel de leur institution.</li>
 	</ul>
-	<p>Vous ne faites pas partie de ces groupes? Les Canadiens peuvent se joindre à GCcollab par invitation! Les membres existants de GCcollab peuvent inviter leurs intervenants et partenaires à se joindre à GCcollab, ce qui en fait un environnement véritablement collaboratif.</p>
+	<p><strong>Vous ne faites pas partie de ces groupes?</strong> Les Canadiens peuvent se joindre à GCcollab par invitation! Les membres existants de GCcollab peuvent inviter leurs intervenants et partenaires à se joindre à GCcollab, ce qui en fait un environnement véritablement collaboratif.</p>
 	<p class='ptm pbm'><strong>Inscrivez-vous et validez votre compte!</strong></p>
 	<p>Une fois que vous aurez rempli le formulaire d'inscription, vous recevrez un courriel de validation. Cliquez sur le lien (ou copiez-le dans la barre d'adresse) pour activer votre compte. Si vous ne recevez pas de courriel, veuillez communiquer avec le <a href='" . elgg_get_site_url() . "mod/contactform/'>bureau d’aide de GCcollab</a>.</p>",
 	
 	'gcRegister:required' => 'requis',
+	'gcRegister:organization_notice' => 'Les individus de cette occupation doivent être invités par un membre existant de GCcollab pour s\'inscrire à un compte. Après avoir reçu votre invitation, inscrivez-vous en utilisant la même adresse courriel que celle qui a été utilisée pour vous inviter.',
 );
  
 add_translation("fr", $french);

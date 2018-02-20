@@ -20,7 +20,7 @@
 
 
 ?>
-<div class="row">
+<div class="clear row">
 
 <?php
 

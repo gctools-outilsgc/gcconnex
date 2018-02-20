@@ -41,6 +41,7 @@ $(document).ready(function() {
 	$("#user_type").change(function() {
 		var type = $(this).val();
 		$('.occupation-choices').hide();
+		$('#organization_notice').hide();
 
 		if (type == 'academic' || type == 'student') {
 			if( type == 'academic' ){
@@ -57,8 +58,17 @@ $(document).ready(function() {
 			var province = $('#provincial').val();
 			province = province.replace(/\s+/g, '-').toLowerCase();
 			$('#' + province + '-wrapper').fadeIn();
+		} else if (type == 'municipal') {
+			$('#provincial-wrapper').fadeIn();
+			var province = $('#provincial').val();
+			province = province.replace(/\s+/g, '-').toLowerCase();
+			$('#municipal').attr('list', 'municipal-'+province+'-list');
+			$('#municipal-wrapper').fadeIn();
+		} else if (type == 'federal') {
+			$('#' + type + '-wrapper').fadeIn();
 		} else {
 			$('#' + type + '-wrapper').fadeIn();
+			$('#organization_notice').show();
 		}
 	});
 
@@ -69,10 +79,16 @@ $(document).ready(function() {
 	});
 
 	$("#provincial").change(function() {
+		var type = $("#user_type").val();
 		var province = $(this).val();
 		province = province.replace(/\s+/g, '-').toLowerCase();
-		$('.provincial-choices').hide();
-		$('#' + province + '-wrapper').fadeIn();
+		if( type == 'provincial' ){
+			$('.provincial-choices').hide();
+			$('#' + province + '-wrapper').fadeIn();
+		} else if( type == 'municipal' ){
+			$('.provincial-choices').hide();
+			$('#municipal').attr('list', 'municipal-'+province+'-list');
+		}
 	});
 
 	// Preload form options if page was reloaded
@@ -442,35 +458,35 @@ $(window).on('beforeunload', function(){
 					));
 					$municipals = get_entity($munObj[0]->guid);
 
-					$municipal = array();
-					if (get_current_language() == 'en'){
-						$municipal = json_decode($municipals->municipal_en, true);
-					} else {
-						$municipal = json_decode($municipals->municipal_fr, true);
-					}
-
 					$municipal_choices = elgg_view('input/text', array(
 						'name' => 'municipal',
 						'id' => 'municipal',
 				        'class' => 'form-control',
-				        'list' => 'municipal-list'
+				        'list' => ''
 					));
 				?>
 
 				<div class="form-group occupation-choices" id="municipal-wrapper" hidden>
-					<label for="municipal" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:department'); ?></span></label>
+					<label for="municipal" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:city'); ?></span></label>
 					<?php echo $municipal_choices; ?>
-					<datalist id="municipal-list">
-						<?php
-							if( !empty($municipal) ){
-								asort($municipal);
-								
-								foreach($municipal as $municipal_name => $value){
-									echo '<option value="' . $municipal_name . '">' . $value . '</option>';
-								}
+					<?php
+						if( !empty($provincial_departments) ){
+							foreach($provincial_departments as $province => $province_name){
+								$municipal = json_decode($municipals->get($province), true);
+								$prov_id = str_replace(" ", "-", strtolower($province));
+
+								echo '<datalist id="municipal-'.$prov_id.'-list">';
+										if( !empty($municipal) ){
+											asort($municipal);
+											
+											foreach($municipal as $municipal_name => $value){
+												echo '<option value="' . $municipal_name . '">' . $value . '</option>';
+											}
+										}
+								echo '</datalist>';
 							}
-						?>
-					</datalist>
+						}
+					?>
 				</div>
 				<!-- End Municipal Government -->
 
@@ -615,6 +631,7 @@ $(window).on('beforeunload', function(){
 				</div>
 				<!-- End Other -->
 
+		    <div id="organization_notice" class="alert alert-info mrgn-bttm-md" hidden><?php echo elgg_echo('gcRegister:organization_notice'); ?></div>
 			<!-- End Organizations -->
 				
 				<!-- Display Name -->
@@ -633,7 +650,7 @@ $(window).on('beforeunload', function(){
 						));
 					?>
 				</div>
-		    	<div id="display_name_notice" class="alert alert-info"><?php echo elgg_echo('gcRegister:display_name_notice'); ?></div>
+		    	<div id="display_name_notice" class="alert alert-info mrgn-bttm-md"><?php echo elgg_echo('gcRegister:display_name_notice'); ?></div>
 				<!-- End Display Name -->
 
 				<!-- Email -->

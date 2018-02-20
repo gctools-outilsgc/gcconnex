@@ -54,7 +54,6 @@
 
 
 # ignore IDE/hidden/testing/OS cache files
-.*
 *~
 /nbproject
 /nb-configuration.xml

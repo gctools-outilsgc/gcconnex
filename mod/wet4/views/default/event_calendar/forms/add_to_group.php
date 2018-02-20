@@ -38,7 +38,7 @@ $remove_group_ids = array();
 foreach ($remove_group as $group) {
 	$remove_group_ids[] = $group->guid;
 	if ($group->guid != $event_container && $group->canEdit()) {
-		$remove_options[$group->guid] = $group->name; 
+		$remove_options[$group->guid] = gc_explode_translation($group->name,$lang); 
 	}
 }
 

@@ -18,4 +18,4 @@ $widgets_view = gc_communities_build_widgets($widgets, $widget_types);
 
 $content = elgg_view_layout('index', array('widgets' => $widgets_view));
 
-echo elgg_view_page( (get_current_language() == 'fr' ? $community_fr : $community_en), $content );
+echo elgg_view_page((get_current_language() == 'fr' ? $community_fr : $community_en), $content);

@@ -152,6 +152,10 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 						
 						$group = get_entity($page[1]);
 						if (!empty($group) && elgg_instanceof($group, "group")) {
+							if(check_entity_relationship($group->getGUID(), "invited", elgg_get_logged_in_user_entity()->getGUID())){
+								forward('/groups/invitations/' . elgg_get_logged_in_user_entity()->username);
+							}
+
 							// report to the user
 							if (!elgg_is_logged_in()) {
 								$_SESSION["last_forward_from"] = current_page_url();
@@ -850,10 +854,11 @@ function group_tools_route_livesearch_handler($hook, $type, $return_value, $para
 		"joins" => array("JOIN " . elgg_get_config("dbprefix") . "groups_entity ge ON e.guid = ge.guid"),
 		"wheres" => array("(ge.name LIKE '%" . $q . "%' OR ge.description LIKE '%" . $q . "%')")
 	);
-	
+	$lang = get_current_language();
 	$entities = elgg_get_entities($options);
 	if (!empty($entities)) {
 		foreach ($entities as $entity) {
+			$entity->name = gc_explode_translation($entity->name,$lang);
 			$output = elgg_view_list_item($entity, array(
 				"use_hover" => false,
 				"class" => "elgg-autocomplete-item",

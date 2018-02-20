@@ -121,7 +121,7 @@ foreach ($css as $url) {
 <?php
 foreach ($js as $url) {
 
-    if (strpos($url,'jquery-1.11.0.min.js') !== false) {
+    if (strpos($url,'jquery-1.11.1.min.js') !== false) {
         //$url = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js';
     }
 

@@ -162,15 +162,17 @@ if ($show_override_notice) {
 //EW - Made the default access for closed group content set to group not private
 if(!$entity && ($container instanceof ElggGroup)){
     if($container->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED){
-        $vars['value'] = ACCESS_PUBLIC;
+        $vars['value'] = elgg_get_config('default_access');
     } else {
         $vars['value'] = $container->group_acl;
     }
+} else if( $vars['value'] == ACCESS_DEFAULT || $vars['value'] == ACCESS_PUBLIC ){
+	// MW - Fall back on default_access if value is set to ACCESS_DEFAULT or ACCESS_PUBLIC
+	$vars['value'] = elgg_get_config('default_access');
 }
 
-/* MW - Fall back on default_access if value is set to ACCESS_DEFAULT or ACCESS_PUBLIC */
-if( $vars['value'] == ACCESS_DEFAULT || $vars['value'] == ACCESS_PUBLIC ){
-	$vars['value'] = elgg_get_config('default_access');
+if( $params['value'] ){
+	$vars['value'] = $params['value'];
 }
 
 echo elgg_view('input/select', $vars);

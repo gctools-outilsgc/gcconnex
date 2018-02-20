@@ -32,7 +32,7 @@
 		$("a.add").click(function(e){
 			e.preventDefault();
 		    var type = $(this).data('type');
-		    var province = (type == 'ministries') ? $("select[name=provincial]").val() : "";
+		    var province = (type == 'ministries' || type == 'municipal') ? $("select[name=provincial]").val() : "";
 
 		    var dept_en = $("#add-" + type + "-en").val();
 		    var dept_fr = $("#add-" + type + "-fr").val();
@@ -73,7 +73,7 @@
 			e.preventDefault();
 		    var type = $(this).data('type');
 		    var id = $(this).data('id');
-		    var province = (type == 'ministries') ? $(this).data('province') : "";
+		    var province = (type == 'ministries' || type == 'municipal') ? $(this).data('province') : "";
 
 		    var dept_en = $('input.dept_en[data-id="' + id + '"]').val();
 		    var dept_fr = $('input.dept_fr[data-id="' + id + '"]').val();
@@ -331,6 +331,7 @@ echo '<div id="municipal">';
 echo '<table class="depts">';
 echo '<tr> <th>'.elgg_echo('add').'</th> </tr>';
 echo '<tr><td>';
+echo elgg_echo('gcRegister:province').': '.$provincial_choices.'<br/>';
 echo elgg_echo('gcRegister:occupation:municipal').' (EN): '.elgg_view('input/text', array('id' => 'add-municipal-en')).'<br/>';
 echo elgg_echo('gcRegister:occupation:municipal').' (FR): '.elgg_view('input/text', array('id' => 'add-municipal-fr')).'<br/>';
 echo '<a class="add elgg-button elgg-button-submit btn btn-primary mtm" data-type="municipal" href="#">'.elgg_echo('add').'</a></td></tr>';
@@ -341,30 +342,31 @@ $munObj = elgg_get_entities(array(
     'subtype' => 'municipal',
 ));
 $municipals = get_entity($munObj[0]->guid);
-$municipals_en = json_decode($municipals->municipal_en, true);
-$municipals_fr = json_decode($municipals->municipal_fr, true);
-ksort($municipals_en);
 
-if (count($municipals_en) > 0) {
-	echo '<table class="depts">';
-	echo '<thead><tr> <th width="10%"></th> <th width="40%">'.elgg_echo('gcRegister:occupation:municipal').' (EN)</th> <th width="40%">'.elgg_echo('gcRegister:occupation:municipal').' (FR)</th> <th width="10%"></th> </tr></thead><tbody>';
-	foreach ($municipals_en as $key => $municipal) {
-		$delete_btn = elgg_view('output/confirmlink',
-			array(
-				'text' => elgg_echo('delete'),
-				'href' => "action/gcRegistration_collab/delete?type=municipal&key=" . $key
-			)
-		);
+echo '<table class="depts">';
+echo '<thead><tr> <th width="10%"></th> <th width="40%">'.elgg_echo('gcRegister:occupation:municipal').' (EN)</th> <th width="40%">'.elgg_echo('gcRegister:occupation:municipal').' (FR)</th> <th width="10%"></th> </tr></thead><tbody>';
+foreach($provincial_departments as $prov){
+	$province_holder = json_decode($municipals->$prov, true);
+	if (count($province_holder) > 0) {
+		echo '<tr><th colspan="4">'.$prov.'</th></tr>'; 
+		foreach($province_holder as $key => $mun){
+			$delete_btn = elgg_view('output/confirmlink',
+				array(
+					'text' => elgg_echo('delete'),
+					'href' => "action/gcRegistration_collab/delete?type=municipal&province=".$prov."&key=" . $key
+				)
+			);
 
-		echo '<tr>'; 
-		echo '<td>'.$delete_btn.'</td>';
-		echo '<td> <input class="dept_en" data-id="'.$key.'" type="text" value="'.$municipal.'" disabled /> </td>';
-		echo '<td> <input class="dept_fr" data-id="'.$key.'" type="text" value="'.$municipals_fr[$key].'" disabled /> </td>';
-		echo '<td> <a class="edit" data-id="'.$key.'" href="#">'.elgg_echo('edit').'</a> <a class="cancel hidden elgg-button only-one-click elgg-button-cancel btn btn-default" data-id="'.$key.'" href="#">'.elgg_echo('cancel').'</a> <a class="save hidden elgg-button only-one-click elgg-button-submit btn btn-primary" data-type="municipal" data-id="'.$key.'" href="#">'.elgg_echo('save').'</a> <br> <span class="edit-message" data-id="'.$key.'"></span> </td>';
-		echo '</tr>';
+			echo '<tr>'; 
+			echo '<td>'.$delete_btn.'</td>';
+			echo '<td> <input class="dept_en" data-province="'.$prov.'" data-id="'.$key.'" type="text" value="'.$mun.'" disabled /> </td>';
+			echo '<td> <input class="dept_fr" data-province="'.$prov.'" data-id="'.$key.'" type="text" value="'.$mun.'" disabled /> </td>';
+			echo '<td> <a class="edit" data-province="'.$prov.'" data-id="'.$key.'" href="#">'.elgg_echo('edit').'</a> <a class="cancel hidden elgg-button only-one-click elgg-button-cancel btn btn-default" data-province="'.$prov.'" data-id="'.$key.'" href="#">'.elgg_echo('cancel').'</a> <a class="save hidden elgg-button only-one-click elgg-button-submit btn btn-primary" data-type="municipal" data-province="'.$prov.'" data-id="'.$key.'" href="#">'.elgg_echo('save').'</a> <br> <span class="edit-message" data-id="'.$key.'"></span> </td>';
+			echo '</tr>';
+		}
 	}
-	echo '</tbody></table>';
 }
+echo '</tbody></table>';
 
 echo '</div>';
 // End Municipal tab

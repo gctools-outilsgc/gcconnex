@@ -37,7 +37,7 @@ return array(
   'wet:gcdirectoryLink' => 'https://gcdirectory-gcannuaire.gc.ca/en/GCD/?pgid=002',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCcollab_User_Help/See_All',
   'wet:gccollabLink' => "https://gccollab.ca/",
-  'wet:GCcollabLink' => "https://GCcollab.gc.ca/",
+  'wet:gcconnexLink' => "https://gcconnex.gc.ca/",
   'wet:groupLoading'=>'Loading content',
   'wet:cover_photo_remove'=>'Remove current group cover image',
   'wet:cover_photo_input'=>'Add a Cover Image to your group',
@@ -82,7 +82,7 @@ return array(
   /**
    * Register
    */
-  'gcconnex:registerText' => "<h3>Welcome to GCcollab!</h3><p>A collaborative and networking space open to all Canadian public servants (federal, provincial and territorial), academics and students, as well as to all Canadians by invitation. Join the conversation!</p>",
+  'gcconnex:registerText' => "<h3>Welcome to GCcollab!</h3><p>A collaborative and networking space open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation. Join the conversation!</p>",
 
   /**
    * Contact / FAQ
@@ -159,6 +159,8 @@ Hope to chat more soon!",
   'expages:qfp' => "QFP",
   'expages:participating_organizations' => "List of Participating Organizations",
   'expages:organismes_participants' => "Ministères et organismes participants",
+  'expages:partners' => "Partners",
+  'expages:partenaires' => "Partenaires",
 
   /**
    * Notifications
@@ -192,7 +194,7 @@ Hope to chat more soon!",
   'cp_notify:body_add_new_user:title' => "You have been added as a new user in GCcollab",
   'cp_notify:subject:invite_new_user' => "You have been invited to join GCcollab",
   'cp_notify:body_invite_new_user:title' => "You have been invited to join GCcollab by %s",
-  'cp_notify:body_invite_new_user:description' => "<p>Join GCcollab, a collaborative and networking space, hosted by the Government of Canada, open to Canadian public servants (federal, provincial and territorial), academics, students and their partners across Canada and beyond.</p>
+  'cp_notify:body_invite_new_user:description' => "<p>Join GCcollab, a collaborative and networking space, hosted by the Government of Canada, open to Canadian public servants (federal, provincial, territorial and municipal), academics, students and their partners across Canada and beyond.</p>
 
 <p>Once you're a member, you can also invite anyone else you need to work with using the Colleagues functionality. (This option is available by selecting the icon of 3 silhouettes that appears above the main navigation bar).</p>
 
@@ -222,6 +224,6 @@ Hope to chat more soon!",
   'subgroups:parent:need_join' => "Join Parent Group",
   'event_calendar:none' => "No events found.",
   'msg:change_access' => "Not all users have access to your content. Since GCcollab wants to be as open as possible, are you sure you need to restrict the access to this content?", //NEW
-  'c_sensitive_info_msg:friendly_reminder' => '<section class="alert alert-info"><h3 class="h3">Friendly reminder:</h3>As per the <a href="/terms">Terms and Conditions of use of GCcollab</a>, sensitive or confidential content is not to be posted on GCcollab. This means that only "unprotected", "unclassified" or "Protected A" document should be posted. The <a href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=1245">Policy on Access to Information</a> applies to all information posted on GCcollab.</section>',
+  'c_sensitive_info_msg:friendly_reminder' => '<section class="alert alert-info"><h3 class="h3">Friendly reminder:</h3>As per the <a href="/terms">Terms and Conditions of use of GCcollab</a>, sensitive or confidential content is not to be posted on GCcollab. This means that only unclassified documents should be posted. The <a href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=1245">Policy on Access to Information</a> applies to all information posted on GCcollab.</section>',
   'comment_notif_description' => "<p>You are not a member of this group. Join the group to be notified when new content is added and to follow this thread. Note: You can adjust your notification preferences in your GCcollab account settings.</p><p>Don’t want to join the group yet? Go ahead and post your comment, but remember to check back to see any new comments posted in this thread.</p>"
 );

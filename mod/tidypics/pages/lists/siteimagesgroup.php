@@ -8,6 +8,7 @@
 $container_guid = (int)get_input('guid');
 elgg_set_page_owner_guid($container_guid);
 elgg_group_gatekeeper();
+$lang = get_current_language();
 $container = get_entity($container_guid);
 if(!$container || !(elgg_instanceof($container, 'group'))) {
 	forward(REFERER);
@@ -18,7 +19,7 @@ $filter = '';
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb($container->name);
+elgg_push_breadcrumb(gc_explode_translation($container->name,$lang));
 
 $offset = (int)get_input('offset', 0);
 $limit = (int)get_input('limit', 16);
@@ -38,7 +39,7 @@ $result = elgg_list_entities(array(
 	'gallery_class' => 'tidypics-gallery'
 ));
 
-$title = elgg_echo('tidypics:siteimagesgroup', array($container->name));
+$title = elgg_echo('tidypics:siteimagesgroup', array(gc_explode_translation($container->name,$lang)));
 
 if (elgg_is_logged_in()) {
 	if ($container->isMember(elgg_get_logged_in_user_entity())) {
