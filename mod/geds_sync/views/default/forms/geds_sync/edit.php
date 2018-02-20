@@ -7,14 +7,14 @@
 */
 echo elgg_echo('geds:org:access:label');
 
-// we get the current access id and use it to set the value of the drop down. 
+// we get the current access id and use it to set the value of the drop down.
 //This way the page will load with the current access rights already set in the drop down
 $options = array(
-		'metadata_owner_guids'=>  array(elgg_get_logged_in_user_guid()),
-		'limit' => 0, 
-		// we only grab the english value as the english and french access should always be the same
-		'metadata_names' => array('orgStruct')
-	);
+	'metadata_owner_guids'=>  array(elgg_get_logged_in_user_guid()),
+	'limit' => 0,
+	// we only grab the english value as the english and french access should always be the same
+	'metadata_names' => array('orgStruct')
+);
 $metadata = elgg_get_metadata($options);
 echo elgg_view('input/access', array(
 	'name' => 'org_access_id',
@@ -27,10 +27,10 @@ echo elgg_echo('geds:loc:access:label');
 
 // grab current value of address metadata to set value of dropdown
 $options = array(
-		'metadata_owner_guids'=>  array(elgg_get_logged_in_user_guid()),
-		'limit' => 0,
-		'metadata_names' => array('addressString')
-	);
+	'metadata_owner_guids'=>  array(elgg_get_logged_in_user_guid()),
+	'limit' => 0,
+	'metadata_names' => array('addressString')
+);
 
 $metadata = elgg_get_metadata($options);
 
