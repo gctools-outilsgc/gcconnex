@@ -86,7 +86,7 @@ return array(
    */
   'contactform:content:form' => "<p>Veuillez consulter la FAQ et le Centre d’aide pour obtenir rapidement des réponses aux questions les plus courantes et apprendre à utiliser GCcollab comme un pro! </p><p>Vous ne trouvez pas la réponse à ce que vous cherchez? Communiquer avec le Soutien technique de GCcollab en remplissant le formulaire ci-dessous. Veuillez décrire votre problème ou poser clairement votre question ou même nous fournir une capture d’écran si vous le pouvez. Un agent de soutien des OutilsGC répondra à votre demande dans les 2 prochains jours ouvrables.</p>",
   'contactform:title' => "Pages d'aide de GCcollab",
-  'contactform:list' => '<ul class="list-unstyled"><li> <a href="http://www.gcpedia.gc.ca/gcwiki/index.php?title=Centre d\'aide pour les outils GC2.0/GCconnex&setlang=fr&uselang=fr">Centre d\'aide</a> </li></ul><br />',
+  'contactform:list' => '<ul class="list-unstyled"><li> <a href="http://www.gcpedia.gc.ca/gcwiki/index.php?title=Centre d\'aide pour les OutilsGC/GCconnex&setlang=fr&uselang=fr">Centre d\'aide</a> </li></ul><br />',
   'contactform:faq' => "FAQ",
   'contactform:title:lostpwd' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisater/Comment_retrouver_votre_mot_de_passe'>Mot de passe perdu</a>",
   'contactform:title:lostuser' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Comment_retrouver_votre_nom_d%27utilisateur'>Nom d'utilisateur perdu</a> ",
@@ -143,6 +143,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'expages:qfp' => "QFP",
   'expages:participating_organizations' => "List of Participating Organizations",
   'expages:organismes_participants' => "Ministères et organismes participants",
+
   'expages:partners' => "Partners",
   'expages:partenaires' => "Partenaires",
   
@@ -160,11 +161,11 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'cp_notify:body_group_invite_email:description' => "<a href='%s'>Inscrivez-vous maintenant</a> et vous serez automatiquement ajouté au groupe.<br/><br/>
 
   Si vous désirez vous inscrire à une date ultérieure en utilisant le <a href='".elgg_get_site_url()."register'>formulaire d’inscription</a> sur GCcollab, vous pouvez vous joindre au groupe en utilisant le code suivant sur votre page d'<a href='%s'>invitation de groupe</a> : %s .<br/><br/>
- 
+
   Vous-êtes déjà sur GCcollab? Votre adresse est peut-être désuète. <a href='".elgg_get_site_url()."login'>Connectez-vous</a> et mettez à jour vos paramètres de comptes.<br/> ",
   'cp_notify:footer:no_user' => 'Besoin d\'aide? <a href="'.elgg_get_site_url().'help/knowledgebase/?utm_source=notification&utm_medium=email">Contactez-nous</a>.',
   'cp_personalized_message' => "<div style='border: 1px solid #46246A; padding:5px; margin-bottom:10px;'>%s vous a envoyé un message personnalisé:<br/><i>%s</i></div>",
-  'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
+  'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/>
     %s <br/>
     <a href='%s'>Visualiser ou afficher un commentaire</a> <br/>
     Vous pouvez aimer, partager et vous abonner à ce contenu dans GCcollab.",
@@ -196,9 +197,9 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'cp_notify:footer' => "",
   'cp_notify:footer2' => "Besoin d’aide? <a href='".elgg_get_site_url()."help/knowledgebase/?utm_source=notification&utm_medium=email'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCcollab et modifiez vos <a href='%s'>paramètres de notifications</a>.",
   'cp_notify:visitTutorials'=>'',
-  'cp_notify:body:contentshare:description' => "<p>%s a partagé votre contenu sur le fil.</p> 
+  'cp_notify:body:contentshare:description' => "<p>%s a partagé votre contenu sur le fil.</p>
                           <p><i>%s</i></p> <br/>
-                          <p><strong>La source :</strong> %s</p> 
+                          <p><strong>La source :</strong> %s</p>
                           <p><a href='%s'>Visualiser ou répondre</a> sur GCcollab.</p>",
 
   /**

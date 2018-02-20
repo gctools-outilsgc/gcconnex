@@ -26,14 +26,14 @@
     'contactform:Errfiletypes' => "<a href='#photo'><span class='prefix'>Erreur [#] :</span> Type de fichier invalide. - Types de fichiers valides sont : [##]</a>",
     'contactform:Errfilesize' => "<a href='#photo'><span class='prefix'>Erreur [#] :</span> La taille du fichier dépasse la limite. - La taille du fichier doit être inférieure à [##] MB.</a>",
     'contactform:Errfileup' => "<a href='#photo'><span class='prefix'>Erreur [#] :</span> Une erreur est survenue lors que vous avez téléchargé le fichier.</a>",
-		
-    //General entries		
-		
+
+    //General entries
+
 	'help_menu_item' =>  "Aide / Contactez-nous",
-	'help:message' =>  "Pour obtenir de l'aide sur GCconnex, s'il vous plaît consultez la page suivante de GCpedia : ",
+	'help:message' =>  "Pour obtenir de l'aide sur GCconnex, s'il vous plaît consultez la page suivante de GCpédia : ",
 	'help:url' =>  "http://gcpedia.gc.ca/wiki/Gouvernement_du_Canada_pilote/GCconnex_utilisateur_aide_et_FAQ_de_r%C3%A9seautage_professionne",
-	'help:url-desc' =>  "Pages d'aide GCPEDIA",
-	'help:contact' =>  "Contactez-nous: ",	
+	'help:url-desc' =>  "Pages d'aide GCpédia",
+	'help:contact' =>  "Contactez-nous: ",
 	'contacform' => "Formulaire de contact",
 	'contactform:menu' => "Contactez-nous",
 	'contactform:titlemsg' => "Merci.",
@@ -41,7 +41,7 @@
 	'contactform:fullname' => "Votre nom entier",
 	'contactform:email' => "Votre adresse courriel",
 	'contactform:phone' => "Votre numéro de téléphone",
-	'contactform:message' => "Votre message",		
+	'contactform:message' => "Votre message",
 	'contactform:enteremail' => "Ajoutez votre courriel si vous désirez obtenir de la rétroaction",
 	'contactform:thankyoumsg' => "Merci d'avoir communiquer avec nous",
 	'contactform:loginreqmsg' => "Doit-on ouvrir une session afin d'utiliser le formulaire de contact?",
@@ -55,9 +55,9 @@
 	'contactform:validator:failed' => "Réponse manqué à la question anti-pourriel",
     'contactform:select' => 'Veuillez choisir une raison',
     'contactform:reason' => 'Choisir...',
-		
-    //setting page		
-    		
+
+    //setting page
+
     'setting:delete' => 'Supprimer',
     'setting:add' => 'Ajouter',
     'setting:id' => 'Identifiant',
