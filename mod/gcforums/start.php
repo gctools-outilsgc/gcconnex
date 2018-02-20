@@ -285,7 +285,7 @@ function render_forums($forum_guid)
 
 		// forums will always remain as content within a group
 		elgg_set_page_owner_guid($group_entity->getGUID());
-		$return = array()
+		$return = array();
 
 		if ($forum_guid !== $group_entity->guid)
 			$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons($entity->getGUID(), $group_entity->getGUID())."</div> ";
