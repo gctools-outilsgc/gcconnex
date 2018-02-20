@@ -313,7 +313,7 @@ function render_forums($forum_guid)
 							<div class='topic-information'>".elgg_echo('gcforums:translate:last_posted')."</div>
 							<div class='topic-information'>".elgg_echo('gcforums:translate:replies')."</div>
 							<div class='topic-information'>".elgg_echo('gcforums:translate:topic_starter')."</div>
-						</div>"
+						</div>";
 
 			/// topic
 			foreach ($topics as $topic) {
