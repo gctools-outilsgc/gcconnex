@@ -1,22 +1,28 @@
 <?php
 
-elgg_ws_expose_function("get.wire","get_wire_posts", array(
-"query" => array('type' => 'string','required' => false, 'default' => ' '),
-"limit" => array('type' => 'int','required' => false, 'default' => 15),
-),'returns wire posts based on query',
-'GET', false, false);
+elgg_ws_expose_function(
+	"get.wire",
+	"get_wire_posts",
+	array(
+		"query" => array('type' => 'string','required' => false, 'default' => ' '),
+		"limit" => array('type' => 'int','required' => false, 'default' => 15),
+		),
+	'returns wire posts based on query',
+	'GET',
+	false,
+	false
+);
 
-function get_wire_posts($query, $limit){
-	$posts = array();	
+function get_wire_posts($query, $limit)
+{
+	$posts = array();
 	$result = 'Nothing to return';
-	$query = trim($query,' \"');
-	//error_log($query);
-	if ($query){
+	$query = trim($query, ' \"');
+	if ($query) {
 		$firstChar = $query[0];
-		if ($firstChar === '@'){
-		//	error_log('@');
+		if ($firstChar === '@') {
 			$user = get_user_by_username(substr($query, 1));
-			if (!$user){
+			if (!$user) {
 				return 'user does not exist';
 			}
 			$options = array(
@@ -26,18 +32,15 @@ function get_wire_posts($query, $limit){
 				'limit' => $limit
 			);
 			$wire_posts = elgg_get_entities($options);
-			if (!$wire_posts){
+			if (!$wire_posts) {
 				////////////////////////////////////////////////////////
 				//TODO: handle no wire posts by user.
 				//return empty result may be valid, or error code, or string
-			
-				//return 
+
+				//return
 			}
-		}else{
+		} else {
 			$options = array(
-				//'metadata_name' => 'tags',
-				//'metadata_value' => $tag,
-				//'metadata_case_sensitive' => false,
 				'type' => 'object',
 				'subtype' => 'thewire',
 				'limit' => $limit,
@@ -46,72 +49,53 @@ function get_wire_posts($query, $limit){
 			);
 			$wire_posts = elgg_get_entities($options);
 		}
-		
-	}else{
+	} else {
 		$options = array(
 			'subtype'=>'thewire',
 			'type' => 'object',
 			'limit' => $limit
-		);	
+		);
 		$wire_posts = elgg_get_entities($options);
 	}
-	if (!$wireposts){
-		//return 'no wire posts with with #'.$query." tags. For usernames, please add '@' to front of query string";
-	}
+
 	$i = 0;
-	foreach($wire_posts as $wp){
-		//error_log(var_dump($wp));
-        //Nick - added guid to the api
+	foreach ($wire_posts as $wp) {
+		//Nick - added guid to the api
 		$posts['post_'.$i]['guid'] = $wp->guid;
 		$posts['post_'.$i]['text'] = thewire_filter($wp->description);
 		$posts['post_'.$i]['time_created'] = $wp->time_created;
 		$posts['post_'.$i]['time_since'] = time_elapsed_B(time()-$wp->time_created);
 		$posts['post_'.$i]['user'] = get_userBlock($wp->owner_guid);
-        
+
 		$i++;
 	}
-	if ($posts){
+	if ($posts) {
 		$result = null;
 		$result['posts'] = $posts;
 	}
 	return $result;
-	
 }
-function time_elapsed_B($secs){
-    /*$bit = array(
-        ' day'        => $secs / 86400 % 7,
-        ' hour'        => $secs / 3600 % 24,
-        ' minute'    => $secs / 60 % 60,
-        ' second'    => $secs % 60
-        );
-        
-    foreach($bit as $k => $v){
-        if($v > 1)$ret = $v . $k . 's';
-        if($v == 1)$ret = $v . $k;
-        }
-    //array_splice($ret, count($ret)-1, 0, 'and');
-    $ret .= 'ago';
-	 * 
-    */
-    if ($secs / 86400 % 7 >= 1){
-    	$num = $secs / 86400 % 7;
-    	$string = 'd';
-    }else{
-    	if ($secs / 3600 % 24 >= 1){
-    		$num = $secs / 3600 % 24;
+function time_elapsed_B($secs)
+{
+	if ($secs / 86400 % 7 >= 1) {
+		$num = $secs / 86400 % 7;
+		$string = 'd';
+	} else {
+		if ($secs / 3600 % 24 >= 1) {
+			$num = $secs / 3600 % 24;
 			$string = 'h';
-    	}else{
-    		if ($secs / 60 % 60 >= 1){
-    			$num = $secs / 60 % 60;
+		} else {
+			if ($secs / 60 % 60 >= 1) {
+				$num = $secs / 60 % 60;
 				$string = 'm';
-    		}else{
-    			if ($secs % 60 >= 1){
-    				$num = $secs % 60;
+			} else {
+				if ($secs % 60 >= 1) {
+					$num = $secs % 60;
 					$string = 's';
-    			}
-    		}
-    	}
-    }
-	
-    return $num.$string;
- }
+				}
+			}
+		}
+	}
+
+	return $num.$string;
+}
