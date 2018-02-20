@@ -24,6 +24,7 @@ $french = array(
     'gccollab_stats:media:title' => "Média",
     'gccollab_stats:retired:title' => "Fonctionnaire à la retraité(e)",
     'gccollab_stats:other:title' => "Autres",
+    'gccollab_stats:users:title' => "Utilisateur(s) :",
 
     'gccollab_stats:organization' => "Organisation",
     'gccollab_stats:membertype' => "Type de membre",
@@ -46,6 +47,8 @@ $french = array(
     'gccollab_stats:groupscreated:amount' => "Nombre de groupes créés",
     'gccollab_stats:groupsjoined:title' => "Groupes rejoints",
     'gccollab_stats:groupsjoined:amount' => "Nombre de groupes rejoints",
+    'gccollab_stats:usersjoined:title' => "Membres rejoints",
+    'gccollab_stats:usersjoined:amount' => "Nombre de membres rejoints",
     'gccollab_stats:likes:title' => "J\'aimes",
     'gccollab_stats:likes:amount' => "Nombre de j\'aimes",
     'gccollab_stats:messages:title' => "Messages",

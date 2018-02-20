@@ -53,6 +53,7 @@ $english = array(
     'gcconnex_profile:present' => 'Present', // for work and education time ranges.. from XX date to Present
     'gcconnex_profile:about_me:empty' => 'Begin entering a description about yourself by clicking "Edit" in the top right corner of this box.',// prompt to add first skill
     'gcconnex_profile:about_me:access' => 'Who can see my description',
+    'gcconnex_profile:optin:access' => 'This information will be used by the Opportunities Platform and will not be visible to users browsing your profile.',
 
     // BASIC INFORMATION PROFILE FORM
     'gcconnex_profile:basic:header' => 'Edit Basic Profile',
@@ -191,6 +192,13 @@ $english = array(
         "gcconnex_profile:opt:shadowed" => "Job Shadowing Opportunity Creator",
         "gcconnex_profile:opt:mentored" => "Mentee",
         "gcconnex_profile:opt:mentoring" => "Mentor",
+        'gcconnex_profile:opt:seeking' => 'Seeking',
+        'gcconnex_profile:opt:offering' => 'Offering',
+        'gcconnex_profile:opt:casual_seek' => 'Casual Work Seeker',
+        'gcconnex_profile:opt:casual_create' => 'Casual Work Opportunity Creator',
+        'gcconnex_profile:opt:student_seek' => 'Student Integration Seeker',
+        'gcconnex_profile:opt:student_create' => 'Student Integration Opportunity Creator',
+    
         "gcconnex_profile:opt:job_sharing" => "Job Sharing",
         "gcconnex_profile:opt:peer_coached" => "Peer Coaching Seeker",
         "gcconnex_profile:opt:peer_coaching" => "Peer Coach",

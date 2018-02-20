@@ -66,6 +66,20 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+	"post.wire",
+	"post_wire",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"message" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Posts a new wire post based on user id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
 	"reply.wire",
 	"reply_wire",
 	array(
@@ -80,8 +94,24 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"edit.wire",
+	"edit_wire",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"message" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => false, 'default' => 0),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Edits a wire post based on user id and wire post id',
+	'POST',
+	true,
+	false
+);
+
 function get_wirepost($user, $guid, $thread, $lang)
 {
+	elgg_load_library('thewire_image');
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
 		return "User was not found. Please try a different GUID, username, or email address";
@@ -162,6 +192,13 @@ function get_wirepost($user, $guid, $thread, $lang)
 
 			$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 			$wire_post->description = wire_filter($wire_post->description);
+		
+			$attachment = thewire_image_get_attachments($wire_post->guid);
+			if ($attachment) {
+				$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
+			}else{
+				$wire_post->Image = '';
+			}
 		}
 	} else {
 		$wire_posts = elgg_list_entities(array(
@@ -169,6 +206,8 @@ function get_wirepost($user, $guid, $thread, $lang)
 			"subtype" => "thewire",
 			"guid" => $guid
 		));
+		
+		
 		$wire_post = json_decode($wire_posts)[0];
 
 		$wire_post_obj = get_entity($wire_post->guid);
@@ -217,6 +256,13 @@ function get_wirepost($user, $guid, $thread, $lang)
 
 		$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 		$wire_post->description = wire_filter($wire_post->description);
+		
+		$attachment = thewire_image_get_attachments($wire_post->guid);
+		if ($attachment) {
+			$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
+		}else{
+			$wire_post->Image = '';
+		}
 
 		$wire_posts = $wire_post;
 	}
@@ -224,8 +270,10 @@ function get_wirepost($user, $guid, $thread, $lang)
 	return $wire_posts;
 }
 
-function get_wireposts($user, $limit, $filters, $offset, $lang)
+function get_wireposts($user, $limit, $offset, $filters, $lang)
 {
+	elgg_load_library('thewire_image');
+
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
 		return "User was not found. Please try a different GUID, username, or email address";
@@ -308,6 +356,13 @@ function get_wireposts($user, $limit, $filters, $offset, $lang)
 
 		$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 		$wire_post->description = wire_filter($wire_post->description);
+		
+		$attachment = thewire_image_get_attachments($wire_post->guid);
+		if ($attachment) {
+			$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
+		}else{
+			$wire_post->Image = '';
+		}
 	}
 
 	return $wire_posts;
@@ -315,6 +370,7 @@ function get_wireposts($user, $limit, $filters, $offset, $lang)
 
 function get_wirepostsbycolleagues($user, $limit, $offset, $lang)
 {
+	elgg_load_library('thewire_image');
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
 		return "User was not found. Please try a different GUID, username, or email address";
@@ -384,6 +440,12 @@ function get_wirepostsbycolleagues($user, $limit, $offset, $lang)
 
 		$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 		$wire_post->description = wire_filter($wire_post->description);
+		$attachment = thewire_image_get_attachments($wire_post->guid);
+		if ($attachment) {
+			$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
+		}else{
+			$wire_post->Image = '';
+		}
 	}
 
 	return $wire_posts;
@@ -391,6 +453,7 @@ function get_wirepostsbycolleagues($user, $limit, $offset, $lang)
 
 function get_wirepostsbyuser($profileemail, $user, $limit, $offset, $lang)
 {
+	elgg_load_library('thewire_image');
 	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
 	if (!$user_entity) {
 		return "User was not found. Please try a different GUID, username, or email address";
@@ -465,9 +528,42 @@ function get_wirepostsbyuser($profileemail, $user, $limit, $offset, $lang)
 
 		$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 		$wire_post->description = wire_filter($wire_post->description);
+		$attachment = thewire_image_get_attachments($wire_post->guid);
+		if ($attachment) {
+			$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
+		}else{
+			$wire_post->Image = '';
+		}
+
 	}
 
 	return $wire_posts;
+}
+
+function post_wire($user, $message, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (trim($message) == "") {
+		return elgg_echo("thewire:blank");
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$new_wire = thewire_save_post($message, $user_entity->guid, ACCESS_PUBLIC, 0);
+	if (!$new_wire) {
+		return elgg_echo("thewire:notsaved");
+	}
+
+	return elgg_echo("thewire:posted");
 }
 
 function reply_wire($user, $message, $guid, $lang)
@@ -488,12 +584,49 @@ function reply_wire($user, $message, $guid, $lang)
 		login($user_entity);
 	}
 
-	$message = utf8_encode($message);
-
 	$new_wire = thewire_save_post($message, $user_entity->guid, ACCESS_PUBLIC, $guid);
 	if (!$new_wire) {
 		return elgg_echo("thewire:notsaved");
 	}
 
 	return elgg_echo("thewire:posted");
+}
+
+function edit_wire($user, $message, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	$entity = get_entity($guid);
+	if (!$entity) {
+		return "Wire was not found. Please try a different GUID";
+	}
+	if (!$entity instanceof ElggWire) {
+		return "Invalid wire. Please try a different GUID";
+	}
+
+	if (trim($message) == "") {
+		return elgg_echo("thewire:blank");
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$message = htmlspecialchars($message, ENT_NOQUOTES, 'UTF-8');
+
+	$result = elgg_echo("thewire:notsaved");
+	if ($entity->canEdit()) {
+		$entity->description = $message;
+		if ($entity->save()) {
+			$result = elgg_echo("thewire:posted");
+		}
+	}
+
+	return $result;
 }

@@ -174,7 +174,8 @@ requirejs(["bootstrap_tour"], function () {
         tour.start(true);
 
         //when tab menu is highlighted, only advance when Discussion tab is pressed
-        $('.elgg-menu-item-discussion').on('click', function(){
+        $('.elgg-menu-item-discussion').on('click', function(e){
+            e.preventDefault();
             var currentStep = tour.getCurrentStep();
             if(currentStep == 1){
                 tour.next();

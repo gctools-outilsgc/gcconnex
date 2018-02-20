@@ -13,6 +13,7 @@ gatekeeper();
 
 $guid = (int) get_input("group_guid");
 $group = get_entity($guid);
+$lang = get_current_language();
 
 if (!empty($group) && ($group instanceof ElggGroup)) {
 
@@ -34,7 +35,7 @@ if (!empty($group) && ($group instanceof ElggGroup)) {
 		}
 		
 		elgg_push_breadcrumb(elgg_echo("groups"), "groups/all");
-		elgg_push_breadcrumb($group->name, $group->getURL());
+		elgg_push_breadcrumb(gc_explode_translation($group->name,$lang), $group->getURL());
 		elgg_push_breadcrumb($breadcrumb);
 	
 		$content = elgg_view_form("groups/invite", array(

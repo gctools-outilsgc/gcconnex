@@ -64,20 +64,13 @@ if(!empty($fileGUIDs)){
             $form .='<br>';
 
             foreach($resultArray as $key => $value){
-                if(get_entity($key)->title3){
+               
                            $form .= elgg_view('output/url', array(
-                'text' => '-'.gc_explode_translation(get_entity($key)->title3,$lang),
-                'href' => 'action/file/move_folder?file_guid=' . $fileGUIDs . '&folder_guid=' . $key,
-                'is_action' => true,
-            ));
-                       }else{
-                           $form .= elgg_view('output/url', array(
-                'text' => $value,
+                'text' => '-'.gc_explode_translation(get_entity($key)->title,$lang),
                 'href' => 'action/file/move_folder?file_guid=' . $fileGUIDs . '&folder_guid=' . $key,
                 'is_action' => true,
             ));
 
-                       }
 
 
                 $form .= '<br>';

@@ -107,7 +107,7 @@ if ($full) {
         $user_link = '<b>' . $user->name . '</b>';
 
 
-    $subject_info = utf8_decode('<b>' . elgg_echo('messages:title') . ':</b> ' . $message->title);
+    $subject_info = '<b>' . elgg_echo('messages:title') . ':</b> ' . $message->title;
 
     //lets redo the body here
     $body = <<<HTML

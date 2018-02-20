@@ -79,14 +79,14 @@ return array(
   /**
    * Register
    */
-  'gcconnex:registerText' => "<h3>Bienvenue à GCcollab!</h3><p>Un espace de collaboration et de réseautage ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux et territoriaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation. Prenez part à la conversation!</p>",
+  'gcconnex:registerText' => "<h3>Bienvenue à GCcollab!</h3><p>Un espace de collaboration et de réseautage ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation. Prenez part à la conversation!</p>",
 
   /**
    * Contact / FAQ
    */
   'contactform:content:form' => "<p>Veuillez consulter la FAQ et le Centre d’aide pour obtenir rapidement des réponses aux questions les plus courantes et apprendre à utiliser GCcollab comme un pro! </p><p>Vous ne trouvez pas la réponse à ce que vous cherchez? Communiquer avec le Soutien technique de GCcollab en remplissant le formulaire ci-dessous. Veuillez décrire votre problème ou poser clairement votre question ou même nous fournir une capture d’écran si vous le pouvez. Un agent de soutien des OutilsGC répondra à votre demande dans les 2 prochains jours ouvrables.</p>",
   'contactform:title' => "Pages d'aide de GCcollab",
-  'contactform:list' => '<ul class="list-unstyled"><li> <a href="http://www.gcpedia.gc.ca/gcwiki/index.php?title=Centre d\'aide pour les outils GC2.0/GCconnex&setlang=fr&uselang=fr">Centre d\'aide</a> </li></ul><br />',
+  'contactform:list' => '<ul class="list-unstyled"><li> <a href="http://www.gcpedia.gc.ca/gcwiki/index.php?title=Centre d\'aide pour les OutilsGC/GCconnex&setlang=fr&uselang=fr">Centre d\'aide</a> </li></ul><br />',
   'contactform:faq' => "FAQ",
   'contactform:title:lostpwd' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisater/Comment_retrouver_votre_mot_de_passe'>Mot de passe perdu</a>",
   'contactform:title:lostuser' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Comment_retrouver_votre_nom_d%27utilisateur'>Nom d'utilisateur perdu</a> ",
@@ -143,6 +143,9 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'expages:qfp' => "QFP",
   'expages:participating_organizations' => "List of Participating Organizations",
   'expages:organismes_participants' => "Ministères et organismes participants",
+
+  'expages:partners' => "Partners",
+  'expages:partenaires' => "Partenaires",
   
   /**
    * Notifications
@@ -158,11 +161,11 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'cp_notify:body_group_invite_email:description' => "<a href='%s'>Inscrivez-vous maintenant</a> et vous serez automatiquement ajouté au groupe.<br/><br/>
 
   Si vous désirez vous inscrire à une date ultérieure en utilisant le <a href='".elgg_get_site_url()."register'>formulaire d’inscription</a> sur GCcollab, vous pouvez vous joindre au groupe en utilisant le code suivant sur votre page d'<a href='%s'>invitation de groupe</a> : %s .<br/><br/>
- 
+
   Vous-êtes déjà sur GCcollab? Votre adresse est peut-être désuète. <a href='".elgg_get_site_url()."login'>Connectez-vous</a> et mettez à jour vos paramètres de comptes.<br/> ",
   'cp_notify:footer:no_user' => 'Besoin d\'aide? <a href="'.elgg_get_site_url().'help/knowledgebase/?utm_source=notification&utm_medium=email">Contactez-nous</a>.',
   'cp_personalized_message' => "<div style='border: 1px solid #46246A; padding:5px; margin-bottom:10px;'>%s vous a envoyé un message personnalisé:<br/><i>%s</i></div>",
-  'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
+  'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/>
     %s <br/>
     <a href='%s'>Visualiser ou afficher un commentaire</a> <br/>
     Vous pouvez aimer, partager et vous abonner à ce contenu dans GCcollab.",
@@ -177,7 +180,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'cp_notify:body_add_new_user:title' => "Vous avez été ajouté en tant que nouvel utilisateur sur GCcollab",
   'cp_notify:subject:invite_new_user' => "Vous avez été invité(e) à joindre GCcollab",
   'cp_notify:body_invite_new_user:title' => "Vous avez été invité(e) à joindre GCcollab par %s",
-  'cp_notify:body_invite_new_user:description' => "<p>Joignez-vous à GCcollab, un espace de collaboration et de réseautage hébergé par le gouvernement du Canada, ouvert aux fonctionnaires canadiens (fédéraux, provinciaux et territoriaux), aux universitaires, aux étudiants et à leurs partenaires partout au Canada.</p>
+  'cp_notify:body_invite_new_user:description' => "<p>Joignez-vous à GCcollab, un espace de collaboration et de réseautage hébergé par le gouvernement du Canada, ouvert aux fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux), aux universitaires, aux étudiants et à leurs partenaires partout au Canada.</p>
 
 <p>Une fois que vous êtes membre, vous pouvez également inviter toute autre personne avec qui vous souhaitez travailler, à partir de la fonctionnalité « Collègues ». (Cette option est disponible en sélectionnant l'icône des trois silhouettes qui figure au-dessus du menu de navigation.</p>
 
@@ -190,13 +193,13 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
 <p>Gardez à l'esprit que GCcollab est toujours en phase pilote et que des modifications et des mises à jour y sont apportées fréquemment.</p>
 
 <p>Il est possible d’obtenir des réponses à toute question ayant trait au codage et à tout problème lié(e) à la plateforme à partir de GitHub. Ainsi, si vous avez des suggestions ou souhaitez nous aider à les améliorer, joignez-vous à nous!</p>",
-  'cp_notify:body_validate_user:description' => "Bienvenue sur GCconnex. Afin de compléter votre inscription, veuillez valider votre compte enregistré sous le nom %s en cliquant sur le lien suivant : %s",
+  'cp_notify:body_validate_user:description' => "Bienvenue sur GCcollab. Afin de compléter votre inscription, veuillez valider votre compte enregistré sous le nom %s en cliquant sur le lien suivant : %s",
   'cp_notify:footer' => "",
   'cp_notify:footer2' => "Besoin d’aide? <a href='".elgg_get_site_url()."help/knowledgebase/?utm_source=notification&utm_medium=email'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCcollab et modifiez vos <a href='%s'>paramètres de notifications</a>.",
   'cp_notify:visitTutorials'=>'',
-  'cp_notify:body:contentshare:description' => "<p>%s a partagé votre contenu sur le fil.</p> 
+  'cp_notify:body:contentshare:description' => "<p>%s a partagé votre contenu sur le fil.</p>
                           <p><i>%s</i></p> <br/>
-                          <p><strong>La source :</strong> %s</p> 
+                          <p><strong>La source :</strong> %s</p>
                           <p><a href='%s'>Visualiser ou répondre</a> sur GCcollab.</p>",
 
   /**
@@ -207,7 +210,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'subgroups:parent:need_join' => "Joindre le groupe parent",
   'event_calendar:none' => 'Aucun événement trouvé.',
   'msg:change_access' => "Ce n’est pas tous les utilisateurs qui ont accès à votre contenu. Puisque GCcollab désire être le plus ouvert possible, êtes-vous certain de vouloir restreindre l’accès à ce contenu?", //NEW
-  'c_sensitive_info_msg:friendly_reminder' => '<section class="alert alert-info"><h3 class="h3">Rappel amical :</h3>Conform&eacute;ment aux <a href="/termes">Conditions d&rsquo;utilisation de GCconnex</a>, aucun contenu de nature sensible ou confidentielle  ne peut &ecirc;tre publi&eacute; sur les Outils GC2.0. Cela signifie que seuls des documents &laquo;&nbsp;non prot&eacute;g&eacute;s&nbsp;&raquo;, &laquo;&nbsp;non classifi&eacute;s&nbsp;&raquo; ou &laquo;&nbsp;Prot&eacute;g&eacute; A&nbsp;&raquo; peuvent &ecirc;tre affich&eacute;s.&nbsp;</section>',
+  'c_sensitive_info_msg:friendly_reminder' => '<section class="alert alert-info"><h3 class="h3">Rappel amical :</h3>Conformément aux <a href="/termes">Conditions d\'utilisation de GCcollab</a>, aucun contenu de nature sensible ou confidentielle ne peut être publié sur les Outils GC2.0. Cela signifie que seuls des documents non classifiés peuvent être affichés.</section>',
   'img:desc:fr' => 'Description de l\'image en français',
   'img:desc:en' => 'Description de l\'image en anglais',
   'description:ideas:en' => 'Description de l\'idée en anglais',

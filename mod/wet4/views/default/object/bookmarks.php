@@ -23,6 +23,7 @@ $categories = elgg_view('output/categories', $vars);
 $link = elgg_view('output/url', array('href' => $bookmark->address));
 
 $json = json_decode($bookmark->description);
+$title_json = json_decode($bookmark->title);
 $description = elgg_view('output/longtext', array('value' => gc_explode_translation( $bookmark->description, $lang ), 'class' => 'pbl'));
 
 $owner_link = elgg_view('output/url', array(
@@ -79,13 +80,14 @@ if ($full && !elgg_in_context('gallery')) {
 		if (get_current_language() == 'fr'){
 			
 			?>
-			<span id="indicator_language_en" onclick="change_en('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+		<span id="indicator_language_en" onclick="change_en('.pbl', '.title');"><span id="fr_title" class="testClass hidden" ><?php echo $title_json->fr;?></span><span id="en_title" class="testClass hidden" ><?php echo $title_json->en;?></span><span id="en_content" class="testClass hidden" ><?php echo $json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 			<?php
 
 		}else{
 			
 			?>
-			<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<span id="indicator_language_fr" onclick="change_fr('.pbl','.title');"><span id="fr_title" class="testClass hidden" ><?php echo $title_json->fr;?></span><span id="en_title" class="testClass hidden" ><?php echo $title_json->en;?></span><span id="en_content" class="testClass hidden" ><?php echo $json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+
 			<?php	
 		}
 		echo'</div>';

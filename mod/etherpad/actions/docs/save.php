@@ -59,6 +59,14 @@ if ($parent_guid) {
 
 if ($page->save()) {
 
+	$user = elgg_get_logged_in_user_entity();
+	$options = array(
+		'relationship' => 'cp_subscribed_to',
+		'relationship_guid' => $user->getGUID()
+	);
+	add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $page->guid);
+	add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $page->guid);
+
 	elgg_clear_sticky_form('etherpad');
 
 	// Now save description as an annotation

@@ -41,6 +41,7 @@ $(document).ready(function() {
 	$("#user_type").change(function() {
 		var type = $(this).val();
 		$('.occupation-choices').hide();
+		$('#organization_notice').hide();
 
 		if (type == 'academic' || type == 'student') {
 			if( type == 'academic' ){
@@ -63,8 +64,11 @@ $(document).ready(function() {
 			province = province.replace(/\s+/g, '-').toLowerCase();
 			$('#municipal').attr('list', 'municipal-'+province+'-list');
 			$('#municipal-wrapper').fadeIn();
+		} else if (type == 'federal') {
+			$('#' + type + '-wrapper').fadeIn();
 		} else {
 			$('#' + type + '-wrapper').fadeIn();
+			$('#organization_notice').show();
 		}
 	});
 
@@ -627,6 +631,7 @@ $(window).on('beforeunload', function(){
 				</div>
 				<!-- End Other -->
 
+		    <div id="organization_notice" class="alert alert-info mrgn-bttm-md" hidden><?php echo elgg_echo('gcRegister:organization_notice'); ?></div>
 			<!-- End Organizations -->
 				
 				<!-- Display Name -->
@@ -645,7 +650,7 @@ $(window).on('beforeunload', function(){
 						));
 					?>
 				</div>
-		    	<div id="display_name_notice" class="alert alert-info"><?php echo elgg_echo('gcRegister:display_name_notice'); ?></div>
+		    	<div id="display_name_notice" class="alert alert-info mrgn-bttm-md"><?php echo elgg_echo('gcRegister:display_name_notice'); ?></div>
 				<!-- End Display Name -->
 
 				<!-- Email -->

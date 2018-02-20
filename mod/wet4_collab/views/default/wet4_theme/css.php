@@ -11638,6 +11638,16 @@ Carousel
     width: 20px;
   }
 
+  .fa-file-image-o:before{
+    content: none !important;
+  }
+  .fa-file-image-o{
+    background: url(<?php echo $site_url ?>/mod/wet4_collab/graphics/temp_icon_fileimage.png);
+    background-size: cover;
+    height: 20px;
+    width: 20px;
+  }
+
   .gcconnex-profile-contact-info .fa-phone:before {
     content: none !important;
   }

@@ -54,6 +54,7 @@ $french = array(
     'gcconnex_profile:present' => 'Maintenant',
     'gcconnex_profile:about_me:empty' => 'Ajoutez des précisions à votre sujet en cliquant sur « Modifier » dans le coin supérieur droit de cette section.',
     'gcconnex_profile:about_me:access' => 'Accès aux renseignements à mon sujet ',
+    'gcconnex_profile:optin:access' => "Ces informations seront utilisées pour la Plateforme de possibilités et ne seront pas visibles par les utilisateurs qui naviguent sur votre profil.",
 
     // BASIC PROFILE FORM
     'gcconnex_profile:basic:header' => 'Modifier le profil de base',
@@ -201,6 +202,12 @@ $french = array(
         "gcconnex_profile:opt:shadowed" => "Observation au poste de travail hôte",
         "gcconnex_profile:opt:mentored" => "Mentoré",
         "gcconnex_profile:opt:mentoring" => "Mentor",
+        'gcconnex_profile:opt:seeking' => 'Recherche',
+        'gcconnex_profile:opt:offering' => 'Offre',
+        'gcconnex_profile:opt:casual_seek' => 'Emploi occasionnel participant',
+        'gcconnex_profile:opt:casual_create' => 'Emploi occasionnel hôte',
+        'gcconnex_profile:opt:student_seek' => 'Intégration des étudiants participant',
+        'gcconnex_profile:opt:student_create' => 'Intégration des étudiants hôte',    
         "gcconnex_profile:opt:job_sharing" => "Partage d'emploi",
         "gcconnex_profile:opt:peer_coached" => "Pair entraîné",
         "gcconnex_profile:opt:peer_coaching" => "Pair entraineur",
