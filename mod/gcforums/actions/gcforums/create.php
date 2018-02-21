@@ -15,7 +15,6 @@ $type = 'object';
 
 switch ($subtype) {
 	case 'hjforumcategory':
-
 		$entity = new ElggObject();
 		$entity->container_guid = $container_guid;
 		$entity->title = $title;
@@ -28,7 +27,6 @@ switch ($subtype) {
 		break;
 
 	case 'hjforum':
-
 		$category_filing = get_input('ddCategoryFiling');
 		$enable_subcategories = get_input('chkEnableCategory');
 		$enable_posting = get_input('chkEnablePost');
@@ -50,14 +48,15 @@ switch ($subtype) {
 		break;
 
 	case 'hjforumtopic':
-
 		// cyu - this is a hack job
 		$old_access = elgg_get_ignore_access();
 		elgg_set_ignore_access(true);
 
 		$sticky = get_input('gcf_sticky');
-		if (!$sticky[0]) $sticky = 0;
-		
+		if (!$sticky[0]) {
+			$sticky = 0;
+		}
+
 		$entity = new ElggObject();
 		$entity->title = $title;
 		$entity->type = $type;
@@ -90,7 +89,6 @@ switch ($subtype) {
 		break;
 
 	case 'hjforumpost':
-
 		$old_access = elgg_get_ignore_access();
 		elgg_set_ignore_access(true);
 
@@ -115,21 +113,22 @@ switch ($subtype) {
 system_message(elgg_echo("gcforums:saved:success", array($entity->title)));
 
 
-if ($subtype === 'hjforumpost')
+if ($subtype === 'hjforumpost') {
 	forward("{$site}gcforums/topic/view/{$entity->getContainerGUID()}");
-else
+} else {
 	forward("{$site}gcforums/view/{$entity->getContainerGUID()}");
-
+}
 
 
 // TODO: move to lib directory
-function gcforums_notify_subscribed_users($hjobject, $hjlink) {
-
+function gcforums_notify_subscribed_users($hjobject, $hjlink)
+{
 	$hjobject_subtype = $hjobject->subtype;
-	if ($hjobject->getSubtype() === 'hjforumpost')
+	if ($hjobject->getSubtype() === 'hjforumpost') {
 		$hjobject_guid = $hjobject->getContainerGUID();
-	else
+	} else {
 		$hjobject_guid = $hjobject->guid;
+	}
 
 	$notification_object_guid = $hjobject->getContainerGUID();
 
@@ -152,8 +151,9 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 	foreach ($users as $user) {
 
 		// do not self-notify
-		if (strcmp($hjobject->getOwnerEntity()->username,$user->username) == 0)
+		if (strcmp($hjobject->getOwnerEntity()->username, $user->username) == 0) {
 			continue;
+		}
 
 		$subscribers[] = (string)$user->guid;
 	}
@@ -174,8 +174,7 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 
 	// if cp notification plugin is active, use that for notifications
 	if (elgg_is_active_plugin('cp_notifications')) {
-
-		if (strcmp(trim($hjobject->getSubtype()),'hjforumtopic') == 0) { // topic made
+		if (strcmp(trim($hjobject->getSubtype()), 'hjforumtopic') == 0) { // topic made
 
 			$message = array(
 				'cp_topic_author' => $hjobject->getOwnerEntity()->name,
@@ -189,7 +188,6 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 			);
 		} else { // post made
 			$message = array(
-
 				'cp_post' => $hjobject,
 				'cp_topic_author' => $hjobject->getOwnerEntity()->name,
 				'cp_topic_author_username' => $hjobject->getOwnerEntity()->username,
@@ -201,17 +199,18 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 			);
 		}
 
-		if (strcmp(trim($hjobject->getSubtype()),'hjforumtopic') == 0 || strcmp(trim($hjobject->getSubtype()),'hjforumpost') == 0) {
-			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+		if (strcmp(trim($hjobject->getSubtype()), 'hjforumtopic') == 0 || strcmp(trim($hjobject->getSubtype()), 'hjforumpost') == 0) {
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 		}
-	} else
+	} else {
 		notify_user($subscribers, $from, $subject, $message);
+	}
 }
 
 
-
 // new entity guid / container guid
-function create_hjforumtopic_relationships($static_guid, $e_guid) {
+function create_hjforumtopic_relationships($static_guid, $e_guid)
+{
 	$entity = get_entity($e_guid);
 	if ($entity instanceof ElggGroup) { // stop recursion when we reach the main page for group forum..
 		if ($entity->guid != $static_guid) {
@@ -219,10 +218,10 @@ function create_hjforumtopic_relationships($static_guid, $e_guid) {
 			return;
 		}
 	} else {
-		if ($static_guid != $e_guid)
+		if ($static_guid != $e_guid) {
 			add_entity_relationship($static_guid, 'descendant', $e_guid);
+		}
 
 		create_hjforumtopic_relationships($static_guid, $entity->getContainerGUID());
 	}
-
 }

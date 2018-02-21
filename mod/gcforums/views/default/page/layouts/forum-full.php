@@ -15,26 +15,23 @@
 /// TODO: delete this
 $class = 'elgg-layout elgg-layout-one-tabbar clearfix forum-clear';
 if (isset($vars['class'])) {
-    $class = "$class {$vars['class']}";
+	$class = "$class {$vars['class']}";
 }
 
-if (isset($vars['title'])){
-    $theTitle ='<h1>'.$vars['title'].'</h1>';
+if (isset($vars['title'])) {
+	$theTitle ='<h1>'.$vars['title'].'</h1>';
 }
 ?>
 
 <div class="<?php echo $class; ?>">
-
 	<div>
 		 <?php echo $theTitle; ?>
 	</div>
-
 	<div class="elgg-main elgg-body">
 		<?php
-// echo $nav;
-if (isset($vars['content'])) {
-    echo $vars['content'];
-}
-?>
+		if (isset($vars['content'])) {
+			echo $vars['content'];
+		}
+		?>
 	</div>
 </div>

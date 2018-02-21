@@ -28,7 +28,6 @@ switch ($subtype) {
 		break;
 
 	case 'hjforum':
-		
 		$entity->title = $title;
 		$entity->description = $description;
 		$entity->access_id = $access;
@@ -37,7 +36,7 @@ switch ($subtype) {
 		$enable_posting = get_input('chkEnablePost');
 		$filed_in_category = get_input('ddCategoryFiling');
 
-		$entity->enable_subcategories  = $enable_category[0];
+		$entity->enable_subcategories = $enable_category[0];
 		$entity->enable_posting = $enable_posting[0];
 		$entity->save();
 
@@ -62,7 +61,6 @@ switch ($subtype) {
 		break;
 
 	case 'hjforumpost':
-
 		$entity->description = $description;
 		$entity->save();
 		break;
@@ -73,10 +71,8 @@ switch ($subtype) {
 
 system_message(elgg_echo("gcforums:saved:success", array($entity->title)));
 // TODO: fix this
-if ($subtype === 'hjforumpost')
+if ($subtype === 'hjforumpost') {
 	forward("{$site}gcforums/topics/view/{$entity->getContainerGUID()}");
-else
+} else {
 	forward("{$site}gcforums/view/{$entity->getContainerGUID()}");
-
-
-
+}

@@ -21,7 +21,7 @@
    $('.desc').html(body);
 
     //the title
-   var eng_title = sender + " sent you a site message entitled '" + subject + "'";
+   var eng_title = sender + " sent you a site message titled '" + subject + "'";
    $('.eng-title').html(eng_title);
    var fr_title = sender + " vous a envoy&#233; un message intitul&#233; '" + subject + "'";
    $('.fr-title').html(fr_title);

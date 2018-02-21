@@ -43,23 +43,7 @@ $english = array(
 	'geds:loc:access:label' => 'Who can see my work location: ',
 	'geds:save' => 'Save',
 	'geds:map:title' => 'Work location',
-	//'geds:sync:info' => 'By clicking Save, you will sync the selected GEDS information with your GCconnex profile. Information about your office location and your organization will also be synched with your GCconnex profile.',
-	/*'geds:sync:info' => '<p>
-By clicking Save, the above information you selected as well as your office and organization information will be imported from GEDS to update your GCconnex profile.  This information is copied the moment you click Save and will not update automatically if your GEDS information change unless you select the sync option again.
-</p>
-<p>
-Additionally, once the accounts are linked, some information in your GCconnex profile will be pulled from GCconnex each time your GEDS profile is loaded. Your GEDS profile page will display the following information from GCconnex when set to a visibility level of “public”: About Me, Education, Work Experience, and Second Language Evaluations.  
-</p>
-<p>
-If you do not wish for a section of your GCconnex profile to appear on GEDS you can set it to a more restrictive option by clicking Edit in the section whose visibility you would like to change.  This will also limit what information other GCconnex members can see in your profile.
-</p>
-<p> 
-Your Avatar and Skills section will always be display in your GEDS profile.
-</p>
-<p>
-The preceding only applies to the internal version of GEDS that is only visible to public servants. None of the information in your GCconnex profile will ever appear on the public-facing GEDS.gc.ca website, regardless of the privacy settings in GCconnex.
-</p>
-	',*/
+
 	'geds:sync:info' => '<p>
 	Please note: GCdirectory is only visible to public servants.<br />
 The Government of Canada has a separate, public-facing directory: GEDS.gc.ca.<br />
