@@ -230,7 +230,7 @@ $english = array(
 
 
 	'cp_newsletter:body:view_comment_reply' => 'View comment or discussion reply',
-	'cp_new_mission:subject' => "New micromission notification",
+	'cp_new_mission:subject' => "A new opportunity was posted on the Opportunities Platform",
 
 
 	// content edit section
