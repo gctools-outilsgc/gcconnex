@@ -52,7 +52,7 @@ echo '<p>This will merge the account <span class="old">'.$old_user->username.'</
     } else {
       echo '<p>'.$new_user->name.'</p>';
       echo '<p>@'.$new_user->username.'</p>';
-      echo '<p>'.$new_user->username.'</p>';
+      echo '<p>'.$new_user->email.'</p>';
       echo '<p>'.$new_user->department.'</p>';
       echo '<p>GUID:'.$new_user->guid.'</p>';
     }
@@ -68,6 +68,7 @@ if(!$new_user || !$old_user){
   echo '<p>Cannot merge same user account.</p>';
 } else {
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'profile', 'label'=> 'Transfer profile (education, work experience and skills)', 'value'=>'profile',)).'</div>';
+  //echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'content', 'label'=> 'Transfer content', 'value'=>'content',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'friends', 'label'=> 'Transfer colleagues', 'value'=>'friends',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'membership', 'label'=> 'Transfer group membership', 'value'=>'membership',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'delete', 'label'=> 'Delete user', 'value'=>'delete',)).'</div>';

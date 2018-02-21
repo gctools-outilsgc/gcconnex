@@ -16,7 +16,7 @@ $new_user = get_user_by_username($new);
 
 if(!$old_user || !$new_user){
   register_error('Could not find user.');
-	forward('admin/merge_users/merge');
+	forward('admin/users/merge_users');
 }
 
 $oldGUID = $old_user->guid;
@@ -33,6 +33,7 @@ $transfer_profile = get_input('profile');
 if(!$transfer_profile){
   $avoid = " AND subtype NOT IN ( $edu, $work, $skill )";
 }
+
 //transfering all object entities to new account
 $data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object'".$avoid);
 
@@ -42,15 +43,19 @@ $file = get_subtype_id('object', 'file');
 foreach($data as $object){
 
   if($object->container_guid != $oldGUID){ //entities in a group
-    update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID' where guid = '$object->guid'");
 
     //handle different entitites a certain way
     switch($object->subtype){
+      case $file:
+        transfer_file_to_new_user($object, $newGUID, $oldGUID);
+      break;
       case $event:
         add_entity_relationship($newGUID,'personal_event', $object->guid);
       break;
       default:
     }
+
+    update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID' where guid = '$object->guid'");
 
   } else { //entities under the user
 

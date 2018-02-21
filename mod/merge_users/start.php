@@ -33,7 +33,6 @@ function transfer_file_to_new_user($object, $NU_guid, $OLD_guid) {
   $filename = $file->getFilenameOnFilestore();
 
   $name = end(explode('/', $filename));
-  system_message($filename.' '.$name);
   $nfh->setFilename($prefix . $name);
 
   $file->open("read");
@@ -41,49 +40,50 @@ function transfer_file_to_new_user($object, $NU_guid, $OLD_guid) {
 
   $nfh->write($file->grabFile());
 
-  $thumb = new ElggFile();
-	$thumb->owner_guid = $nfh->owner_guid;
+  if($file->simpletype == "image"){
+    //lets create some thumbnails
+    $thumb = new ElggFile();
+  	$thumb->owner_guid = $nfh->owner_guid;
 
-	$sizes = [
-		'small' => [
-			'w' => 60,
-			'h' => 60,
-			'square' => true,
-			'metadata_name' => 'thumbnail',
-			'filename_prefix' => 'thumb',
-		],
-		'medium' => [
-			'w' => 153,
-			'h' => 153,
-			'square' => true,
-			'metadata_name' => 'smallthumb',
-			'filename_prefix' => 'smallthumb',
-		],
-		'large' => [
-			'w' => 600,
-			'h' => 600,
-			'square' => false,
-			'metadata_name' => 'largethumb',
-			'filename_prefix' => 'largethumb',
-		],
-	];
+  	$sizes = [
+  		'small' => [
+  			'w' => 60,
+  			'h' => 60,
+  			'square' => true,
+  			'metadata_name' => 'thumbnail',
+  			'filename_prefix' => 'thumb',
+  		],
+  		'medium' => [
+  			'w' => 153,
+  			'h' => 153,
+  			'square' => true,
+  			'metadata_name' => 'smallthumb',
+  			'filename_prefix' => 'smallthumb',
+  		],
+  		'large' => [
+  			'w' => 600,
+  			'h' => 600,
+  			'square' => false,
+  			'metadata_name' => 'largethumb',
+  			'filename_prefix' => 'largethumb',
+  		],
+  	];
 
-  foreach ($sizes as $size => $data) {
-    $image_bytes = get_resized_image_from_existing_file($nfh->getFilenameOnFilestore(), $data['w'], $data['h'], $data['square']);
+    foreach ($sizes as $size => $data) {
+      $image_bytes = get_resized_image_from_existing_file($nfh->getFilenameOnFilestore(), $data['w'], $data['h'], $data['square']);
+      $name = explode('.', $name);
+      $filename2 = "{$prefix}{$data['filename_prefix']}{$name[0]}.jpg";
+      $thumb->setFilename($filename2);
+      $thumb->open("write");
+      $thumb->write($image_bytes);
+      $thumb->close();
+      unset($image_bytes);
 
-    $filename2 = "{$prefix}{$data['filename_prefix']}{$name}";
-    $thumb->setFilename($filename2);
-    $thumb->open("write");
-    $thumb->write($image_bytes);
-    $thumb->close();
-    unset($image_bytes);
-
+      $nfh->{$data['metadata_name']} = $filename2;
+    }
   }
 
   // close file
   $file->close();
   $nfh->close();
-
-  //$nfh->save();
-  //$file->delete();
 }
