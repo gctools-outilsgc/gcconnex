@@ -59,15 +59,6 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "</span>";
 	$form_body .= "</div>";
 	
-	// hide group actions
-	$form_body .= "<div>";
-	$form_body .= elgg_echo("group_tools:cleanup:actions");
-	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "actions", 
-		"options_values" => $noyes_options, 
-		"value" => $group->getPrivateSetting($prefix . "actions"),
-		"class" => "mls"
-	));
 	$form_body .= "<span alt='" . elgg_echo("group_tools:explain") . "' title='" . elgg_echo("group_tools:cleanup:actions:explain") . "' class='float-alt'>";
 	$form_body .= elgg_view_icon("info");
 	$form_body .= "</span>";

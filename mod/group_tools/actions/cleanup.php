@@ -28,7 +28,6 @@ if (!empty($group) && ($group instanceof ElggGroup)) {
 		$prefix = "group_tools:cleanup:";
 
 		$group->setPrivateSetting($prefix . "owner_block", $owner_block);
-		$group->setPrivateSetting($prefix . "actions", $actions);
 		$group->setPrivateSetting($prefix . "menu", $menu);
 		$group->setPrivateSetting($prefix . "members", $members);
 		$group->setPrivateSetting($prefix . "featured", $featured);
