@@ -70,20 +70,22 @@ function load_new_community_wire_items() {
 
 	// Get the guid from the post id
 	var firstPostOnPage = $('.community-wire-holder ul li').first().attr('id');
-	var postID = firstPostOnPage.split("-");
-	postID = postID.slice(2);
+    if (firstPostOnPage) {
+		var postID = firstPostOnPage.split("-");
+		postID = postID.slice(2);
 
-	// Bring back the latests posts and add them to the page
-	elgg.get('ajax/view/ajax/community_wire', {
-		data: {
-			'url': window.location.pathname.replace('/', ''),
-			'latest': postID[0]
-		},
-		dataType: 'html',
-		success: function(data) {
-			$('.community-wire-holder ul').first().prepend($(data).html());
-			$('.stream-new-newsfeed').remove();
-			community_wire_stream_count();
-		}
-	});
+		// Bring back the latests posts and add them to the page
+		elgg.get('ajax/view/ajax/community_wire', {
+			data: {
+				'url': window.location.pathname.replace('/', ''),
+				'latest': postID[0]
+			},
+			dataType: 'html',
+			success: function(data) {
+				$('.community-wire-holder ul').first().prepend($(data).html());
+				$('.stream-new-newsfeed').remove();
+				community_wire_stream_count();
+			}
+		});
+	}
 }

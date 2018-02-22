@@ -28,14 +28,13 @@ function check_for_deptactivity_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
     var firstPostOnPage = $('.panel-river').first().parent().attr('id');
-    var postID = firstPostOnPage.split("-");
-    postID = postID.slice(2);
+    if (firstPostOnPage) {
+        var postID = firstPostOnPage.split("-");
+        postID = postID.slice(2);
 
-
-
-    var site = elgg.normalize_url();
-    var first_post ='';
-    //Ping the api to see what the latest newsfeed item. This will only grab one post
+        var site = elgg.normalize_url();
+        var first_post ='';
+        //Ping the api to see what the latest newsfeed item. This will only grab one post
         elgg.get('ajax/view/ajax/deptactivity_check', {
             data: {'userid': elgg.get_logged_in_user_guid, 'limit': 1},
             dataType: 'json',
@@ -56,6 +55,7 @@ function check_for_deptactivity_items(){
 
             }
         });
+    }
 }
 
 function loadNewDeptactivityItems(){
@@ -78,6 +78,5 @@ function loadNewDeptactivityItems(){
             $('.stream-new-newsfeed').remove();
             deptactivity_stream_count();
         }
-
     });
 }

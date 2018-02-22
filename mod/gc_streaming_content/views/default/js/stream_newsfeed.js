@@ -42,7 +42,7 @@ function check_for_newsfeed_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
     var firstPostOnPage = $('.panel-river .elgg-body .elgg-item').first().attr('id');
-    if( firstPostOnPage ){
+    if (firstPostOnPage) {
         var postID = firstPostOnPage.split("-");
         postID = postID.slice(2);
     

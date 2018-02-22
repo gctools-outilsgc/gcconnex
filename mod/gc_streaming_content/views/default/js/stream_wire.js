@@ -40,42 +40,42 @@ function stop_stream_count(){
 
 // Checking to see if there are any new wire posts
 function check_for_posts(){
-        //What are the posts currently loaded on the page?
-        //Get the guid from the post id
-        var firstPostOnPage = $('.elgg-item-object-thewire .elgg-content').first().parent().parent().parent().attr('id');
+    //What are the posts currently loaded on the page?
+    //Get the guid from the post id
+    var firstPostOnPage = $('.elgg-item-object-thewire .elgg-content').first().parent().parent().parent().attr('id');
+    if (firstPostOnPage) {
         var postGUID = firstPostOnPage.split("-");
         postGUID = postGUID.slice(2);
-    
-    
     
         var site = elgg.normalize_url();
         var first_post ='';
         //Ping the api to see what the latest wire post. This will only grab one post
-            $.ajax({
-                type: 'GET',
-                contentType: "application/json",
-                url: site+'services/api/rest/json/?method=get.wire&limit=1',
-                dataType: 'json',
-                success: function(feed){
-                    //Get the latest post and compare that post to the post that is on the page.
-                   var test_array = feed.result.posts.post_0.guid;
-                   
-                    if(comparePosts(test_array, postGUID)){
-                        //True - Keep looking for posts
-                        setTimeout(stream_count, 10000);
-                        
-                    }else{
-                        //False - there is a new post. We can stop looking now.
-                        stop_stream_count();
+        $.ajax({
+            type: 'GET',
+            contentType: "application/json",
+            url: site+'services/api/rest/json/?method=get.wire&limit=1',
+            dataType: 'json',
+            success: function(feed){
+                //Get the latest post and compare that post to the post that is on the page.
+               var test_array = feed.result.posts.post_0.guid;
+               
+                if(comparePosts(test_array, postGUID)){
+                    //True - Keep looking for posts
+                    setTimeout(stream_count, 10000);
                     
-                    }
-                },
-                error: function(request, status, error) { 
-                   console.log('error');
-
+                }else{
+                    //False - there is a new post. We can stop looking now.
+                    stop_stream_count();
+                
                 }
-            });
-        }
+            },
+            error: function(request, status, error) { 
+               console.log('error');
+
+            }
+        });
+    }
+}
     
 
  function comparePosts(post, onPage){
