@@ -111,7 +111,6 @@ elgg_ws_expose_function(
 
 function get_wirepost($user, $guid, $thread, $lang)
 {
-	elgg_load_library('thewire_image');
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
 		return "User was not found. Please try a different GUID, username, or email address";
@@ -192,13 +191,6 @@ function get_wirepost($user, $guid, $thread, $lang)
 
 			$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 			$wire_post->description = wire_filter($wire_post->description);
-		
-			$attachment = thewire_image_get_attachments($wire_post->guid);
-			if ($attachment) {
-				$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
-			}else{
-				$wire_post->Image = '';
-			}
 		}
 	} else {
 		$wire_posts = elgg_list_entities(array(
@@ -206,8 +198,6 @@ function get_wirepost($user, $guid, $thread, $lang)
 			"subtype" => "thewire",
 			"guid" => $guid
 		));
-		
-		
 		$wire_post = json_decode($wire_posts)[0];
 
 		$wire_post_obj = get_entity($wire_post->guid);
@@ -256,13 +246,6 @@ function get_wirepost($user, $guid, $thread, $lang)
 
 		$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 		$wire_post->description = wire_filter($wire_post->description);
-		
-		$attachment = thewire_image_get_attachments($wire_post->guid);
-		if ($attachment) {
-			$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
-		}else{
-			$wire_post->Image = '';
-		}
 
 		$wire_posts = $wire_post;
 	}
@@ -272,8 +255,6 @@ function get_wirepost($user, $guid, $thread, $lang)
 
 function get_wireposts($user, $limit, $offset, $filters, $lang)
 {
-	elgg_load_library('thewire_image');
-
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
 		return "User was not found. Please try a different GUID, username, or email address";
@@ -356,13 +337,6 @@ function get_wireposts($user, $limit, $offset, $filters, $lang)
 
 		$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 		$wire_post->description = wire_filter($wire_post->description);
-		
-		$attachment = thewire_image_get_attachments($wire_post->guid);
-		if ($attachment) {
-			$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
-		}else{
-			$wire_post->Image = '';
-		}
 	}
 
 	return $wire_posts;
@@ -370,7 +344,6 @@ function get_wireposts($user, $limit, $offset, $filters, $lang)
 
 function get_wirepostsbycolleagues($user, $limit, $offset, $lang)
 {
-	elgg_load_library('thewire_image');
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
 		return "User was not found. Please try a different GUID, username, or email address";
@@ -440,12 +413,6 @@ function get_wirepostsbycolleagues($user, $limit, $offset, $lang)
 
 		$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 		$wire_post->description = wire_filter($wire_post->description);
-		$attachment = thewire_image_get_attachments($wire_post->guid);
-		if ($attachment) {
-			$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
-		}else{
-			$wire_post->Image = '';
-		}
 	}
 
 	return $wire_posts;
@@ -453,7 +420,6 @@ function get_wirepostsbycolleagues($user, $limit, $offset, $lang)
 
 function get_wirepostsbyuser($profileemail, $user, $limit, $offset, $lang)
 {
-	elgg_load_library('thewire_image');
 	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
 	if (!$user_entity) {
 		return "User was not found. Please try a different GUID, username, or email address";
@@ -528,13 +494,6 @@ function get_wirepostsbyuser($profileemail, $user, $limit, $offset, $lang)
 
 		$wire_post->userDetails = get_user_block($wire_post->owner_guid, $lang);
 		$wire_post->description = wire_filter($wire_post->description);
-		$attachment = thewire_image_get_attachments($wire_post->guid);
-		if ($attachment) {
-			$wire_post->Image = elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename;
-		}else{
-			$wire_post->Image = '';
-		}
-
 	}
 
 	return $wire_posts;
