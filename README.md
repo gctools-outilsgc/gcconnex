@@ -1,11 +1,11 @@
 
 # GCconnex
 
-[![Build Status](https://secure.travis-ci.org/gctools-outilsgc/gcconnex.svg?branch=gcconnex)](https://travis-ci.org/gctools-outilsgc/gcconnex)
+[![Build Status](https://secure.travis-ci.org/gctools-outilsgc/gcconnex.svg?branch=master)](https://travis-ci.org/gctools-outilsgc/gcconnex)
 [![Join the chat at https://gitter.im/gctools-outilsgc/gcconnex](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gctools-outilsgc/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/badges/quality-score.png?b=gcconnex)](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/?branch=gcconnex)
-[![Code Coverage](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/badges/coverage.png?b=gcconnex)](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/?branch=gcconnex)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/?branch=gcconnex)
+[![Code Coverage](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/?branch=gcconnex)
 
 GCconnex is a professional networking and collaborative workspace for all Canadian public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
 
