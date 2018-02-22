@@ -94,22 +94,20 @@ function loadNewNewsfeedItems(){
 
     //Get the guid from the post id
     var firstPostOnPage = $('.panel-river .elgg-body .elgg-item').first().attr('id');
-    if( firstPostOnPage ){
-        var postID = firstPostOnPage.split("-");
-        postID = postID.slice(2);
+    var postID = firstPostOnPage.split("-");
+    postID = postID.slice(2);
 
-        ajax_path = 'ajax/view/ajax/newsfeed_items'; //here is my ajax view :3
-        //Bring back the latests posts and add them to the page
-        elgg.get(ajax_path, {
-            data: {'userid': elgg.get_logged_in_user_guid, 'latest': postID[0]},
-            dataType: 'html',
-            success: function (data) {
-                $('.newsfeed-posts-holder').prepend(data);
-                $('.stream-new-newsfeed').remove();
-                newsfeed_stream_count();
-            }
-        });
-    }
+    ajax_path = 'ajax/view/ajax/newsfeed_items'; //here is my ajax view :3
+    //Bring back the latests posts and add them to the page
+    elgg.get(ajax_path, {
+        data: {'userid': elgg.get_logged_in_user_guid, 'latest': postID[0]},
+        dataType: 'html',
+        success: function (data) {
+            $('.newsfeed-posts-holder').prepend(data);
+            $('.stream-new-newsfeed').remove();
+            newsfeed_stream_count();
+        }
+    });
 }
 
     
