@@ -126,7 +126,7 @@
 		//settings		
 		'file_tools:settings:allowed_extensions' => 'Extensions autorisées (séparées par des virgules)',
 		'file_tools:settings:user_folder_structure' => 'Utiliser la structure de dossiers',
-		'file_tools:settings:sort:default' => 'Options de tri de dossiers par défaut',	
+		'file_tools:settings:sort:default' => 'Option de tri de fichiers par défaut',	
 		'file_tools:settings:googledoc' => 'Autoriser les téléchargements de Google Doc',	
 		'file:type:application' => 'Application',
 		'file:type:text' => 'Texte',
