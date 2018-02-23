@@ -4,8 +4,8 @@
  */
 
 elgg_ws_expose_function(
-	"get.opportunity",
-	"get_opportunity",
+	"get.opportunitytest",
+	"get_opportunity_test",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
 		"guid" => array('type' => 'int', 'required' => true),
@@ -18,8 +18,8 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
-	"get.opportunities",
-	"get_opportunities",
+	"get.opportunitiestest",
+	"get_opportunities_test",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
@@ -33,7 +33,7 @@ elgg_ws_expose_function(
 	false
 );
 
-function get_opportunity($user, $guid, $lang)
+function get_opportunity_test($user, $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -180,7 +180,7 @@ function get_opportunity($user, $guid, $lang)
 	return $opportunity;
 }
 
-function get_opportunities($user, $limit, $offset, $filters, $lang)
+function get_opportunities_test($user, $limit, $offset, $filters, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
