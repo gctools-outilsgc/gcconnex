@@ -5,6 +5,7 @@ RUN apk --no-cache add \
   php5-dom \
   php5-phar \
   php5-gd \
+  php5-iconv \
   php5-json \
   php5-mysql \
   php5-openssl \
@@ -31,6 +32,7 @@ RUN \
     php5-curl \
     php5-dom \
     php5-gd \
+    php5-iconv \
     php5-json \
     php5-mysql \
     php5-xml \
