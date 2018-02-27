@@ -20,40 +20,8 @@ $forward_url = $group->getURL();
 
 $tabs = false;
 
-$friends = elgg_get_logged_in_user_entity()->getFriends(array("limit" => false));
-if (!empty($friends)) {
-	$toggle_content = "<span>" . elgg_echo("group_tools:group:invite:friends:select_all") . "</span>";
-	$toggle_content .= "<span class='hidden wb-invisible'>" . elgg_echo("group_tools:group:invite:friends:deselect_all") . "</span>";
-
-	//$friendspicker = elgg_view("output/url", array("text" => $toggle_content, "href" => "javascript:void(0);", "onclick" => "group_tools_toggle_all_friends();", "id" => "friends_toggle", "class" => "float-alt elgg-button elgg-button-action"));
-	$friendspicker .= elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));
-} else {
-	$friendspicker = elgg_echo('groups:nofriendsatall');
-}
-
 // which options to show
 if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $invite_csv))) {
-	$tabs = array(
-		"friends" => array(
-			"text" => elgg_echo("friends"),
-			"href" => "#",
-			"rel" => "friends",
-			"priority" => 200,
-			"onclick" => "group_tools_group_invite_switch_tab(\"friends\");",
-			"selected" => true
-		)
-	);
-
-	// invite friends
-	$form_data = "<div id='group_tools_group_invite_friends'>";
-	$form_data .= $friendspicker;
-
-    //fix an odd bug where if a user doesn't have any colleagues, the form will break
-    if(elgg_get_logged_in_user_entity()->getFriends(array('count'=>true,)) > 0){
-        $form_data .= "</div></div></div></div>";
-    } else {
-        $form_data .= '</div>';
-    }
 
 	//invite all site members
 	if ($invite_site_members == "yes") {
@@ -62,6 +30,7 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 			"href" => "#",
 			"rel" => "users",
 			"priority" => 300,
+			"selected" => true,
 			"onclick" => "group_tools_group_invite_switch_tab(\"users\");"
 		);
 
@@ -279,7 +248,7 @@ echo '</div>';
 
     $('#group_tools_group_invite_email').hide();
 	$('#group_tools_group_invite_circle').hide();
-    $('#group_tools_group_invite_users').hide();
+    //$('#group_tools_group_invite_users').hide();
 	function group_tools_group_invite_switch_tab(tab) {
 		$('#invite_to_group li').removeClass('elgg-state-selected');
 
