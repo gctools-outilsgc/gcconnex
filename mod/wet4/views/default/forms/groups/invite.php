@@ -19,13 +19,14 @@ $owner = $group->getOwnerEntity();
 $forward_url = $group->getURL();
 
 $tabs = false;
+$limit = 1000;
+$friends = elgg_get_logged_in_user_entity()->getFriends(array("limit" => $limit + 1));
 
-$friends = elgg_get_logged_in_user_entity()->getFriends(array("limit" => false));
-if (!empty($friends)) {
+if (count($friends) > $limit) {
+ $friendspicker = elgg_echo('groups:toomanyfriends');
+} elseif (!empty($friends)) {
 	$toggle_content = "<span>" . elgg_echo("group_tools:group:invite:friends:select_all") . "</span>";
 	$toggle_content .= "<span class='hidden wb-invisible'>" . elgg_echo("group_tools:group:invite:friends:deselect_all") . "</span>";
-
-	//$friendspicker = elgg_view("output/url", array("text" => $toggle_content, "href" => "javascript:void(0);", "onclick" => "group_tools_toggle_all_friends();", "id" => "friends_toggle", "class" => "float-alt elgg-button elgg-button-action"));
 	$friendspicker .= elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));
 } else {
 	$friendspicker = elgg_echo('groups:nofriendsatall');
@@ -49,7 +50,7 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 	$form_data .= $friendspicker;
 
     //fix an odd bug where if a user doesn't have any colleagues, the form will break
-    if(elgg_get_logged_in_user_entity()->getFriends(array('count'=>true,)) > 0){
+    if(count($friends) > 0 && count($friends) <= $limit){
         $form_data .= "</div></div></div></div>";
     } else {
         $form_data .= '</div>';

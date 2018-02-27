@@ -143,7 +143,7 @@ return array(
 
 	'group:accept:invitation' => 'Accepter <span class="wb-inv">la demande d\'adhésion au groupe "%s"</span>',
 	'group:decline:invitation' => 'Rejeter <span class="wb-inv"> la demande d\'adhésion au groupe "%s"</span>',
-
+  'groups:toomanyfriends' => 'Vous avez trop de collègues pour les afficher ici!',
 
 	'entity:like:link:question' => 'Aimer la question %s',
 	'entity:unlike:link:question' => 'Enlever la mention j\'aime de la question %s',
