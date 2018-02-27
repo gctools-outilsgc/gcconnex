@@ -1262,21 +1262,12 @@ function share_post($user,$message,$guid, $lang)
 	}
 
 	$entity = get_entity($guid);
-	//$message = 'hello';
+
 	$new_wire = thewire_tools_save_post($message, $user_entity->guid, ACCESS_PUBLIC, 0,'site', $guid);
 	if (!$new_wire) {
 		return elgg_echo("thewire:notsaved");
 	}
 
-	return elgg_echo("thewire:posted".$message.' '.$user_entity->guid.' '.$guid);
+	return elgg_echo("thewire:posted");
 
-	// if (elgg_instanceof($entity, 'object') && $entity->canEdit()) {
-	// 	if ($entity->delete()) {
-	// 		return elgg_echo('blog:message:deleted_post');
-	// 	} else {
-	// 		return elgg_echo('blog:error:cannot_delete_post');
-	// 	}
-	// } else {
-	// 	return elgg_echo('blog:error:post_not_found');
-	// }
 }
