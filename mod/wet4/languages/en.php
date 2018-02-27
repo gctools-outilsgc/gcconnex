@@ -147,7 +147,7 @@ return array(
 
     'group:accept:invitation' => 'Accept<span class="wb-inv">group invite to "%s"</span>',
     'group:decline:invitation' => 'Decline<span class="wb-inv">group invite to "%s"</span>',
-    'groups:toomanyfriends' => 'You have too many colleagues to display here!',
+    'groups:toomanyfriends' => 'Looks like you\'re too popular! Your colleagues list can\'t be loaded because you have over 1,000 colleagues.',
 
     'entity:like:link:question' => 'Like the question %s',
     'entity:unlike:link:question' => 'Remove like from the question %s',
