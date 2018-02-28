@@ -799,6 +799,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$to_recipients = array();
 		$to_recipients_site = array();
+		$get_error_info = '';
 
 	    switch ($type_of_like) {
 	    	case 'group':
@@ -819,10 +820,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    		$action_type = 'like_group';
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $group_owner->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$group_owner->getGUID()] = $group_owner;
+					$to_recipients[$group_owner->getGUID()] = $group_owner;
+					$get_error_info = 'group';
 
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $group_owner->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$group_owner->getGUID()] = $group_owner;
+					$to_recipients_site[$group_owner->getGUID()] = $group_owner;
+					$get_error_info = 'group';
 
 	    		break;
 
@@ -845,10 +848,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    		$action_type = "like_comment";
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'comment';
 
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'comment';
 	    		break;
 
 	    	case 'discussion_reply':
@@ -869,9 +874,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$action_type = "like_reply";
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'discussion_reply';
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'discussion_reply';
 	    		break;
 
 
@@ -888,7 +895,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 						'cp_msg_type' => 'cp_likes_user_update',
 						'cp_liked_by' => $liked_by->name
 					);
-	    			$to_recipients[$liked_content->guid] = $liked_content;
+					$to_recipients[$liked_content->guid] = $liked_content;
+					$get_error_info = 'user_update_if_liked_content';
 
 
 		    	} else {
@@ -923,10 +931,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 					);
 
 		    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'), 'likes_email') == 0)
-	    				$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$get_error_info = 'content';
 
 	    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'), 'likes_site') == 0)
-	    				$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$get_error_info = 'content';
 		    	}
 	    		break;
 
@@ -992,6 +1002,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if ($group_owner) {
 			$error_message .= 'Group owner= ' . print_r($group_owner, true);
 		}
+		$error_message .= $get_error_info; //from which state the error is from
 		notification_logging($error_message);
 	}
 
