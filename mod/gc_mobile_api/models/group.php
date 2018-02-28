@@ -560,8 +560,6 @@ function get_group_discussions($user, $guid, $limit, $offset, $lang)
 		$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
 		$discussion->title = gc_explode_translation($discussion->title, $lang);
 		$discussion->description = gc_explode_translation($discussion->description, $lang);
-		error_log(print_r($discussion->userDetails,true));
-		
 	}
 
 	return $discussions;
