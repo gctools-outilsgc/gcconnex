@@ -5,7 +5,8 @@ $new = get_input("new");
 $old_user = get_user_by_username($old);
 $new_user = get_user_by_username($new);
 
-echo '<p>This will merge the account <span class="old">'.$old_user->username.'</span> into <span class="new">'.$new_user->username.'</span>. Look below to confirm both profiles and choose which content is transferred.</p>';
+echo '<p>This will merge the account <span class="old">'.$old_user->username.'</span> into <span class="new">'.$new_user->username.'</span>. Look below to confirm both profiles and choose what you would like to transfer.</p>';
+echo '<p><i><strong>NOTE:</strong></i> all groups owned by <span class="old">'.$old_user->username.'</span> will be transferrd regardless of the selection below. </p>';
 
 ?>
 <div class="user-display" id="user-old">
@@ -67,10 +68,10 @@ if(!$new_user || !$old_user){
 } else if($old_user == $new_user){
   echo '<p>Cannot merge same user account.</p>';
 } else {
-  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'profile', 'label'=> 'Transfer profile (education, work experience and skills)', 'value'=>'profile',)).'</div>';
-  //echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'content', 'label'=> 'Transfer content', 'value'=>'content',)).'</div>';
+  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'content', 'label'=> 'Transfer content', 'value'=>'content',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'friends', 'label'=> 'Transfer colleagues', 'value'=>'friends',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'membership', 'label'=> 'Transfer group membership', 'value'=>'membership',)).'</div>';
+  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'profile', 'label'=> 'Transfer profile (education, work experience and skills)', 'value'=>'profile',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'delete', 'label'=> 'Delete user', 'value'=>'delete',)).'</div>';
   echo elgg_view('input/submit', array('value' => "Merge", 'class' => 'btn btn-submit mrgn-tp-md', 'data-confirm' => 'Are you sure?'));
 }

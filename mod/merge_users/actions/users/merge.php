@@ -27,52 +27,64 @@ $edu = get_subtype_id('object', 'education');
 $work = get_subtype_id('object', 'experience');
 $skill = get_subtype_id('object', 'MySkill');
 
-$transfer_profile = get_input('profile');
+//check if we are transfering content
+$transfer_content = get_input('content');
 
-//ignore these subtypes if not transfering profile
-if(!$transfer_profile){
-  $avoid = " AND subtype NOT IN ( $edu, $work, $skill )";
+if($transfer_content){
+    //transfering all object entities to new account
+    $data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object' AND subtype NOT IN ( $edu, $work, $skill )");
+
+    $event = get_subtype_id('object', 'event_calendar');
+    $file = get_subtype_id('object', 'file');
+
+    foreach($data as $object){
+
+      if($object->container_guid != $oldGUID){ //entities in a group
+
+        //handle different entitites a certain way
+        switch($object->subtype){
+          case $file:
+            transfer_file_to_new_user($object, $newGUID, $oldGUID);
+          break;
+          case $event:
+            add_entity_relationship($newGUID,'personal_event', $object->guid);
+          break;
+          default:
+        }
+
+        update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID' where guid = '$object->guid'");
+
+      } else { //entities under the user
+
+        //handle different entitites a certain way
+        switch($object->subtype){
+          case $file:
+            transfer_file_to_new_user($object, $newGUID, $oldGUID);
+          break;
+          case $event:
+            add_entity_relationship($newGUID,'personal_event', $object->guid);
+          default:
+        }
+
+        update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$object->guid'");
+
+      }
+
+    }
 }
 
-//transfering all object entities to new account
-$data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object'".$avoid);
 
-$event = get_subtype_id('object', 'event_calendar');
-$file = get_subtype_id('object', 'file');
+$transfer_profile = get_input('profile');
 
-foreach($data as $object){
+//handle transfering profile info entities to new user
+if($transfer_profile){
 
-  if($object->container_guid != $oldGUID){ //entities in a group
+  $profile_data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object' AND subtype IN ( $edu, $work, $skill )");
 
-    //handle different entitites a certain way
-    switch($object->subtype){
-      case $file:
-        transfer_file_to_new_user($object, $newGUID, $oldGUID);
-      break;
-      case $event:
-        add_entity_relationship($newGUID,'personal_event', $object->guid);
-      break;
-      default:
-    }
-
-    update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID' where guid = '$object->guid'");
-
-  } else { //entities under the user
-
-    //handle different entitites a certain way
-    switch($object->subtype){
-      case $file:
-        transfer_file_to_new_user($object, $newGUID, $oldGUID);
-      break;
-      case $event:
-        add_entity_relationship($newGUID,'personal_event', $object->guid);
-      default:
-    }
+  foreach($profile_data as $object){
 
     update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$object->guid'");
 
-      //handle transfering profile info entities to new user
-      if($transfer_profile){
         switch($object->subtype){
           //education
           case $edu:
@@ -120,11 +132,8 @@ foreach($data as $object){
             break;
         }
       }
-
-  }
-
-
 }
+
 
 //transfering group ownership and making sure new account is a member of the group they are now the owner of
 $dataGroups = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='group'");
@@ -138,8 +147,6 @@ foreach($dataGroups as $group){
   if(!$groupEnt->isMember($new_user)){
     $groupEnt->join($new_user);
   }
-
-
 
   //cover photo
   if(elgg_is_active_plugin('gc_group_layout')){
@@ -185,7 +192,7 @@ if($transfer_friends){
 
 }
 
-system_message('All content and groups has been transfered to <b>'.$new_user->name.'</b> from the account <b>'.$old_user->name.'</b>.');
+system_message('The account <b>'.$new_user->name.'</b> has been merged into the account <b>'.$old_user->name.'</b>.');
 
 //unset from old account so entities are not deleted as well
 if($transfer_profile){
