@@ -41,7 +41,7 @@ function stop_stream_newsfeed_count(){
 function check_for_newsfeed_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
-    var firstPostOnPage = $('.panel-river .elgg-body .elgg-item').first().attr('id');
+    var firstPostOnPage = $('#activity .elgg-list-river .elgg-item').first().attr('id');
     if (firstPostOnPage) {
         var postID = firstPostOnPage.split("-");
         postID = postID.slice(2);
@@ -93,7 +93,7 @@ function loadNewNewsfeedItems(){
     $('.stream-new-newsfeed').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
 
     //Get the guid from the post id
-    var firstPostOnPage = $('.panel-river .elgg-body .elgg-item').first().attr('id');
+    var firstPostOnPage = $('#activity .elgg-list-river .elgg-item').first().attr('id');
     var postID = firstPostOnPage.split("-");
     postID = postID.slice(2);
 
