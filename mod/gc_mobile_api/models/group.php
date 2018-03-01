@@ -274,7 +274,7 @@ function get_group($user, $guid, $lang)
 	}
 	//Group 'Tools' that are enabled or not
 	//Returning info hide anything not activitated
-	$group->enabled;
+	$group->enabled = new stdClass();
 	$group->enabled->activity = $groupObj->activity_enable;
 	$group->enabled->bookmarks = $groupObj->bookmarks_enable;
 	$group->enabled->file_tools_structure_management = $groupObj->file_tools_structure_management_enable;
