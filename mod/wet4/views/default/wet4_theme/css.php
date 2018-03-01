@@ -1082,9 +1082,6 @@ h5, .h5 {
 h6, .h6 {
   font-size: 14px; }
 
-p {
-  margin: 0 0 11.5px; }
-
 .lead {
   margin-bottom: 23px;
   font-size: 18px;
