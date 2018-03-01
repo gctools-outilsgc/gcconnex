@@ -27,12 +27,17 @@ $edu = get_subtype_id('object', 'education');
 $work = get_subtype_id('object', 'experience');
 $skill = get_subtype_id('object', 'MySkill');
 
+//subtypes to not transfer
+$image = get_subtype_id('object', 'image');
+$file = get_subtype_id('object', 'file');
+$album = get_subtype_id('object', 'album');
+
 //check if we are transfering content
 $transfer_content = get_input('content');
 
 if($transfer_content){
     //transfering all object entities to new account
-    $data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object' AND subtype NOT IN ( $edu, $work, $skill )");
+    $data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object' AND subtype NOT IN ( $edu, $work, $skill, $image, $file, $album )");
 
     $event = get_subtype_id('object', 'event_calendar');
     $file = get_subtype_id('object', 'file');
@@ -43,9 +48,6 @@ if($transfer_content){
 
         //handle different entitites a certain way
         switch($object->subtype){
-          case $file:
-            transfer_file_to_new_user($object, $newGUID, $oldGUID);
-          break;
           case $event:
             add_entity_relationship($newGUID,'personal_event', $object->guid);
           break;
@@ -58,9 +60,6 @@ if($transfer_content){
 
         //handle different entitites a certain way
         switch($object->subtype){
-          case $file:
-            transfer_file_to_new_user($object, $newGUID, $oldGUID);
-          break;
           case $event:
             add_entity_relationship($newGUID,'personal_event', $object->guid);
           default:
@@ -199,6 +198,15 @@ if($transfer_profile){
   unset($old_user->education);
   unset($old_user->work);
   unset($old_user->gc_skills);
+}
+
+//Test for deactivate
+$deactivate = get_input('deactivate');
+
+if($deactivate){
+  $old_user->gcdeactivate = true;
+  $old_user->gcdeactivatereason = "";
+  $old_user->gcdeactivatetime = time();
 }
 
 //lets say goodbye to this old user

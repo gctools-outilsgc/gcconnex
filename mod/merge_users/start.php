@@ -11,6 +11,7 @@ function merge_users_init() {
 
 }
 
+//we don't use this but it's good to have it
 function transfer_file_to_new_user($object, $NU_guid, $OLD_guid) {
 
   $prefix = 'file/';

@@ -68,10 +68,13 @@ if(!$new_user || !$old_user){
 } else if($old_user == $new_user){
   echo '<p>Cannot merge same user account.</p>';
 } else {
-  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'content', 'label'=> 'Transfer content', 'value'=>'content',)).'</div>';
+  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'content', 'label'=> 'Transfer old account\'s written content (wire posts, blogs, discussions, comments, etc...)', 'value'=>'content',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'friends', 'label'=> 'Transfer colleagues', 'value'=>'friends',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'membership', 'label'=> 'Transfer group membership', 'value'=>'membership',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'profile', 'label'=> 'Transfer profile (education, work experience and skills)', 'value'=>'profile',)).'</div>';
+  if(elgg_is_active_plugin('member_selfdelete')){
+    echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'deactivate', 'label'=> 'Deactivate old account', 'value'=>'deactivate',)).'</div>';
+  }
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'delete', 'label'=> 'Delete user', 'value'=>'delete',)).'</div>';
   echo elgg_view('input/submit', array('value' => "Merge", 'class' => 'btn btn-submit mrgn-tp-md', 'data-confirm' => 'Are you sure?'));
 }
