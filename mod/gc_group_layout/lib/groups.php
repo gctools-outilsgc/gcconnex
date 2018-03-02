@@ -356,7 +356,7 @@ function groups_handle_profile_page($guid) {
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
 	$sidebar_value = $group->getPrivateSetting('group_tools:cleanup:menu');
 
-	if($sidebar_value == 'yes'){
+	if($sidebar_value == 'no'){
 		$sidebar = elgg_view('groups/sidebar/sidebar', array('entity' => $group));
 	}
 	
