@@ -40,7 +40,7 @@ if($transfer_content){
     $data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object' AND subtype NOT IN ( $edu, $work, $skill, $image, $file, $album )");
 
     $event = get_subtype_id('object', 'event_calendar');
-    $file = get_subtype_id('object', 'file');
+    $bookmark = get_subtype_id('object', 'bookmarks');
 
     foreach($data as $object){
 
@@ -48,6 +48,9 @@ if($transfer_content){
 
         //handle different entitites a certain way
         switch($object->subtype){
+          case $bookmark:
+            update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = '$object->guid'");
+            break;
           case $event:
             add_entity_relationship($newGUID,'personal_event', $object->guid);
           break;
@@ -60,8 +63,12 @@ if($transfer_content){
 
         //handle different entitites a certain way
         switch($object->subtype){
+          case $bookmark:
+            update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = '$object->guid'");
+            break;
           case $event:
             add_entity_relationship($newGUID,'personal_event', $object->guid);
+            break;
           default:
         }
 
