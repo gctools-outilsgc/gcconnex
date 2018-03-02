@@ -205,7 +205,7 @@ $deactivate = get_input('deactivate');
 
 if($deactivate){
   $old_user->gcdeactivate = true;
-  $old_user->gcdeactivatereason = "";
+  $old_user->gcdeactivatereason = "Merged account";
   $old_user->gcdeactivatetime = time();
 }
 
