@@ -65,7 +65,7 @@ function get_discussion($user, $guid, $thread, $lang)
 	));
 	$discussion = json_decode($discussions)[0];
 
-	$discussion->name = gc_explode_translation($discussion->name, $lang);
+	$discussion->title = gc_explode_translation($discussion->title, $lang);
 
 	$likes = elgg_get_annotations(array(
 		'guid' => $discussion->guid,
