@@ -214,32 +214,4 @@ function apply_post($user, $guid, $lang)
 
 	return 'You '.$message;
 
-	// $opportunities = elgg_list_entities(array(
-	// 	'type' => 'object',
-	// 	'subtype' => 'mission',
-	// 	'guid' => $guid
-	// ));
-	// $opportunity = json_decode($opportunities)[0];
-
-	// $opportunity->title = gc_explode_translation($opportunity->title, $lang);
-
-	// $likes = elgg_get_annotations(array(
-	// 	'guid' => $opportunity->guid,
-	// 	'annotation_name' => 'likes'
-	// ));
-	// $opportunity->likes = count($likes);
-
-	// $liked = elgg_get_annotations(array(
-	// 	'guid' => $opportunity->guid,
-	// 	'annotation_owner_guid' => $user_entity->guid,
-	// 	'annotation_name' => 'likes'
-	// ));
-	// $opportunity->liked = count($liked) > 0;
-
-	// $opportunity->comments = get_entity_comments($opportunity->guid);
-
-	// $opportunity->userDetails = get_user_block($opportunity->owner_guid, $lang);
-	// $opportunity->description = gc_explode_translation($opportunity->description, $lang);
-
-	//return $opportunity;
 }
