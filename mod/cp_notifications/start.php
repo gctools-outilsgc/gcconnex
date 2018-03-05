@@ -187,7 +187,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$template = elgg_view('cp_notifications/email_template', $message);
 			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$user_obj = get_user_by_email($params['cp_to']);
-
+			$info_notif = 'cp_friend_invite';
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send($params['cp_to'], $params['cp_to'], $subject, $template, NULL,true) : mail($params['cp_to'],$subject,$template,cp_get_headers());
 			return true;
 
@@ -247,6 +247,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_password' => $params['cp_password'],
 			);
 			$to_recipients[] = $params['cp_user'];
+			$info_notif = 'cp_useradd';
+			
 			$subject = elgg_echo('cp_notify:subject:add_new_user',array(),'en') . ' | ' . elgg_echo('cp_notify:subject:add_new_user',array(),'fr');
 			$email_only = true;
 			break;
@@ -259,6 +261,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']),'en') . ' | ' . elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']),'fr');
 			$to_recipients[] = get_user($params['cp_validate_user']['guid']);
+			$info_notif = 'cp_validate_user';
 			$email_only = true;
 			break;
 
@@ -266,6 +269,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$add_to_sent = true;
 			$sender_guid = $params['cp_from']['guid'];
 			$to_recipients[] = get_user($params['cp_to']['guid']);
+			$info_notif = 'cp_site_msg_type';			
 			$subject = $params['cp_topic_title'];
 			$message = array(
 				'cp_msg_title' => $params['cp_topic_title'],
@@ -301,6 +305,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($users as $user) {
 				$to_recipients[$user->guid_one] = get_entity($user->guid_one);
 			}
+			$info_notif = 'cp_wire_image';			
 			
 			break;
 
@@ -324,7 +329,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject .= elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name),'fr');
 
 			$to_recipients[] = $params['cp_recipient'];
-
+			$info_notif = 'cp_wire_share';						
 			$content_entity = $params['cp_content_reshared'];
 			$author = $params['cp_shared_by'];
 			$content_url = $params['cp_content_reshared']->getURL();
@@ -340,7 +345,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:messageboard:subject',array(),'en') . ' | ' . elgg_echo('cp_notify:messageboard:subject',array(),'fr');
 			$to_recipients[] = $params['cp_recipient'];
-
+			$info_notif = 'cp_messageboard';			
 			$content_entity = $params['cp_message_content'];
 			$author = $params['cp_writer'];
 			break;
@@ -356,6 +361,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'fr')),'fr');
 			$to_recipients[] = $params['cp_to_user'];
+			$info_notif = 'cp_add_grp_operator';						
 			break;
 
 
@@ -368,6 +374,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:group_admin_transfer',array(gc_explode_translation($params['cp_group_name'],'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:group_admin_transfer',array(gc_explode_translation($params['cp_group_name'],'fr')),'fr');
 			$to_recipients[] = $params['cp_new_owner_user'];
+			$info_notif = 'cp_grp_admin_transfer';									
 			break;
 
 
@@ -382,7 +389,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			$subject = elgg_echo('cp_notify:subject:wire_mention',array($params['cp_mention_by']),'en') . ' | ' . elgg_echo('cp_notify:subject:wire_mention',array($params['cp_mention_by']),'fr');
 			$to_recipients[] = $params['cp_send_to'];
-
+			$info_notif = 'cp_wire_mention';									
 			$content_entity = $params['cp_wire_entity'];
 			$author = $content_entity->getOwnerEntity();
 			break;
@@ -397,7 +404,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 				);
 			$to_recipients[] = get_user($params['cp_request_guid']);
-
+			$info_notif = 'cp_friend_approve';									
 			$content_entity = $params['object'];
 			$author = $params['object'];
 			break;
@@ -405,6 +412,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 		case 'cp_group_add':	// group_tools/lib/functions.php OR groups/actions/groups/membership/add.php ????
 			$to_recipients[] = $params['cp_user_added'];
+			$info_notif = 'cp_group_add';												
 			$subject = elgg_echo('cp_notify:subject:group_add_user',array(gc_explode_translation($params['cp_group']['name'],'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:group_add_user',array(gc_explode_translation($params['cp_group']['name'],'fr')),'fr');
 			$message = array(
 				'cp_user_added' => $params['cp_user_added'],
@@ -429,7 +437,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type
 			);
 			$to_recipients[] = get_user($params['cp_invitee']['guid']);
-
+			$info_notif = 'cp_group_invite';												
 			$content_entity = $params['cp_invite_to_group'];
 			$author = $params['cp_inviter'];
 			break;
@@ -448,6 +456,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($params['cp_group_mail_users'] as $to_user) {
 				$to_recipients[$to_user] = get_user($to_user);
 			}
+			$info_notif = 'cp_group_mail';															
 			break;
 
 
@@ -460,6 +469,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:friend_request',array($params['cp_friend_requester']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:friend_request',array($params['cp_friend_requester']['name']),'fr');
 			$to_recipients[] = get_user($params['cp_friend_receiver']['guid']);
+			$info_notif = 'cp_friend_request';												
 
 			$content_entity = $params['cp_relationship'];
 			$author = $params['cp_friend_requester'];
@@ -481,6 +491,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
 
+			$info_notif = 'cp_hjpost';												
 			$content_entity = $params['cp_post'];
 			$content_url = $params['cp_topic_url'];
 			$author = $params['cp_post']->getOwnerEntity();
@@ -502,6 +513,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
 
+			$info_notif = 'cp_hjtopic';															
 			$content_url = $params['cp_topic_url'];
 			$content_entity = $params['cp_topic'];
 			$author = $params['cp_topic']->getOwnerEntity();
@@ -518,6 +530,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject = elgg_echo('cp_notify:event_request:subject',array($params['cp_event_request_user'], $params['cp_event_obj']->title),'en');
 			$subject .= ' | '.elgg_echo('cp_notify:event_request:subject',array($params['cp_event_request_user'], $params['cp_event_obj']->title),'fr');
 			$to_recipients[] = $params['cp_event_owner'];
+			$info_notif = 'cp_event_request';															
+			
 			break;
 
 		case 'cp_event_ics': // .../mod/event_calendar/actions/event_calendar/add_ics.php
@@ -538,13 +552,16 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		    $subject = $event->title.' - '.elgg_get_logged_in_user_entity()->username; 
 
 		   	$event = 'event';
-		   	$to_recipients[] = $params['cp_event_send_to_user'];
+			$to_recipients[] = $params['cp_event_send_to_user'];
+			$info_notif = 'cp_event_ics';															
+			   
 			break;
 
 			case 'cp_welcome_message':	// messages/actions/messages/send.php
 			$add_to_sent = true;
 			$sender_guid = $params['cp_from']['guid'];
 			$to_recipients[] = get_user($params['cp_to']['guid']);
+			$info_notif = 'cp_welcome_message';																		
 			$subject = $params['cp_topic_title'];
 			$message = array(
 				'cp_msg_title' => $params['cp_topic_title'],
@@ -595,7 +612,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients)) {
-		notification_logging('error: in cp_create_notification(), $to_recipients is not array');
+		notification_logging('error: in cp_create_notification(), $to_recipients is not array'.$info_notif);
 	}
 }
 
