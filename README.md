@@ -39,6 +39,7 @@ use docker-compose to start/create your containers.
 
 and add an entry for ```<host ip> gcconnex.local``` in your hosts file.
 Then visit [http://gcconnex.local](http://gcconnex.local) which should by now be a fully set up dev environment.
+An admin account is created: Username: "admin"  Password: "adminpassword".
 
 
 ### Docker specific configuration
