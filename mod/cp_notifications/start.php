@@ -1002,7 +1002,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if ($group_owner) {
 			$error_message .= 'Group owner= ' . print_r($group_owner, true);
 		}
-		$error_message .= $get_error_info; //from which state the error is from
+		$error_message .= 'State: '.$get_error_info; //from which state the error is from
 		notification_logging($error_message);
 	}
 
