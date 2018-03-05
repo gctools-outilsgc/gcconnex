@@ -165,6 +165,7 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 			'annotation_owner_guid' => $user_entity->guid,
 			'annotation_name' => 'likes'
 		));
+		
 		$opportunity->liked = count($liked) > 0;
 
 		$opportunityObj = get_entity($opportunity->guid);
@@ -173,6 +174,7 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 
 		$opportunity->userDetails = get_user_block($opportunity->owner_guid, $lang);
 		$opportunity->description = clean_text(gc_explode_translation($opportunity->description, $lang));
+		$opportunity->state = $opportunityObj->state;
 	}
 
 	return $opportunities;
