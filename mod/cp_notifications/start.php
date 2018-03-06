@@ -710,9 +710,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	if (strcmp($object_subtype, 'likes') != 0) {
 
 		$content = get_entity($object->entity_guid);
-
+		$get_error_info='if object subtype likes 0';
 		// auto save -drafts or -published blogs, we don't send out notifications
-		if (strcmp($object_subtype,'blog_auto_save') == 0 && (strcmp($entity->status,'draft') == 0 || strcmp($entity->status, 'published') == 0)) return;
+		if (strcmp($object_subtype,'blog_auto_save') == 0 && (strcmp($entity->status,'draft') == 0 || strcmp($entity->status, 'published') == 0)){
+			$get_error_info='draft/autosave';
+			return;
+		} 
 
 
 		// if we are publishing, or revising blogs then send out notification
@@ -732,6 +735,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 			$author = $current_user;
 			$content_entity = $entity;
+			$get_error_info = 'blog revision or published';
 
 			$watchers = get_subscribers($dbprefix, $current_user->guid, $entity->guid);
 
@@ -777,6 +781,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 			$author = $current_user;
 			$content_entity = $entity;
+			$get_error_info = 'page, page top';			
 
 			$watchers = get_subscribers($dbprefix, $current_user->guid, $entity->guid);
 
@@ -1285,6 +1290,8 @@ function cp_create_notification($event, $type, $object) {
 
 			// cyu - there is an issue with regards to auto-saving drafts
 			if (strcmp($object->getSubtype(),'blog') == 0) {
+			$get_error_info='draft blog';
+				
 				if (strcmp($object->status,'draft') == 0 || strcmp($object->status,'unsaved_draft') == 0) return;
 			}
 
