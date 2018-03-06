@@ -84,6 +84,99 @@ function get_opportunity($user, $guid, $lang)
 	$opportunity->userDetails = get_user_block($opportunity->owner_guid, $lang);
 	$opportunity->description = gc_explode_translation($opportunity->description, $lang);
 
+	$opportunityObj = get_entity($opportunity->guid);
+	$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
+	$opportunity->roletype = elgg_echo($opportunityObj->role_type);
+	//$opportunity->programArea = elgg_echo('missions:program_area') . ": " . elgg_echo($opportunityObj->program_area); //This should work and translate to user lang but doesnt
+	$opportunity->programArea = elgg_echo($opportunityObj->program_area);
+	$opportunity->numOpportunities = $opportunityObj->number;
+	$opportunity->idealStart = $opportunityObj->start_date;
+	$opportunity->idealComplete = $opportunityObj->complete_date;
+	$opportunity->deadline = $opportunityObj->deadline;
+	$opportunity->oppVirtual = $opportunityObj->remotely;
+	$opportunity->oppOnlyIn = $opportunityObj->openess;
+	$opportunity->location = elgg_echo($opportunityObj->location);
+	$opportunity->security = elgg_echo($opportunityObj->security);
+	$opportunity->skills = $opportunityObj->key_skills;
+	//$opportunity->participants = $opportunityObj->;
+	//$opportunity->applicants = $opportunityObj->;
+	$opportunity->timezone = elgg_echo($opportunityObj->timezone);
+	$opportunity->timecommitment = $opportunityObj->time_commitment;
+	$opportunity->department = $opportunityObj->department;
+
+	//Language metadata
+	$unpacked_array = mm_unpack_mission($opportunityObj);
+	$unpacked_language = '';
+	if (! empty($unpacked_array['lwc_english']) || ! empty($unpacked_array['lwc_french'])) {
+  	$unpacked_language .= '<b>' . elgg_echo('missions:written_comprehension') . ': </b>';
+  	if (! empty($unpacked_array['lwc_english'])) {
+      $unpacked_language .= '<span name="mission-lwc-english">' . elgg_echo('missions:formatted:english', array($unpacked_array['lwc_english'])) . '</span> ';
+  	}
+  	if (! empty($unpacked_array['lwc_french'])) {
+      $unpacked_language .= '<span name="mission-lwc-french">' . elgg_echo('missions:formatted:french', array($unpacked_array['lwc_french'])) . '</span>';
+  	}
+		$unpacked_language .= '<br>';
+	}
+	if (! empty($unpacked_array['lwe_english']) || ! empty($unpacked_array['lwe_french'])) {
+		$unpacked_language .= '<b>' . elgg_echo('missions:written_expression') . ': </b>';
+		if (! empty($unpacked_array['lwe_english'])) {
+	  	$unpacked_language .= '<span name="mission-lwe-english">' . elgg_echo('missions:formatted:english', array($unpacked_array['lwe_english'])) . '</span> ';
+	 	}
+	  if (! empty($unpacked_array['lwe_french'])) {
+	  	$unpacked_language .= '<span name="mission-lwe-french">' . elgg_echo('missions:formatted:french', array($unpacked_array['lwe_french'])) . '</span>';
+	  }
+	  	$unpacked_language .= '<br>';
+	}
+	if (! empty($unpacked_array['lop_english']) || ! empty($unpacked_array['lop_french'])) {
+		$unpacked_language .= '<b>' . elgg_echo('missions:oral_proficiency') . ': </b>';
+		if (! empty($unpacked_array['lop_english'])) {
+			$unpacked_language .= '<span name="mission-lop-english">' . elgg_echo('missions:formatted:english', array($unpacked_array['lop_english'])) . '</span> ';
+		}
+		if (! empty($unpacked_array['lop_french'])) {
+			$unpacked_language .= '<span name="mission-lop-french">' . elgg_echo('missions:formatted:french', array($unpacked_array['lop_french'])) . '</span>';
+		}
+		$unpacked_language .= '<br>';
+	}
+	if (empty($unpacked_language)) {
+		$unpacked_language = '<span name="no-languages">' . elgg_echo('missions:none_required') . '</span>';
+	}
+	$opportunity->languageRequirements = $unpacked_language;
+
+	//scheduling metadata
+	$unpacked_time = '';
+	if ($opportunityObj->mon_start) {
+		$unpacked_time .= '<b>' . elgg_echo('missions:mon') . ': </b>';
+	 	$unpacked_time .= $opportunityObj->mon_start . elgg_echo('missions:to') .  $opportunityObj->mon_duration . '<br>';
+	}
+	if ($opportunityObj->tue_start) {
+		$unpacked_time .= '<b>' . elgg_echo('missions:tue') . ': </b>';
+		$unpacked_time .= '<span name="mission-tue-start">' . $opportunityObj->tue_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-tue-duration">' . $opportunityObj->tue_duration . '</span><br>';
+	}
+	if ($opportunityObj->wed_start) {
+		$unpacked_time .= '<b>' . elgg_echo('missions:wed') . ': </b>';
+		$unpacked_time .=  $opportunityObj->wed_start  . elgg_echo('missions:to') . $opportunityObj->wed_duration . '<br>';
+	}
+	if ($opportunityObj->thu_start) {
+		$unpacked_time .= '<b>' . elgg_echo('missions:thu') . ': </b>';
+		$unpacked_time .= '<span name="mission-thu-start">' . $opportunityObj->thu_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-thu-duration">' . $opportunityObj->thu_duration . '</span><br>';
+	}
+	if ($opportunityObj->fri_start) {
+	  $unpacked_time .= '<b>' . elgg_echo('missions:fri') . ': </b>';
+	  $unpacked_time .= '<span name="mission-fri-start">' . $opportunityObj->fri_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-fri-duration">' . $opportunityObj->fri_duration . '</span><br>';
+	}
+	if ($opportunityObj->sat_start) {
+	  $unpacked_time .= '<b>' . elgg_echo('missions:sat') . ': </b>';
+	  $unpacked_time .= '<span name="mission-sat-start">' . $opportunityObj->sat_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-sat-duration">' . $opportunityObj->sat_duration . '</span><br>';
+	}
+	if ($opportunityObj->sun_start) {
+	  $unpacked_time .= '<b>' . elgg_echo('missions:sun') . ': </b>';
+	  $unpacked_time .= '<span name="mission-sun-start">' . $opportunityObj->sun_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-sun-duration">' . $opportunityObj->sun_duration . '</span><br>';
+	}
+	if (empty($unpacked_time)) {
+	  $unpacked_time = '<span name="no-times">' . elgg_echo('missions:none_required') . '</span>';
+	}
+	$opportunity->schedulingRequirements = $unpacked_time;
+
 	return $opportunity;
 }
 
@@ -154,6 +247,10 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 		$opportunity->liked = count($liked) > 0;
 
 		$opportunityObj = get_entity($opportunity->guid);
+		$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
+		$opportunity->roletype = elgg_echo($opportunityObj->role_type);
+		$opportunity->deadline = $opportunityObj->deadline;
+		$opportunity->programArea = elgg_echo($opportunityObj->program_area);
 		$opportunity->owner = ($opportunityObj->getOwnerEntity() == $user_entity);
 		$opportunity->iconURL = $opportunityObj->getIconURL();
 
