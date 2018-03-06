@@ -799,6 +799,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$to_recipients = array();
 		$to_recipients_site = array();
+		$get_error_info = '';
 
 	    switch ($type_of_like) {
 	    	case 'group':
@@ -819,10 +820,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    		$action_type = 'like_group';
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $group_owner->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$group_owner->getGUID()] = $group_owner;
+					$to_recipients[$group_owner->getGUID()] = $group_owner;
+					$get_error_info = 'group';
 
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $group_owner->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$group_owner->getGUID()] = $group_owner;
+					$to_recipients_site[$group_owner->getGUID()] = $group_owner;
+					$get_error_info = 'group';
 
 	    		break;
 
@@ -845,10 +848,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    		$action_type = "like_comment";
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'comment';
 
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'comment';
 	    		break;
 
 	    	case 'discussion_reply':
@@ -869,9 +874,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$action_type = "like_reply";
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'discussion_reply';
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'discussion_reply';
 	    		break;
 
 
@@ -888,7 +895,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 						'cp_msg_type' => 'cp_likes_user_update',
 						'cp_liked_by' => $liked_by->name
 					);
-	    			$to_recipients[$liked_content->guid] = $liked_content;
+					$to_recipients[$liked_content->guid] = $liked_content;
+					$get_error_info = 'user_update_if_liked_content';
 
 
 		    	} else {
@@ -923,10 +931,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 					);
 
 		    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'), 'likes_email') == 0)
-	    				$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$get_error_info = 'content';
 
 	    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'), 'likes_site') == 0)
-	    				$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$get_error_info = 'content';
 		    	}
 	    		break;
 
@@ -985,7 +995,15 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
-		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array');
+		$error_message = "error: in cp_create_notification(), \$to_recipients or \$to_recipients_site is not array"."\r\n"."Owner_entity = ".($content->getOwnerEntity()?print_r($content->getOwnerEntity(),true) : 'N/A');
+		if ($comment_author) {
+			$error_message .= 'Comment author= '. print_r($comment_author, true);
+		}
+		if ($group_owner) {
+			$error_message .= 'Group owner= ' . print_r($group_owner, true);
+		}
+		$error_message .= $get_error_info; //from which state the error is from
+		notification_logging($error_message);
 	}
 
 } // end of function
@@ -1001,7 +1019,7 @@ function cp_create_annotation_notification($event, $type, $object) {
  * @param mixed $object		the object/entity of the event
  */
 function cp_create_notification($event, $type, $object) {
-error_log('subtype'.$object->getSubtype());
+
 	$do_not_subscribe_list = array('mission-posted', 'file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
@@ -1183,6 +1201,8 @@ error_log('subtype'.$object->getSubtype());
 			// digest information purposes
 			$content_entity = $container_entity;
 			$author = $user_comment;
+
+			$container = get_entity($container_entity->container_guid);
 
 			// the user creating the content is automatically subscribed to it
 			if (elgg_instanceof($container, 'group')) {
@@ -1425,7 +1445,10 @@ error_log('subtype'.$object->getSubtype());
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
-		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array<br>');
+		$error_message = "error: in cp_create_notification(), \$to_recipients or \$to_recipients_site is not array"."\r\n"."Author_id = ".($object->owner_guid?$object->owner_guid : 'N/A')."\r\n"."Content_id = ".($object->container_guid?$object->container_guid : 'N/A')."\r\n"."Content_id = ".$object->getContainerGUID();
+
+		notification_logging($error_message);
+
 	}
 
 }

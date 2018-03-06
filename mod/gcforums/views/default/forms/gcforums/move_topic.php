@@ -1,6 +1,5 @@
 <?php
 
-
 $notice = "<p><form action='{$base_url}gcforums/move_topic'><div class='administrative-topic-tool'>
 			<section class='alert alert-danger'>
 				<strong>This only shows up for administrators</strong>.
@@ -24,7 +23,5 @@ $btnMove = elgg_view('input/submit', array(
 ));
 
 $content .= "{$notice} <label>Source (Forum Topic GUIDs) </label> {$txtTopic} <label>Target (Forum GUID) </label> {$txtForum} <br/> {$btnMove}</div></form></p>";
-
-
 
 echo $content;

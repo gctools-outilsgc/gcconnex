@@ -281,7 +281,7 @@ function file_tools_folder_breadcrumb_hook($hook, $type, $returnvalue, $params) 
 			if($parent->title3){
 				$title_parent = gc_explode_translation($parent->title3,$lang);
 			}else{
-				$title_parent = $parent->title;
+				$title_parent = gc_explode_translation($parent->title,$lang);
 			}
 			
 			$folder_options = array(

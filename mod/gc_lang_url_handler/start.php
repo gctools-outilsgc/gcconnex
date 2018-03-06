@@ -45,7 +45,3 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 }
 
 
-
-
-
-

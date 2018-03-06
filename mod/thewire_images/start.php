@@ -17,7 +17,7 @@ function thewire_image() {
 	elgg_register_library('thewire_image', "$plugin_root/lib/thewire_image.php");
 	elgg_register_js('dropzone', 'mod/thewire_images/js/dropzone.js');
 	elgg_register_css('dropzone', 'mod/thewire_images/css/dropzone.css');
-	
+
 	elgg_extend_view('js/elgg', 'js/thewire_image');
 
 	elgg_register_event_handler('create', 'object', 'thewire_image_check_attachments');
@@ -85,7 +85,7 @@ function thewire_image_check_attachments($event, $type, $object) {
  * @return bool
  */
 function thewire_image_page_handler($page) {
-	gatekeeper();
+	
 	$pages = dirname(__FILE__) . '/pages/thewire_image';
 	$section = elgg_extract(0, $page);
 
@@ -117,7 +117,7 @@ function thewire_image_delete_attached_files($event, $type, $object) {
 	if (!elgg_instanceof($object, 'object', 'thewire')) {
 		return null;
 	}
-	
+
 	// we want to use the thewire_image_get_attachments() function,
 	// so load the library.
 	elgg_load_library('thewire_image');

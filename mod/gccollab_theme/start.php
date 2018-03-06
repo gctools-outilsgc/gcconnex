@@ -232,7 +232,7 @@ function collab_menu_block_handler($hook, $type, $menu, $params){
                     $item->setPriority('7');
                     break;
                 case 'activity':
-                    $item->setText('Activity');
+                    $item->setText(elgg_echo('activity'));
                     $item->setPriority('8');
                     $item->addItemClass('removeMe');
                     break;
@@ -347,7 +347,7 @@ function collab_menu_block_handler($hook, $type, $menu, $params){
                     $item->setPriority('15');
                     break;
                 case 'activity':
-                    $item->setText('Activity');
+                    $item->setText(elgg_echo('activity'));
                     $item->setPriority('16');
                     $item->addItemClass('removeMe');
                     break;

@@ -38,7 +38,8 @@ elgg_ws_expose_function(
 		"user" => array('type' => 'string', 'required' => true),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
 		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
-		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en"),
+		"api_version" => array('type' => 'float', 'required' => false, 'default' => 0)
 	),
 	'Retrieves a user\'s activity information based on user id',
 	'POST',
@@ -169,6 +170,21 @@ elgg_ws_expose_function(
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Deletes a user-owned object based on user id and post id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"share.post",
+	"share_post",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"message" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Shares a user-owned object based on user id and post id',
 	'POST',
 	true,
 	false
@@ -382,7 +398,7 @@ function get_user_data($profileemail, $user, $lang)
 					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->getIconURL();
 					$j++;
 				}
-			} elseif (!is_null($job->colleagues)) {
+			} elseif (!is_null($job->colleagues) && !empty(trim($job->colleagues))) {
 				$friendEntity = get_user($job->colleagues);
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["id"] = $friendEntity->guid;
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["username"] = $friendEntity->username;
@@ -479,8 +495,12 @@ function get_user_data($profileemail, $user, $lang)
 	$blogs = elgg_get_entities($options);
 	$user['blogs'] = count($blogs);
 
-	$colleagues = $user_entity->getFriends(array('limit' => 0));
-	$user['colleagues'] = count($colleagues);
+	$colleagues = $user_entity->getFriends(array('limit' => 2000));
+	$plus = "";
+	if(count($colleagues) == 2000)
+		$plus = "+";
+
+	$user['colleagues'] = count($colleagues).''.$plus;
 
 	return $user;
 }
@@ -500,7 +520,7 @@ function get_user_exists($user, $lang)
 	return $valid;
 }
 
-function get_user_activity($profileemail, $user, $limit, $offset, $lang)
+function get_user_activity($profileemail, $user, $limit, $offset, $lang, $api_version)
 {
 	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
 	if (!$user_entity) {
@@ -567,12 +587,12 @@ function get_user_activity($profileemail, $user, $limit, $offset, $lang)
 		} elseif ($object instanceof ElggDiscussionReply) {
 			$event->object['type'] = 'discussion-reply';
 			$original_discussion = get_entity($object->container_guid);
-			$event->object['name'] = $original_discussion->title;
-			$event->object['description'] = $object->description;
+			$event->object['name'] = gc_explode_translation($original_discussion->title, $lang);
+			$event->object['description'] = gc_explode_translation($object->description, $lang);
 		} elseif ($object instanceof ElggFile) {
 			$event->object['type'] = 'file';
-			$event->object['name'] = $object->title;
-			$event->object['description'] = $object->description;
+			$event->object['name'] = gc_explode_translation($object->title, $lang);
+			$event->object['description'] = gc_explode_translation($object->description, $lang);
 		} elseif ($object instanceof ElggObject) {
 			$event->object['type'] = 'discussion-add';
 
@@ -1230,4 +1250,29 @@ function delete_post($user, $guid, $lang)
 	} else {
 		return elgg_echo('blog:error:post_not_found');
 	}
+}
+
+function share_post($user,$message,$guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user));
+ 	if (!$user_entity) {
+ 		return "User was not found. Please try a different GUID, username, or email address";
+ 	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$entity = get_entity($guid);
+
+	$new_wire = thewire_tools_save_post($message, $user_entity->guid, ACCESS_PUBLIC, 0,'site', $guid);
+	if (!$new_wire) {
+		return elgg_echo("thewire:notsaved");
+	}
+
+	return elgg_echo("thewire:posted");
+
 }

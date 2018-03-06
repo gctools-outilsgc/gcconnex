@@ -53,16 +53,16 @@ unset($vars['icon_class']);
 
 $list_items = '';
 
-foreach($tags as $tag) {
+foreach ($tags as $tag) {
 	if (is_string($tag) && strlen($tag) > 0) {
-        //Adding GSA query to tags
-        if(get_current_language() == 'en'){
-            $lang_string ='eng';
-        }else{
-           $lang_string = 'fra';
-        }
-        $query = '?q='.$tag.'&a=s&s=3&chk4=on';
-        $url = "http://intranet.canada.ca/search-recherche/query-recherche-" .$lang_string. ".aspx" .$query;
+		//Adding GSA query to tags
+		if (get_current_language() == 'en') {
+			$lang_string ='eng';
+		} else {
+			$lang_string = 'fra';
+		}
+		$query = '?q='.$tag.'&a=s&s=3&chk4=on';
+		$url = "http://intranet.canada.ca/search-recherche/query-recherche-" .$lang_string. ".aspx" .$query;
 		$list_items .= "<li class=\"$item_class\">";
 		$list_items .= '<a href="'.$url.'">'.$tag.'</a>';
 		$list_items .= '</li>';
@@ -79,4 +79,3 @@ echo <<<___HTML
 		</ul>
 	</div>
 ___HTML;
-

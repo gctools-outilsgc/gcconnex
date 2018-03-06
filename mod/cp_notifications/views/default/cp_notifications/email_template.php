@@ -479,7 +479,7 @@ switch ($msg_type) {
 
 		$view_invitation = "{$vars['cp_invitation_url']}?utm_source=notification&utm_medium=email";
 
-		$article_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gctools-outilsgc.ca/en/support/solutions/articles/2100030466-how-do-i-join-a-group-" : "https://gccollab.gctools-outilsgc.ca/en/support/solutions/articles/2100028400-how-do-i-find-and-join-a-group-";
+		$article_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gctools-outilsgc.ca/en/support/solutions/articles/2100030466-how-do-i-join-a-group-" : "https://gccollab.gctools-outilsgc.ca/en/support/solutions/articles/2100030475-how-do-i-join-a-group-";
 		$help_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gc.ca/contactform/?utm_source=notification&utm_medium=email" : "https://gccollab.ca/help/knowledgebase/?utm_source=notification&utm_medium=email";
 		$cp_notify_msg_description_en = elgg_echo('cp_notification:group_invite', array($vars['cp_invitation_msg'], $view_invitation, $article_link, $help_link), 'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notification:group_invite', array($vars['cp_invitation_msg'], $view_invitation, $article_link, $help_link), 'fr');
@@ -499,7 +499,7 @@ switch ($msg_type) {
 
 		$invitation_link = "{$vars['cp_invitation_non_user_url']}?utm_source=notification&utm_medium=email";
 		$registration_link = "{$site->getURL()}register";
-		$article_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gctools-outilsgc.ca/en/support/solutions/articles/2100030466-how-do-i-join-a-group-" : "https://gccollab.gctools-outilsgc.ca/en/support/solutions/articles/2100028400-how-do-i-find-and-join-a-group-";
+		$article_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gctools-outilsgc.ca/en/support/solutions/articles/2100030466-how-do-i-join-a-group-" : "https://gccollab.gctools-outilsgc.ca/en/support/solutions/articles/2100030475-how-do-i-join-a-group-";
 		$help_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gc.ca/contactform/?utm_source=notification&utm_medium=email" : "https://gccollab.ca/help/knowledgebase/?utm_source=notification&utm_medium=email";
 		$login_link = "{$site->getURL()}login";
 

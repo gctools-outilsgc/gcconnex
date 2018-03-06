@@ -27,15 +27,11 @@ if (!empty($group) && ($group instanceof ElggGroup)) {
 	if ($group->canEdit()) {
 		$prefix = "group_tools:cleanup:";
 
-		$group->setPrivateSetting($prefix . "owner_block", $owner_block);
-		$group->setPrivateSetting($prefix . "actions", $actions);
 		$group->setPrivateSetting($prefix . "menu", $menu);
 		$group->setPrivateSetting($prefix . "members", $members);
-		$group->setPrivateSetting($prefix . "search", $search);
 		$group->setPrivateSetting($prefix . "featured", $featured);
 		$group->setPrivateSetting($prefix . "featured_sorting", $featured_sorting);
 		$group->setPrivateSetting($prefix . "my_status", $my_status);
-
 
 		$forward_url = $group->getURL();
 		system_message(elgg_echo("group_tools:actions:cleanup:success"));

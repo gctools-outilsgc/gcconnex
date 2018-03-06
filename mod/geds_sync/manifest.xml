@@ -6,7 +6,7 @@
 	<description>Uses GEDS API to pull profile information at users request</description>
 	<website>http://gcconnex.gc.ca/</website>
 	<license>GNU General Public License version 2</license>
- 	
+
  	<requires>
 		<type>elgg_release</type>
 		<version>1.8.15</version>

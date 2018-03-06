@@ -75,8 +75,8 @@ $english = array(
 	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", 
 
 	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", 
-	'cp_notifications:mail_body:subtype:thewire' => "%s posted a new %s message entitled:",
-	'cp_notifications:mail_body:subtype:thewire_digest' => "%s posted a new %s message entitled: %s",
+	'cp_notifications:mail_body:subtype:thewire' => "%s posted a new %s message titled:",
+	'cp_notifications:mail_body:subtype:thewire_digest' => "%s posted a new %s message titled: %s",
 	
 	'cp_notifications:mail_body:subtype:thewireSubj' => "%s posted a new %s message",
 	
@@ -230,7 +230,7 @@ $english = array(
 
 
 	'cp_newsletter:body:view_comment_reply' => 'View comment or discussion reply',
-	'cp_new_mission:subject' => "New micromission notification",
+	'cp_new_mission:subject' => "A new opportunity was posted on the Opportunities Platform",
 
 
 	// content edit section
@@ -265,8 +265,8 @@ $english = array(
 
 
 	// group mail section
-	'cp_notify:subject:group_mail' => "You have received a message entitled '%s' from the group '%s'",
-	'cp_notify:body_group_mail:title' => "You have received a message entitled '%s' from the group '%s'",
+	'cp_notify:subject:group_mail' => "You have received a message titled '%s' from the group '%s'",
+	'cp_notify:body_group_mail:title' => "You have received a message titled '%s' from the group '%s'",
 	'cp_notify:body_group_mail:description' => "The group owner or administrator has sent the following message: <br/>
 		%s",
 
@@ -327,10 +327,9 @@ $english = array(
 
 	// site message section
 	'cp_notify:subject:site_message' => "%s sent you a new message '%s'",
-	'cp_notify:body_site_msg:title' => "%s sent you a site message entitled '%s'",
+	'cp_notify:body_site_msg:title' => "%s sent you a site message titled '%s'",
 	'cp_notify:body_site_msg:description_site' => "The content of the message is: <br/>
 		%s",
-
 	'cp_notify:body_site_msg:description_email' => "The content of the message is: <br/>
 		%s <br/>
 		You can view or reply to this by clicking on this link: %s",
@@ -346,10 +345,10 @@ $english = array(
 	'cp_notify_usr:subject:new_content2' => "%s posted a new %s",
 	'cp_notify:subject:new_content' => "A new %s was posted in group %s",
 
-	// +------ cyu - modified : <username> posted a new <item type> entitled <item name>
-	'cp_notify:body_new_content:title' => "<a href='%s'>%s</a> posted a new %s entitled <a href='%s'>%s</a>",
+	// +------ cyu - modified : <username> posted a new <item type> titled <item name>
+	'cp_notify:body_new_content:title' => "<a href='%s'>%s</a> posted a new %s titled <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title2' => "<a href='%s'>%s</a> posted a new %s in <a href='%s'>%s</a>",
-	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> posted a new %s message entitled",
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> posted a new %s message titled",
 
 	
 
@@ -368,7 +367,7 @@ $english = array(
 
 	// mentioned section
 	'cp_notify:subject:mention' => "%s mentioned you on GCconnex",
-	'cp_notify:body_mention:title' => "%s mentioned you in their post or reply entitled '%s'",
+	'cp_notify:body_mention:title' => "%s mentioned you in their post or reply titled '%s'",
 	'cp_notify:body_mention:description' => "Here is the post where you were mentioned: <br/>
 		%s <br/>
 		You can view or reply to this post by clicking on this link: %s",

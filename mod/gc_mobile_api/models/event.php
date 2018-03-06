@@ -44,17 +44,19 @@ function get_event($user, $guid, $lang)
 		return "Invalid user. Please try a different GUID, username, or email address";
 	}
 
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
 	$entity = get_entity($guid);
 	if (!$entity) {
 		return "Event was not found. Please try a different GUID";
 	}
 	if (!$entity->type !== "event_calendar") {
-		return "Invalid event. Please try a different GUID";
+		//return "Invalid event. Please try a different GUID";
 	}
 
-	if (!elgg_is_logged_in()) {
-		login($user_entity);
-	}
+
 
 	$events = elgg_list_entities(array(
 		'type' => 'object',
@@ -84,6 +86,18 @@ function get_event($user, $guid, $lang)
 	$eventObj = get_entity($event->guid);
 	$event->startDate = date("Y-m-d H:i:s", $eventObj->start_date);
 	$event->endDate = date("Y-m-d H:i:s", $eventObj->end_date);
+	$event->organizer = $eventObj->contact;
+	$event->phone = $eventObj->contact_phone;
+	$event->email = $eventObj->contact_email;
+	$event->fee = $eventObj->fees;
+	$event->eventLang = $eventObj->language;
+	$event->location = $eventObj->venue;
+	if ($eventObj->group_guid){
+		$group = get_entity($eventObj->group_guid);
+		$event->group = gc_explode_translation($group->name, $lang);
+		$event->groupGUID = $eventObj->group_guid;
+	}
+
 
 	return $event;
 }
@@ -107,7 +121,7 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 		'subtype' => 'event_calendar',
 		'limit' => $limit,
 		'offset' => $offset,
-		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer'))
+		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'DESC', 'as' => 'integer'))
 	);
 
 	if ($from) {
@@ -150,6 +164,14 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 		$eventObj = get_entity($event->guid);
 		$event->startDate = date("Y-m-d H:i:s", $eventObj->start_date);
 		$event->endDate = date("Y-m-d H:i:s", $eventObj->end_date);
+		$event->location = $eventObj->venue;
+
+		if ($eventObj->group_guid){
+			$group = get_entity($eventObj->group_guid);
+			$event->group = gc_explode_translation($group->name, $lang);
+			$event->groupGUID = $eventObj->group_guid;
+		}
+		
 	}
 
 	return $events;

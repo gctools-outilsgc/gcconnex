@@ -354,8 +354,12 @@ function groups_handle_profile_page($guid) {
 	groups_register_profile_buttons($group);
 
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
-	$sidebar = elgg_view('groups/sidebar/sidebar', array('entity' => $group));
-    
+	$sidebar_value = $group->getPrivateSetting('group_tools:cleanup:menu');
+
+	if($sidebar_value == 'no'){
+		$sidebar = elgg_view('groups/sidebar/sidebar', array('entity' => $group));
+	}
+	
 	$params = array(
 		'content' => $content,
 		'sidebar' => $sidebar,

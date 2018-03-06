@@ -199,6 +199,7 @@
         <li role="presentation"><a href="#groupsjoined" aria-controls="groupsjoined" role="tab" data-toggle="tab"><?php echo elgg_echo("gccollab_stats:groupsjoined:title"); ?></a></li>
         <li role="presentation"><a href="#likes" aria-controls="likes" role="tab" data-toggle="tab"><?php echo elgg_echo("gccollab_stats:likes:title"); ?></a></li>
         <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><?php echo elgg_echo("gccollab_stats:messages:title"); ?></a></li>
+        <li role="presentation"><a href="#optins" aria-controls="optins" role="tab" data-toggle="tab"><?php echo elgg_echo("gccollab_stats:optins:title"); ?></a></li>
     </ul>
 
     <div class="tab-content" style="width: 100%; max-width:100%;">

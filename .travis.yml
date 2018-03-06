@@ -61,7 +61,3 @@ install:
 script:
  - ./vendor/bin/phpunit
  - php -f ./engine/tests/suite.php
-
-# mod testing
- - cd ./mod/
- - phpunit

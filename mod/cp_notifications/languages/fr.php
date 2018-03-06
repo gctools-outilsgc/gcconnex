@@ -206,7 +206,7 @@ $french = array(
 	'cp_newsletter:heading:notify:cp_mention:plural' => "Personnes vous ont mentionné!", 
 
 
-	'cp_new_mission:subject' => "Nouvelle Plateforme de possibilités",
+	'cp_new_mission:subject' => "Une nouvelle possibilité a été affichée sur la Plateforme de possibilités",
 
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s?utm_source=notification_digest&utm_medium=email'> Paramètres de notification</a>.",
@@ -375,7 +375,7 @@ $french = array(
 	'cp_notify:subject:new_content_mas2' => "Un nouvel %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_fem' => "Une nouvelle %s a été affichée dans le groupe %s",
 
-	// +------ cyu <User name> posted a new <item type> entitled <item name>
+	// +------ cyu <User name> posted a new <item type> titled <item name>
 	'cp_notify:body_new_content:title_m' => "<a href='%s'>%s</a> a affiché un nouveau %s intitulé <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title_f' => "<a href='%s'>%s</a> a affiché une nouvelle %s intitulée <a href='%s'>%s</a>",
 

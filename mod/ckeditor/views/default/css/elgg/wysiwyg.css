@@ -3,7 +3,6 @@
 /* The Elgg CSS reset forces the scrollbar which we don't want */
 html, body {
 	height: auto;
-	margin: 0;
 }
 
 body {

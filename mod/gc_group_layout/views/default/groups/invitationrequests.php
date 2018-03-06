@@ -29,7 +29,7 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 				$url = "action/groups/join?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
 				$accept_button = elgg_view("output/url", array(
 					"href" => $url,
-					"text" => elgg_echo('group:accept:invitation', array($group->name)),
+					"text" => elgg_echo('group:accept:invitation', array(gc_explode_translation($group->name,$lang))),
 					"class" => "elgg-button elgg-button-submit",
 					"is_trusted" => true,
 					"is_action" => true
@@ -118,7 +118,7 @@ if (elgg_get_context() == "groups") {
 
 			$group_title = elgg_view("output/url", array(
 				"href" => $group->getURL(),
-				"text" => $group->name,
+				"text" => gc_explode_translation($group->name,$lang),
 				"is_trusted" => true,
 			));
 
@@ -131,7 +131,7 @@ if (elgg_get_context() == "groups") {
 			));
 
 			$body = "<div class='col-xs-10'><h4>$group_title</h4>";
-			$body .= "<p class='elgg-subtext'>$group->briefdescription</p></div>";
+			$body .= "<p class='elgg-subtext'>" . gc_explode_translation($group->briefdescription,$lang) . "</p></div>";
 
 			$body .= "<div class='col-xs-2'>" . $delete_button . "</div>";
 

@@ -832,11 +832,6 @@ max-height: 500px;
 
     /****************************************/
 
-    p {
-            margin: 0 0 5.5px;
-
-    }
-
     .ideaPoints {
         font-size: 1.25em;
     }

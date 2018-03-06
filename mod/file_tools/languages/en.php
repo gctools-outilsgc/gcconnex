@@ -134,7 +134,7 @@ return array(
 	//settings
 	'file_tools:settings:allowed_extensions' => 'Allowed extensions (comma seperated)',
 	'file_tools:settings:user_folder_structure' => 'Use folder structure',
-	'file_tools:settings:sort:default' => 'Default folder sorting options',
+	'file_tools:settings:sort:default' => 'Default file sorting options',
 	'file_tools:settings:list_length' => 'How many files to show in the listing',
 	'file_tools:settings:list_length:unlimited' => 'Unlimited',
 	'file_tools:settings:googledoc' => 'Allow Google Doc link uploads',

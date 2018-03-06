@@ -1,26 +1,30 @@
 <?php
 
-elgg_ws_expose_function("search.user.skills","search_user_api_skills", array("skills" => array('type' => 'string')),
+elgg_ws_expose_function(
+	"search.user.skills",
+	"search_user_api_skills",
+	array("skills" => array('type' => 'string')),
 	'list of skills is returned',
-               'GET', false, false);
+	'GET',
+	false,
+	false
+);
 
-function search_user_api_skills($skillsString){
+function search_user_api_skills($skillsString)
+{
 	global $CONFIG;
 	$users = array();
 	$skillArray = array();
 	$skillList = json_decode($skillsString);
-	if(json_last_error() != JSON_ERROR_NONE){
+	if (json_last_error() != JSON_ERROR_NONE) {
 		return 'Error parsing skill list, must be valid JSON array syntax';
 	}
-	//$result = 'nothing';
 	$i = 0;
-	foreach($skillList as $sl){
-	
+	foreach ($skillList as $sl) {
 		elgg_set_ignore_access(true);
 		$skillArray['skill_'.$i]['name'] = $sl;
-		
-				//error_log('skill-'.$sl);
-		$entities = elgg_get_entities(array( 
+
+		$entities = elgg_get_entities(array(
 			'subtype'=>'MySkill',
 			'type' => 'object',
 			'limit' => 0,
@@ -28,29 +32,24 @@ function search_user_api_skills($skillsString){
 			'wheres' => array("o.title LIKE '%$sl%'")
 		));
 		$j = 0;
-		foreach ($entities as $e){
-			//error_log($e->title);
-			//if ($e->title == $sl){
-				//array_push($users, get_userBlock($e->owner_guid));
-				$users['user_'.$j] = get_userBlock($e->owner_guid);
-				$users['user_'.$j]['skills'] = getSkillsArray($e->owner_guid);
-			//}
+		foreach ($entities as $e) {
+			$users['user_'.$j] = get_userBlock($e->owner_guid);
+			$users['user_'.$j]['skills'] = getSkillsArray($e->owner_guid);
 			$j++;
 		}
-		if ($users)
+		if ($users) {
 			$skillArray['skill_'.$i]['users'] = $users;
-		//error_log(print_r($users));
-		//$result = $entities[0]; 
+		}
 		$users = array();
 		$i++;
 		elgg_set_ignore_access(false);
 	}
-	
+
 	$result["skills"] = $skillArray;
 	return $result;
 }
-function getSkillsArray($uid){
-	
+function getSkillsArray($uid)
+{
 	elgg_set_ignore_access(true);
 	$skillsEntity = elgg_get_entities(array(
 		'owner_guid'=>$uid,
@@ -58,15 +57,13 @@ function getSkillsArray($uid){
 		'type' => 'object',
 		'limit' => 0
 	));
-	if ($skillsEntity){
+	if ($skillsEntity) {
 		$result = array();
-		foreach($skillsEntity as $skill){
-			array_push($result,trim($skill->title));
+		foreach ($skillsEntity as $skill) {
+			array_push($result, trim($skill->title));
 		}
-	}	
-	
-		
+	}
+
 	elgg_set_ignore_access(false);
 	return $result;
 }
-
