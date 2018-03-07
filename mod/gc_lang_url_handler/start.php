@@ -18,6 +18,9 @@ function gc_lang_url_handler_init($param1, $param2, $param3) {
  */
 function global_url_handler($hook, $type, $returnvalue, $params) {
 
+	// checks to make sure that the url does not affect the ajax calls
+	if (strpos($_SERVER['PHP_SELF'], 'ajax') !== false) return;
+	
 	if (strpos($_SERVER['PHP_SELF'], '/view') !== false || strpos($_SERVER['PHP_SELF'], '/profile') !== false) {
 
 		if ($_GET["language"] == 'fr') { 
