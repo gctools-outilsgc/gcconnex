@@ -704,6 +704,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',gc_explode_translation($entity->title,'en'), $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',gc_explode_translation($entity->title,'fr'), $current_user->username),'fr');
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
+			add_entity_relationship($entity->getOwnerGUID(), 'cp_subscribed_to_email', $entity->getGUID());
+			add_entity_relationship($entity->getOwnerGUID(), 'cp_subscribed_to_site_mail', $entity->getGUID());
+
 			$message = array(
 				'cp_content' => $entity,
 				'cp_user' => $current_user->username,
@@ -717,7 +720,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$content_id = $entity->getContainerGUID();
 			}else{
 				$author_id = $current_user->guid;
-				$content_id = $entity->guid;
 			}
 
 			$author = $current_user;
