@@ -1641,9 +1641,9 @@ return array(
 	'lang:english' => 'Anglais',
 	'lang:french' => 'Français',
 	'box:indicator:fr' => 'Ce contenu est aussi disponible en ',
-	'indicator:click:fr' => 'français',
+	'indicator:click:fr' => 'Français',
 	'box:indicator:en' => 'This content is also available in ',
-	'indicator:click:en' => 'english.',
+	'indicator:click:en' => 'English.',
 
 /*Rotate content*/
 	'rotate:image' => 'Tourner l\'image',
