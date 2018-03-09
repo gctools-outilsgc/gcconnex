@@ -179,7 +179,7 @@ elgg_ws_expose_function(
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Query GCcollab data based on user-given parameters',
-	'GET',
+	'POST',
 	false,
 	false
 );
@@ -245,8 +245,9 @@ function query_the_posts($user, $password, $object, $query, $group, $limit, $off
 			$params['container_guid'] = $group;
 		}
 
-		// $data = json_decode(elgg_list_entities_from_relationship($params));
+		$ia = elgg_set_ignore_access(true);
 		$data = json_decode(elgg_list_entities_from_metadata($params));
+		elgg_set_ignore_access($ia);
 	}
 
 	return $data;
