@@ -24,7 +24,29 @@ $french = array(
 			
 // notice			// avis
 			
-'gcRegister:email_notice' => '<h2 class="h2">Veuillez créer votre compte.</h2><ol><li>Une adresse de courriel valide du gouvernement du Canada se terminant par gc.ca est requise pour créer un compte GCconnex. Si votre adresse de courriel du gouvernement est différente et que vous avez reçu un avis indiquant que votre adresse de courriel n\'est pas valide, veuillez écrire à <a href="mailto:GCconnex@tbs-sct.gc.ca">GCconnex@tbs-sct.gc.ca</a>.</li><li>Le système ne permet pas la création d’un deuxième compte au moyen de la même adresse de courriel. Si vous recevez un message vous indiquant que l’adresse de courriel est déjà inscrite, vous avez probablement déjà un compte GCconnex. Veuillez écrire à <a href="mailto:GCconnex@tbs-sct.gc.ca">GCconnex@tbs-sct.gc.ca</a> pour récupérer les données d’identification de votre compte GCconnex.</li><li>Avant de pouvoir ouvrir une première session dans GCconnex, vous devrez valider votre inscription en cliquant sur un lien de confirmation qui sera envoyé par courriel afin de valider votre compte. Si vous ne recevez pas ce courriel, veuillez écrire à <a href="mailto:GCconnex@tbs-sct.gc.ca">GCconnex@tbs-sct.gc.ca</a>.</li></ol>',
+'gcRegister:email_notice' => '<h2 class="h2">Veuillez créer votre compte.</h2>
+<ol>
+<li>Votre compte GCconnex doit être lié à une <b>adresse de courriel valide du gouvernement du
+Canada</b> se terminant par gc.ca ou Canada.ca.</li>
+<li>Vous devez <b>valider</b> votre nouveau compte avant de pouvoir ouvrir une séance pour la première
+fois. Un courriel de validation sera envoyé à votre adresse de courriel. Cliquez sur le lien figurant
+dans le courriel (ou copiez-collez- le dans votre navigateur) pour valider votre compte. Si vous ne
+recevez pas de courriel de validation, soumettez un billet au <a href="https://gcconnex.gc.ca/help/knowledgebase">bureau d’aide.</a>
+<i>(Remarque : Il faudra peut-être plusieurs minutes avant que vous receviez le courriel de
+validation en raison de votre pare-feu ministériel. Assurez-vous de vérifier votre dossier de
+pourriels.)</i></li>
+<li><b>Vous avez déjà un compte?</b> <a href="https://gcconnex.gc.ca/forgotpassword">Demandez la réinitialisation du mot de passe.</a> Si vous ne recevez
+pas le courriel de réinitialisation du mot de passe, soumettez un billet au <a href="https://gcconnex.gc.ca/help/knowledgebase">bureau d’aide</a>.
+<i>(Remarque : Il faudra peut-être plusieurs minutes avant que vous receviez le courriel de mot de
+passe oublié en raison de votre pare-feu ministériel. Assurez-vous de vérifier votre dossier de
+pourriels.)</i></li>
+<li><b>Vous avez changé de ministère ou d’adresse de courriel? Pas besoin de créer un nouveau
+compte.</b> Veuillez soumettre un billet au <a href="https://gcconnex.gc.ca/help/knowledgebase">bureau d’aide.</a> Nous apporterons les changements
+nécessaires à votre compte existant et nous vous aiderons à y accéder de nouveau. Assurez-
+vous d’inclure votre ancienne adresse de courriel ainsi que la nouvelle.</li>
+<li><b>Vous éprouvez encore de la difficulté à créer un compte?</b> Soumettez un billet au <a href="https://gcconnex.gc.ca/help/knowledgebase">bureau d’aide</a>,
+et nous nous ferons un plaisir de vous aider.</li>
+</ol>',
 			
 'gcRegister:terms_and_conditions' => 'J\'ai lu, j\'ai compris et j\accepte les <a target="_blank" href="http://gcconnex.gc.ca/terms">Conditions d\'utilisation</a>.',
 'gcRegister:validation_notice' => '<b>Remarque :</b> Vous ne pourrez pas ouvrir une session sur Gcconnex avant d\'avoir reçu un courriel de validation.',
