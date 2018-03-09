@@ -223,7 +223,7 @@ You will automatically add them as a {$lsingle} when you create your account.",
 'groups:invite:title' => "Invite {$lplural} to this {$glsingle}",
 'groups:inviteto' => "Invite {$lplural} to '%s'",
 'groups:nofriends' => "You have no {$lplural} left who have not been invited to this {$glsingle}.",
-'groups:nofriendsatall' => "You have no {$lplural} to invite!",
+'groups:nofriendsatall' => "You have no {$lplural} to invite! Use the \"Find user(s)\" or \"Using e-mail address\" option.",
 
 
 /*

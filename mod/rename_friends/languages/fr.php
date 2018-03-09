@@ -187,7 +187,7 @@ $french = array(
 'groups:invite:title' => "Invitez les {$lplural} à ce {$glsingle}",
 'groups:inviteto' => "Invitez les {$lplural} à '%s'",
 'groups:nofriends' => "Il ne vous reste pu de {$lplural} à inviter à ce {$glsingle}.",
-'groups:nofriendsatall' => "Vous n'avez plus de {$lplural} à inviter!",
+'groups:nofriendsatall' => "Vous n'avez plus de {$lplural} à inviter! Utilisez l'option \"Trouver un ou des utilisateur(s)\" ou \"En utilisant l'adresse de courriel\".",
 		
 // River Addon		
 		
