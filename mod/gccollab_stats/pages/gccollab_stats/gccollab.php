@@ -531,7 +531,7 @@
 
     <div class="user-stats" id="federal">
 
-        <div class="chart" id="federalMembers" style="min-height: 1000px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="federalMembers" style="min-height: 1200px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
@@ -595,7 +595,7 @@
 
     <div class="user-stats" id="provincial">
 
-        <div class="chart" id="provincialMembers" style="min-height: 400px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="provincialMembers" style="min-height: 800px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
@@ -673,7 +673,7 @@
     </div>
 
     <div class="user-stats" id="municipal">
-        <div class="chart" id="municipalMembers" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="municipalMembers" style="min-height: 800px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
@@ -732,7 +732,7 @@
     </div>
 
     <div class="user-stats" id="international">
-        <div class="chart" id="internationalMembers" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="internationalMembers" style="min-height: 800px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
@@ -791,7 +791,7 @@
     </div>
 
     <div class="user-stats" id="ngo">
-        <div class="chart" id="ngoMembers" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="ngoMembers" style="min-height: 800px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
@@ -850,7 +850,7 @@
     </div>
 
     <div class="user-stats" id="community">
-        <div class="chart" id="communityMembers" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="communityMembers" style="min-height: 800px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
@@ -909,7 +909,7 @@
     </div>
 
     <div class="user-stats" id="business">
-        <div class="chart" id="businessMembers" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="businessMembers" style="min-height: 800px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
@@ -968,7 +968,7 @@
     </div>
 
     <div class="user-stats" id="media">
-        <div class="chart" id="mediaMembers" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="mediaMembers" style="min-height: 300px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
@@ -1087,7 +1087,7 @@
 
     <div class="user-stats" id="other">
 
-        <div class="chart" id="otherMembers" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+        <div class="chart" id="otherMembers" style="min-height: 1000px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
 
         <script>
             $(function () {
