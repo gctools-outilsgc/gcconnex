@@ -1664,7 +1664,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		if ( $type == "object" ){
-			if ( $subtype == "mission-posted" || $subtype == "mission" || $subtype == "bookmarks" ){
+			if ( $subtype == "mission-posted" || $subtype == "mission" || $subtype == "bookmarks" || $subtype == "groupforumtopic" || $subtype == "event_calendar" ){
 				$duplicate_check = md5( sanitize_string($this->title).sanitize_string($this->description) ) . $owner_guid . get_input('__elgg_ts');
 				try{
 					$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
