@@ -27,9 +27,21 @@ $english = array(
 		<h2 class="h2">Please create your account.</h2>
 
 		<ol>
-        <li>The system can only create GCconnex accounts using a valid Government of Canada email address ending in gc.ca or canada.ca. If your Government email address is different and you have received an “invalid email notice”, please contact <a href="mailto:GCconnex@tbs-sct.gc.ca">GCconnex@tbs-sct.gc.ca</a>.</li>
-		<li>The system will not let you create a second account with the same email address. If you get an “This email address has already been registered” error, you likely already have a GCconnex account. Please contact <a href="mailto:GCconnex@tbs-sct.gc.ca">GCconnex@tbs-sct.gc.ca</a> to retrieve your GCconnex account credentials.</li>
-		<li>Before you are able to login to GCconnex, you will receive a validation email and you must validate your account. If you do not receive the email, please contact <a href="mailto:GCconnex@tbs-sct.gc.ca">GCconnex@tbs-sct.gc.ca</a>.</li>
+        <li>Your GCconnex account must be registered to a <b>valid Government of Canada email address</b> ending in gc.ca or canada.ca.</li>
+		<li>You need to <b>validate</b> your newly created account before you can log in for the first time. A
+		validation email will be sent to your email. Click (or copy/paste) the link in the email to validate
+		your account. If you do not receive a validation email, submit a ticket to the <a href="https://gcconnex.gc.ca/help/knowledgebase">help desk</a>.
+		<i>(Note: It may take several minutes to receive the validation email due to your departmental
+		firewall. Be sure to check your Junk folder.)</i></li>
+		<li><b>Already have an account?</b> <a href="https://gcconnex.gc.ca/forgotpassword">Request a password reset.</a> If you do not receive the password reset
+		email, submit a ticket to the <a href="https://gcconnex.gc.ca/help/knowledgebase">help desk.</a>
+		<i>(Note: It may take several minutes to receive the forgot password email due to your
+		departmental firewall. Be sure to check your Junk folder.)</i></li>
+		<li><b>Changed departments or email address? No need to create a new account.</b> Please submit a
+		ticket to the <a href="https://gcconnex.gc.ca/help/knowledgebase">help desk.</a> We will make the necessary changes to your existing account and help
+		you regain access. Be sure to include your old and new email address.</li>
+		<li><b>Still having issues creating an account?</b> Submit a ticket to the <a href="https://gcconnex.gc.ca/help/knowledgebase">help desk</a> and we will gladly assist
+		you.</li>
 		</ol>
 	',
 	'gcRegister:terms_and_conditions' => 'I have read, understood, and agree to the <a target="_blank" href="http://gcconnex.gc.ca/terms">terms and conditions of use</a>.',
