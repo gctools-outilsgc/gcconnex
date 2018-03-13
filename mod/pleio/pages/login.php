@@ -28,7 +28,7 @@ if (!$auth_client || !$auth_secret || !$auth_url) {
 }
 
 if ($auth == 'oidc') {
-    $oidc = new OpenIDConnectClient($auth_url, $auth_client, $auth_secret);
+    $oidc = new Jumbojett\OpenIDConnectClient($auth_url, $auth_client, $auth_secret);
     $oidc->addScope(array('openid', 'profile', 'email'));
     $oidc->authenticate();
 
