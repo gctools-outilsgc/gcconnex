@@ -58,7 +58,7 @@ define(function(require) {
 		// get a copy of the body to compare for auto save
 		oldDescription = $('form[id=blog-post-edit]').find('textarea[name=description]').val();
 
-		setInterval(saveDraft, 60000);
+		setInterval(saveDraft, 43200000); //12h
 	};
 
 	elgg.register_hook_handler('init', 'system', init);

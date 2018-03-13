@@ -722,8 +722,10 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 			$current_user = get_user($entity->getOwnerGUID());
 			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',gc_explode_translation($entity->title,'en'), $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',gc_explode_translation($entity->title,'fr'), $current_user->username),'fr');
-			
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
+
+			add_entity_relationship($entity->getOwnerGUID(), 'cp_subscribed_to_email', $entity->getGUID());
+			add_entity_relationship($entity->getOwnerGUID(), 'cp_subscribed_to_site_mail', $entity->getGUID());
 
 			$message = array(
 				'cp_content' => $entity,
@@ -733,12 +735,18 @@ function cp_create_annotation_notification($event, $type, $object) {
 				'cp_en_entity' => 'blog',
 			);
 
+			if($entity->getContainerEntity() instanceof ElggGroup){
+				$author_id = $object->getOwnerGUID();
+				$content_id = $entity->getContainerGUID();
+			}else{
+				$author_id = $current_user->guid;
+			}
+
 			$author = $current_user;
 			$content_entity = $entity;
 			$get_error_info = 'blog revision or published';
 
-			$watchers = get_subscribers($dbprefix, $current_user->guid, $entity->guid);
-
+			$watchers = get_subscribers($dbprefix, $author_id, $content_id);
 			foreach ($watchers as $watcher) {
 				$message['user_name'] = $watcher->username;
 
@@ -746,9 +754,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 				$recipient_user = get_user($watcher->guid);
 
-		
-				if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
-
+				if (has_access_to_entity($entity, $recipient_user) && $entity->access_id != 0) {
 					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 					else
