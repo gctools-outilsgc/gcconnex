@@ -164,3 +164,139 @@ function create_username($str, $a_char = array("'", "-", "."))
 	}
 	return ucfirst($string);
 }
+
+elgg_ws_expose_function(
+	"query.posts",
+	"query_the_posts",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"password" => array('type' => 'string', 'required' => true),
+		"object" => array('type' => 'string', 'required' => false, 'default' => ""),
+		"query" => array('type' => 'string', 'required' => false, 'default' => ""),
+		"group" => array('type' => 'string', 'required' => false, 'default' => ""),
+		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
+		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Query GCcollab data based on user-given parameters',
+	'POST',
+	false,
+	false
+);
+
+function query_the_posts($user, $password, $object, $query, $group, $limit, $offset, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+    $valid = elgg_authenticate($user_entity->username, $password);
+
+    $type = "object";
+    $subtype = "";
+    switch ($object) {
+    	case "blog":
+    		$subtype = "blog";
+        	break;
+        case "discussion":
+    		$subtype = "groupforumtopic";
+        	break;
+        case "event":
+    		$subtype = "event_calendar";
+        	break;
+        case "group":
+    		$type = "group";
+        	break;
+        case "opportunity":
+    		$subtype = "mission";
+        	break;
+        case "wire":
+    		$subtype = "thewire";
+        	break;
+        default:
+    		return "Please use one of the following object types: 'blog', 'discussion', 'event', 'group', 'opportunity', 'wire'";
+        	break;
+	}
+
+    $data = "Username/password combination is not correct.";
+	if ($valid === true) {
+		if (!elgg_is_logged_in()) {
+			login($user_entity);
+		}
+
+		$params = array(
+			'type' => $type,
+			'subtype' => $subtype,
+			'limit' => $limit,
+			'offset' => $offset
+		);
+
+		if ($query) {
+			$db_prefix = elgg_get_config('dbprefix');
+			$params['joins'] = array("JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
+			$params['wheres'] = array("(oe.title LIKE '%" . $query . "%' OR oe.description LIKE '%" . $query . "%')");
+		}
+
+		if ($group) {
+			$params['container_guid'] = $group;
+		}
+
+		$ia = elgg_set_ignore_access(true);
+		$data = json_decode(elgg_list_entities_from_metadata($params));
+		elgg_set_ignore_access($ia);
+	}
+
+	return $data;
+}
+
+elgg_ws_expose_function(
+	"login.redirect",
+	"login_and_redirect",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"password" => array('type' => 'string', 'required' => true),
+		"redirect_en" => array('type' => 'string', 'required' => true),
+		"redirect_fr" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Login user into GCcollab and redirect them',
+	'POST',
+	false,
+	false
+);
+
+function login_and_redirect($user, $password, $redirect_en, $redirect_fr, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		header("Location: " . $_SERVER['HTTP_REFERER']);
+		exit();
+	}
+	if (!$user_entity instanceof ElggUser) {
+		header("Location: " . $_SERVER['HTTP_REFERER']);
+		exit();
+	}
+
+    $valid = elgg_authenticate($user_entity->username, $password);
+
+	if ($valid === true) {
+		login($user_entity);
+
+		if($lang == "fr"){
+			setcookie("gcconnex_lang", "fr");
+			header("Location: $redirect_fr");
+			exit();
+		} else {
+			setcookie("gcconnex_lang", "en");
+			header("Location: $redirect_en");
+			exit();
+		}
+	} else {
+		header("Location: " . $_SERVER['HTTP_REFERER']);
+		exit();
+	}
+}

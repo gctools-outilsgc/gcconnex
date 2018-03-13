@@ -149,7 +149,10 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 					if (empty($group)) {
 						// is this a hidden group
 						$ia = elgg_set_ignore_access(true);
-						
+						if (!elgg_get_logged_in_user_entity()){
+							register_error(elgg_echo("loggedinrequired"));
+							forward('/login');
+						}
 						$group = get_entity($page[1]);
 						if (!empty($group) && elgg_instanceof($group, "group")) {
 							if(check_entity_relationship($group->getGUID(), "invited", elgg_get_logged_in_user_entity()->getGUID())){

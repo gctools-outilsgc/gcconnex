@@ -18,29 +18,33 @@ function gc_lang_url_handler_init($param1, $param2, $param3) {
  */
 function global_url_handler($hook, $type, $returnvalue, $params) {
 
-	if ($_GET["language"] == 'fr') { 
-		if ($_COOKIE['connex_lang'] != 'fr') {
-			setcookie('connex_lang', 'fr', 0, '/');
-			Header('Location: '.$_SERVER['PHP_SELF']);
-		}
-	} elseif ($_GET["language"] == 'en') {
-		if ($_COOKIE['connex_lang'] != 'en') {
-			setcookie('connex_lang', 'en', 0, '/');
-			Header('Location: '.$_SERVER['PHP_SELF']);
+	// checks to make sure that the url does not affect the ajax calls
+	if (strpos($_SERVER['PHP_SELF'], 'ajax') !== false) return;
+	
+	if (strpos($_SERVER['PHP_SELF'], '/view') !== false || strpos($_SERVER['PHP_SELF'], '/profile') !== false) {
+
+		if ($_GET["language"] == 'fr') { 
+			if ($_COOKIE['connex_lang'] != 'fr') {
+				setcookie('connex_lang', 'fr', 0, '/');
+				Header('Location: '.$_SERVER['PHP_SELF']);
+			}
+		} elseif ($_GET["language"] == 'en') {
+			if ($_COOKIE['connex_lang'] != 'en') {
+				setcookie('connex_lang', 'en', 0, '/');
+				Header('Location: '.$_SERVER['PHP_SELF']);
+			}
+		} else {
+			if ($_GET["language"] == '' || $_GET["language"] != 'en' || $_GET["language"] != 'fr'  )  {
+				
+				forward("?language=" . get_current_language());
+			}
 		}
 
 	} else {
-		if ($_GET["language"] == '' || $_GET["language"] != 'en' || $_GET["language"] != 'fr'  )  {
-			forward("?language=" . get_current_language());
-			
-		}
 
+		return;
 	}
+	
 }
-
-
-
-
-
 
 

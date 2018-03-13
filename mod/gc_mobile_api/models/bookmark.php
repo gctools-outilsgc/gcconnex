@@ -249,7 +249,7 @@ function get_bookmarks_by_owner($user, $limit, $offset, $filters, $lang, $target
   }
   $target_entity = $user_entity;
   if ($target != ''){
-    $target_entity = is_numeric($target) ? get_user($target) : (strpos($target, '@') !== false ? get_user_by_email($target)[0] : get_user_by_username($target));
+    $target_entity = get_entity($target);
   }
 
   //add conditional for target later

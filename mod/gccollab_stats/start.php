@@ -83,34 +83,29 @@ function get_member_data($type, $lang) {
 	switch($type) {
 
 	case 'all':
-		$users = elgg_get_entities(array(
-			'type' => 'user',
-			'limit' => 0
-		));
+		$total_query = "SELECT count(e.guid) AS total FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid WHERE e.type = 'user' AND e.enabled = 'yes';";
+		$total = get_data($total_query);
+		$data['total'] = intval($total[0]->total);
 
-		$data['total'] = count($users);
+		$all_query = "SELECT msv.string, count(msv.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' GROUP BY msv.string;";
+		$all = get_data($all_query);
 
 		if ($lang == 'fr'){
 			$users_types = array('federal' => 'féderal', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'provincial' => 'provincial', 'municipal' => 'municipale', 'international' => 'international', 'ngo' => 'ngo', 'community' => 'collectivité', 'business' => 'entreprise', 'media' => 'média', 'retired' => 'retraité(e)', 'other' => 'autre');
 
-			foreach($users as $key => $obj){
-				$data[$users_types[$obj->user_type]] = isset( $data[$users_types[$obj->user_type]] ) ? $data[$users_types[$obj->user_type]] + 1 : 1;
+			foreach($all as $obj){
+				$data[$users_types[$obj->string]] = intval($obj->count);
 			}
 		} else {
-			foreach($users as $key => $obj){
-				$data[$obj->user_type] = isset( $data[$obj->user_type] ) ? $data[$obj->user_type] + 1 : 1;
+			foreach($all as $obj){
+				$data[$obj->string] = intval($obj->count);
 			}
 		}
 		break;
 
 	case 'federal':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'federal'),
-			),
-			'limit' => 0
-		));
+		$query = "SELECT msv2.string as federal, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'federal' AND msn2.string = 'federal' AND msv2.string <> '' GROUP BY msv2.string;";
+		$users = get_data($query);
 
 		if ($lang == 'fr'){
 			$deptObj = elgg_get_entities(array(
@@ -120,110 +115,65 @@ function get_member_data($type, $lang) {
 			$depts = get_entity($deptObj[0]->guid);
 			$federal_departments = json_decode($depts->federal_departments_fr, true);
 
-			foreach($users as $key => $obj){
-				$data[$federal_departments[$obj->federal]] = isset( $data[$federal_departments[$obj->federal]] ) ? $data[$federal_departments[$obj->federal]] + 1 : 1;
+			foreach($users as $obj){
+				$data[$federal_departments[$obj->federal]] = intval($obj->count);
 			}
 		} else {
-			foreach($users as $key => $obj){
-				$data[$obj->federal] = isset( $data[$obj->federal] ) ? $data[$obj->federal] + 1 : 1;
+			foreach($users as $obj){
+				$data[$obj->federal] = intval($obj->count);
 			}
 		}
 		break;
 
 	case 'academic':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'academic'),
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data[$obj->institution]['total'] = isset( $data[$obj->institution]['total'] ) ? $data[$obj->institution]['total'] + 1 : 1;
-			if($obj->university){
-				$data[$obj->institution][$obj->university] = isset( $data[$obj->institution][$obj->university] ) ? $data[$obj->institution][$obj->university] + 1 : 1;
-			}
-			if($obj->college){
-				$data[$obj->institution][$obj->college] = isset( $data[$obj->institution][$obj->college] ) ? $data[$obj->institution][$obj->college] + 1 : 1;
-			}
+		$all_query = "SELECT msv2.string as institution, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'academic' AND msn2.string = 'institution' GROUP BY msv2.string;";
+		$users = get_data($all_query);
+		foreach($users as $obj){
+			$data[$obj->institution]['total'] = intval($obj->count);
+		}
+
+		$university_query = "SELECT msv2.string as university, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'academic' AND msn2.string = 'university' AND msv2.string <> '' GROUP BY msv2.string;";
+		$university_users = get_data($university_query);
+		foreach($university_users as $obj){
+			$data['university'][$obj->university] = intval($obj->count);
+		}
+
+		$college_query = "SELECT msv2.string as college, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'academic' AND msn2.string = 'college' AND msv2.string <> '' GROUP BY msv2.string;";
+		$college_users = get_data($college_query);
+		foreach($college_users as $obj){
+			$data['college'][$obj->college] = intval($obj->count);
 		}
 		break;
 
 	case 'student':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'student'),
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data[$obj->institution]['total'] = isset( $data[$obj->institution]['total'] ) ? $data[$obj->institution]['total'] + 1 : 1;
-			if($obj->university){
-				$data[$obj->institution][$obj->university] = isset( $data[$obj->institution][$obj->university] ) ? $data[$obj->institution][$obj->university] + 1 : 1;
-			}
-			if($obj->college){
-				$data[$obj->institution][$obj->college] = isset( $data[$obj->institution][$obj->college] ) ? $data[$obj->institution][$obj->college] + 1 : 1;
-			}
-			if($obj->highschool){
-				$data[$obj->institution][$obj->highschool] = isset( $data[$obj->institution][$obj->highschool] ) ? $data[$obj->institution][$obj->highschool] + 1 : 1;
-			}
+		$all_query = "SELECT msv2.string as student, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'student' AND msn2.string = 'institution' GROUP BY msv2.string;";
+		$users = get_data($all_query);
+		foreach($users as $obj){
+			$data[$obj->student]['total'] = intval($obj->count);
 		}
-		break;
 
-	case 'university':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'academic'),
-				array('name' => 'institution', 'value' => 'university'),
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->university] = isset( $data[$obj->university] ) ? $data[$obj->university] + 1 : 1;
+		$university_query = "SELECT msv2.string as university, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'student' AND msn2.string = 'university' AND msv2.string <> '' GROUP BY msv2.string;";
+		$university_users = get_data($university_query);
+		foreach($university_users as $obj){
+			$data['university'][$obj->university] = intval($obj->count);
 		}
-		break;
 
-	case 'college':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'academic'),
-				array('name' => 'institution', 'value' => 'college'),
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->college] = isset( $data[$obj->college] ) ? $data[$obj->college] + 1 : 1;
+		$college_query = "SELECT msv2.string as college, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'student' AND msn2.string = 'college' AND msv2.string <> '' GROUP BY msv2.string;";
+		$college_users = get_data($college_query);
+		foreach($college_users as $obj){
+			$data['college'][$obj->college] = intval($obj->count);
 		}
-		break;
 
-	case 'highschool':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'student'),
-				array('name' => 'institution', 'value' => 'highschool'),
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->highschool] = isset( $data[$obj->highschool] ) ? $data[$obj->highschool] + 1 : 1;
+		$highschool_query = "SELECT msv2.string as highschool, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'student' AND msn2.string = 'highschool' AND msv2.string <> '' GROUP BY msv2.string;";
+		$highschool_users = get_data($highschool_query);
+		foreach($highschool_users as $obj){
+			$data['highschool'][$obj->highschool] = intval($obj->count);
 		}
 		break;
 
 	case 'provincial':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'provincial'),
-			),
-			'limit' => 0
-		));
+		$all_query = "SELECT msv2.string as provincial, count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'provincial' AND msn2.string = 'provincial' AND msv2.string <> '' GROUP BY msv2.string;";
+		$users = get_data($all_query);
 
 		if ($lang == 'fr'){
 			$provObj = elgg_get_entities(array(
@@ -240,127 +190,43 @@ function get_member_data($type, $lang) {
 			$mins = get_entity($minObj[0]->guid);
 			$ministries = json_decode($mins->ministries_fr, true);
 
-			foreach($users as $key => $obj){
-				$data[$provincial_departments[$obj->provincial]]['total'] = isset( $data[$provincial_departments[$obj->provincial]]['total'] ) ? $data[$provincial_departments[$obj->provincial]]['total'] + 1 : 1;
-				$data[$provincial_departments[$obj->provincial]][$ministries[$obj->provincial][$obj->ministry]] = isset( $data[$provincial_departments[$obj->provincial]][$ministries[$obj->provincial][$obj->ministry]] ) ? $data[$provincial_departments[$obj->provincial]][$ministries[$obj->provincial][$obj->ministry]] + 1 : 1;
+			foreach($users as $obj){
+				$data[$provincial_departments[$obj->provincial]]['total'] = intval($obj->count);
+
+				$ministry_query = "SELECT msv3.string as ministry, count(msv3.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metadata md3 ON u.guid = md3.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id LEFT JOIN {$dbprefix}metastrings msn3 ON md3.name_id = msn3.id LEFT JOIN {$dbprefix}metastrings msv3 ON md3.value_id = msv3.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'provincial' AND msv2.string = '" . $obj->provincial . "' AND msn3.string = 'ministry' GROUP BY msv3.string;";
+				$ministry_users = get_data($ministry_query);
+
+				foreach($ministry_users as $obj2){
+					$data[$provincial_departments[$obj->provincial]][$obj2->ministry] = intval($obj2->count);
+				}
 			}
 		} else {
-			foreach($users as $key => $obj){
-				$data[$obj->provincial]['total'] = isset( $data[$obj->provincial]['total'] ) ? $data[$obj->provincial]['total'] + 1 : 1;
-				$data[$obj->provincial][$obj->ministry] = isset( $data[$obj->provincial][$obj->ministry] ) ? $data[$obj->provincial][$obj->ministry] + 1 : 1;
+			foreach($users as $obj){
+				$data[$obj->provincial]['total'] = intval($obj->count);
+
+				$ministry_query = "SELECT msv3.string as ministry, count(msv3.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metadata md3 ON u.guid = md3.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id LEFT JOIN {$dbprefix}metastrings msn3 ON md3.name_id = msn3.id LEFT JOIN {$dbprefix}metastrings msv3 ON md3.value_id = msv3.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = 'provincial' AND msv2.string = '" . $obj->provincial . "' AND msn3.string = 'ministry' GROUP BY msv3.string;";
+				$ministry_users = get_data($ministry_query);
+
+				foreach($ministry_users as $obj2){
+					$data[$obj->provincial][$obj2->ministry] = intval($obj2->count);
+				}
 			}
 		}
 		break;
 
 	case 'municipal':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'municipal')
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->municipal] = isset( $data[$obj->municipal] ) ? $data[$obj->municipal] + 1 : 1;
-		}
-		break;
-
 	case 'international':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'international')
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->international] = isset( $data[$obj->international] ) ? $data[$obj->international] + 1 : 1;
-		}
-		break;
-
 	case 'ngo':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'ngo')
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->ngo] = isset( $data[$obj->ngo] ) ? $data[$obj->ngo] + 1 : 1;
-		}
-		break;
-
 	case 'community':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'community')
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->community] = isset( $data[$obj->community] ) ? $data[$obj->community] + 1 : 1;
-		}
-		break;
-
 	case 'business':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'business')
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->business] = isset( $data[$obj->business] ) ? $data[$obj->business] + 1 : 1;
-		}
-		break;
-
 	case 'media':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'media')
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->media] = isset( $data[$obj->media] ) ? $data[$obj->media] + 1 : 1;
-		}
-		break;
-
 	case 'retired':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'retired')
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->retired] = isset( $data[$obj->retired] ) ? $data[$obj->retired] + 1 : 1;
-		}
-		break;
-
 	case 'other':
-		$users = elgg_get_entities_from_metadata(array(
-			'type' => 'user',
-			'metadata_name_value_pairs' => array(
-				array('name' => 'user_type', 'value' => 'other')
-			),
-			'limit' => 0
-		));
-		foreach($users as $key => $obj){
-			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
-			$data[$obj->other] = isset( $data[$obj->other] ) ? $data[$obj->other] + 1 : 1;
+		$query = "SELECT msv2.string as " . $type . ", count(msv2.string) as count FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metadata md2 ON u.guid = md2.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id LEFT JOIN {$dbprefix}metastrings msn2 ON md2.name_id = msn2.id LEFT JOIN {$dbprefix}metastrings msv2 ON md2.value_id = msv2.id WHERE e.type = 'user' AND e.enabled = 'yes' AND msn.string = 'user_type' AND msv.string = '" . $type . "' AND msn2.string = '" . $type . "' AND msv2.string <> '' GROUP BY msv2.string;";
+		$users = get_data($query);
+
+		foreach($users as $obj){
+			$data[$obj->$type] = intval($obj->count);
 		}
 		break;
 
@@ -368,7 +234,7 @@ function get_member_data($type, $lang) {
 	    $query = "SELECT msv.string as department, count(*) as count FROM {$dbprefix}users_entity u LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id WHERE msn.string = 'department' GROUP BY department ORDER BY count DESC LIMIT 25";
 		$departments = get_data($query);
 
-		foreach($departments as $key => $obj){
+		foreach($departments as $obj){
 			$data[$obj->department] = (int)$obj->count;
 		}
 		break;
@@ -396,7 +262,7 @@ function get_site_data($type, $lang) {
 		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
 		$wireposts = get_data($query);
 
-		foreach($wireposts as $key => $obj){
+		foreach($wireposts as $obj){
 			$data[] = array($obj->time_created, "", $obj->owner_guid);
 		}
 		break;
@@ -407,7 +273,7 @@ function get_site_data($type, $lang) {
 		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
 		$blogposts = get_data($query);
 
-		foreach($blogposts as $key => $obj){
+		foreach($blogposts as $obj){
 			$data[] = array($obj->time_created, "", "", $obj->owner_guid);
 		}
 		break;
@@ -418,7 +284,7 @@ function get_site_data($type, $lang) {
 		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
 		$comments = get_data($query);
 
-		foreach($comments as $key => $obj){
+		foreach($comments as $obj){
 			$data[] = array($obj->time_created, "", $obj->owner_guid);
 		}
 		break;
@@ -427,7 +293,7 @@ function get_site_data($type, $lang) {
 		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'group' AND enabled = 'yes'";
 		$groupscreated = get_data($query);
 
-		foreach($groupscreated as $key => $obj){
+		foreach($groupscreated as $obj){
 			$data[] = array($obj->time_created, "", "", $obj->owner_guid);
 		}
 		break;
@@ -436,7 +302,7 @@ function get_site_data($type, $lang) {
 		$query = "SELECT * FROM {$dbprefix}entity_relationships WHERE relationship = 'member'";
 		$groupsjoined = get_data($query);
 
-		foreach($groupsjoined as $key => $obj){
+		foreach($groupsjoined as $obj){
 			if ( $obj->time_created ){
 				$data[] = array($obj->time_created, $obj->guid_one, $obj->guid_two);
 			}
@@ -449,7 +315,7 @@ function get_site_data($type, $lang) {
 		$query = "SELECT * FROM {$dbprefix}annotations WHERE name_id = $likesID";
 		$likes = get_data($query);
 
-		foreach($likes as $key => $obj){
+		foreach($likes as $obj){
 			$data[] = array($obj->time_created, $obj->owner_guid, "");
 		}
 		break;
@@ -463,7 +329,7 @@ function get_site_data($type, $lang) {
 					WHERE md.name_id = {$name_id}";
 		$messages = get_data($query);
 
-		foreach($messages as $key => $obj){
+		foreach($messages as $obj){
 			$data[] = array($obj->time_created, "", $obj->sender_guid);
 		}
 		break;
@@ -502,7 +368,7 @@ function get_site_data($type, $lang) {
 			$map[$optin_type] = elgg_get_metastring_id($optin_type);
 		}
 
-		$query = "SELECT count(DISTINCT m.entity_guid) as num FROM elggmetadata m WHERE";
+		$query = "SELECT count(DISTINCT m.entity_guid) as num FROM {$dbprefix}metadata m WHERE";
 		foreach ($optin_types as $optin_type => $index) {
 			$temp = $query . " m.name_id={$map[$optin_type]} AND m.value_id={$yes};";
 			$result = get_data($temp)[0];
@@ -545,7 +411,7 @@ function get_time_data($type, $lang) {
 	switch($type) {
 
 	case 'members':
-		$query = "SELECT DISTINCT e.time_created AS time, count(*) AS count, date_format(from_unixtime(e.time_created),'%Y-%m-%d') AS date FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity st ON e.guid = st.guid WHERE e.type = 'user' AND e.enabled = 'yes' GROUP BY date ORDER BY time";
+		$query = "SELECT DISTINCT e.time_created AS time, count(*) AS count, date_format(from_unixtime(e.time_created),'%Y-%m-%d') AS date FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity u ON e.guid = u.guid WHERE e.type = 'user' AND e.enabled = 'yes' GROUP BY date ORDER BY time";
 		$data = get_data($query);
 		break;
 
@@ -582,7 +448,7 @@ function get_group_data($type, $group, $lang) {
 		$query = "SELECT * FROM {$dbprefix}entity_relationships WHERE relationship = 'member' AND guid_two = '" . $group . "'";
 		$groupsjoined = get_data($query);
 
-		foreach($groupsjoined as $key => $obj){
+		foreach($groupsjoined as $obj){
 			if ( $obj->time_created ){
 				$user = get_user($obj->guid_one);
 				if($user->username){
@@ -604,11 +470,11 @@ function get_group_data($type, $group, $lang) {
 		if ($lang == 'fr'){
 			$users_types = array('federal' => 'féderal', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'provincial' => 'provincial', 'municipal' => 'municipale', 'international' => 'international', 'ngo' => 'ngo', 'community' => 'collectivité', 'business' => 'entreprise', 'media' => 'média', 'retired' => 'retraité(e)', 'other' => 'autre');
 
-			foreach($users as $key => $obj){
+			foreach($users as $obj){
 				$data[$users_types[$obj->user_type]] = isset( $data[$users_types[$obj->user_type]] ) ? $data[$users_types[$obj->user_type]] + 1 : 1;
 			}
 		} else {
-			foreach($users as $key => $obj){
+			foreach($users as $obj){
 				$data[$obj->user_type] = isset( $data[$obj->user_type] ) ? $data[$obj->user_type] + 1 : 1;
 			}
 		}

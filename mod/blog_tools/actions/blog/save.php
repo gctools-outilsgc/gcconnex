@@ -236,17 +236,15 @@ if (!$error) {
 		system_message(elgg_echo('blog:message:saved'));
 
 		$status = $blog->status;
-		
 		// add to river if changing status or published, regardless of new post
 		// because we remove it for drafts.
-		if (($new_post || $old_status == 'draft') && $status == 'published') {
+		if (($new_post || $old_status == 'draft' ||  $old_status == 'published') && $status == 'published') {
 			elgg_create_river_item(array(
 				'view' => 'river/object/blog/create',
 				'action_type' => 'create',
 				'subject_guid' => $blog->owner_guid,
 				'object_guid' => $blog->getGUID(),
 			));
-			
 			// we only want notifications sent when post published
 			elgg_trigger_event('publish', 'object', $blog);
 			

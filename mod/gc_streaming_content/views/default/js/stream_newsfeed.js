@@ -41,15 +41,14 @@ function stop_stream_newsfeed_count(){
 function check_for_newsfeed_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
-    var firstPostOnPage = $('.panel-river .elgg-body').first().parent().parent().attr('id');
-    var postID = firstPostOnPage.split("-");
-    postID = postID.slice(2);
+    var firstPostOnPage = $('#activity .elgg-list-river .elgg-item').first().attr('id');
+    if (firstPostOnPage) {
+        var postID = firstPostOnPage.split("-");
+        postID = postID.slice(2);
     
-    
-    
-    var site = elgg.normalize_url();
-    var first_post ='';
-    //Ping the api to see what the latest newsfeed item. This will only grab one post
+        var site = elgg.normalize_url();
+        var first_post ='';
+        //Ping the api to see what the latest newsfeed item. This will only grab one post
         elgg.get('ajax/view/ajax/newsfeed_check', {
             data: {'userid': elgg.get_logged_in_user_guid, 'limit': 1},
             dataType: 'json',
@@ -72,6 +71,7 @@ function check_for_newsfeed_items(){
 
             }
         });
+    }
 }
 
 // is there a point to this?
@@ -93,10 +93,10 @@ function loadNewNewsfeedItems(){
     $('.stream-new-newsfeed').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
 
     //Get the guid from the post id
-    var firstPostOnPage = $('.panel-river .elgg-body').first().parent().parent().attr('id');
+    var firstPostOnPage = $('#activity .elgg-list-river .elgg-item').first().attr('id');
     var postID = firstPostOnPage.split("-");
     postID = postID.slice(2);
-  
+
     ajax_path = 'ajax/view/ajax/newsfeed_items'; //here is my ajax view :3
     //Bring back the latests posts and add them to the page
     elgg.get(ajax_path, {
@@ -107,7 +107,6 @@ function loadNewNewsfeedItems(){
             $('.stream-new-newsfeed').remove();
             newsfeed_stream_count();
         }
-        
     });
 }
 

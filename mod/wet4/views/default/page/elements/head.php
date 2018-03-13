@@ -221,6 +221,12 @@ if (!$can_index) {
 }
 
 
+if (get_input('language') != 'en' || get_input('language') != 'fr') {
+  echo '<meta name="robots" content="noindex, follow">';
+}
+// TODO closed group - noindex
+
+
 // group profile url with the group name - noindex will be displayed if group is only accessible to group members
 preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_array);
 if (sizeof($output_array) > 0) {

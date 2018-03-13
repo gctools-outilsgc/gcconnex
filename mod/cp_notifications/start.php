@@ -187,7 +187,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$template = elgg_view('cp_notifications/email_template', $message);
 			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$user_obj = get_user_by_email($params['cp_to']);
-
+			$info_notif = 'cp_friend_invite';
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send($params['cp_to'], $params['cp_to'], $subject, $template, NULL,true) : mail($params['cp_to'],$subject,$template,cp_get_headers());
 			return true;
 
@@ -247,6 +247,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_password' => $params['cp_password'],
 			);
 			$to_recipients[] = $params['cp_user'];
+			$info_notif = 'cp_useradd';
+			
 			$subject = elgg_echo('cp_notify:subject:add_new_user',array(),'en') . ' | ' . elgg_echo('cp_notify:subject:add_new_user',array(),'fr');
 			$email_only = true;
 			break;
@@ -259,6 +261,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']),'en') . ' | ' . elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']),'fr');
 			$to_recipients[] = get_user($params['cp_validate_user']['guid']);
+			$info_notif = 'cp_validate_user';
 			$email_only = true;
 			break;
 
@@ -266,6 +269,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$add_to_sent = true;
 			$sender_guid = $params['cp_from']['guid'];
 			$to_recipients[] = get_user($params['cp_to']['guid']);
+			$info_notif = 'cp_site_msg_type';			
 			$subject = $params['cp_topic_title'];
 			$message = array(
 				'cp_msg_title' => $params['cp_topic_title'],
@@ -301,6 +305,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($users as $user) {
 				$to_recipients[$user->guid_one] = get_entity($user->guid_one);
 			}
+			$info_notif = 'cp_wire_image';			
 			
 			break;
 
@@ -324,7 +329,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject .= elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name),'fr');
 
 			$to_recipients[] = $params['cp_recipient'];
-
+			$info_notif = 'cp_wire_share';						
 			$content_entity = $params['cp_content_reshared'];
 			$author = $params['cp_shared_by'];
 			$content_url = $params['cp_content_reshared']->getURL();
@@ -340,7 +345,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:messageboard:subject',array(),'en') . ' | ' . elgg_echo('cp_notify:messageboard:subject',array(),'fr');
 			$to_recipients[] = $params['cp_recipient'];
-
+			$info_notif = 'cp_messageboard';			
 			$content_entity = $params['cp_message_content'];
 			$author = $params['cp_writer'];
 			break;
@@ -356,6 +361,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'fr')),'fr');
 			$to_recipients[] = $params['cp_to_user'];
+			$info_notif = 'cp_add_grp_operator';						
 			break;
 
 
@@ -368,6 +374,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:group_admin_transfer',array(gc_explode_translation($params['cp_group_name'],'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:group_admin_transfer',array(gc_explode_translation($params['cp_group_name'],'fr')),'fr');
 			$to_recipients[] = $params['cp_new_owner_user'];
+			$info_notif = 'cp_grp_admin_transfer';									
 			break;
 
 
@@ -382,7 +389,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			$subject = elgg_echo('cp_notify:subject:wire_mention',array($params['cp_mention_by']),'en') . ' | ' . elgg_echo('cp_notify:subject:wire_mention',array($params['cp_mention_by']),'fr');
 			$to_recipients[] = $params['cp_send_to'];
-
+			$info_notif = 'cp_wire_mention';									
 			$content_entity = $params['cp_wire_entity'];
 			$author = $content_entity->getOwnerEntity();
 			break;
@@ -397,7 +404,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 				);
 			$to_recipients[] = get_user($params['cp_request_guid']);
-
+			$info_notif = 'cp_friend_approve';									
 			$content_entity = $params['object'];
 			$author = $params['object'];
 			break;
@@ -405,6 +412,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 		case 'cp_group_add':	// group_tools/lib/functions.php OR groups/actions/groups/membership/add.php ????
 			$to_recipients[] = $params['cp_user_added'];
+			$info_notif = 'cp_group_add';												
 			$subject = elgg_echo('cp_notify:subject:group_add_user',array(gc_explode_translation($params['cp_group']['name'],'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:group_add_user',array(gc_explode_translation($params['cp_group']['name'],'fr')),'fr');
 			$message = array(
 				'cp_user_added' => $params['cp_user_added'],
@@ -429,7 +437,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type
 			);
 			$to_recipients[] = get_user($params['cp_invitee']['guid']);
-
+			$info_notif = 'cp_group_invite';												
 			$content_entity = $params['cp_invite_to_group'];
 			$author = $params['cp_inviter'];
 			break;
@@ -448,6 +456,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($params['cp_group_mail_users'] as $to_user) {
 				$to_recipients[$to_user] = get_user($to_user);
 			}
+			$info_notif = 'cp_group_mail';															
 			break;
 
 
@@ -460,6 +469,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:friend_request',array($params['cp_friend_requester']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:friend_request',array($params['cp_friend_requester']['name']),'fr');
 			$to_recipients[] = get_user($params['cp_friend_receiver']['guid']);
+			$info_notif = 'cp_friend_request';												
 
 			$content_entity = $params['cp_relationship'];
 			$author = $params['cp_friend_requester'];
@@ -481,6 +491,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
 
+			$info_notif = 'cp_hjpost';												
 			$content_entity = $params['cp_post'];
 			$content_url = $params['cp_topic_url'];
 			$author = $params['cp_post']->getOwnerEntity();
@@ -502,6 +513,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
 
+			$info_notif = 'cp_hjtopic';															
 			$content_url = $params['cp_topic_url'];
 			$content_entity = $params['cp_topic'];
 			$author = $params['cp_topic']->getOwnerEntity();
@@ -518,6 +530,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject = elgg_echo('cp_notify:event_request:subject',array($params['cp_event_request_user'], $params['cp_event_obj']->title),'en');
 			$subject .= ' | '.elgg_echo('cp_notify:event_request:subject',array($params['cp_event_request_user'], $params['cp_event_obj']->title),'fr');
 			$to_recipients[] = $params['cp_event_owner'];
+			$info_notif = 'cp_event_request';															
+			
 			break;
 
 		case 'cp_event_ics': // .../mod/event_calendar/actions/event_calendar/add_ics.php
@@ -538,13 +552,16 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		    $subject = $event->title.' - '.elgg_get_logged_in_user_entity()->username; 
 
 		   	$event = 'event';
-		   	$to_recipients[] = $params['cp_event_send_to_user'];
+			$to_recipients[] = $params['cp_event_send_to_user'];
+			$info_notif = 'cp_event_ics';															
+			   
 			break;
 
 			case 'cp_welcome_message':	// messages/actions/messages/send.php
 			$add_to_sent = true;
 			$sender_guid = $params['cp_from']['guid'];
 			$to_recipients[] = get_user($params['cp_to']['guid']);
+			$info_notif = 'cp_welcome_message';																		
 			$subject = $params['cp_topic_title'];
 			$message = array(
 				'cp_msg_title' => $params['cp_topic_title'],
@@ -595,7 +612,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients)) {
-		notification_logging('error: in cp_create_notification(), $to_recipients is not array');
+		notification_logging('error: in cp_create_notification(), $to_recipients is not array'.$info_notif);
 	}
 }
 
@@ -693,17 +710,22 @@ function cp_create_annotation_notification($event, $type, $object) {
 	if (strcmp($object_subtype, 'likes') != 0) {
 
 		$content = get_entity($object->entity_guid);
-
+		$get_error_info='if object subtype likes 0';
 		// auto save -drafts or -published blogs, we don't send out notifications
-		if (strcmp($object_subtype,'blog_auto_save') == 0 && (strcmp($entity->status,'draft') == 0 || strcmp($entity->status, 'published') == 0)) return;
+		if (strcmp($object_subtype,'blog_auto_save') == 0 && (strcmp($entity->status,'draft') == 0 || strcmp($entity->status, 'published') == 0)){
+			$get_error_info='draft/autosave';
+			return;
+		} 
 
 
 		// if we are publishing, or revising blogs then send out notification
 		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 			$current_user = get_user($entity->getOwnerGUID());
 			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',gc_explode_translation($entity->title,'en'), $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',gc_explode_translation($entity->title,'fr'), $current_user->username),'fr');
-			
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
+
+			add_entity_relationship($entity->getOwnerGUID(), 'cp_subscribed_to_email', $entity->getGUID());
+			add_entity_relationship($entity->getOwnerGUID(), 'cp_subscribed_to_site_mail', $entity->getGUID());
 
 			$message = array(
 				'cp_content' => $entity,
@@ -713,11 +735,18 @@ function cp_create_annotation_notification($event, $type, $object) {
 				'cp_en_entity' => 'blog',
 			);
 
+			if($entity->getContainerEntity() instanceof ElggGroup){
+				$author_id = $object->getOwnerGUID();
+				$content_id = $entity->getContainerGUID();
+			}else{
+				$author_id = $current_user->guid;
+			}
+
 			$author = $current_user;
 			$content_entity = $entity;
+			$get_error_info = 'blog revision or published';
 
-			$watchers = get_subscribers($dbprefix, $current_user->guid, $entity->guid);
-
+			$watchers = get_subscribers($dbprefix, $author_id, $content_id);
 			foreach ($watchers as $watcher) {
 				$message['user_name'] = $watcher->username;
 
@@ -725,9 +754,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 				$recipient_user = get_user($watcher->guid);
 
-		
-				if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
-
+				if (has_access_to_entity($entity, $recipient_user) && $entity->access_id != 0) {
 					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 					else
@@ -736,9 +763,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID()))
 						messages_send($subject, $template, $watcher->guid, $site->guid, 0, true, false);
 				}
-
-				return true;
 			}
+			return true;
 		}
 
 
@@ -760,30 +786,34 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 			$author = $current_user;
 			$content_entity = $entity;
+			$get_error_info = 'page, page top';			
 
 			$watchers = get_subscribers($dbprefix, $current_user->guid, $entity->guid);
 
 			foreach ($watchers as $watcher) {
 				$message['user_name'] = $watcher->username;
-
 				$template = elgg_view('cp_notifications/email_template', $message);
 				$recipient_user = get_user($watcher->guid);
 
-				if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
+				if (has_access_to_entity($entity, $recipient_user) /*&& $object->access_id != 0*/) {
 
-					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0)
+					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0) {
+
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
-					else
+					}
+					else {
+
 						(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
+					}
+
 
 					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID())) {
 						$site_template = elgg_view('cp_notifications/site_template', $message);
 						messages_send($subject, $site_template, $watcher->guid, $site->guid, 0, true, false);
 					}
 				}
-			
-				return true;
 			}
+			return true;
 		}
 		
 	} else {
@@ -799,6 +829,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$to_recipients = array();
 		$to_recipients_site = array();
+		$get_error_info = '';
 
 	    switch ($type_of_like) {
 	    	case 'group':
@@ -819,10 +850,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    		$action_type = 'like_group';
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $group_owner->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$group_owner->getGUID()] = $group_owner;
+					$to_recipients[$group_owner->getGUID()] = $group_owner;
+					$get_error_info = 'group';
 
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $group_owner->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$group_owner->getGUID()] = $group_owner;
+					$to_recipients_site[$group_owner->getGUID()] = $group_owner;
+					$get_error_info = 'group';
 
 	    		break;
 
@@ -845,10 +878,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    		$action_type = "like_comment";
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'comment';
 
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'comment';
 	    		break;
 
 	    	case 'discussion_reply':
@@ -869,9 +904,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$action_type = "like_reply";
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
-    				$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$to_recipients[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'discussion_reply';
     			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
-    				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$to_recipients_site[$comment_author->getGUID()] = $comment_author;
+					$get_error_info = 'discussion_reply';
 	    		break;
 
 
@@ -888,7 +925,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 						'cp_msg_type' => 'cp_likes_user_update',
 						'cp_liked_by' => $liked_by->name
 					);
-	    			$to_recipients[$liked_content->guid] = $liked_content;
+					$to_recipients[$liked_content->guid] = $liked_content;
+					$get_error_info = 'user_update_if_liked_content';
 
 
 		    	} else {
@@ -923,10 +961,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 					);
 
 		    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'), 'likes_email') == 0)
-	    				$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$get_error_info = 'content';
 
 	    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'), 'likes_site') == 0)
-	    				$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
+						$get_error_info = 'content';
 		    	}
 	    		break;
 
@@ -992,6 +1032,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if ($group_owner) {
 			$error_message .= 'Group owner= ' . print_r($group_owner, true);
 		}
+		$error_message .= 'State: '.$get_error_info; //from which state the error is from
 		notification_logging($error_message);
 	}
 
@@ -1257,6 +1298,8 @@ function cp_create_notification($event, $type, $object) {
 
 			// cyu - there is an issue with regards to auto-saving drafts
 			if (strcmp($object->getSubtype(),'blog') == 0) {
+			$get_error_info='draft blog';
+				
 				if (strcmp($object->status,'draft') == 0 || strcmp($object->status,'unsaved_draft') == 0) return;
 			}
 

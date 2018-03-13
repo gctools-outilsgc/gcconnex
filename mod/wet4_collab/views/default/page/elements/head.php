@@ -225,6 +225,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
           <!-- cyu - included header meta tags for GSA (limiting pages to index) -->
           <meta name="robots" content="noindex">
+          <meta name="platform" content="gccollab" />
 
         <?php } ?>
 

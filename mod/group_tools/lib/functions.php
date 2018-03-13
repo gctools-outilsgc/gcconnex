@@ -117,7 +117,6 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 					);
 				elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
                 $result = true;
-
 			} else {
 
 				// send notification...
@@ -289,13 +288,12 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 						'cp_invitation_nonuser_url' => elgg_get_site_url()."register?friend_guid={$loggedin_user->guid}&group_invitecode={$invite_code}",
 						'cp_invitation_url' => elgg_get_site_url()."groups/invitations/?invitecode={$invite_code}",
 						'cp_invitation_code' => $invite_code,
-						'cp_invitation_msg' => $text,
+						'cp_invite_msg' => $text,
 						'cp_user_profile'=> elgg_get_site_url().'profile/'.$loggedin_user->name,
 						'cp_msg_type' => 'cp_group_invite_email'
 						);
 					elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
                     $result = true;
-
 				} else {
 
 					// send notification...

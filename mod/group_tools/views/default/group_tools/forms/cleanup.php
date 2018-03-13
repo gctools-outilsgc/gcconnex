@@ -45,34 +45,6 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	
 	$form_body = "<div class='elgg-quiet'>" . elgg_echo("group_tools:cleanup:description") . "</div>";
 	
-	// cleanup owner block
-	$form_body .= "<div>";
-	$form_body .= elgg_echo("group_tools:cleanup:owner_block");
-	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "owner_block", 
-		"options_values" => $noyes_options, 
-		"value" => $group->getPrivateSetting($prefix . "owner_block"),
-		"class" => "mls"
-	));
-	$form_body .= "<span alt='" . elgg_echo("group_tools:explain") . "' title='" . elgg_echo("group_tools:cleanup:owner_block:explain") . "' onmouseover='elgg.group_tools.cleanup_highlight(\"owner_block\");' onmouseout='elgg.group_tools.cleanup_unhighlight(\"owner_block\");' class='float-alt'>";
-	$form_body .= elgg_view_icon("info");
-	$form_body .= "</span>";
-	$form_body .= "</div>";
-	
-	// hide group actions
-	$form_body .= "<div>";
-	$form_body .= elgg_echo("group_tools:cleanup:actions");
-	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "actions", 
-		"options_values" => $noyes_options, 
-		"value" => $group->getPrivateSetting($prefix . "actions"),
-		"class" => "mls"
-	));
-	$form_body .= "<span alt='" . elgg_echo("group_tools:explain") . "' title='" . elgg_echo("group_tools:cleanup:actions:explain") . "' class='float-alt'>";
-	$form_body .= elgg_view_icon("info");
-	$form_body .= "</span>";
-	$form_body .= "</div>";
-	
 	// hide group menu items
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:menu");
@@ -83,20 +55,6 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 		"class" => "mls"
 	));
 	$form_body .= "<span alt='" . elgg_echo("group_tools:explain") . "' title='" . elgg_echo("group_tools:cleanup:menu:explain") . "' onmouseover='elgg.group_tools.cleanup_highlight(\"menu\");' onmouseout='elgg.group_tools.cleanup_unhighlight(\"menu\");' class='float-alt'>";
-	$form_body .= elgg_view_icon("info");
-	$form_body .= "</span>";
-	$form_body .= "</div>";
-	
-	// hide group search
-	$form_body .= "<div>";
-	$form_body .= elgg_echo("group_tools:cleanup:search");
-	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "search", 
-		"options_values" => $noyes_options, 
-		"value" => $group->getPrivateSetting($prefix . "search"),
-		"class" => "mls"
-	));
-	$form_body .= "<span alt='" . elgg_echo("group_tools:explain") . "' title='" . elgg_echo("group_tools:cleanup:search:explain") . "' onmouseover='elgg.group_tools.cleanup_highlight(\"search\");' onmouseout='elgg.group_tools.cleanup_unhighlight(\"search\");' class='float-alt'>";
 	$form_body .= elgg_view_icon("info");
 	$form_body .= "</span>";
 	$form_body .= "</div>";
