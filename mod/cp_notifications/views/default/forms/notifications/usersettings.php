@@ -19,6 +19,7 @@ elgg_load_library('elgg:gc_notification:functions');
 $title = elgg_echo('cp_notifications:heading:page_title');
 
 
+$content .= "<input type='text' style='visibility:hidden' name='user_guid' value='".$user->getGUID()."'> ";
 
 /// DIGEST OPTION FOR USER NOTIFICATIONS
 $enable_digest = elgg_get_plugin_setting('cp_notifications_enable_bulk','cp_notifications');
