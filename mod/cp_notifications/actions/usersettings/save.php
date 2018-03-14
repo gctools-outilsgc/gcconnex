@@ -15,13 +15,31 @@ $user = get_entity($user_guid);
 
 /// overwriting the save action for usersettings in notifications, save all the checkboxes
 $plugin_name = $plugin->getManifest()->getName();
+
+
+/// when no colleagues are selected for subscription, the key does not exist
+if (!array_key_exists('subscribe_colleague_picker', $params)) {
+
+	// no performance issue because this function should only be called once
+	$all_colleagues = $user->getFriends(array('limit' => false));
+	foreach ($all_colleagues as $colleague) {
+
+		$result1 = remove_entity_relationship($user->guid, 'cp_subscribed_to_email', $colleague->guid);
+		$result2 = remove_entity_relationship($user->guid, 'cp_subscribed_to_site_mail', $colleague->guid);
+	}
+}
+
+
+
 foreach ($params as $k => $v) {
 
 	// select all checkbox, don't save metadata
 	if (strpos($k,'cpn_group_') !== false)
 		continue;
 
-	$result = $plugin->setUserSetting($k, $v, $user->guid);
+	// PHP WARNING string required, but array given
+	if (!is_array($v)) 
+		$result = $plugin->setUserSetting($k, $v, $user->guid);
 
 	/// create relationships between user and group that they have subscribed to
 	if (strpos($k,'cpn_site_mail_') !== false || strpos($k,'cpn_email_') !== false) {

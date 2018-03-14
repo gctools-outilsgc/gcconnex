@@ -116,6 +116,7 @@ $subscribed_colleagues = elgg_get_plugin_user_setting('subscribe_colleague_picke
 	));
 
 	foreach($subbed_colleagues as $c) {
+		
 		$subbed_colleague_guids[] = $c->getGUID();
 	}
 
