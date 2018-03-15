@@ -3,7 +3,7 @@
     "description": "This plugin contains all additions to Elgg for Pleio standalone (e.g. OAuth2 login, site permission handling)",
     "type": "elgg-plugin",
     "keywords": ["elgg", "plugin", "oauth2", "pleio"],
-    "license": "GPL-2.0-or-later",
+    "license": "GPL-2.0",
     "support": {
         "source": "https://github.com/Pleio/mod_pleio",
         "issues": "https://github.com/Pleio/mod_pleio/issues"

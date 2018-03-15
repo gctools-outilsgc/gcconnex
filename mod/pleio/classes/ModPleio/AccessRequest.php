@@ -24,17 +24,17 @@ class AccessRequest {
         $resourceOwner = new ResourceOwner($this->user);
         $loginHandler = new LoginHandler($resourceOwner);
         $site = elgg_get_site_entity();
-
+        
         try {
             $user = $loginHandler->createUser();
             if ($user) {
                 $this->remove();
                 $this->sendEmail(
-                    elgg_echo("pleio:approved:subject", [$site->name]),
+                    elgg_echo("pleio:approved:subject", [$site->name]), 
                     elgg_echo("pleio:approved:body", [
-                        $user->name,
                         $site->name,
-                        $site->url
+                        $site->url,
+                        $site->url . "notifications/personal/" . $user->username
                     ])
                 );
                 return true;
@@ -48,15 +48,11 @@ class AccessRequest {
 
     public function decline() {
         $site = elgg_get_site_entity();
-        $resourceOwner = new ResourceOwner($this->user);
 
         if ($this->remove()) {
             $this->sendEmail(
-                elgg_echo("pleio:declined:subject", [$site->name]),
-                elgg_echo("pleio:declined:body", [
-                    $resourceOwner->getName(),
-                    $site->name
-                ])
+                elgg_echo("pleio:declined:subject", [$site->name]), 
+                elgg_echo("pleio:declined:body", [$site->name])
             );
 
             return true;
@@ -65,7 +61,7 @@ class AccessRequest {
         return false;
     }
 
-    public function remove() {
+    private function remove() {
         return delete_data("DELETE FROM pleio_request_access WHERE id = {$this->id}");
     }
 

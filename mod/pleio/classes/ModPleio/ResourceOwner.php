@@ -56,5 +56,4 @@ class ResourceOwner extends GenericResourceOwner {
     public function toArray() {
         return $this->response;
     }
-
 }
