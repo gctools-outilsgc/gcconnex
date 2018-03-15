@@ -33,20 +33,6 @@ elgg_ws_expose_function(
 	false
 );
 
-elgg_ws_expose_function(
-	"apply.post",
-	"apply_post",
-	array(
-		"user" => array('type' => 'string', 'required' => true),
-		"guid" => array('type' => 'int', 'required' => true),
-		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
-	),
-	'Retrieves a opportunity based on user id and opportunity id',
-	'POST',
-	true,
-	false
-);
-
 function get_opportunity($user, $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
