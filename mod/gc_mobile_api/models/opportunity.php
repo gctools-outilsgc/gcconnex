@@ -177,6 +177,7 @@ function get_opportunity($user, $guid, $lang)
 	}
 	$opportunity->schedulingRequirements = $unpacked_time;
 
+	
 	return $opportunity;
 }
 
@@ -244,8 +245,8 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 			'annotation_owner_guid' => $user_entity->guid,
 			'annotation_name' => 'likes'
 		));
+		
 		$opportunity->liked = count($liked) > 0;
-
 		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
 		$opportunity->roletype = elgg_echo($opportunityObj->role_type);
@@ -253,9 +254,10 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 		$opportunity->programArea = elgg_echo($opportunityObj->program_area);
 		$opportunity->owner = ($opportunityObj->getOwnerEntity() == $user_entity);
 		$opportunity->iconURL = $opportunityObj->getIconURL();
-
 		$opportunity->userDetails = get_user_block($opportunity->owner_guid, $lang);
 		$opportunity->description = clean_text(gc_explode_translation($opportunity->description, $lang));
+		$opportunity->state = $opportunityObj->state;
+
 	}
 
 	return $opportunities;
