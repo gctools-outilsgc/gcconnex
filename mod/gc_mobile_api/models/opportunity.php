@@ -247,35 +247,33 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 
 	foreach ($opportunities as $opportunity) {
 		$opportunityObj = get_entity($opportunity->guid);
-		if($opportunityObj->state == 'posted'){	
 	
-			$opportunity->title = gc_explode_translation($opportunity->title, $lang);
+		$opportunity->title = gc_explode_translation($opportunity->title, $lang);
 
-			$likes = elgg_get_annotations(array(
-				'guid' => $opportunity->guid,
-				'annotation_name' => 'likes'
-			));
-			$opportunity->likes = count($likes);
+		$likes = elgg_get_annotations(array(
+			'guid' => $opportunity->guid,
+			'annotation_name' => 'likes'
+		));
+		$opportunity->likes = count($likes);
 
-			$liked = elgg_get_annotations(array(
-				'guid' => $opportunity->guid,
-				'annotation_owner_guid' => $user_entity->guid,
-				'annotation_name' => 'likes'
-			));
-			
-			$opportunity->liked = count($liked) > 0;
-			$opportunityObj = get_entity($opportunity->guid);
-			$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
-			$opportunity->roletype = elgg_echo($opportunityObj->role_type);
-			$opportunity->deadline = $opportunityObj->deadline;
-			$opportunity->programArea = elgg_echo($opportunityObj->program_area);
-			$opportunity->owner = ($opportunityObj->getOwnerEntity() == $user_entity);
-			$opportunity->iconURL = $opportunityObj->getIconURL();
-			$opportunity->userDetails = get_user_block($opportunity->owner_guid, $lang);
-			$opportunity->description = clean_text(gc_explode_translation($opportunity->description, $lang));
-			$opportunity->state = $opportunityObj->state;
+		$liked = elgg_get_annotations(array(
+			'guid' => $opportunity->guid,
+			'annotation_owner_guid' => $user_entity->guid,
+			'annotation_name' => 'likes'
+		));
+		
+		$opportunity->liked = count($liked) > 0;
+		$opportunityObj = get_entity($opportunity->guid);
+		$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
+		$opportunity->roletype = elgg_echo($opportunityObj->role_type);
+		$opportunity->deadline = $opportunityObj->deadline;
+		$opportunity->programArea = elgg_echo($opportunityObj->program_area);
+		$opportunity->owner = ($opportunityObj->getOwnerEntity() == $user_entity);
+		$opportunity->iconURL = $opportunityObj->getIconURL();
+		$opportunity->userDetails = get_user_block($opportunity->owner_guid, $lang);
+		$opportunity->description = clean_text(gc_explode_translation($opportunity->description, $lang));
+		$opportunity->state = $opportunityObj->state;
 
-		}
 	}
 
 	return $opportunities;
