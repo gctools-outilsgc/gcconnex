@@ -15,10 +15,6 @@
     </requires>
     <requires>
         <type>plugin</type>
-        <name>profile_manager</name>
-    </requires>
-    <requires>
-        <type>plugin</type>
         <name>web_services</name>
     </requires>
     <activate_on_install>true</activate_on_install>

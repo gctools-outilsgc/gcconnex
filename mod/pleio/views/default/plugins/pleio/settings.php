@@ -97,15 +97,6 @@ echo elgg_view("input/dropdown", array(
 echo "</label>";
 echo "</p>";
 
-echo "<p>";
-echo "<label>" . elgg_echo("pleio:settings:domain_whitelist") . "<br />";
-echo elgg_view("input/text", array(
-    "name" => "params[domain_whitelist]",
-    "value" => $plugin->domain_whitelist
-));
-echo "</label>";
-echo "<span class=\"elgg-subtext\">" . elgg_echo("pleio:settings:domain_whitelist:explanation") . "</span>";
-echo "</p>";
 
 echo "<p>";
 echo "<label>" . elgg_echo("pleio:settings:walled_garden_description") . "<br />";

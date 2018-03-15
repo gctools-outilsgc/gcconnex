@@ -1,5 +1,5 @@
 <?php
-$auth_url = elgg_get_plugin_setting('auth_url', 'pleio', $CONFIG->pleio->url);
+$auth_url = elgg_get_plugin_setting('auth_url', 'pleio');
 
 $user = elgg_get_page_owner_entity();
 if ($user) {

@@ -15,14 +15,6 @@ foreach ($fields as $field) {
 
 $resourceOwner = new ModPleio\ResourceOwner($_SESSION["pleio_resource_owner"]);
 $loginHandler = new ModPleio\LoginHandler($resourceOwner);
-
-$domain = pleio_get_domain_from_email($resourceOwner->getEmail());
-
-if (pleio_domain_in_whitelist($domain)) {
-    $id = $loginHandler->requestAccess(false);
-    $loginHandler->sendValidationEmail();
-} else {
-    $loginHandler->requestAccess(true);
-}
+$loginHandler->requestAccess();
 
 forward("/access_requested");

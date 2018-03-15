@@ -100,47 +100,4 @@ class Helpers {
 
         return ($result !== false);
     }
-
-    public static function getSiteEmail() {
-        global $CONFIG;
-
-        $site = elgg_get_site_entity();
-        if ($site->email) {
-            return $site->email;
-        } else {
-            return "noreply@" . get_site_domain($CONFIG->site_guid);
-        }
-    }
-
-    public static function signData($data) {
-        $data = base64_encode(json_encode($data)) . ":" . time();
-        $hash = hash_hmac("sha256", $data, get_site_secret());
-        return "{$hash}:{$data}";
-    }
-
-    public static function loadSignedData($data) {
-        list($input_hash, $data, $timestamp) = explode(":", $data);
-        $verification_hash = hash_hmac("sha256", $data . ":" . $timestamp, get_site_secret());
-
-        if ($verification_hash !== $input_hash) {
-            return false;
-        }
-
-        if (time() > $timestamp + 3600*24) {
-            return false;
-        }
-
-        $data = json_decode(base64_decode($data), true);
-
-        if (!$data) {
-            return false;
-        }
-
-        return $data;
-    }
-
-    public static function emailInWhitelist($email) {
-        $domain = pleio_get_domain_from_email($email);
-        return pleio_domain_in_whitelist($domain);
-    }
 }
