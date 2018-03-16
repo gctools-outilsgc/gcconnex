@@ -81,7 +81,7 @@ function get_discussion($user, $guid, $thread, $lang)
 	$discussion->liked = count($liked) > 0;
 
 	$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
-	$discussion->description = clean_text(gc_explode_translation($discussion->description, $lang));
+	$discussion->description = gc_explode_translation($discussion->description, $lang);
 
 	$discussionsArray = array();
 	$discussionsArray[] = $discussion;
@@ -169,7 +169,7 @@ function get_discussions($user, $limit, $offset, $filters, $lang)
 		$discussion->liked = count($liked) > 0;
 
 		$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
-		$discussion->description = clean_text(gc_explode_translation($discussion->description, $lang));
+		$discussion->description = gc_explode_translation($discussion->description, $lang);
 	}
 
 	return $discussions;
