@@ -12,6 +12,7 @@ if (elgg_is_logged_in()) {
 }
 
 $site = elgg_get_site_url();
+$db_prefix = elgg_get_config('dbprefix');
 
 $code = get_input("code");
 $state = get_input("state");
@@ -26,7 +27,7 @@ if (!$auth || !$auth_client || !$auth_secret || !$auth_url) {
 }
 
 if ($auth == 'oidc') {
-    $oidc = new OpenIDConnectClient($auth_url, $auth_client, $auth_secret);
+    $oidc = new Jumbojett\OpenIDConnectClient($auth_url . 'openid', $auth_client, $auth_secret);
     $oidc->addScope(array('openid', 'profile', 'email'));
     $oidc->authenticate();
 
@@ -38,6 +39,30 @@ if ($auth == 'oidc') {
     $user = get_user_by_pleio_guid_or_email($userid, $email);
     $allow_registration = elgg_get_config("allow_registration");
 
+    /*** Username Generation ***/
+    $query = "SELECT count(*) as num FROM {$db_prefix}users_entity WHERE username = '". $username ."'";
+    $result = get_data($query);
+
+    // check if username exists and increment it
+    if ( $result[0]->num > 0 ){
+        $unamePostfix = 0;
+        $usrnameQuery = $username;
+        
+        do {
+            $unamePostfix++;
+            $tmpUsrnameQuery = $usrnameQuery . $unamePostfix;
+            
+            $query1 = "SELECT count(*) as num FROM {$db_prefix}users_entity WHERE username = '". $tmpUsrnameQuery ."'";
+            $tmpResult = get_data($query1);
+            
+            $uname = $tmpUsrnameQuery;
+        } while ( $tmpResult[0]->num > 0);
+    } else {
+        $uname = $username;
+    }
+    $username = $uname;
+    /*** End Username Generation ***/
+
     if (!$user && $allow_registration) {
         $guid = register_user(
             $username,
@@ -45,8 +70,6 @@ if ($auth == 'oidc') {
             $name,
             $email
         );
-
-        $db_prefix = elgg_get_config('dbprefix');
         
         if ($guid) {
             update_data("UPDATE {$db_prefix}users_entity SET pleio_guid = {$userid} WHERE guid = {$guid}");
@@ -61,7 +84,6 @@ if ($auth == 'oidc') {
 
     try {
         login($user);
-        system_message(elgg_echo("loginok"));
 
         if ($user->name !== $name) {
             $user->name = $name;
@@ -70,16 +92,20 @@ if ($auth == 'oidc') {
         if ($user->email !== $email) {
             $user->email = $email;
         }
+        
+        system_message(elgg_echo('wet:loginok', array($user->name)));
 
-        // if ($user->language !== $this->resourceOwner->getLanguage()) {
-        //     $user->language = $this->resourceOwner->getLanguage();
-        // }
+        /*
+        if ($user->language !== $this->resourceOwner->getLanguage()) {
+            $user->language = $this->resourceOwner->getLanguage();
+        }
 
-        // if ($user->isAdmin() !== $this->resourceOwner->isAdmin()) {
-        //     if ($this->resourceOwner->isAdmin()) {
-        //         $user->makeAdmin();
-        //     }
-        // }
+        if ($user->isAdmin() !== $this->resourceOwner->isAdmin()) {
+            if ($this->resourceOwner->isAdmin()) {
+                $user->makeAdmin();
+            }
+        }
+        */
 
         $user->save();
 
@@ -95,7 +121,7 @@ if ($auth == 'oidc') {
     } catch (\LoginException $e) {
         throw new CouldNotLoginException;
     }
-} else {
+} else if ($auth == 'oauth') {
     $provider = new ModPleio\Provider([
         "clientId" => $auth_client,
         "clientSecret" => $auth_secret,

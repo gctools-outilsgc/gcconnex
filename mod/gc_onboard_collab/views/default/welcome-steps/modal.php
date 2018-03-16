@@ -94,7 +94,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
 
                 <h3 class="pull-left mrgn-tp-md"> <?php echo elgg_echo('onboard:welcome:intro:title'); ?></h3>
                 <div class="pull-right">
-                    <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>6));?>
+                    <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>7));?>
 
                 </div>
 

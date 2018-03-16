@@ -3,7 +3,7 @@ $auth_url = elgg_get_plugin_setting('auth_url', 'pleio');
 
 $link = elgg_view("output/url", [
     "href" => $auth_url . "profile",
-    "text" => "Pleio",
+    "text" => "GCcollab Account",
     "target" => "_blank"
 ]);
 

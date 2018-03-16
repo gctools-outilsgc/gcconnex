@@ -38,7 +38,7 @@ Unfortunately the site administrator of %s decided to decline your membership re
     "pleio:settings:authorization" => "Authorization",
     "pleio:settings:auth" => "Authorization Type",
     "pleio:settings:oauth" => "OAuth2",
-    "pleio:settings:oidc" => "OpenID Connect",
+    "pleio:settings:oidc" => "OpenID Connect (with trailing slash)",
     "pleio:settings:auth_url" => "Auth issuer URL",
     "pleio:settings:auth_client" => "Client ID",
     "pleio:settings:auth_secret" => "Client Secret",

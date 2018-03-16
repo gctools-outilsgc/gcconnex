@@ -23,7 +23,7 @@
     <div class="panel panel-custom">
         <div class="panel-heading"> <h2 class="panel-title"><?php echo elgg_echo('onboard:steps'); ?></h2></div>
         <div class="panel-body" id="step-progress" aria-hidden="true">
-            <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>6, 'class' => 'mrgn-tp-md'));?>
+            <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>7, 'class' => 'mrgn-tp-md'));?>
         </div>
     </div>
 

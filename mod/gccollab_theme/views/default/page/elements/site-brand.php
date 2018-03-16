@@ -29,30 +29,18 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                     <span class="wb-inv"><?php echo elgg_echo('wet:gc');?></span>
                 </div>
                 <section class="hidden-xs col-sm-7 col-md-6 col-lg-6">
-                    <?php if( $user->user_type === 'federal' ): ?>
-                        <ul id="" class="pull-left list-unstyled mrgn-bttm-0">
-                            <li class="pull-left tool-link">
-                            <a href="<?php echo elgg_echo('wet:gcpediaLink');?>">
-                                <span class="bold-gc">GC</span><?php echo elgg_echo('wet:barGCpedia');?>
-                            </a>
-                            </li>
-                            <li class="pull-left tool-link">
-                            <a href="<?php echo elgg_echo('wet:gcintranetLink-toolsHead');?>">
-                               <span class="bold-gc">GC</span>intranet
-                            </a>
-                            </li>
-                            <li class="pull-left tool-link">
-                            <a href="<?php echo elgg_echo('wet:gcdirectoryLink');?>">
-                               <span class="bold-gc">GC</span><?php echo elgg_echo('wet:barDirectory');?>
-                            </a>
-                            </li>
-                            <li class="pull-left tool-link">
-                            <a href="<?php echo elgg_echo('wet:gcconnexLink');?>">
-                               <span class="bold-gc">GC</span>connex
-                            </a>
-                            </li>
-                        </ul>
-                    <?php endif; ?>
+                    <ul id="" class="pull-left list-unstyled mrgn-bttm-0" style="font-weight:bold;">
+                        <li class="pull-left tool-link">
+                        <a href="https://account.gccollab.ca" style="color:#6b5088;">
+                            <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt="GCcollab"></span>Account
+                        </a>
+                        </li>
+                        <li class="pull-left tool-link">
+                        <a href="https://wiki.gccollab.ca" style="color:#6b5088;">
+                            <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt="GCcollab"></span>Wiki
+                        </a>
+                        </li>
+                    </ul>
                 </section>
                 <section class="wb-mb-links visible-xs col-xs-4 col-sm-3" id="wb-glb-mn">
                     <h2><?php echo elgg_echo('wet:search');?></h2>

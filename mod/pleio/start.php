@@ -60,6 +60,38 @@ function pleio_init() {
     elgg_extend_view("css/elgg", "pleio/css/site");
     elgg_extend_view("page/elements/head", "page/elements/topbar/fix");
     elgg_extend_view("page/elements/foot", "page/elements/stats");
+
+    if ( elgg_is_active_plugin('web_services') ) {
+        elgg_ws_expose_function(
+            "pleio.verifyuser",
+            "pleio_verify_user_creds",
+            array(
+                "user" => array('type' => 'string', 'required' => true),
+                "password" => array('type' => 'string', 'required' => true)
+            ),
+            'Verifies user credentials based on email and password.',
+            'POST',
+            false,
+            false
+        );
+
+        function pleio_verify_user_creds($user, $password) {
+            $user_entity = get_user_by_email($user)[0];
+
+            if (!$user_entity) {
+                return json_encode(false);
+            }
+
+            $username = $user_entity->username;
+            $name = $user_entity->name;
+            $admin = elgg_is_admin_user($user_entity->guid);
+            $valid = elgg_authenticate($username, $password);
+
+            $return = array("name" => $name, "valid" => $valid, "admin" => $admin);
+
+            return $return;
+        }
+    }
 }
 
 function pleio_page_handler($page) {
@@ -98,13 +130,6 @@ function pleio_public_pages_handler($hook, $type, $value, $params) {
 }
 
 function pleio_user_icon_url_handler($hook, $type, $value, $params) {
-    $auth = elgg_get_plugin_setting('auth', 'pleio');
-    $auth_url = elgg_get_plugin_setting('auth_url', 'pleio');
-
-    if ($auth == 'oidc') {
-        $auth_url = str_replace("openid", "", $auth_url);
-    }
-
     $entity = $params["entity"];
     $size = $params["size"];
 
@@ -120,11 +145,13 @@ function pleio_user_icon_url_handler($hook, $type, $value, $params) {
     $guid = (int) $entity->guid;
 
     $result = get_data_row("SELECT pleio_guid FROM {$dbprefix}users_entity WHERE guid = $guid");
-    if ($result) {
+    if ($result->pleio_guid) {
         $pleio_guid = $result->pleio_guid;
     } else {
-        $pleio_guid = 0;
+        return $value;
     }
+
+    $auth_url = elgg_get_plugin_setting('auth_url', 'pleio');
 
     $url = $auth_url . "mod/profile/icondirect.php?guid={$pleio_guid}&size={$size}";
 
@@ -218,36 +245,6 @@ function pleio_get_required_profile_fields() {
             }
         }
     }
-
-    return $return;
-}
-
-elgg_ws_expose_function(
-    "pleio.verifyuser",
-    "pleio_verify_user_creds",
-    array(
-        "user" => array('type' => 'string', 'required' => true),
-        "password" => array('type' => 'string', 'required' => true)
-    ),
-    'Verifies user credentials based on email and password.',
-    'POST',
-    false,
-    false
-);
-
-function pleio_verify_user_creds($user, $password) {
-    $user_entity = get_user_by_email($user)[0];
-
-    if (!$user_entity) {
-        return json_encode(false);
-    }
-
-    $username = $user_entity->username;
-    $name = $user_entity->name;
-    $admin = elgg_is_admin_user($user_entity->guid);
-    $valid = elgg_authenticate($username, $password);
-
-    $return = array("name" => $name, "valid" => $valid, "admin" => $admin);
 
     return $return;
 }

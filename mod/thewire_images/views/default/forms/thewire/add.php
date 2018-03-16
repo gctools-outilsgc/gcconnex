@@ -106,7 +106,7 @@ $post_input = elgg_view("input/plaintext", array(
 
 $submit_button = elgg_view("input/submit", array(
 	"value" => $text,
-	"class" => "btn btn-primary mls thewire-submit-button",
+	"class" => "btn btn-primary mls thewire-submit-button only-one-click",
 ));
 
 $mentions = "";
