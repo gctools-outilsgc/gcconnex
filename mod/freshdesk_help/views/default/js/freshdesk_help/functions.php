@@ -265,7 +265,7 @@ function submitTicket(form, lang, source, product){
   var formdata = new FormData();
 
   //create organization field entry from the form
-  if(product == 2100000290){
+  if(product == 2100000290 || product == 2100000516){
     var user_type = $("#user_type").val();
 
     if (user_type == 'federal') {

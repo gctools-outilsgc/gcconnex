@@ -69,7 +69,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
 
   <div class="mrgn-tp-sm">
     <?php
-    if(  $product_id != 2100000290){
+    if(  $product_id == 2100000289 || $product_id == 2100000298){
     	echo '<label for="department">'.elgg_echo('freshdesk:ticket:department').'</label>';
     	echo elgg_view('input/department_field');
     } else {

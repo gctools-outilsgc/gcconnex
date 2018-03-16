@@ -2,13 +2,16 @@
 $mode = get_input('mode');
 if($mode == 'embed'){
 
-  echo '<ul class="elgg-tabs"><li><a href="freshdesk_help?mode=default">Main</a></li><li class="elgg-state-selected active"><a href="freshdesk_help?mode=embed">GCpedia Widget</a></li></ul>';
-  $portal = 2100008990;
+  echo '<ul class="elgg-tabs"><li><a href="freshdesk_help?mode=default">Main</a></li><li class="elgg-state-selected active"><a href="freshdesk_help?mode=embed">Wiki Widget</a></li></ul>';
+  if(!isset($vars['entity']->embed_portal_id)){
+    $vars['entity']->embed_portal_id = 2100008990;
+  }
+  $portal = $vars['entity']->embed_portal_id;
   $action = 'pedia-save.php';
 
 } else {
 
-echo '<ul class="elgg-tabs"><li class="elgg-state-selected active"><a href="freshdesk_help?mode=default">Main</a></li><li><a href="freshdesk_help?mode=embed">GCpedia Widget</a></li></ul>';
+echo '<ul class="elgg-tabs"><li class="elgg-state-selected active"><a href="freshdesk_help?mode=default">Main</a></li><li><a href="freshdesk_help?mode=embed">Wiki Widget</a></li></ul>';
 $action = 'save.php';
 
 //api key
@@ -66,7 +69,36 @@ echo elgg_view("input/select", array(
         'value' => $vars['entity']->product_id));
 echo '</div>';
 
-//embed
+//embed portal
+echo '<div class="basic-profile-field">';
+echo '<label for="embed_portal_id">Embed Portal ID</label>';
+echo elgg_view("input/select", array(
+        'name' => 'params[embed_portal_id]',
+        'id' => 'embed_portal_id',
+        'class' => 'mrgn-bttm-sm form-control',
+        'options_values' => array(
+            2100008990 => "GCpedia",
+            2100009159 => "GCwiki",
+        ),
+        'value' => $vars['entity']->embed_portal_id));
+echo '</div>';
+
+//embed product
+echo '<div class="basic-profile-field">';
+echo '<label for="embed_product_id">Embed Product ID</label>';
+echo elgg_view("input/select", array(
+        'name' => 'params[embed_product_id]',
+        'id' => 'embed_product_id',
+        'class' => 'mrgn-bttm-sm form-control',
+        'options_values' => array(
+            2100000298 => "GCpedia",
+            2100000516 => "GCwiki",
+        ),
+        'value' => $vars['entity']->embed_product_id));
+echo '</div>';
+
+//embed product
+/*
 $params = array(
         'name' => 'params[embed_product_id]',
         'id' => 'embed_product_id',
@@ -77,7 +109,7 @@ $params = array(
 echo '<div class="basic-profile-field">';
 echo '<label for="embed_product_id">Embed Product ID</label>';
 echo elgg_view("input/text", $params);
-echo '</div>';
+echo '</div>';*/
 
 $portal = $vars['entity']->portal_id;
 }
