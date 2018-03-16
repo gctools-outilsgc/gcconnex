@@ -233,7 +233,6 @@ if (sizeof($output_array) > 0) {
   if ($my_page_entity instanceof ElggGroup && $my_page_entity->getContentAccessMode() !== "unrestricted") {
     echo '<meta name="robots" content="noindex, follow">';
   }
-
 } else {
   // if user profile url has a slash at the end, do not index
   preg_match("/\/profile\/.*\//", $_SERVER['REQUEST_URI'], $output_array);
@@ -248,7 +247,27 @@ if ($page_entity instanceof ElggEntity && $page_entity->getSubtype() === 'thewir
 }
 
 // Meta tags for the page
+$page_entity_type = "";
+if ($my_page_entity instanceof ElggEntity)
+  $page_entity_type = $my_page_entity->getSubtype();
+if ($my_page_entity instanceof ElggUser) $page_entity_type = "user";
+if ($my_page_entity instanceof ElggGroup) $page_entity_type = "group";
+
+// condition for pages
+if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
+  $page_entity_type = 'pages';
+}
+
+// Meta tags for the page
 ?>
+
+<?php if ($my_page_entity instanceof ElggEntity) { ?>
+<meta name="platform" content="gcconnex" />
+<meta name="dcterms.type" content= "<?php echo $page_entity_type; ?>" />
+<meta name="dcterms.modified" content="<?php echo date("Y-m-d", $my_page_entity->time_updated); ?>" />
+<meta name="dcterms.description" content="<?php echo strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr')); ?>" /> 
+<?php } ?>
+
 <meta name="description" content="<?php echo $desc; ?>" />
 <meta name="dcterms.title" content="<?php echo $page_title ?>" />
 <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
