@@ -143,7 +143,7 @@ return array(
 
 	'group:accept:invitation' => 'Accepter <span class="wb-inv">la demande d\'adhésion au groupe "%s"</span>',
 	'group:decline:invitation' => 'Rejeter <span class="wb-inv"> la demande d\'adhésion au groupe "%s"</span>',
-
+  'groups:toomanyfriends' => 'Il semble que vous êtes trop populaire! Votre liste de collègues ne peut pas être chargée car vous avez plus de 1 000 collègues. Utilisez l\'option "Trouver un ou des utilisateur(s)" ou "En utilisant l\'adresse de courriel".',
 
 	'entity:like:link:question' => 'Aimer la question %s',
 	'entity:unlike:link:question' => 'Enlever la mention j\'aime de la question %s',
