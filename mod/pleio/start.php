@@ -27,8 +27,6 @@ function pleio_init() {
     elgg_unregister_action("user/requestnewpassword");
 
     elgg_unregister_action("admin/user/resetpassword");
-    elgg_unregister_action("admin/user/delete");
-    elgg_register_action("admin/user/delete", dirname(__FILE__) . "/actions/admin/user/delete.php", "admin");
 
     elgg_unregister_menu_item("page", "users:unvalidated");
     elgg_unregister_menu_item("page", "users:add");
@@ -84,10 +82,16 @@ function pleio_init() {
 
             $username = $user_entity->username;
             $name = $user_entity->name;
+
+            $icon_time = $user_entity->icontime;
+            $avatar = false;
+            if ($icon_time) {
+                $avatar = elgg_get_site_url().'mod/profile/icondirect.php?lastcache='.$icon_time.'&joindate='.$user_entity->getTimeCreated().'&guid='.$user_entity->guid.'&size=master';
+            }
             $admin = elgg_is_admin_user($user_entity->guid);
             $valid = elgg_authenticate($username, $password);
 
-            $return = array("name" => $name, "valid" => $valid, "admin" => $admin);
+            $return = array("name" => $name, "avatar" => $avatar, "valid" => $valid, "admin" => $admin);
 
             return $return;
         }
