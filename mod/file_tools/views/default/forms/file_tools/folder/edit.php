@@ -63,7 +63,7 @@ elgg_set_context("file_tools");
 $form_data .= "<div>";
 $form_data .= "<label>" . elgg_echo("access") . "</label>";
 $form_data .= "<br />";
-$form_data .= elgg_view("input/access", array("name" => "access_id", "value" => $access_id));
+$form_data .= elgg_view("input/access", array("name" => "access_id", "value" => $access_id, 'entity' => $folder));
 $form_data .= "</div>";
 
 // restore context
