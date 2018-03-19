@@ -43,25 +43,6 @@
  echo '</div>';
 
   ?>
-<script>
-
-  // Fix heights on page load
-  equalizeHeights(".article-cat:visible");
-
-  // Fix heights on window resize
-  var iv = null;
-  $(window).resize(function() {
-    if(iv !== null) {
-      window.clearTimeout(iv);
-    }
-
-    // Needs to be a timeout function so it doesn't fire every ms of resize
-    iv = setTimeout(function() {
-            equalizeHeights(".article-cat:visible");
-    }, 120);
-  });
-
-</script>
  </div>
 
 <?php echo elgg_view('contactform/contactform'); ?>
