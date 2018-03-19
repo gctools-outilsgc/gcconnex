@@ -103,6 +103,7 @@ function get_opportunity($user, $guid, $lang)
 	$opportunity->timezone = elgg_echo($opportunityObj->timezone);
 	$opportunity->timecommitment = $opportunityObj->time_commitment;
 	$opportunity->department = $opportunityObj->department;
+	$opportunity->state = $opportunityObj->state;
 
 	//Language metadata
 	$unpacked_array = mm_unpack_mission($opportunityObj);
@@ -233,6 +234,7 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 
 	foreach ($opportunities as $opportunity) {
 		$opportunity->title = gc_explode_translation($opportunity->title, $lang);
+		$opportunityObj = get_entity($opportunity->guid);
 
 		$likes = elgg_get_annotations(array(
 			'guid' => $opportunity->guid,
@@ -245,9 +247,36 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 			'annotation_owner_guid' => $user_entity->guid,
 			'annotation_name' => 'likes'
 		));
-		
+		if($opportunity->owner_guid != $user_entity->guid){
+			error_log('opt owner: '.$opportunity->owner_guid.'opt account: '.$opportunity->account."user guid :".$user_entity->guid);
+			if($opportunityObj->state != 'completed' && $opportunityObj->state != 'cancelled'){
+				$relationship_count = elgg_get_entities_from_relationship(array(
+					'relationship' => 'mission_accepted',
+					'relationship_guid' => $opportunity->guid,
+					'count' => true
+				));	
+				if($relationship_count < $opportunityObj->number) {
+				
+					$opportunity->apply = 'mission_apply'; // user can apply
+				}
+					
+				if(check_entity_relationship($opportunity->guid, 'mission_tentative', $user_entity->guid)) {
+					//console.log($opportunity->title);
+					$opportunity->apply = 'tentative'; // user can accecpt offer
+				}
+				if(check_entity_relationship($opportunity->guid, 'mission_offered', $user_entity->guid)) {
+					$opportunity->apply = 'offered'; // user can accecpt offer
+					
+				}
+				if(check_entity_relationship($opportunity->guid, 'mission_accepted', $user_entity->guid) ||
+				check_entity_relationship($opportunity->guid, 'mission_applied', $user_entity->guid)) {
+					$opportunity->apply = 'withdraw'; // user can accecpt offer
+				
+				}
+			}
+		}
+			
 		$opportunity->liked = count($liked) > 0;
-		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
 		$opportunity->roletype = elgg_echo($opportunityObj->role_type);
 		$opportunity->deadline = $opportunityObj->deadline;
