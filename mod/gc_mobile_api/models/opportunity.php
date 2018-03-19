@@ -33,6 +33,20 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"apply.post",
+	"apply_post",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a opportunity based on user id and opportunity id',
+	'POST',
+	true,
+	false
+);
+
 function get_opportunity($user, $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
@@ -290,4 +304,44 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 	}
 
 	return $opportunities;
+}
+
+
+
+function apply_post($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$entity = get_entity($guid);
+	if (!$entity) {
+		return "Opportunity was not found. Please try a different GUID";
+	}
+	if (!elgg_instanceof($entity, 'object', 'mission')) {
+		return "Invalid opportunity. Please try a different GUID";
+	}
+
+	// Creates an applied relationship between user and mission if there is no relationship there already.
+	if(!check_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid) && !check_entity_relationship($entity->guid, 'mission_tentative', $user_entity->guid)) {
+		add_entity_relationship($entity->guid, 'mission_applied', $user_entity->guid);
+		$message = 'Apply';
+	}
+		
+	// Opt in applicant if they are not opted in yet.
+	if(!check_if_opted_in($user_entity)) {
+		$user_entity->opt_in_missions = 'gcconnex_profile:opt:yes';
+		$user_entity->save();
+	}
+
+	return 'You '.$message;
+
 }
