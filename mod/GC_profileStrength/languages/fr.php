@@ -19,6 +19,11 @@ return array(
     'ps:optin' => "Adhérer",
     'ps:psErr' => "Une erreur est survenue durant l'obtentions de vos informations de profil . Nous travaillons pour résoudre le problème .",
     'badge:complete:achieved:1' => '%s a un profil complet',
+    'ps:avatar:added' => 'Téléchargé',
+    'ps:avatar:notadded' => 'Pas téléchargé',
+    'ps:about:added' => 'Rempli',
+    'ps:about:notadded' => 'Non rempli',
+    'ps:youhave' => 'Your profile is %s percent complete.'
 );
-    
+
 add_translation("fr", $french);

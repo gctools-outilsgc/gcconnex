@@ -2,7 +2,7 @@
 
 /**
  * Profile Strength
- * 
+ *
  * @author Mathieu Blondin Ethan Wallace github.com/ethanWallace
  */
 
@@ -11,19 +11,19 @@ $userEnt = get_user ( $user_guid );
 
 //avatar
 if($userEnt->getIconURL() !=  elgg_get_site_url() . '_graphics/icons/user/defaultmedium.gif'){
-    $avIcon = '<i class="fa fa-check text-primary"></i>';
+    $avIcon = '<i class="fa fa-check text-primary"><span class="wb-inv">' . elgg_echo('ps:avatar:added') . '</span></i>';
     $avTotal = 100;
 }else{
-    $avIcon = '<i class="fa fa-exclamation-triangle text-danger"></i>';
+    $avIcon = '<i class="fa fa-exclamation-triangle text-danger"><span class="wb-inv">' . elgg_echo('ps:avatar:notadded') . '</span></i>';
     $avTotal = 0;
 }
 
 //About me
 if($userEnt->description){
-    $aboutIcon = '<i class="fa fa-check text-primary"></i>';
+    $aboutIcon = '<i class="fa fa-check text-primary"><span class="wb-inv">' . elgg_echo('ps:about:added') . '</span></i>';
     $aboutTotal = 100;
 }else{
-    $aboutIcon = '<i class="fa fa-exclamation-triangle text-danger"></i>';
+    $aboutIcon = '<i class="fa fa-exclamation-triangle text-danger"><span class="wb-inv">' . elgg_echo('ps:about:notadded') . '</span></i>';
     $aboutTotal = 0;
 }
 
@@ -98,36 +98,37 @@ echo '<link rel="stylesheet" href="'.elgg_get_site_url().'mod/GC_profileStrength
 <?php
 //render results
 if($userEnt->profilestrength != 100){
-    echo '<div class="col-md-push-3 col-md-6"><div id="complete"></div></div>';
+    echo '<div class="col-md-push-3 col-md-6"><div aria-hidden="true" id="complete"></div></div>';
+    echo '<span class="wb-inv">'.elgg_echo('ps:youhave', array($complete)).'</span>';
     echo '<div class="clearfix"></div>';
     echo '<details><summary class="bg-primary">'.elgg_echo('ps:details').'</summary>';
 
     //about me / Avatar
 
     echo '<ul class="list-unstyled colcount-sm-2 colcount-md-2 colcount-lg-2 mrgn-tp-sm">';
-    echo '<li><strong>Avatar</strong>: ';
+    echo '<li><strong>Avatar</strong>';
     echo $avIcon;
     echo '</li>';
-    echo '<li><strong>'.elgg_echo('profile:aboutme').'</strong>:  ';
+    echo '<li><strong>'.elgg_echo('profile:aboutme').'</strong>';
     echo $aboutIcon;
     echo '</li></ul>';
 
     //progress bars
 
     echo '<ul class="list-unstyled colcount-sm-1 colcount-md-1 colcount-lg-1">';
-    echo '<li><strong>'. elgg_echo("ps:basicprofile").'</strong>:</li> <li><progress class="progress-bar-striped" max="100" value="'.$basicCount .'"></progress><span>' . $basicCount . '%</span></li>';
-    echo '<li><strong>'. elgg_echo('profile:skills') .'</strong>:</li> <li> <progress class="progress-bar-striped" max="100" value="'.$skillCount .'"></progress><span>' . $skillCount . '%</span></li>';
-    echo '<li><strong>'. elgg_echo('ps:education') .'</strong>:</li> <li> <progress class="progress-bar-striped" max="100" value="'.$eduCount .'"></progress><span>' . $eduCount . '%</span></li>';
-    echo '<li><strong>'. elgg_echo('ps:work') .'</strong>:</li> <li> <progress class="progress-bar-striped" max="100" value="'.$workCount .'"></progress><span>' . $workCount . '%</span></li>';
+    echo '<li><strong style="width:100%;">'. elgg_echo("ps:basicprofile").'</strong> <span style="display: block; width:100%;"><progress class="progress-bar-striped" max="100" value="'.$basicCount .'"><span class="wb-inv">' . $basicCount . '%</span></progress><span>' . $basicCount . '%</span></span></li>';
+    echo '<li><strong style="width:100%;">'. elgg_echo('profile:skills') .'</strong> <span style="display: block; width:100%;"><progress class="progress-bar-striped" max="100" value="'.$skillCount .'"><span class="wb-inv">' . $skillCount . '%</span></progress><span>' . $skillCount . '%</span></span></li>';
+    echo '<li><strong style="width:100%;">'. elgg_echo('ps:education') .'</strong> <span style="display: block; width:100%;"><progress class="progress-bar-striped" max="100" value="'.$eduCount .'"><span class="wb-inv">' . $eduCount . '%</span></progress><span>' . $eduCount . '%</span></span></li>';
+    echo '<li><strong style="width:100%;">'. elgg_echo('ps:work') .'</strong> <span style="display: block; width:100%;"><progress class="progress-bar-striped" max="100" value="'.$workCount .'"><span class="wb-inv">' . $workCount . '%</span></progress><span>' . $workCount . '%</span></span></li>';
     echo '</ul>';
     echo '<div class="clearfix"></div></details>';
 } else {
     /*Strength is at 100%*/
     echo '<div class="text-center">';
     echo elgg_view('output/img', array(
-            'src' => 'mod/GC_profileStrength/graphics/completeBadgeLvl01.png', 
-            'alt' => elgg_echo('badge:complete:achieved:1', array($userEnt->name)), 
-            'title' => elgg_echo('badge:complete:achieved:1', array($userEnt->name)), 
+            'src' => 'mod/GC_profileStrength/graphics/completeBadgeLvl01.png',
+            'alt' => elgg_echo('badge:complete:achieved:1', array($userEnt->name)),
+            'title' => elgg_echo('badge:complete:achieved:1', array($userEnt->name)),
             'style' => 'width:125px;'
             ));
     echo '<p>'.elgg_echo('ps:all-star').'</p>';
@@ -161,7 +162,7 @@ if($userEnt->profilestrength != 100){
     //focus onto the micromission section
     if(elgg_plugin_exists('missions') && elgg_is_active_plugin('missions') && $OptedIn==false){
         echo '<p class="pull-left" style="width: 70%;">'.elgg_echo('ps:optingin').'</p>';
-        
+
         if(!strpos($currentPage,'profile')){
             echo '<a href="'.elgg_get_site_url().'profile/'.$userEnt->username.'#edit-opt-in" class="btn btn-primary mrgn-tp-sm pull-right">'. elgg_echo('ps:optin').'</a>';
         }else{
