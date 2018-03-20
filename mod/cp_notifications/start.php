@@ -201,8 +201,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			$group_name = $params['cp_invite_to_group']['name'];
 			if (elgg_is_active_plugin('wet4')) {
-				$group_name_en = gc_explode_translation($group_name, 'en');
-				$group_name_fr = gc_explode_translation($group_name, 'fr');
+				$group_name_en =  htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($group_name, 'en'))));
+				$group_name_fr = htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($group_name, 'fr'))));
 			}
 
 			$subject = elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'], $group_name_en),'en') . ' | ' . elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'], $group_name_fr),'fr');
@@ -359,7 +359,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_who_made_operator' => $params['cp_who_made_operator'],
 				'cp_group_url' => $params['cp_group_url'],
 			);
-			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'fr')),'fr');
+			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array(htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($params['cp_group_name'], 'en'))))),'en') . ' | ' . elgg_echo('cp_notify:subject:add_grp_operator',array(htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($params['cp_group_name'], 'fr'))))),'fr');
 			$to_recipients[] = $params['cp_to_user'];
 			$info_notif = 'cp_add_grp_operator';						
 			break;
@@ -372,7 +372,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_group_url' => $params['cp_group_url'],
 				'cp_appointer' => $params['cp_appointer']
 			);
-			$subject = elgg_echo('cp_notify:subject:group_admin_transfer',array(gc_explode_translation($params['cp_group_name'],'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:group_admin_transfer',array(gc_explode_translation($params['cp_group_name'],'fr')),'fr');
+			$subject = elgg_echo('cp_notify:subject:group_admin_transfer',array(htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($params['cp_group_name'],'en'))))),'en') . ' | ' . elgg_echo('cp_notify:subject:group_admin_transfer',array(htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($params['cp_group_name'],'fr'))))),'fr');
 			$to_recipients[] = $params['cp_new_owner_user'];
 			$info_notif = 'cp_grp_admin_transfer';									
 			break;
@@ -833,8 +833,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	    switch ($type_of_like) {
 	    	case 'group':
-	    		$group_name_en = gc_explode_translation($content_entity->name, 'en');
-	    		$group_name_fr = gc_explode_translation($content_entity->name, 'fr');
+	    		$group_name_en = htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($content_entity->name, 'en'))));
+	    		$group_name_fr = htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($content_entity->name, 'fr'))));
 
 	    		$subject = elgg_echo(elgg_echo('cp_notify:subject:likes_group', array($liked_by->name, $group_name_en), 'en'));
 	    		$subject .= elgg_echo(elgg_echo('cp_notify:subject:likes_group', array($liked_by->name, $group_name_fr), 'fr'));
@@ -1318,8 +1318,8 @@ function cp_create_notification($event, $type, $object) {
 			$user = get_user($object->owner_guid);
 			$group = $object->getContainerEntity();
 
-			$group_name = gc_explode_translation($group->name,'en');
-			$group_name2 = gc_explode_translation($group->name,'fr');
+			$group_name = htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($group->name,'en'))));
+			$group_name2 = htmlspecialchars(filter_tags(htmlspecialchars_decode(gc_explode_translation($group->name,'fr'))));
 
 			// fem and mas are different (so the subject should be reflected on which subtype is passed)
 			$subtypes_gender_subject = array(
