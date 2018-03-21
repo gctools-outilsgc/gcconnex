@@ -296,7 +296,27 @@ else {
                 'value' => $all_values['value_answer'],
         	));
         	break;
-        
+        case elgg_echo('missions:groupandlevel'):
+            $input_gl_group = elgg_view('input/dropdown', array(
+                'name'=>'group',
+                'value'=>'gl_group',
+                'options'=> mm_echo_explode_setting_string(elgg_get_plugin_setting('gl_group_string', 'missions')),
+                'id'=>'post-mission-gl-group',
+                'class'=>'',
+            ));
+            $content .= <<< EOD
+            <div class="col-sm-9">
+                <div class="col-sm-6">
+                     $input_gl_group;
+                </div>
+                <div class="col-sm-6">
+                    <input class="form-control" id="numeric1" name="level" type="number" data-rule-digits="true" min="1" max="10" step="1" />
+                </div>
+
+            </div>
+EOD;
+            break;
+
         default:
 
         $content .= elgg_view('input/text', array(

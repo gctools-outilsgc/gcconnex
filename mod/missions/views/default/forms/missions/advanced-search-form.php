@@ -41,6 +41,7 @@ else
 		elgg_echo('missions:security_clearance'),
 		elgg_echo('missions:location'),
 		elgg_echo('missions:language'),
+		elgg_echo('missions:groupandlevel'),
 		elgg_echo('missions:time'),
 		elgg_echo('missions:period'),
 		elgg_echo('missions:start_time'),
