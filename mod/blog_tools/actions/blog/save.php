@@ -69,8 +69,6 @@ $values = array(
 	'show_owner' => 'no'
 );
 
-// fail if a required entity isn't set
-$required = array('title', 'description');
 $cart = array(); //Create a array to compare if english or french title and description is in.
 foreach ($values as $name => $default) {
 
@@ -99,11 +97,6 @@ foreach ($values as $name => $default) {
 		$value = htmlspecialchars(get_input('title', $default, false), ENT_QUOTES, 'UTF-8');
 	} else {
 		$value = get_input($name, $default);
-	}
-	
-	if (in_array($name, $required) && empty($value)) {
-		$error = elgg_echo("blog:error:missing:$name");
-		break;
 	}
 
 	switch ($name) {
