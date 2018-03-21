@@ -71,20 +71,18 @@ $values = array(
 
 $cart = array(); //Create a array to compare if english or french title and description is in.
 foreach ($values as $name => $default) {
-
-	 $cart[] = array($name => $values);
+	$value = get_input($name, $default);
+	$cart[$name] = $value;//array($name => $values);
 }
 
-if ($cart['title'] && $cart['title2'] == ''){
+if (trim($cart['title']) == ''  && trim($cart['title2']) == ''){
 	$error = elgg_echo("blog:error:missing:title");
 
 }
 
-if ($cart['description'] && $cart['description2'] == '') {
+if (trim($cart['description']) == '' && trim($cart['description2']) == '') {
 	$error = elgg_echo("blog:error:missing:description");
 }
-
-
 
 // cyu - implement minor edit functionality as per requirements document (notification)
 $minor_edit = get_input('chk_blog_minor_edit');
