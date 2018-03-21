@@ -342,7 +342,8 @@ function elgg_full_entities_view_handler($hook, $type, $value, $params) {
 
 
 function elgg_thewire_list_handler($hook, $type, $value, $params) {
-	echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->description}</a>  <br/>";
+	echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->description}</a>  <br/>";
+	echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->description}</a>  <br/>";
 	return array();
 }
 
