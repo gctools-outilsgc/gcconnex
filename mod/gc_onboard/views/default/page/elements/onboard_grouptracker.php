@@ -26,14 +26,14 @@ $onboard_page = elgg_extract('group_page', $vars);
 <div class="onboarding-cta-holder clearfix col-sm-12">
     <div class="col-sm-9">
         <div class="col-sm-12">
-            <?php if($onboard_page){ 
-                      echo '<h3 class="onboard-cta-title mrgn-tp-sm">';
+            <?php if($onboard_page){
+                      echo '<p style="margin-top:5px;" class="onboard-cta-title"><strong>';
                       echo $cta_title;
-                      echo '</h3>';
+                      echo '</strong></p>';
                   } else {
-                      echo '<h4 class="onboard-cta-title">';
+                      echo '<p style="margin-top:5px;" class="onboard-cta-title"><strong>';
                       echo $cta_title;
-                      echo '</h4>';
+                      echo '</strong></p>';
                   }
                 ?>
             <div class="onboard-cta-desc">
@@ -55,7 +55,7 @@ $onboard_page = elgg_extract('group_page', $vars);
                     }
                 ?>
             </li>
-   
+
         </ul>
     </div>
 </div>
