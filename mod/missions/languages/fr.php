@@ -344,7 +344,7 @@ return array(
 "missions:error:cannot_complete_mission_no_participants" =>	"Vous ne pouvez pas achever une possibilité sans participant actif.",
     'missions:splash:popup_title'=>"Que possibilités êtes vous intéressé?",
     'missions:splash:popup_instruction'=> "Sélectionner les types de possibilités qui vous intéressent (soit comme un hôte ou comme participant).",
-    'missions:splash:welcome'=>"Bienvenue à la Plateforme de possibilités de ConneXions Carrière au sein du Carrefour d'emploi!",
+    'missions:splash:welcome'=>"Bienvenue à la Plateforme de possibilités de ConneXions Carrière au sein du Carrefour de carrière!",
 "missions:first_splash_paragraph" =>	"Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés.",
 "missions:second_splash_paragraph" =>	"Pour participer, consultez certaines de nos possibilités ouvertes ci-dessous et cliquez sur le bouton d'inscription et sélectionnez les types de possibilités qui vous intéressent (soit comme un hôte ou comme participant).",
     "missions:optin:success"=>"Bienvenue à la Plateforme de possibilités de ConneXions Carrière",
@@ -467,7 +467,7 @@ return array(
 "missions:user_department" =>	"Ministère de l'utilisateur",
 "missions:error:no_departments_loaded" =>"Aucun ministère n'est chargé. L'analytique ne peut pas générer les graphiques.",
 "missions:invite_to_opt_in" =>	"Inviter à s'inscrire aux possibilités de ConneXions Carrière",
-"missions:check_micro_missions" =>	"Consultez les micro-missions ainsi que les autres possibilités interministérielles supportés par la Plateforme de possibilités de ConneXions carrière au sein du Carrefour d'emploi! Inscrivez-vous à partir de votre profil GCconnex pour participer!",
+"missions:check_micro_missions" =>	"Consultez les micro-missions ainsi que les autres possibilités interministérielles supportés par la Plateforme de possibilités de ConneXions carrière au sein du Carrefour de carrière! Inscrivez-vous à partir de votre profil GCconnex pour participer!",
 "missions:view" =>	"Afficher",
 "missions:offer" =>	"Offrir",
 "missions:reject" =>	"Refuser",
@@ -556,9 +556,9 @@ Veuillez noter que les renseignements que vous saisissez dans ces champs seront 
 "missions:placeholder_i" =>	"Cela supprimera de manière permanente la personne de la liste des participants et des candidats. L'employé recevra un avis l'informant qu'il a été retiré de cette possibilité.",
 "missions:placeholder_i2" => "Cela supprimera de manière permanente la personne de la liste des participants. L'employé recevra un avis l'informant qu'il a été retiré de cette possibilité.",
 "missions:placeholder_j" =>	"Cliquez ici pour obtenir de l'orientation et des définitions au sujet de chaque type de possibilité (s'ouvre dans un nouvel onglet)",
-"missions:placeholder_k" =>	"La fonction « S'inscrire » prend en charge la fonctionnalité de la Plateforme de possibilités de ConneXions Carrière à l'intérieur du Carrefour d'emploi, en parallèle avec les renseignements de votre profil GCconnex, afin de permettre aux employés de découvrir des possibilités d'intérêt.
+"missions:placeholder_k" =>	"La fonction « S'inscrire » prend en charge la fonctionnalité de la Plateforme de possibilités de ConneXions Carrière à l'intérieur du Carrefour de carrière, en parallèle avec les renseignements de votre profil GCconnex, afin de permettre aux employés de découvrir des possibilités d'intérêt.
 
-Cliquez ici pour en savoir plus au sujet du Carrefour d'emploi et de chaque type de possibilité.
+Cliquez ici pour en savoir plus au sujet du Carrefour de carrière et de chaque type de possibilité.
 
 L'approbation de votre superviseur est nécessaire avant que vous soyez en mesure d'accepter une offre pour tout type de possibilité. En vous inscrivant à un type de possibilité, vous attestez que vous avez eu une conversation initiale avec votre superviseur au sujet de l'utilisation de ces outils de perfectionnement professionnel et de mobilité.",
 
@@ -663,7 +663,7 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:settings:analytics_on" =>   "Afficher l'onglet des analytiques?",
 "missions:cannot_cancel_mission_with_participants" =>     "Veuillez supprimer tout participant actif et tout participant auxquels vous avez envoyé une offre avant la désactivation de cette possibilité.",
 "missions:required" =>    "(requis)",
-"missions:placeholder_a" =>   "Bienvenue à la Plateforme de possibilités de ConneXions Carrière au sein du Carrefour d'emploi! Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés. On encourage les employés à s'inscrire aux types de possibilité de perfectionnement professionnel et de mobilité au même niveau dans leur profil afin de pleinement profiter de cet outil. <a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation</a>.",
+"missions:placeholder_a" =>   "Bienvenue à la Plateforme de possibilités de ConneXions Carrière au sein du Carrefour de carrière! Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés. On encourage les employés à s'inscrire aux types de possibilité de perfectionnement professionnel et de mobilité au même niveau dans leur profil afin de pleinement profiter de cet outil. <a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation</a>.",
 
 /*Notifictaions*/
         "missions:new_micromission_notification"=>"Une nouvelle opportunité a été créée dans la Plateforme de possibilités de ConneXions Carrière",
