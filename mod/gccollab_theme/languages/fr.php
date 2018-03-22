@@ -50,7 +50,7 @@ return array(
   'wet:login_welcome'=>'Welcome to GCcollab',
   'wet:jobs:link' => 'emplois.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
   'wet:jobs:href' => "https://www.canada.ca/fr/services/emplois/opportunites/gouvernement.html",
-  'wet:marketplace:link' => "Carrefour d'emploi",
+  'wet:marketplace:link' => "Carrefour de carrière",
   'wet:marketplace:href' => elgg_get_site_url() . "groups/profile/6161",
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations de toutes les regions du Canada",
   'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions qui se passe à l’instant",

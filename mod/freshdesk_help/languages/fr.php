@@ -49,7 +49,7 @@ return array(
   'freshdesk:ticket:types:group' => "Relatif aux groupes",
   'freshdesk:ticket:types:data' => "Demande de données",
   'freshdesk:ticket:types:training' => "Formation",
-  'freshdesk:ticket:types:jobs' => "Carrefour d'emploi",
+  'freshdesk:ticket:types:jobs' => "Carrefour de carrière",
   'freshdesk:ticket:types:enhancement' => "Amélioration",
   'freshdesk:ticket:types:flag' => "Signaler un contenu ou comportement",
   'freshdesk:ticket:types:account' => "Création de compte",
