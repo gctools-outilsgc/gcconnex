@@ -144,7 +144,7 @@ $english = array(
     'cp_notifications:personal_mentions' => 'Notify me when someone @mentions me',
     'cp_notifications:personal_content' => 'Notify me when something happens on content I create',
     'cp_notifications:personal_colleagues' => 'Notify me when my colleagues create content',
-	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
+	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Career Marketplace",
 
 	'cp_notifications:no_group_content' => "(No group content subscription)",
 
@@ -170,8 +170,8 @@ $english = array(
 	'cp_newsletter:heading:notify:personal:singular' => "Personal notification", 	
 	'cp_newsletter:heading:notify:personal:plural' => "Personal notifications", 
 	
-	'cp_newsletter:heading:notify:mission:singular' => "Opportunities Platform notification", 	
-	'cp_newsletter:heading:notify:mission:plural' => "Opportunities Platform notifications", 
+	'cp_newsletter:heading:notify:mission:singular' => "Career Marketplace notification", 	
+	'cp_newsletter:heading:notify:mission:plural' => "Career Marketplace notifications", 
 	
 	'cp_newsletter:heading:notify:group:singular' => "Group notification", 	
 	'cp_newsletter:heading:notify:group:plural' => "Group notifications", 
@@ -230,7 +230,7 @@ $english = array(
 
 
 	'cp_newsletter:body:view_comment_reply' => 'View comment or discussion reply',
-	'cp_new_mission:subject' => "A new opportunity was posted on the Opportunities Platform",
+	'cp_new_mission:subject' => "A new opportunity was posted on the Career Marketplace",
 
 
 	// content edit section
