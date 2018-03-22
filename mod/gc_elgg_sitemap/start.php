@@ -342,10 +342,12 @@ function elgg_full_entities_view_handler($hook, $type, $value, $params) {
 
 
 function elgg_thewire_list_handler($hook, $type, $value, $params) {
-	echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->description}</a>  <br/>";
+	echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->description}</a>  <br/>";
+	echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->description}</a>  <br/>";
 	return array();
 }
 
+/// lists out all the entities on the page
 function elgg_entities_list_handler($hook, $type, $value, $params) {
 	
 	$empty = array();
@@ -355,24 +357,34 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 		return $empty;
 	}
 
+
+	if ($value['entity']->title !== '') {
+		$pArray = json_decode($value['entity']->title);
+		if ($pArray->en === '' && $pArray->fr === '') return $empty;
+	} 
+
 	$context = get_context();
 	switch ($context) {
 		case 'file':
 		case 'event_calendar':
-			echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->title}</a>  <br/>";
+			echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->title}</a>  <br/>";
+			echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->title}</a>  <br/>";
 			break;
 		case 'groups':
 			$group_url = elgg_get_site_url()."groups/profile/{$value['entity']->guid}/";
-			echo "<a href='{$group_url}'>{$value['entity']->name}</a>  <br/>";
+			echo "<a href='{$group_url}?language=en'>{$value['entity']->name}</a>  <br/>";
+			echo "<a href='{$group_url}?language=fr'>{$value['entity']->name}</a>  <br/>";
 			break;
 
 		case 'members':
 			$member_url = elgg_get_site_url()."profile/{$value['entity']->username}";
-			echo "<a href='{$member_url}'>{$value['entity']->username}</a>  <br/>";
+			echo "<a href='{$member_url}?language=en'>{$value['entity']->username}</a>  <br/>";
+			echo "<a href='{$member_url}?language=fr'>{$value['entity']->username}</a>  <br/>";
 			break;
 
 		default:
-			echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->title}</a>  <br/>";
+			echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->title}</a>  <br/>";
+			echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->title}</a>  <br/>";
 		
 	}
 
