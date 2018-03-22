@@ -40,7 +40,7 @@ if ($summary === false) {
 		'class' => 'elgg-river-subject',
 		'is_trusted' => true,
 	));
-    
+
 }
 
 $message = elgg_extract('message', $vars);
@@ -73,7 +73,7 @@ if($subtype_test == 'comment' || $subtype_test =='discussion_reply'){
     $container = $container->getContainerEntity();
     $test = 'You need to find the group I am in.';
     $commentordiscuss = true;
-    
+
     //$subtype_test2 = $subtype_test->getContainerEntity();
 }else{
     $test = '';
@@ -85,18 +85,24 @@ if($subtype_test == 'comment' || $subtype_test =='discussion_reply'){
 
 
 if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
-	$group_link = elgg_view('output/url', array(
+	$group_string = elgg_view('output/url', array(
 		'href' => $container->getURL(),
 		'text' => $name,
 		'is_trusted' => true,
 	));
+
+	$group_link = elgg_view('output/url', array(
+		'href' => $container->getURL(),
+		'text' => $name,
+		'is_trusted' => true,
+		'tabindex' => '-1'
+	));
     //Nick - Changed "in the group" to just the group link in order to show this is group content. May need some looking at
-	$group_string = $group_link;
     $group_image = elgg_view_entity_icon($container, 'medium');
-    $in_the_group = elgg_echo('river:ingroup', array($group_string));
+    $in_the_group = elgg_echo('river:ingroup', array($group_link));
    // $group_testing = elgg_view_image_block($group_image, $group_link);
 
-    
+
 }
 //so when the activity happens in a group then display the users icon and stuff
 $subject = $item->getSubjectEntity();
@@ -105,7 +111,7 @@ $user_icon = elgg_view_entity_icon($subject, 'small');
 
 //removed $responses
 //Nick - commented out comment or discuss var for instances of comments on blogs not within a group.
-//Nick - checking for group activity context so it will use the other layout 
+//Nick - checking for group activity context so it will use the other layout
 if($group_string /*|| $commentordiscuss*/ && !elgg_in_context('group_activity_tab')){
     $identify_activity = elgg_echo('group');
     echo <<<RIVER
@@ -119,8 +125,8 @@ if($group_string /*|| $commentordiscuss*/ && !elgg_in_context('group_activity_ta
 </div>
 <div class="  mrgn-bttm-sm mrgn-tp-sm">
 
-$message 
-$attachments 
+$message
+$attachments
 
 </div>
 
@@ -143,4 +149,3 @@ $attachments
 RIVER;
 
 }
-

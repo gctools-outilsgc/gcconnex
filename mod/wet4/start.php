@@ -55,6 +55,8 @@ function wet4_theme_init()
 	elgg_register_plugin_hook_handler('register', 'menu:widget', 'wet4_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'wet4_elgg_page_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:title', 'consistent_menu_styler');
+		elgg_register_plugin_hook_handler('register', 'menu:title2', 'consistent_menu_styler_alt');
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_likes_entity_menu_setup', 400);
 
@@ -370,6 +372,23 @@ function _elgg_set_landing_page()
 	return false;
 }
 
+function consistent_menu_styler($hook, $type, $menu, $params) {
+	$classes = array('btn', 'btn-primary', 'btn-md');
+	foreach ($menu as $key => $item) {
+							$item->setLinkClass($classes);
+		 }
+
+	return $menu;
+}
+
+function consistent_menu_styler_alt($hook, $type, $menu, $params) {
+	$classes = array('btn', 'btn-default', 'btn-md');
+	foreach ($menu as $key => $item) {
+							$item->setLinkClass($classes);
+		 }
+
+	return $menu;
+}
 
 
 /*
@@ -953,7 +972,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
                 );
                 $return[] = ElggMenuItem::factory($options);
             }
-  
+
 	if ($entity->canEdit() && $handler) {
         //checks so the edit icon is not placed on incorrect entities
       if($handler != 'group_operators'){

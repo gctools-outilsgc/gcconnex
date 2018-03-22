@@ -30,37 +30,35 @@
     echo ($context === 'gcforums') ? '<section class="col-md-12 mrgn-bttm-md" id="wb-cont">' : '<section class="col-md-8 mrgn-bttm-md" id="wb-cont">';
 
 	echo elgg_view('page/layouts/elements/header', $vars);
-    
+
     // This basically moves the "page menu" element to the tabs on pages where the side bar links are now tabs :)
 	if ($context == 'friends' || $context == 'messages' || $context == 'settings')
         echo elgg_view_menu('page', array('sort_by' => 'priority'));
 
     // @todo deprecated so remove in Elgg 2.0
 	if (isset($vars['area1'])) echo $vars['area1'];
-			
+
 	if (isset($vars['content'])) {
-        
+
         if (elgg_is_logged_in() && $context !== 'group_profile') {
 
             $buttons = elgg_view_menu('title', array(
                'sort_by' => 'priority',
-               'class' => 'list-inline pull-right',
-                'item_class' => 'btn btn-primary btn-md',
+               'class' => 'list-inline',
             ));
 
             $buttons2 = elgg_view_menu('title2', array(
                'sort_by' => 'priority',
-               'class' => 'list-inline pull-right',
-                'item_class' => 'btn btn-default btn-md mrgn-rght-md',
+               'class' => 'list-inline',
             ));
 
-            echo "<div class='clearfix'>{$buttons} {$buttons2}</div>";
-            
+            echo "<div class='title-menu-container clearfix'>{$buttons} {$buttons2}</div>";
+
         }
         echo $vars['content'];
-		
+
 	}
-    
+
 
     echo elgg_view('page/layouts/elements/footer', $vars);
 ?>
@@ -68,9 +66,9 @@
 
     <section class="col-md-4 pull-right">
 
-<?php // On smaller screens, blocks are stacked in left to right order: content, sidebar.      
-   echo elgg_view('page/elements/sidebar', $vars);      
-?>      
-  
+<?php // On smaller screens, blocks are stacked in left to right order: content, sidebar.
+   echo elgg_view('page/elements/sidebar', $vars);
+?>
+
 	</section>
 </div>
