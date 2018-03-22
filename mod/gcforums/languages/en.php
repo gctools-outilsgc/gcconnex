@@ -104,7 +104,7 @@ $english = array(
 	"gcforums:no_comments" => "<i>No comments have been made yet... Be the first!</i>",
 	"gcforums:categories_not_available" => "<i>Currently No Categories Available</i>",
 
-	"gcforums:jmp_menu" => "Jobs Marketplace",
+	"gcforums:jmp_menu" => "Career Marketplace",
 	"gcforums:jmp_url" => $site_url . "groups/profile/7617072",
 
 	"gcforums:notification_subject_topic" => "New forum topic",
