@@ -118,6 +118,7 @@ if ($show_menu) {
         $badge = '<div class="gcProfileBadge">';
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/amb_badge_v1_5.png',
+						'aria-hidden' => 'true',
             'class' => 'img-responsive',
             'title' => elgg_echo('gcProfilePictureBadges:ambassador'),
 						'alt' => elgg_echo('gcProfilePictureBadges:ambassador'),
@@ -134,6 +135,7 @@ if ($show_menu) {
 
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/'.$user->init_badge.'.png',
+						'aria-hidden' => 'true',
             'class' => 'img-responsive',
             'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$user->init_badge),
 						'alt' => elgg_echo('gcProfilePictureBadges:badge:title:'.$user->init_badge),
@@ -146,7 +148,7 @@ if ($show_menu) {
 
 $icon = elgg_view('output/img', array(
     'src' => $user->getIconURL($size),
-    'alt' => $name,
+    'alt' => elgg_echo('avatar:alt:tag', array($name)),
     'title' => $name,
     'class' => $img_class . $badgeBorder,
 ));
@@ -171,7 +173,7 @@ if ($use_link) {
 		'href' => $url,
 		'text' => $badge . $icon,
 		'is_trusted' => true,
-		'class' => $class,
+		'class' => $class. ' addMoreFocus',
 	));
 
 } else {

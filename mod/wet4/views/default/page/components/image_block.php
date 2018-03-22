@@ -5,7 +5,7 @@
  *
  * Common pattern where there is an image, icon, media object to the left
  * and a descriptive block of text to the right.
- * 
+ *
  * ---------------------------------------------------------------
  * |          |                                      |    alt    |
  * |  image   |               body                   |   image   |
@@ -58,8 +58,8 @@ if ($image) {
 
 if ($alt_image) {
 	$alt_image = "<div class=\"elgg-image-alt\">$alt_image</div>";
-}    
-    
+}
+
  echo <<<HTML
 
 <div class="$class clearfix " $id>
@@ -67,15 +67,15 @@ if ($alt_image) {
 	$alt_image$body
 
     <div class=" elgg-body clearfix edit-comment">
-    
+
     </div>
 </div>
 
 HTML;
-    
-    
+
+
 }else if(elgg_in_context('file_tools_selector')){ //for files and folders
-    
+
 
 
 if ($image) {
@@ -85,13 +85,13 @@ if ($image) {
 if ($alt_image) {
 	$alt_image = '<div class="elgg-image-alt  col-xs-1 mrgn-tp-md">' . $alt_image . '</div>';
 }
-    
+
     //see if entity is file or folder
 $entity = elgg_extract('subtype', $vars, '');
 $guid = elgg_extract('guid', $vars, '');
 
 
-    
+
 
 //only display move link on files
 if($entity == 'file' && elgg_is_logged_in() && elgg_get_logged_in_user_entity()->canEdit()){
@@ -100,7 +100,7 @@ if($entity == 'file' && elgg_is_logged_in() && elgg_get_logged_in_user_entity()-
     $body = "<div class=\"mrgn-tp-sm col-xs-9\">$body</div>";
     $move_link = '';
 }
- 
+
 
 
 
@@ -109,7 +109,7 @@ echo <<<HTML
 <div class="$class clearfix mrgn-bttm-sm" $id>
 	$alt_image$image$body
     <div class=" elgg-body clearfix edit-comment">
-    
+
     </div>
 </div>
 HTML;
@@ -119,7 +119,7 @@ HTML;
 
     if(elgg_in_context('custom_index_widgets wire') || elgg_in_context('widgets')){
         if ($image) {
-            $image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";        
+            $image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
         }
         $body = '<div class="col-xs-10">' . $body . '</div>';
     } else {
@@ -138,17 +138,17 @@ HTML;
 HTML;
 
 }else{
-    
+
     $body = "<div class=\"mrgn-tp-sm col-xs-10 noWrap\">$body</div>";
 
 if ($image) {
-	$image = "<div aria-hidden=\"true\" class=\"mrgn-tp-sm col-xs-2\">$image</div>";
+	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
      //$echo = elgg_get_context();
 }
 
 if ($alt_image) {
 	$alt_image = "<div class=\"elgg-image-alt\">$alt_image</div>";
-   
+
 }
 
 echo <<<HTML
@@ -158,7 +158,7 @@ echo <<<HTML
 	$image$alt_image$body$echo
     <div class="clearfix"></div>
     <div class=" elgg-body edit-comment">
-   
+
     </div>
 </article>
 <div class="clearfix"></div>

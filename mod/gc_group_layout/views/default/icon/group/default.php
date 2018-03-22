@@ -65,13 +65,13 @@ if($imginfo){
 	$realratio = $imginfo[0]/$imginfo[1];
   $img_height = $size != 'master' ? $icon_sizes[$size]['h'] : NULL;
   $img_width = $size != 'master' ? $icon_sizes[$size]['w'] : NULL;
-  
+
 	//set ratio greater than realratio by default in case $img_height = 0
 	$setratio = $realratio + 1;
 	if(!empty($img_height)){
 		$setratio = $img_width/$img_height;
 	}
-	    		
+
 	// set the largest dimension to "auto"
 	if($realratio > $setratio || empty($img_height)){
 		// constrain the height
@@ -85,7 +85,7 @@ if($imginfo){
 $img = '<div class="au_subgroups_group_icon au_subgroups_group_icon-' . $vars['size'] . '-wet4">';
 $img .= elgg_view('output/img', array(
 	'src' => $entity->getIconURL($vars['size']),
-	'alt' => gc_explode_translation($title,$lang),
+	'alt' => elgg_echo('group:image:alt', array(gc_explode_translation($title,$lang))),
 	'class' => $class . 'img-responsive img-circle',
 	'width' => $img_width,
 	'height' => $img_height,
@@ -97,6 +97,7 @@ if ($url) {
 		'href' => $url,
 		'text' => $img,
 		'is_trusted' => true,
+		'class' => ' addMoreFocus'
 	);
 	$class = elgg_extract('link_class', $vars, '');
 	if ($class) {
