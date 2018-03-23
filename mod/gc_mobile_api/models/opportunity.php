@@ -277,7 +277,6 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 	foreach ($opportunities as $opportunity) {
 	
 		$opportunity->title = gc_explode_translation($opportunity->title, $lang);
-		$opportunityObj = get_entity($opportunity->guid);
 	
 		$likes = elgg_get_annotations(array(
 			'guid' => $opportunity->guid,
@@ -320,6 +319,7 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 		}
 			
 		$opportunity->liked = count($liked) > 0;
+		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
 		$opportunity->roletype = elgg_echo($opportunityObj->role_type);
 		$opportunity->deadline = $opportunityObj->deadline;
@@ -329,8 +329,6 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 		$opportunity->userDetails = get_user_block($opportunity->owner_guid, $lang);
 		$opportunity->description = clean_text(gc_explode_translation($opportunity->description, $lang));
 		$opportunity->state = $opportunityObj->state;
-		error_log('opportunity '.print_r($opportunity,true));
-	
 
 	}
 
