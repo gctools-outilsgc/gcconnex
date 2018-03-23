@@ -1,7 +1,7 @@
 
 <?php
 /**
- * two_column.php 
+ * two_column.php
  *
  * Elgg two-column layout
  *
@@ -22,7 +22,15 @@
 //if (isset($vars['class'])) {
 //    $class = "$class {$vars['class']}";
 //}
+if(elgg_get_context() == 'groups'){
+	echo elgg_view('page/elements/cover_photo', array());
+	echo elgg_view('groups/profile/summary', $vars);
+	elgg_push_context('groupSubPage');
+	echo '<div class="two-column-menu">'.elgg_view('groups/profile/tab_menu').'</div>';
+	elgg_pop_context();
+}
 echo $vars['title'];
+
 if(elgg_get_context() =='contactform'){
 	$message=elgg_get_plugin_setting('message','contactform');
 	$namefr=elgg_get_plugin_setting('namefr','contactform');
@@ -110,7 +118,7 @@ if ($vars['context']){
 	$vars['content'] = $filter . $vars['content'];
 }
 
-		
+
     echo '<section class="col-md-6">';
 
 		echo $vars['content'];
