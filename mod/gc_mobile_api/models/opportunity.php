@@ -33,6 +33,48 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"apply.post",
+	"apply_post",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a opportunity based on user id and opportunity id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"withdraw.post",
+	"withdraw_post",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a opportunity based on user id and opportunity id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"accept.post",
+	"accept_post",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a opportunity based on user id and opportunity id',
+	'POST',
+	true,
+	false
+);
+
 function get_opportunity($user, $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
@@ -103,6 +145,7 @@ function get_opportunity($user, $guid, $lang)
 	$opportunity->timezone = elgg_echo($opportunityObj->timezone);
 	$opportunity->timecommitment = $opportunityObj->time_commitment;
 	$opportunity->department = $opportunityObj->department;
+	$opportunity->state = $opportunityObj->state;
 
 	//Language metadata
 	$unpacked_array = mm_unpack_mission($opportunityObj);
@@ -232,8 +275,9 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 	$opportunities = json_decode($all_opportunities);
 
 	foreach ($opportunities as $opportunity) {
+	
 		$opportunity->title = gc_explode_translation($opportunity->title, $lang);
-
+	
 		$likes = elgg_get_annotations(array(
 			'guid' => $opportunity->guid,
 			'annotation_name' => 'likes'
@@ -245,7 +289,35 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 			'annotation_owner_guid' => $user_entity->guid,
 			'annotation_name' => 'likes'
 		));
-		
+		if($opportunity->owner_guid != $user_entity->guid){
+			
+			if($opportunityObj->state != 'completed' && $opportunityObj->state != 'cancelled'){
+				$relationship_count = elgg_get_entities_from_relationship(array(
+					'relationship' => 'mission_accepted',
+					'relationship_guid' => $opportunity->guid,
+					'count' => true
+				));	
+				if($relationship_count < $opportunityObj->number) {
+				
+					$opportunity->apply = 'mission_apply'; // user can apply
+				}
+					
+				if(check_entity_relationship($opportunity->guid, 'mission_tentative', $user_entity->guid)) {
+					//console.log($opportunity->title);
+					$opportunity->apply = 'tentative'; // user can accecpt offer
+				}
+				if(check_entity_relationship($opportunity->guid, 'mission_offered', $user_entity->guid)) {
+					$opportunity->apply = 'offered'; // user can accecpt offer
+					
+				}
+				if(check_entity_relationship($opportunity->guid, 'mission_accepted', $user_entity->guid) ||
+				check_entity_relationship($opportunity->guid, 'mission_applied', $user_entity->guid)) {
+					$opportunity->apply = 'withdraw'; // user can accecpt offer
+				
+				}
+			}
+		}
+			
 		$opportunity->liked = count($liked) > 0;
 		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
@@ -261,4 +333,120 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 	}
 
 	return $opportunities;
+}
+
+
+
+function apply_post($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$entity = get_entity($guid);
+	if (!$entity) {
+		return "Opportunity was not found. Please try a different GUID";
+	}
+	if (!elgg_instanceof($entity, 'object', 'mission')) {
+		return "Invalid opportunity. Please try a different GUID";
+	}
+
+	// Creates an applied relationship between user and mission if there is no relationship there already.
+	if(!check_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid) && !check_entity_relationship($entity->guid, 'mission_tentative', $user_entity->guid)) {
+		add_entity_relationship($entity->guid, 'mission_applied', $user_entity->guid);
+		$message = elgg_echo('missions:you_have_applied_to_mission', array($entity->job_title, $entity->name));
+		
+	}
+	
+	// Opt in applicant if they are not opted in yet.
+	if(!check_if_opted_in($user_entity)) {
+		$user_entity->opt_in_missions = 'gcconnex_profile:opt:yes';
+		$user_entity->save();
+	}
+	return $message;
+
+}
+
+function withdraw_post($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$entity = get_entity($guid);
+	if (!$entity) {
+		return "Opportunity was not found. Please try a different GUID";
+	}
+	if (!elgg_instanceof($entity, 'object', 'mission')) {
+		return "Invalid opportunity. Please try a different GUID";
+	}
+
+	// Deletes the tentative relationship between mission and applicant.
+if(check_entity_relationship($entity->guid, 'mission_tentative', $user_entity->guid)) {
+	$message_return = 'missions:declination_has_been_sent';
+	remove_entity_relationship($entity->guid, 'mission_tentative', $user_entity->guid);
+}
+if(check_entity_relationship($entity->guid, 'mission_applied', $user_entity->guid)) {
+	$message_return = 'missions:withdrawal_has_been_sent';
+	remove_entity_relationship($entity->guid, 'mission_applied', $user_entity->guid);
+}
+if(check_entity_relationship($entity->guid, 'mission_offered', $user_entity->guid)) {
+	$message_return = 'missions:declination_has_been_sent';
+	remove_entity_relationship($entity->guid, 'mission_offered', $user_entity->guid);
+}
+if(check_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid)) {
+	$message_return = 'missions:withdrawal_has_been_sent';
+	remove_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid);
+  mm_complete_mission_inprogress_reports($entity, true);
+}
+	return elgg_echo($message_return, array($entity->job_title));
+	
+
+}
+
+function accept_post($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$entity = get_entity($guid);
+	if (!$entity) {
+		return "Opportunity was not found. Please try a different GUID";
+	}
+	if (!elgg_instanceof($entity, 'object', 'mission')) {
+		return "Invalid opportunity. Please try a different GUID";
+	}
+
+	if(check_entity_relationship($entity->guid, 'mission_offered', $user_entity->guid)) {
+
+		remove_entity_relationship($entity->guid, 'mission_offered', $user_entity->guid);
+		add_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid);
+	}
+	
+	return elgg_echo('missions:now_participating_in_mission', array($entity->job_title));
 }
