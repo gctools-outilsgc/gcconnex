@@ -275,7 +275,7 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 	$opportunities = json_decode($all_opportunities);
 
 	foreach ($opportunities as $opportunity) {
-	
+		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->title = gc_explode_translation($opportunity->title, $lang);
 	
 		$likes = elgg_get_annotations(array(
@@ -315,11 +315,12 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 					$opportunity->apply = 'withdraw'; // user can accecpt offer
 				
 				}
+			}else{
+				$opportunity->apply = 'close';
 			}
 		}
 			
 		$opportunity->liked = count($liked) > 0;
-		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
 		$opportunity->roletype = elgg_echo($opportunityObj->role_type);
 		$opportunity->deadline = $opportunityObj->deadline;
