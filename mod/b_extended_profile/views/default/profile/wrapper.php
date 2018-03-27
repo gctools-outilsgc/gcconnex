@@ -85,7 +85,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             finit_ajax_block('work-experience');
         }
 
-        if ( has_content($user, 'gc_skills') && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false ) {
+        if ( has_content($user, 'gc_skills') && (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) ) {
             init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
             echo elgg_view('b_extended_profile/skills');
             finit_ajax_block('skills');
@@ -97,7 +97,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
          * Constructs the opt-in section according to the original plugin methodology.
          */
         if (elgg_is_active_plugin('missions') && $user->opt_in_missions == 'gcconnex_profile:opt:yes' 
-            && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
+            && (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) ) {
 
             echo elgg_view('missions/completed-missions');
         }
@@ -105,7 +105,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
          * END MODIFIED CODE
          */
 
-        if ( (has_content($user, 'english') || has_content($user, 'french')) && stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false ) {
+        if ( (has_content($user, 'english') || has_content($user, 'french')) && (stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) ) {
             init_ajax_block(elgg_echo('gcconnex_profile:sle'), 'languages', $user);
             echo elgg_view('b_extended_profile/languages');
             finit_ajax_block('languages');
@@ -115,7 +115,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
          * MODIFIED CODE
          * Constructs the opt-in section according to the original plugin methodology.
          */
-        if (elgg_is_active_plugin('missions') && has_content($user, 'opt-in') && stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false ) {
+        if (elgg_is_active_plugin('missions') && has_content($user, 'opt-in') && ( stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) ) {
             init_ajax_block(elgg_echo('gcconnex_profile:opt:opt-in'), 'opt-in', $user);
             echo elgg_view('b_extended_profile/opt-in');
             finit_ajax_block('opt-in');
@@ -139,7 +139,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         }
 
         // don't let the crawler index the widget board of the profile
-        if (stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false) {
+        if (stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
             echo '<h2 class="wb-inv">'.$user->name."'s widgets</h2>";
 
             $num_columns = elgg_extract('num_columns', $vars, 2);

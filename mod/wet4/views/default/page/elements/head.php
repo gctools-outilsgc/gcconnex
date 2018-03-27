@@ -43,7 +43,7 @@ $gc_language = get_current_language();
 $elgg_entity = $my_page_entity;
 
 
-if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) {
   // check if this is a (user or group) profile
   if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
 
@@ -278,7 +278,7 @@ if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
 
 
 <?php // hide the ajax toggle (hide the div)
-if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) { ?>
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) { ?>
   <style>
     .change_language {
       display:none;
