@@ -221,9 +221,9 @@ if (!$can_index) {
 }
 
 
-if (get_input('language') != 'en' || get_input('language') != 'fr') {
+/*if (get_input('language') != 'en' || get_input('language') != 'fr') {
   echo '<meta name="robots" content="noindex, follow">';
-}
+}*/
 // TODO closed group - noindex
 
 
