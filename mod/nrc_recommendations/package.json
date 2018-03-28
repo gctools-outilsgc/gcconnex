@@ -1,0 +1,16 @@
+{
+  "name": "nrc_recommendations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jsrsasign": "^8.0.4",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}
