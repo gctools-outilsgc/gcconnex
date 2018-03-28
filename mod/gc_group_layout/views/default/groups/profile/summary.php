@@ -84,7 +84,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             <div class="mrgn-bttm-sm pull-left  mrgn-rght-md">
 				<?php
 
-					if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
+					if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
 						echo '<b>'.elgg_echo("groups:owner").'</b>';
 						echo elgg_view('output/url', array(
 							'text' => $owner->name,
@@ -110,10 +110,10 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 	                    'class' => '',
 	                ));
 
-	                if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
+	                if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
 						echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $all_members_link;
 				} else {
-					if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
+					if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
 						echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $num_members;
 				}
             ?>
@@ -121,7 +121,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
             <div class="mrgn-bttm-sm pull-left mrgn-lft-lg">
             <?php
-            	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
+            	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
 	                echo elgg_view('output/url', array(
 	                    'href' => "http://stats.gctools-outilsgc.ca/gcconnex?filter=".$group->guid,
 	                    'text' =>  elgg_echo('groups:stats'),
@@ -150,7 +150,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             if(!$tags){
             } else {
 
-            	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
+            	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
                 	echo $tags;
     
             }
@@ -171,7 +171,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 <?php
 
 										 	// cyu - check if the gsa crawler is on this page, hide the likes and share if it is (we don't need to crawl them)
-										 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
+										 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
 
 												//Nick - Added a link to share the group on the wire
 												if (elgg_is_logged_in()) {
@@ -374,7 +374,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 														 'item_class' => 'btn btn-primary',
 												 ));
 
-										 		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
+										 		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
 													echo $buttons;
 										 }
 										 }
