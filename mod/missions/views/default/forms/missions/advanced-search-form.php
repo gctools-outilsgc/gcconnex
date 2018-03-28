@@ -41,8 +41,7 @@ else
 		elgg_echo('missions:security_clearance'),
 		elgg_echo('missions:location'),
 		elgg_echo('missions:language'),
-		elgg_echo('missions:groupandlevel') . " - " . elgg_echo('missions:gl:group'),
-		elgg_echo('missions:groupandlevel') . " - " . elgg_echo('missions:gl:level'),
+		elgg_echo('missions:groupandlevel'),
 		elgg_echo('missions:time'),
 		elgg_echo('missions:period'),
 		elgg_echo('missions:start_time'),
@@ -101,7 +100,8 @@ if ($advanced_form) {
 				"writing" => $advanced_form[$form_name.'_'.$s.'_element_lwe'],
 				"oral" => $advanced_form[$form_name.'_'.$s.'_element_lop'],
 				"operand" => $advanced_form[$form_name.'_'.$s.'_operand'],
-				"day" => $advanced_form[$form_name.'_'.$s.'_element_day']
+				"day" => $advanced_form[$form_name.'_'.$s.'_element_day'],
+				"lvl" => $advanced_form[$form_name.'_'.$s.'_element_lvl']
 			);
 ?> 
 			<script type="text/javascript">

@@ -296,7 +296,7 @@ else {
                 'value' => $all_values['value_answer'],
         	));
         	break;
-        case elgg_echo('missions:groupandlevel') . " - " . elgg_echo('missions:gl:group'):
+        case elgg_echo('missions:groupandlevel'):
             $content .= elgg_view('input/dropdown', array(
                 'name'=> $dropdown_name . '_element',
                 'value'=> $all_values['value_answer'],
@@ -304,19 +304,18 @@ else {
                 'id'=>'post-mission-gl-group',
                 'class'=>'',
             ));
-            break;
-        case elgg_echo('missions:groupandlevel') . " - " . elgg_echo('missions:gl:level'):
-            $content .= <<< EOD
-            <div class="col-sm-6">
-                <input class="form-control" id="numeric1" name="{$dropdown_name}_element" type="number" data-rule-digits="true" min="1" max="10" step="1" value={$all_values["value_answer"]} />
-            </div>
-EOD;
         	$content .= elgg_view('input/dropdown', array(
                 'name' => $dropdown_name . '_operand',
                 'value' => htmlspecialchars_decode($all_values['operand']),
                 'options' => array('=', '>=', '<='),
                 'style' => 'display:inline-block'
         	));
+
+            $content .= <<< EOD
+            <div class="col-sm-6">
+                <input class="form-control" id="numeric1" name="{$dropdown_name}_element_lvl" type="number" data-rule-digits="true" min="1" max="10" step="1" value={$all_values["lvl"]} />
+            </div>
+EOD;
             break;
 
         default:
