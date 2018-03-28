@@ -181,7 +181,9 @@ function get_newsfeedtest($user, $limit, $offset, $lang)
 			$event->object['description'] = gc_explode_translation($object->description, $lang);
 			$event->object['url'] = $object->getURL();
 		} elseif ($object instanceof ElggObject) {
-			$event->object['type'] = 'discussion-add';
+			$subtype = $object->getSubtype();
+			$event->object['subtype'] = $subtype;
+			$event->object['type'] = 'object';
 
 			$name = ($object->title) ? $object->title : $object->name;
 			if (empty(trim($name))) {
