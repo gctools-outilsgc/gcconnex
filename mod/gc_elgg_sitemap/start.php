@@ -6,7 +6,7 @@ elgg_register_event_handler('init','system','gc_elgg_sitemap_init');
 function gc_elgg_sitemap_init() {
 
 	// display text only if user agent string is gsa-crawler (or whatever is set)
-	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
+	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) {
 
 	    elgg_register_plugin_hook_handler('register', 'menu:site', 'elgg_site_menu_handler', array());
 	    elgg_register_plugin_hook_handler('register', 'menu:user_menu', 'elgg_user_menu_handler', array());
@@ -342,9 +342,15 @@ function elgg_full_entities_view_handler($hook, $type, $value, $params) {
 
 
 function elgg_thewire_list_handler($hook, $type, $value, $params) {
-	echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->description}</a>  <br/>";
-	echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->description}</a>  <br/>";
+
+	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) {
+		echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->description}</a>  <br/>";
+		echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->description}</a>  <br/>";
+	} else {
+		echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->description}</a>  <br/>";
+	}
 	return array();
+
 }
 
 /// lists out all the entities on the page
@@ -367,24 +373,41 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 	switch ($context) {
 		case 'file':
 		case 'event_calendar':
-			echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->title}</a>  <br/>";
-			echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->title}</a>  <br/>";
+			if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) {
+				echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->title}</a>  <br/>";
+				echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->title}</a>  <br/>";
+			} else {
+				echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->title}</a>  <br/>";
+			}
 			break;
 		case 'groups':
 			$group_url = elgg_get_site_url()."groups/profile/{$value['entity']->guid}/";
-			echo "<a href='{$group_url}?language=en'>{$value['entity']->name}</a>  <br/>";
-			echo "<a href='{$group_url}?language=fr'>{$value['entity']->name}</a>  <br/>";
+			if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) {
+				echo "<a href='{$group_url}?language=en'>{$value['entity']->name}</a>  <br/>";
+				echo "<a href='{$group_url}?language=fr'>{$value['entity']->name}</a>  <br/>";
+			} else {
+				echo "<a href='{$group_url}'>{$value['entity']->name}</a>  <br/>";
+			}
+
 			break;
 
 		case 'members':
 			$member_url = elgg_get_site_url()."profile/{$value['entity']->username}";
-			echo "<a href='{$member_url}?language=en'>{$value['entity']->username}</a>  <br/>";
-			echo "<a href='{$member_url}?language=fr'>{$value['entity']->username}</a>  <br/>";
+			if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) {
+				echo "<a href='{$member_url}?language=en'>{$value['entity']->username}</a>  <br/>";
+				echo "<a href='{$member_url}?language=fr'>{$value['entity']->username}</a>  <br/>";
+			} else {
+				echo "<a href='{$member_url}'>{$value['entity']->username}</a>  <br/>";
+			}
 			break;
 
 		default:
-			echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->title}</a>  <br/>";
-			echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->title}</a>  <br/>";
+			if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) {
+				echo "<a href='{$value['entity']->getURL()}?language=en'>{$value['entity']->title}</a>  <br/>";
+				echo "<a href='{$value['entity']->getURL()}?language=fr'>{$value['entity']->title}</a>  <br/>";
+			} else {
+				echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->title}</a>  <br/>";
+			}
 		
 	}
 

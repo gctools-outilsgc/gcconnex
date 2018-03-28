@@ -60,7 +60,7 @@ $tabs = array(
 
 
 // if user is the gsa-crawler
-if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+if (elgg_is_active_plugin('gc_fedsearch_gsa') || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false ) {
   
 	// cyu - added discussion
 	$tabs["gsa_all_discussions"] = array(

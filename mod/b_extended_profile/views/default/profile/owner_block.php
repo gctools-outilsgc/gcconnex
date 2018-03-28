@@ -32,7 +32,7 @@ if (!$user) {
 // @todo: create a link to edit the user profile picture
 
 // just dont display anything with icons when gsa hits page
-if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
     if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 
         $iconimg = '<div class="avatar-hover-edit">' . elgg_echo('gcconnex_profile:profile:edit_avatar') . '</div><img src="';
