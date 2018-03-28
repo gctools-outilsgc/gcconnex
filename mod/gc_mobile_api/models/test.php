@@ -200,13 +200,8 @@ function get_newsfeedtest($user, $limit, $offset, $lang)
 
 			$other = get_entity($object->container_guid);
 			if ($other instanceof ElggGroup) {
-				if (!isset($event->object['type'])) {
-					$event->object['name'] = ($other->title) ? $other->title : $other->name;
-				}
-			} else {
-				if (!isset($event->object['type'])) {
-					$event->object['name'] = ($other->title) ? $other->title : $other->name;
-				}
+				$event->object['group_title'] = gc_explode_translation($other->title, $lang);
+				$event->object['group_guid'] = $other->guid;
 			}
 
 			if (strpos($event->object['name'], '"en":') !== false) {
