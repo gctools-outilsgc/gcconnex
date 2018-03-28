@@ -838,6 +838,10 @@ function get_newsfeed($user, $limit, $offset, $lang)
 			$event->object['name'] = gc_explode_translation($original_discussion->title, $lang);
 			$event->object['description'] = gc_explode_translation($object->description, $lang);
 
+			$group = get_entity($original_discussion->container_guid);
+			$event->object['group_guid'] = $group->guid;
+			$event->object['group_title'] = gc_explode_translation($group->title, $lang);
+
 			if (is_callable(array($original_discussion, 'getURL'))) {
 				$event->object['url'] = $original_discussion->getURL();
 			}
@@ -847,7 +851,9 @@ function get_newsfeed($user, $limit, $offset, $lang)
 			$event->object['description'] = gc_explode_translation($object->description, $lang);
 			$event->object['url'] = $object->getURL();
 		} elseif ($object instanceof ElggObject) {
-			$event->object['type'] = 'discussion-add';
+			$subtype = $object->getSubtype();
+			$event->object['subtype'] = $subtype;
+			$event->object['type'] = 'object';
 
 			$name = ($object->title) ? $object->title : $object->name;
 			if (empty(trim($name))) {
@@ -864,13 +870,8 @@ function get_newsfeed($user, $limit, $offset, $lang)
 
 			$other = get_entity($object->container_guid);
 			if ($other instanceof ElggGroup) {
-				if (!isset($event->object['type'])) {
-					$event->object['name'] = ($other->title) ? $other->title : $other->name;
-				}
-			} else {
-				if (!isset($event->object['type'])) {
-					$event->object['name'] = ($other->title) ? $other->title : $other->name;
-				}
+				$event->object['group_title'] = gc_explode_translation($other->title, $lang);
+				$event->object['group_guid'] = $other->guid;
 			}
 
 			if (strpos($event->object['name'], '"en":') !== false) {
