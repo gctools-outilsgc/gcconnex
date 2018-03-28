@@ -365,7 +365,7 @@ function post_wire($user, $message, $image, $lang)
 		$file_obj = new TheWireImage();
 		$file_obj->setFilename('thewire_image/' . rand().".jpg");
 		$file_obj->setMimeType("image/jpeg");
-		$file_obj->original_filename = "Image_from_Mobile_API";
+		$file_obj->original_filename = "Image_from_Mobile_API.jpg";
 		$file_obj->simpletype = file_get_simple_type("image");
 		$file_obj->access_id = ACCESS_PUBLIC;
 
