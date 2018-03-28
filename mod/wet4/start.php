@@ -985,7 +985,8 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
                 $user = elgg_get_logged_in_user_entity();
                 $page_owner = elgg_get_page_owner_entity();
                 if($entity->getSubtype() == 'discussion_reply' ){
-                    if($entity->owner_guid == $user['guid'] || elgg_is_admin_logged_in() || ($page_owner instanceof ElggGroup && $page_owner->getOwnerGUID() == $user['guid']) || $page_owner->canEdit()){
+					if($page_owner!=''||$page_owner!=null){
+					if($entity->owner_guid == $user['guid'] || elgg_is_admin_logged_in() || ($page_owner instanceof ElggGroup && $page_owner->getOwnerGUID() == $user['guid']) || $page_owner->canEdit()){
                     $options = array(
                     'name' => 'edit',
                     'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></i>',
@@ -1005,7 +1006,8 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
                     );
                     $return[] = \ElggMenuItem::factory($options);
                     }
-                }
+				}
+			}
             }
         }
     }
