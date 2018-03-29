@@ -173,7 +173,7 @@ $english = array(
         "gcconnex_profile:opt:opt_in_access" => "Who can see my opt-in choices: ",
         "gcconnex_profile:opt:yes" => "Yes",
         "gcconnex_profile:opt:no" => "No",
-        "gcconnex_profile:completed_missions" => "Completed Career ConneXions Opportunities",
+        "gcconnex_profile:completed_missions" => "Completed Opportunities",
 
     // opportunity types opt-in
             // at-level
@@ -213,7 +213,7 @@ $english = array(
         
         "gcconnex_profile:opportunities" => "Opportunities",
         "gcconnex_profile:hide" => "Hide",
-        "gcconnex_profile:confirm:hide" => "Hiding this Micro-Mission means that it will no longer appear under 'Completed Career ConneXions Opportunities' in your profile and this operation cannot be reversed.",
+        "gcconnex_profile:confirm:hide" => "Hiding this Micro-Mission means that it will no longer appear under 'Completed Opportunities' in your profile and this operation cannot be reversed.",
         "gcconnex_profile:show" => "Show"
 
 );

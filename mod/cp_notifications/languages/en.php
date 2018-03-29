@@ -144,7 +144,7 @@ $english = array(
     'cp_notifications:personal_mentions' => 'Notify me when someone @mentions me',
     'cp_notifications:personal_content' => 'Notify me when something happens on content I create',
     'cp_notifications:personal_colleagues' => 'Notify me when my colleagues create content',
-	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Career Marketplace",
+	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career Marketplace",
 
 	'cp_notifications:no_group_content' => "(No group content subscription)",
 

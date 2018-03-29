@@ -33,7 +33,7 @@ return array(
     "missions:tab:opportunity" =>   "Step 2: Opportunity Details",
     "missions:tab:requirements" =>  "Step 3: Opportunity Requirements",
     "missions:post_opportunity" =>  "Post Opportunity",
-    "missions:micromissions" => "Career ConneXions Career Marketplace",
+    "missions:micromissions" => "Career Marketplace",
     "missions:micromissions_menu" => "Career Marketplace",
     "missions:homepage" =>  "Home Page",
     "missions:opportunity_role" => "Opportunity role",
@@ -241,8 +241,8 @@ return array(
 "missions:formatted:french" =>  "French (%s)",
 "missions:formatted:english" =>  "English (%s)",
 "missions:formatted:time" =>    "Start at %s:%s for %sh%sm",
-"missions:opt_in_paragraph" =>  "Participating in the Career ConneXions Career Marketplace means that you can post, apply to or receive invitations to opportunities supported by this tool. If you would like to opt in, please click on the button below.",
-"missions:opt_out_paragraph" => "If you would like to opt out of the Career ConneXions Opportunities Plateform, please click the button below.",
+"missions:opt_in_paragraph" =>  "Participating in the Career Marketplace means that you can post, apply to or receive invitations to opportunities supported by this tool. If you would like to opt in, please click on the button below.",
+"missions:opt_out_paragraph" => "If you would like to opt out of the Career Marketplace, please click the button below.",
 "missions:opt_in" =>    "Opt In",
 "missions:opt_out" =>   "Opt Out",
 "missions:error:need_to_opt_in" =>  "You need to opt in to an opportunity type on your profile to access that page.",
@@ -293,7 +293,7 @@ return array(
     'missions:splash:popup_instruction'=> "Select the types of opportunities that interest you (as either a host or participant).",
 "missions:splash:missions_help_message" => "If you require any help, <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Jobs_Marketplace' target='_blank'>view our help page</a>.",
 "missions:splash:missions_right_now" => "Opportunities Happening Right Now",
-"missions:splash:what_are_missions" =>  "How can I learn more about the types of opportunities supported by the Career ConneXions Career Marketplace?",
+"missions:splash:what_are_missions" =>  "How can I learn more about the types of opportunities supported by the Career Marketplace?",
 "missions:splash:how_to_apply" =>   "Get started by opting in",
 "missions:my_opportunities" =>  "My Opportunities",
 "missions:search_opportunities" =>  "Search Opportunities",
@@ -315,7 +315,7 @@ return array(
 "missions:invalid_start_time_format" => "Invalid start time format for ",
 "missions:invalid_duration_time_format" =>  "Invalid duration format for ",
 "missions:period" =>    "Period",
-"missions:notify_supervisor" => "Career ConneXions Opportunity notification to supervisor",
+"missions:notify_supervisor" => "Career Marketplace Opportunity notification to supervisor",
 "missions:error:opportunity_limit_reached" =>   "The number of opportunities limit has been reached.",
 "missions:endorse_person" =>    "I would also like to endorse %s.",
 "missions:require_feedback" =>  "Opportunities which require feedback",
@@ -342,10 +342,10 @@ return array(
 "missions:feedback_explanation_one" =>  "Filling out the text box and clicking the submit button will send a feedback notification to the user.",
 "missions:feedback_explanation_two" =>  "Checking the checkbox will endorse the user in regards to this opportunity. This will appear on the employee&rsquo;s profile page with your avatar.",
 "missions:error:cannot_complete_mission_no_participants" => "You cannot complete an opportunity with no active participants.",
-    'missions:splash:welcome'=>"Welcome to the Career ConneXions Career Marketplace within Career Marketplace!",
+    'missions:splash:welcome'=>"Welcome to the Career Marketplace!",
 "missions:first_splash_paragraph" =>    "This is a tool that quickly matches at-level mobility (i.e. micro-missions and job swapping) and development (i.e. mentoring and job shadowing) opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles.",
 "missions:second_splash_paragraph" =>   "To participate, check out some of our open opportunities below and click the opt in button. Select the types of opportunities that interest you (as either a host or participant).",
-    "missions:optin:success"=>"Welcome to the Career ConneXions Career Marketplace",
+    "missions:optin:success"=>"Welcome to the Career Marketplace",
 "missions:graph_interval" =>    "Graph interval",
 "missions:graph_interval_paragraph" =>  "Please input the time period as well as the starting date. Also, please choose what kind of graph you would like for your results.",
 "missions:last_year" => "Last year",
@@ -358,7 +358,7 @@ return array(
 "missions:graph_data" =>    "Graph data",
 "missions:add_department" =>    "Add department",
 "missions:add_this_department_to_graph" =>  "Add this department to my graph",
-"missions:micro_mission_analytics" =>   "Career ConneXions Opportunities' analytics",
+"missions:micro_mission_analytics" =>   "Career Marketplace analytics",
 "missions:pie_graph_for" => "Pie graph for",
 "missions:department_pie" =>    "Department pie graph",
 "missions:for_dates" => "for dates",
@@ -435,7 +435,7 @@ return array(
 "missions:or" =>    "or",
 "missions:cancel_changes" =>    "Cancel changes",
 "missions:invited_candidates" =>    "Members you shared this opportunity with",
-"missions:you_will_be_opted_in" =>  "Please note that upon submission you will be opted in to the Career ConneXions Career Marketplace.",
+"missions:you_will_be_opted_in" =>  "Please note that upon submission you will be opted in to the Career Marketplace.",
 "missions:find_members" => "Find Members",
 "missions:invite_to_opportunity" => "Share Opportunity",
 "missions:select_mission" =>    "Select Opportunity",
@@ -464,8 +464,8 @@ return array(
 "missions:you_have_applied_to_mission" =>   "You have applied to opportunity '%s'. Your application has been compiled from your profile and sent to %s.",
 "missions:user_department" =>   "User department",
 "missions:error:no_departments_loaded" =>   "There are no departments loaded. Analytics can not build graphs.",
-"missions:invite_to_opt_in" =>  "Invite to opt in to Career ConneXions Opportunities",
-"missions:check_micro_missions" =>  "You should check out Micro-Missions and the other interdepartmental at-level mobility and development opportunities in the Career ConneXions Career Marketplace! Opt in now from your GCconnex profile to participate!",
+"missions:invite_to_opt_in" =>  "Invite to opt in to Career Marketplace Opportunities",
+"missions:check_micro_missions" =>  "You should check out Micro-Missions and the other interdepartmental at-level mobility and development opportunities in the Career Marketplace! Opt in now from your GCconnex profile to participate!",
 "missions:view" =>  "View",
 "missions:offer" => "Offer",
 "missions:reject" =>    "Reject",
@@ -521,7 +521,7 @@ return array(
 "admin:missions:main" =>    "Administration tool",
 "missions:has_been_reopened" => "The opportunity '%s' has been reopened.",
 "missions:correct_action_and_guid" =>"Are you sure you selected the correct Opportunity ID and action?",
-"mission:guid_entered_not_mission" =>   "The ID you entered was not a Career ConneXions Opportunity.",
+"mission:guid_entered_not_mission" =>   "The ID you entered was not a Career Marketplace Opportunity.",
 "missions:mission_full" =>  "Opportunity Full",
 "missions:error:please_select_mission" =>   "Please select an opportunity.",
 "missions:error:exceeds_string_length" =>   "%s exceeds the %s character limit.",
@@ -546,7 +546,7 @@ Note that users  on this list are not guaranteed to be qualified for your opport
 You can share your opportunity with any employee whether on this list or not.  Employees who do not appear on this list are also welcome to express interest in your opportunity.",
 "missions:no_skill_matches_found" => "There were no users found with all the following skills: %s.",
 "missions:all_feedback_finished" => "All feedback for opportunity '%s' has been submitted.",
-"missions:placeholder_b" => "The Career ConneXions Career Marketplace is a reality thanks to the collaboration of many passionate employees and supportive departments. <a href='http://www.gcpedia.gc.ca/wiki/Micro-Missions#Acknowledgements' target='_blank'>Click here for the full list of contributors.</a>",
+"missions:placeholder_b" => "The Career Marketplace is a reality thanks to the collaboration of many passionate employees and supportive departments. <a href='http://www.gcpedia.gc.ca/wiki/Micro-Missions#Acknowledgements' target='_blank'>Click here for the full list of contributors.</a>",
 "missions:placeholder_c" => "Placeholder C",
 "missions:placeholder_d" => "<a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Please click here for more information, tutorials and guidance materials</a>.
 Please note that information you input in these fields will be stored in your cache for several minutes. Inactivity for extended periods of time may result in lost information.",
@@ -555,14 +555,14 @@ Please note that information you input in these fields will be stored in your ca
 "missions:placeholder_i" => "This will permanently remove the individual from the participant and applicant list. The employee will receive a notification advising (s)he has been removed from this opportunity.",
 "missions:placeholder_i2" =>    "This will permanently remove the individual from the participant list. The employee will receive a notification advising (s)he has been removed from this opportunity.",
 "missions:placeholder_j" => "<a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Click here for guidance and definitions about each type of opportunity</a>",
-"missions:placeholder_k" => "The 'opt-in' feature supports the functionality of the Career ConneXions Career Marketplace in tandem with the information in your GCconnex profile to facilitate connecting employees with opportunities of interest.
+"missions:placeholder_k" => "The 'opt-in' feature supports the functionality of the Career Marketplace in tandem with the information in your GCconnex profile to facilitate connecting employees with opportunities of interest.
 <a herf='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Click here for more information about the Career Marketplace and each opportunity type.</a>
 The approval of your supervisor will be required before an offer for any type of opportunity can be accepted. By opting in to an opportunity type you certify that you have had an initial conversation with your supervisor about leveraging these professional development and mobility tools.",
 
 
-    "missions:new_micromission_notification"=>"A new opportunity has been created in the Career ConneXions Career Marketplace",
+    "missions:new_micromission_notification"=>"A new opportunity has been created in the Career Marketplace",
 
-    "cp_notify:personal_opportunities"=>"Notify me when a new opportunity I have opted in for is created in the Career ConneXions Career Marketplace",
+    "cp_notify:personal_opportunities"=>"Notify me when a new opportunity I have opted in for is created in the Career Marketplace",
 
 "missions:error:search_field_empty" =>   "Please enter a value in the search field.",
 "missions:diagnostic_suite:no_missions_in_db" =>"There are no opportunities in the database.",
@@ -606,7 +606,7 @@ The approval of your supervisor will be required before an offer for any type of
 "missions:diagnostic_suite:timezone_not_in_list" =>   "The opportunity with ID %s has a timezone that is not part of the timezone list: '%s'.",
 "missions:error:timezone_needs_input" => "Since you entered a start time and duration, you must select a timezone.",
 "missions:diagnostic_suite:no_timezone" =>   "The opportunity with ID %s has at least one filled out start time and duration but the timezone is empty.",
-"missions:mission_version" => "Career ConneXions Career Marketplace Version",
+"missions:mission_version" => "Career Marketplace Version",
 "missions:opt_in_to_opportunities" =>    "Opt in to Opportunities",
 "missions:opt_in_confirmation_text" =>    "By opting in you certify that you have had an initial conversation with your supervisor about leveraging these professional development and mobility tools.",
 "missions:find" =>  "Find",
@@ -667,9 +667,9 @@ Should you no longer be available to participate in this opportunity, please wit
 "missions:settings:analytics_on" =>  "Display analytics tab?",
 "missions:cannot_cancel_mission_with_participants" => "Please remove all active participants and all applicants to whom you have sent an offer before deactivating this opportunity.",
 "missions:required" =>    "(required)",
-"missions:placeholder_a" =>   "Welcome to the Career ConneXions Career Marketplace! This is a tool that quickly matches at-level mobility (i.e. micro-missions and job swapping) and development (i.e. mentoring and job shadowing) opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles.
+"missions:placeholder_a" =>   "Welcome to the Career Marketplace! This is a tool that quickly matches at-level mobility (i.e. micro-missions and job swapping) and development (i.e. mentoring and job shadowing) opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles.
 Employees are encouraged to opt in to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
-<a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Please click here for more information, tutorials and guidance materials</a>.","Welcome to the Career ConneXions Career Marketplace!
+<a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Please click here for more information, tutorials and guidance materials</a>.","Welcome to the Career Marketplace!
 This is a tool that quickly matches opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles.
 Employees are encouraged to &rsquo;opt in&rsquo; to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
 <a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Please click here for more information, tutorials and guidance materials</a>.",
