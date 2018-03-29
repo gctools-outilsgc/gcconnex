@@ -182,8 +182,7 @@ function get_newsfeedtest($user, $limit, $offset, $lang)
 			$event->object['url'] = $object->getURL();
 		} elseif ($object instanceof ElggObject) {
 			$subtype = $object->getSubtype();
-			$event->object['subtype'] = $subtype;
-			$event->object['type'] = 'object';
+			$event->object['type'] = $subtype;
 
 			$name = ($object->title) ? $object->title : $object->name;
 			if (empty(trim($name))) {
@@ -202,6 +201,13 @@ function get_newsfeedtest($user, $limit, $offset, $lang)
 			if ($other instanceof ElggGroup) {
 				$event->object['group_title'] = gc_explode_translation($other->title, $lang);
 				$event->object['group_guid'] = $other->guid;
+			}
+			if ($event->action == "comment") {
+				$other_other = get_entity($other->container_guid);
+				if ($other_other instanceof ElggGroup) {
+					$event->object['group_title'] = gc_explode_translation($other_other->title, $lang);
+					$event->object['group_guid'] = $other_other->guid;
+				}
 			}
 
 			if (strpos($event->object['name'], '"en":') !== false) {
