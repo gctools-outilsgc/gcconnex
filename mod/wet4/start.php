@@ -10,6 +10,9 @@ elgg_register_event_handler('init', 'system', 'wet4_theme_init');
 function wet4_theme_init()
 {
 
+		//error_log('is registered? '.elgg_is_menu_item_registered('subSite','Forum'));
+		//elgg_unregister_menu_item('subSite','Forum');
+
 	/* cyu - global change to sidebars, display when it is not the crawler
 	 * the following batch of elgg_extend_view overwrites the elements in the page
 	 */
@@ -243,7 +246,24 @@ function wet4_theme_init()
     elgg_register_js('cluster-js-min', 'mod/wet4/vendors/clusterize.js/clusterize.min.js');
     elgg_register_js('cluster-js', 'mod/wet4/vendors/clusterize.js/clusterize.js');
 
-    register_plugin_hook('format', 'friendly:title', 'wet_seo_friendly_urls');
+	register_plugin_hook('format', 'friendly:title', 'wet_seo_friendly_urls');
+
+	
+	elgg_register_plugin_hook_handler('register', 'menu:site', 'remove_menu_item_handler');
+
+
+}
+function remove_menu_item_handler($hook, $type, $menu, $params){
+	
+	foreach ($menu as $key => $item){
+		switch ($item->getName()){
+			case 'mission_main':
+				unset($menu[$key]);
+				break;
+		}
+	}
+	return $menu;
+
 }
 
 global $CONFIG;
