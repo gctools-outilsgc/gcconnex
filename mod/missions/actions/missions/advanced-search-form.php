@@ -54,12 +54,8 @@ if ($err != '') {
             $query_clean = mm_analyze_advanced_search_element($i, $advanced_form);
         }
         if(!empty($query_clean)) {
-            if ( is_array($query_clean) ){
-                // don't want to go beyond 2-part ones
-                $query_clean0 = array( 'name' => $query_clean['name'][0], 'operand' => $query_clean['operand'][0], 'value' => $query_clean['value'][0]);
-                $query_clean1 = array( 'name' => $query_clean['name'][1], 'operand' => $query_clean['operand'][1], 'value' => $query_clean['value'][1]);
-                $array[$i] = $query_clean0;
-                $array[100 + $i] = $query_clean1;
+            if ( is_array(current($query_clean)) ){
+                $array = array_merge($array, $query_clean);
             }
             else
                 $array[$i] = $query_clean;

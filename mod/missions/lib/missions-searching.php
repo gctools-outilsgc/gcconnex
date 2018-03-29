@@ -472,11 +472,21 @@ function mm_analyze_advanced_search_element($place, $array)
             $returner['value'] = $array[$form_name.'_'.$place.'_element'];
             break;
             
-// Group and level
+    // Group and level
         case elgg_echo('missions:groupandlevel'):
-            $returner['name'] = 'gl_group_level';
-            $returner['operand'] = $array[$form_name.'_'.$place.'_operand'];
-            $returner['value'] = $array[$form_name.'_'.$place.'_element'] . '-' . $array[$form_name.'_'.$place.'_element_lvl'];
+            $returner['groupandlevel_group'] = array(
+                'name'      =>  'gl_group',
+                'operand'   =>  '=',
+                'value'     =>  $array[$form_name.'_'.$place.'_element']
+            );
+
+            if ($array[$form_name.'_'.$place.'_operand'] !== 'all'){
+                $returner['groupandlevel_level'] = array(
+                    'name'      => 'gl_level',
+                    'operand'   => $array[$form_name.'_'.$place.'_operand'],
+                    'value'     => $array[$form_name.'_'.$place.'_element_lvl']
+                );
+            }
             break;
     }
 
