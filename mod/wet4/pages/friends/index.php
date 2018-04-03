@@ -28,6 +28,8 @@ $options = array(
     'limit' => '700',
 
 );
+$options['wheres'][] = get_mutual_friendship_where_clause();
+
 $content = elgg_list_entities_from_relationship($options);
 
 $params = array(
@@ -38,3 +40,15 @@ $params = array(
 $body = elgg_view_layout('one_sidebar', $params);
 
 echo elgg_view_page($title, $body);
+
+
+// checks for reciprical friend relationship
+function get_mutual_friendship_where_clause() {
+    $db_prefix = get_config('dbprefix');
+    return "EXISTS (
+        SELECT 1 FROM {$db_prefix}entity_relationships r2
+            WHERE r2.guid_one = r.guid_two
+            AND r2.relationship = 'friend'
+            AND r2.guid_two = r.guid_one)";
+}
+

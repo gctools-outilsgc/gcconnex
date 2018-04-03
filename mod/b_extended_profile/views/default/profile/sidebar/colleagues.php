@@ -5,18 +5,21 @@ User profile Colleagues
 
 $owner = elgg_get_page_owner_entity();
 
-$friends = $owner->listFriends('', $num, array(
-        'size' => 'small',
-        'pagination' => FALSE,
-        'list_type' => 'gallery',
-        'gallery_class' => 'elgg-gallery-users',
-        'count' => TRUE,
-        'limit' => '14',
-        ));
+$options = array(
+    'type' => 'user',
+    'relationship' => 'friend',
+    'relationship_guid' => $owner->getGUID(),
+    'list_type' => 'gallery',
+    'size' => 'small'
+);
 
-$count2 = $owner->getFriends(array('limit'=>0, 'count'=>true,));
+// add secondary clause for mutual relationships
+$options['wheres'][] = get_mutual_friendship_where_clause();
+$list = elgg_list_entities_from_relationship($options);
 
-$friendCount = '(' . $count2 . ')';
+$count = count(elgg_get_entities_from_relationship($options));
+$friendCount = "({$count})";
+
 
 $all_link = elgg_view('output/url', array(
 	'href' => 'friends/' . $owner->username,
@@ -27,11 +30,23 @@ $all_link = elgg_view('output/url', array(
 
 $footer = "<div class='text-right'>$all_link</div>";
 
-if(!($friends)) {
-
+if($count <= 0) {
     $friends = elgg_echo('gcprofile:nocoll', array($owner->getDisplayName()));
-    $footer='';
-
+    $footer = '';
 }
-echo elgg_view_module('aside', elgg_echo('friends'), $friends, array('footer' => $footer));
+
+echo elgg_view_module('aside', elgg_echo('friends'), $list, array('footer' => $footer));
+
+
+// checks for reciprical friend relationship
+function get_mutual_friendship_where_clause() {
+    $db_prefix = get_config('dbprefix');
+    return "EXISTS (
+        SELECT 1 FROM {$db_prefix}entity_relationships r2
+            WHERE r2.guid_one = r.guid_two
+            AND r2.relationship = 'friend'
+            AND r2.guid_two = r.guid_one)";
+}
+
+
 ?>
