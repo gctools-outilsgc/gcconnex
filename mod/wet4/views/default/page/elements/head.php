@@ -167,7 +167,7 @@ if ($my_page_entity) {
   $lastModDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
 
   $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="' . $pubDate . '"/>';
-  $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
+  //$datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
 
 } else {
 
@@ -231,7 +231,7 @@ if (!$can_index) {
 preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_array);
 if (sizeof($output_array) > 0) {
   if ($my_page_entity instanceof ElggGroup && $my_page_entity->getContentAccessMode() !== "unrestricted") {
-    echo '<meta name="robots" content="noindex, follow">';
+    //echo '<meta name="robots" content="noindex, follow">';
   }
 } else {
   // if user profile url has a slash at the end, do not index
@@ -268,7 +268,6 @@ if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
 <meta name="dcterms.description" content="<?php echo strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr')); ?>" /> 
 <?php } ?>
 
-<meta name="description" content="<?php echo $desc; ?>" />
 <meta name="dcterms.title" content="<?php echo $page_title ?>" />
 <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
 <?php echo $datemeta; ?>
