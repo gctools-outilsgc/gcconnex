@@ -476,7 +476,7 @@ return array(
 "missions:error:you_do_not_own_this_mission" =>	"Vous ne possédez la possibilité '%s' que vous offrez.",
 "missions:error:applicant_not_applied_to_mission" =>	"L'utilisateur %s s'est retiré cette possibilité.",
 "missions:participating_in" =>	"Participant à '%s'",
-"missions:participating_in_more" =>	"Vous êtes maintenant un candidat à cette opptunité. Veuillez aviser votre superviseur et profitez de cette occasion.",
+"missions:participating_in_more" =>	"Vous êtes maintenant un candidat à cette opportunité. Veuillez aviser votre superviseur et profitez de cette occasion.",
 "missions:participating_in2" =>  "%s a accepté votre offre",
 "missions:participating_in2_more" => "%s a accepté votre offre de participer dans ",
 "missions:participating_out" => "Cette opportunité à été comblée: '%s'.",
