@@ -53,6 +53,7 @@ elgg_ws_expose_function(
 	"withdraw_post",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
+		"message" => array('type' => 'string', 'required' => true, 'default' => ""),
 		"guid" => array('type' => 'int', 'required' => true),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
@@ -485,7 +486,7 @@ function apply_post($user,$message,$guid, $lang)
 
 }
 
-function withdraw_post($user, $guid, $lang)
+function withdraw_post($user,$message,  $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -525,6 +526,21 @@ if(check_entity_relationship($entity->guid, 'mission_accepted', $user_entity->gu
 	remove_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid);
   mm_complete_mission_inprogress_reports($entity, true);
 }
+
+$reasonEn = elgg_echo('missions:decline:'.$message,'en');
+$reasonFr = elgg_echo('missions:decline:'.$message,'fr');
+$mission_link = '<a href="'.$entity->getURL().'" >'.elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')).' </a>';
+$subject = elgg_echo('missions:applicant_leaves', array($user_entity->name),'en')." | ". elgg_echo('missions:applicant_leaves', array($user_entity->name),'fr');
+
+$withdrawnEn .= elgg_echo('missions:applicant_leaves_more', array($user_entity->name),'en') . $mission_link . '.' . "\n";
+$withdrawnReasonEn .= elgg_echo('missions:reason_given', array($reasonEn),'en');
+
+$withdrawnFr .= elgg_echo('missions:applicant_leaves_more', array($user_entity->name),'fr') . $mission_link . '.' . "\n";
+$withdrawnReasonFr .= elgg_echo('missions:reason_given', array($reasonFr),'fr');
+
+mm_notify_user($entity->guid, $user_entity->guid, $subject, $withdrawnEn, $withdrawnFr,$withdrawnReasonEn ,$withdrawnReasonFr );
+
+
 	return elgg_echo($message_return, array($entity->job_title));
 	
 
