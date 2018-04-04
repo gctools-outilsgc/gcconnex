@@ -33,7 +33,6 @@ $metas = elgg_extract('metas', $vars, array());
 $links = elgg_extract('links', $vars, array());
 
 
-
 // Load in global variable with entity to create metadata tags
 global $my_page_entity;
 
@@ -94,6 +93,8 @@ echo elgg_format_element('title', array(), $page_title, array('encode_text' => t
 
 
 foreach ($metas as $attributes) {
+	if ($attributes['name'] === 'description')
+		continue;
 	echo elgg_format_element('meta', $attributes);
 }
 
@@ -258,14 +259,29 @@ if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
 }
 
 // Meta tags for the page
+
+if (!$my_page_entity instanceof ElggEntity) {
+	$segments = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'));
+	$segments = explode('/', $segments);
+	$wire_post = get_entity($segments[sizeof($segments) - 1]);
+	if ($wire_post instanceof ElggEntity)
+		$my_page_entity = $wire_post;
+}
+
 ?>
 
-<?php if ($my_page_entity instanceof ElggEntity) { ?>
+
+<?php if ($my_page_entity instanceof ElggEntity) { 
+$description = strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr'));
+$description = str_replace("&quot;", '', $description);
+$description = str_replace('"', '', $description); // just in case ...
+	?>
+
 <meta name="platform" content="gcconnex" />
 <meta name="dcterms.type" content= "<?php echo $page_entity_type; ?>" />
-<meta name="dcterms.description" content="<?php echo strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr')); ?>" /> 
+<meta name="dcterms.description" content="<?php echo $description; ?>" /> 
 <meta name="dcterms.modified" content="<?php echo date("Y-m-d", $my_page_entity->time_updated); ?>" />
-<?php } ?>
+<?php } ?> 
 
 <meta name="dcterms.title" content="<?php echo $page_title ?>" />
 <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
