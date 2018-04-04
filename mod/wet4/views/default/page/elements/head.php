@@ -263,8 +263,8 @@ if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
 <?php if ($my_page_entity instanceof ElggEntity) { ?>
 <meta name="platform" content="gcconnex" />
 <meta name="dcterms.type" content= "<?php echo $page_entity_type; ?>" />
-<meta name="dcterms.modified" content="<?php echo date("Y-m-d", $my_page_entity->time_updated); ?>" />
 <meta name="dcterms.description" content="<?php echo strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr')); ?>" /> 
+<meta name="dcterms.modified" content="<?php echo date("Y-m-d", $my_page_entity->time_updated); ?>" />
 <?php } ?>
 
 <meta name="dcterms.title" content="<?php echo $page_title ?>" />
