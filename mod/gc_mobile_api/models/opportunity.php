@@ -580,6 +580,21 @@ function accept_post($user, $guid, $lang)
 		remove_entity_relationship($entity->guid, 'mission_offered', $user_entity->guid);
 		add_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid);
 	}
+	$mission_link = '<a href="'.$entity->getURL().'">'.$entity->title.'</a>';
+
+		// notify participant
+		$subject = elgg_echo('missions:participating_in', array(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en').' | '.elgg_echo('missions:participating_in', array(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr');
+		$message_en = elgg_echo('missions:participating_in_more', array($user_entity->name),'en') . $mission_link . '.';
+		$message_fr = elgg_echo('missions:participating_in_more', array($user_entity->name),'fr') . $mission_link . '.';
+
+		mm_notify_user($user_entity->guid, $entity->guid, $subject, '','',$message_en,$message_fr);
+
+		// notify owner
+		$subject = elgg_echo( 'missions:participating_in2', array($user_entity->name),'en').' | '.elgg_echo( 'missions:participating_in2', array($user_entity->name),'fr');
+		$message_en = elgg_echo('missions:participating_in2_more', array($user_entity->name),'en') . $mission_link . '.';
+		$message_fr = elgg_echo('missions:participating_in2_more', array($user_entity->name),'fr') . $mission_link . '.';
+
+		mm_notify_user($entity->guid, $user_entity->guid, $subject, '','',$message_en,$message_fr);
 	
 	return elgg_echo('missions:now_participating_in_mission', array($entity->job_title));
 }
