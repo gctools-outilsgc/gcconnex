@@ -263,9 +263,20 @@ if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
 if (!$my_page_entity instanceof ElggEntity) {
 	$segments = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'));
 	$segments = explode('/', $segments);
-	$wire_post = get_entity($segments[sizeof($segments) - 1]);
-	if ($wire_post instanceof ElggEntity)
-		$my_page_entity = $wire_post;
+	$some_post = get_entity($segments[sizeof($segments) - 1]);
+	if ($some_post instanceof ElggEntity) {
+		$my_page_entity = $some_post;
+		$page_entity_type = $my_page_entity->getSubtype();
+	}
+	
+	if (!$some_post instanceof ElggEntity)
+		$some_post = get_entity($segments[sizeof($segments) - 2]);
+
+	if ($some_post instanceof ElggEntity) {
+		$my_page_entity = $some_post;
+		$page_entity_type = $my_page_entity->getSubtype();
+	}
+
 }
 
 ?>
