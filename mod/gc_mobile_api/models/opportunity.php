@@ -527,8 +527,15 @@ if(check_entity_relationship($entity->guid, 'mission_accepted', $user_entity->gu
   mm_complete_mission_inprogress_reports($entity, true);
 }
 
-$reasonEn = elgg_echo('missions:decline:'.$message,'en');
-$reasonFr = elgg_echo('missions:decline:'.$message,'fr');
+$reason = array('workload', 'interest', 'engagement', 'approval');
+if (in_array($message,$reason)){
+	$reasonEn = elgg_echo('missions:decline:'.$message,'en');
+	$reasonFr = elgg_echo('missions:decline:'.$message,'fr');
+}else{
+	$reasonEn = $message;
+	$reasonFr = $message;
+}
+
 $mission_link = '<a href="'.$entity->getURL().'" >'.elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')).' </a>';
 $subject = elgg_echo('missions:applicant_leaves', array($user_entity->name),'en')." | ". elgg_echo('missions:applicant_leaves', array($user_entity->name),'fr');
 
