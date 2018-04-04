@@ -231,9 +231,7 @@ if (!$can_index) {
 // modified: if group profile url, do nothing, otherwise check user profile
 preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_array);
 if (sizeof($output_array) > 0) {
-//  if ($my_page_entity instanceof ElggGroup && $my_page_entity->getContentAccessMode() !== "unrestricted") {
-    //echo '<meta name="robots" content="noindex, follow">';
-//  }
+	// do nothing
 } else {
   // if user profile url has a slash at the end, do not index
   preg_match("/\/profile\/.*\//", $_SERVER['REQUEST_URI'], $output_array);
