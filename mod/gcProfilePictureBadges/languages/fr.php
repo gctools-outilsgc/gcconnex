@@ -11,6 +11,7 @@
  *	Copyright : Team Webgalli 2011-2015
  */
 $french = array(
+		'avatar:alt:tag' => "Avatar de %s",
 		'gcProfilePictureBadges:badgeselectdesc' => "Ajouter le badge d'un groupe: ",
 		'gcProfilePictureBadges:form:tooltip' => "Utilisez le menu déroulant ci-dessous pour ajouter l’écusson d’une initiative interministérielle à votre avatar. Pour avoir accès à un écusson et l’ajouter à votre avatar, vous devez premièrement vous joindre au groupe GCconnex lié à cette initiative (p. ex. <a href=\"https://gcconnex.gc.ca/groups/profile/20934966/mental-health-strategy-group-groupe-de-la-strategie-sur-la-sante-mentale\">Groupe de la Stratégie sur la santé mentale).</a> ",
 

@@ -42,6 +42,7 @@ echo elgg_view_menu_item($item);
 if ($children) {
 	echo elgg_view('navigation/menu/elements/section', array(
 		'items' => $children,
+		'role' => 'menu',
 		'class' => ' elgg-child-menu sm list-unstyled',
 	));
 }

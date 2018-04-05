@@ -255,6 +255,14 @@
 
  }
 
+ .onboard-cta-title {
+   font-size:18px;
+   color: #49646d;
+   margin-top: 10px;
+   margin-bottom: 1px;
+ }
+
+
  .onboard-cta-buttons .btn-primary{
      background-color: #46246A !important;
      border-color: #46246A;

@@ -3,7 +3,7 @@ return array(
     /**
    * Profile Strength
    */
-    
+
      'ps:basicprofile' => "Basic profile",
      'ps:access' => "Access: ",
      'ps:details' => "See details",
@@ -18,4 +18,9 @@ return array(
      'ps:optin' =>"Opt-In",
      'ps:psErr'=>"An error occured getting your profile information.  We are working to resolve the issue.",
      'badge:complete:achieved:1' => '%s has a complete profile',
+     'ps:avatar:added' => 'Uploaded',
+     'ps:avatar:notadded' => 'Not uploaded',
+     'ps:about:added' => 'Filled in',
+     'ps:about:notadded' => 'Not filled in',
+     'ps:youhave' => 'Your profile is %s percent complete.'
     );

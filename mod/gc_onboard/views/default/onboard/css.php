@@ -264,6 +264,13 @@
 
  }
 
+ .onboard-cta-title {
+   font-size:18px;
+   color: #49646d;
+   margin-top: 10px;
+   margin-bottom: 1px;
+ }
+
 .wb-overlay {
   -webkit-background-clip: border-box;
 background-clip: border-box;
