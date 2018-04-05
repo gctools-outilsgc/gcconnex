@@ -168,7 +168,6 @@ if ($my_page_entity) {
   $lastModDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
 
   $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="' . $pubDate . '"/>';
-  //$datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
 
 } else {
 
@@ -222,12 +221,6 @@ if (!$can_index) {
 }
 
 
-/*if (get_input('language') != 'en' || get_input('language') != 'fr') {
-  echo '<meta name="robots" content="noindex, follow">';
-}*/
-// TODO closed group - noindex
-
-
 // group profile url with the group name - noindex will be displayed if group is only accessible to group members
 // modified: if group profile url, do nothing, otherwise check user profile
 preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_array);
@@ -264,29 +257,27 @@ if (!$my_page_entity instanceof ElggEntity) {
 	$segments = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'));
 	$segments = explode('/', $segments);
 	$some_post = get_entity($segments[sizeof($segments) - 1]);
+
 	if ($some_post instanceof ElggEntity) {
 		$my_page_entity = $some_post;
 		$page_entity_type = $my_page_entity->getSubtype();
-	}
+	} else {
+    $some_post = get_entity($segments[sizeof($segments) - 2]);
+  }
 	
-	if (!$some_post instanceof ElggEntity)
-		$some_post = get_entity($segments[sizeof($segments) - 2]);
-
 	if ($some_post instanceof ElggEntity) {
 		$my_page_entity = $some_post;
 		$page_entity_type = $my_page_entity->getSubtype();
 	}
-
 }
 
-?>
 
-
-<?php if ($my_page_entity instanceof ElggEntity) { 
+if ($my_page_entity instanceof ElggEntity) { 
 $description = strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr'));
 $description = str_replace("&quot;", '', $description);
 $description = str_replace('"', '', $description); // just in case ...
-	?>
+
+?>
 
 <meta name="platform" content="gcconnex" />
 <meta name="dcterms.type" content= "<?php echo $page_entity_type; ?>" />
