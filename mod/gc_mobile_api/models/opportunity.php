@@ -38,6 +38,7 @@ elgg_ws_expose_function(
 	"apply_post",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
+		"message" => array('type' => 'string', 'required' => true, 'default' => ""),		
 		"guid" => array('type' => 'int', 'required' => true),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
@@ -52,6 +53,7 @@ elgg_ws_expose_function(
 	"withdraw_post",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
+		"message" => array('type' => 'string', 'required' => true, 'default' => ""),
 		"guid" => array('type' => 'int', 'required' => true),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
@@ -275,7 +277,7 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 	$opportunities = json_decode($all_opportunities);
 
 	foreach ($opportunities as $opportunity) {
-	
+		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->title = gc_explode_translation($opportunity->title, $lang);
 	
 		$likes = elgg_get_annotations(array(
@@ -315,11 +317,12 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 					$opportunity->apply = 'withdraw'; // user can accecpt offer
 				
 				}
+			}else{
+				$opportunity->apply = 'close';
 			}
 		}
 			
 		$opportunity->liked = count($liked) > 0;
-		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->jobtype = elgg_echo($opportunityObj->job_type);
 		$opportunity->roletype = elgg_echo($opportunityObj->role_type);
 		$opportunity->deadline = $opportunityObj->deadline;
@@ -337,7 +340,7 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 
 
 
-function apply_post($user, $guid, $lang)
+function apply_post($user,$message,$guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -362,7 +365,115 @@ function apply_post($user, $guid, $lang)
 	// Creates an applied relationship between user and mission if there is no relationship there already.
 	if(!check_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid) && !check_entity_relationship($entity->guid, 'mission_tentative', $user_entity->guid)) {
 		add_entity_relationship($entity->guid, 'mission_applied', $user_entity->guid);
-		$message = elgg_echo('missions:you_have_applied_to_mission', array($entity->job_title, $entity->name));
+		$message_info = elgg_echo('missions:you_have_applied_to_mission', array($entity->job_title, $entity->name));
+
+		$title_applicant_en = elgg_echo('missions:application_notice_sentence_title', array($user_entity->name, $entity->job_title),'en') ;
+		$title_applicant_fr = elgg_echo('missions:application_notice_sentence_title', array($user_entity->name, $entity->job_title),'fr') ;
+		
+		$content_applicant_en = elgg_echo('missions:application_notice_sentence', 'en') . '<br>';
+		$content_applicant_fr = elgg_echo('missions:application_notice_sentence', 'fr') . '<br>';
+		$content_applicant_en .= '<br>'.elgg_echo('missions:see_full_profile','en') . ': '; 
+		$content_applicant_fr .= '<br>'.elgg_echo('missions:see_full_profile','fr') . ': '; 
+	
+		$content_applicant_en .= '<a href="'.$user_entity->getURL().'">'.$user_entity->username.'<a/><br>';
+		$content_applicant_fr .= '<a href="'.$user_entity->getURL().'">'.$user_entity->username.'<a/><br>';
+		
+		$content_applicant_en .= elgg_echo('missions:see_full_mission','en') . ': '; 
+		$content_applicant_fr .= elgg_echo('missions:see_full_mission','fr') . ': '; 
+	
+		$content_applicant_en .= '<a href="'.$entity->getURL().'">'.$entity->job_title.'<a/><br>';
+		$content_applicant_fr .= '<a href="'.$entity->getURL().'">'.$entity->job_title.'<a/><br>';
+		
+		$content_applicant_en .=  '<br>'.elgg_echo('missions:from_message',array($user_entity->username),'en').'<br><span style="font-style: italic;">'.$message . '</span><br>';
+		$content_applicant_fr .=  '<br>'.elgg_echo('missions:from_message',array($user_entity->username),'fr').'<br><span style="font-style: italic;">'.$message . '</span><br>';
+	
+		// Lists all educations of the applicant.
+		$education_list = $user_entity->education;
+		if(!is_array($education_list)) {
+			$education_list = array_filter(array($education_list));
+		}
+		if(!empty($education_list)) {
+			foreach ($education_list as $education) {
+				$education = get_entity($education);
+				$education_ending_en = date("F", mktime(null, null, null, $education->enddate)) . ', ' . $education->endyear;
+				$education_ending_fr = $cal_month[$education->enddate] . ', ' . $education->endyear;
+	
+				if ($education->ongoing == 'true') {
+					$education_ending_en = 'Present';
+					$education_ending_fr = 'Présent';
+				}
+	
+				$education_beginning_en = date("F", mktime(null, null, null, $education->startdate)) . ', ' . $education->startyear;
+				$education_beginning_fr = $cal_month[$education->startdate] . ', ' . $education->startyear;
+	 
+				// TODO: This section should be in the language files eventually.
+				$content_applicant_en .= '<br><b><font size="4">' . $education->school . ':</font></b>' . "<br>";
+				$content_applicant_en .=  $education_beginning_en . ' - ' . $education_ending_en . "<br>";
+				$content_applicant_en .= '<b>' . $education->degree . ':</b> ' . $education->field . "<br>";
+	
+				$content_applicant_fr .= '<br><b><font size="4">' . $education->school . ':</font></b>' . "<br>";
+				$content_applicant_fr .=  $education_beginning_fr . ' - ' . $education_ending_fr . "<br>";
+				$content_applicant_fr .= '<b>' . $education->degree . ':</b> ' . $education->field . "<br>";
+			}
+		}
+		
+		//Lists all work experiences of the applicant.
+		$experience_list = $user_entity->work;
+		if(!is_array($experience_list)) {
+			$experience_list = array_filter(array($experience_list));
+		}
+		if(!empty($experience_list)) {
+			foreach ($experience_list as $experience) {
+				$experience = get_entity($experience);
+				$experience_ending_en = date("F", mktime(null, null, null, $experience->enddate)) . ', ' . $experience->endyear;
+				$experience_ending_fr = $cal_month[$experience->enddate] . ', ' . $experience->endyear;
+				if ($experience->ongoing == 'true') {
+					$experience_ending_en = 'Present';
+					$experience_ending_fr = 'Présent';
+				}
+				$experience_beginning_en = date("F", mktime(null, null, null, $experience->startdate)) . ', ' . $experience->startyear;
+				$experience_beginning_fr =  $cal_month[$experience->startdate] . ', ' . $experience->startyear;
+				
+				// TODO: This section should be in the language files eventually.
+				$content_applicant_en .= '<br><b><font size="4">' . $experience->organization . ':</font></b>' . "<br>";
+				$content_applicant_en .= $experience_beginning_en . ' - ' . $experience_ending_en . "<br>";
+				$content_applicant_en .= '<b>' . $experience->title . '</b>' . "<br>";
+				$content_applicant_en .= $experience->responsibilities . "<br><br>";
+	
+				$content_applicant_fr .= '<br><b><font size="4">' . $experience->organization . ':</font></b>' . "<br>";
+				$content_applicant_fr .= $experience_beginning_fr . ' - ' . $experience_ending_fr . "<br>";
+				$content_applicant_fr .= '<b>' . $experience->title . '</b>' . "<br>";
+				$content_applicant_fr .= $experience->responsibilities . "<br><br>";
+			}
+		}
+		
+		// Lists all skills of the applicant.
+		$skill_list = $user_entity->gc_skills;
+		if(!is_array($skill_list)) {
+			$skill_list = array_filter(array($skill_list));
+		}
+		if(!empty($skill_list)) {
+			foreach ($skill_list as $skill) {
+				$skill = get_entity($skill);
+				$content_applicant_en .= '<b>' . $skill->title . '</b>' . "<br>";
+				$content_applicant_fr .= '<b>' . $skill->title . '</b>' . "<br>";
+			}
+		}
+		
+		// Sends the application via email and notification.
+		$content_applicant_en .= elgg_view('output/url', array(
+				'href' => elgg_get_site_url() . 'missions/mission-offer/' . $entity->guid . '/' . $user_entity->guid,
+				'text' => '<br>'.elgg_echo('missions:offer','en')
+		));
+	
+		$content_applicant_fr .= elgg_view('output/url', array(
+				'href' => elgg_get_site_url() . 'missions/mission-offer/' . $entity->guid . '/' . $user_entity->guid,
+				'text' => '<br>'.elgg_echo('missions:offer','fr')
+		));
+	
+		$subject = elgg_echo('missions:application_to','en') . $entity->job_title.' | '.elgg_echo('missions:application_to','fr') . $entity->job_title;
+
+		mm_notify_user($entity->guid, $user_entity->guid, $subject,$title_applicant_en,$title_applicant_fr, $content_applicant_en, $content_applicant_fr);
 		
 	}
 	
@@ -371,11 +482,11 @@ function apply_post($user, $guid, $lang)
 		$user_entity->opt_in_missions = 'gcconnex_profile:opt:yes';
 		$user_entity->save();
 	}
-	return $message;
+	return $message_info;
 
 }
 
-function withdraw_post($user, $guid, $lang)
+function withdraw_post($user,$message,  $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -415,6 +526,28 @@ if(check_entity_relationship($entity->guid, 'mission_accepted', $user_entity->gu
 	remove_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid);
   mm_complete_mission_inprogress_reports($entity, true);
 }
+
+$reason = array('workload', 'interest', 'engagement', 'approval');
+if (in_array($message,$reason)){
+	$reasonEn = elgg_echo('missions:decline:'.$message,'en');
+	$reasonFr = elgg_echo('missions:decline:'.$message,'fr');
+}else{
+	$reasonEn = $message;
+	$reasonFr = $message;
+}
+
+$mission_link = '<a href="'.$entity->getURL().'" >'.elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')).' </a>';
+$subject = elgg_echo('missions:applicant_leaves', array($user_entity->name),'en')." | ". elgg_echo('missions:applicant_leaves', array($user_entity->name),'fr');
+
+$withdrawnEn .= elgg_echo('missions:applicant_leaves_more', array($user_entity->name),'en') . $mission_link . '.' . "\n";
+$withdrawnReasonEn .= elgg_echo('missions:reason_given', array($reasonEn),'en');
+
+$withdrawnFr .= elgg_echo('missions:applicant_leaves_more', array($user_entity->name),'fr') . $mission_link . '.' . "\n";
+$withdrawnReasonFr .= elgg_echo('missions:reason_given', array($reasonFr),'fr');
+
+mm_notify_user($entity->guid, $user_entity->guid, $subject, $withdrawnEn, $withdrawnFr,$withdrawnReasonEn ,$withdrawnReasonFr );
+
+
 	return elgg_echo($message_return, array($entity->job_title));
 	
 
@@ -447,6 +580,21 @@ function accept_post($user, $guid, $lang)
 		remove_entity_relationship($entity->guid, 'mission_offered', $user_entity->guid);
 		add_entity_relationship($entity->guid, 'mission_accepted', $user_entity->guid);
 	}
+	$mission_link = '<a href="'.$entity->getURL().'">'.$entity->title.'</a>';
+
+		// notify participant
+		$subject = elgg_echo('missions:participating_in', array(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en').' | '.elgg_echo('missions:participating_in', array(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr');
+		$message_en = elgg_echo('missions:participating_in_more', array($user_entity->name),'en') . $mission_link . '.';
+		$message_fr = elgg_echo('missions:participating_in_more', array($user_entity->name),'fr') . $mission_link . '.';
+
+		mm_notify_user($user_entity->guid, $entity->guid, $subject, '','',$message_en,$message_fr);
+
+		// notify owner
+		$subject = elgg_echo( 'missions:participating_in2', array($user_entity->name),'en').' | '.elgg_echo( 'missions:participating_in2', array($user_entity->name),'fr');
+		$message_en = elgg_echo('missions:participating_in2_more', array($user_entity->name),'en') . $mission_link . '.';
+		$message_fr = elgg_echo('missions:participating_in2_more', array($user_entity->name),'fr') . $mission_link . '.';
+
+		mm_notify_user($entity->guid, $user_entity->guid, $subject, '','',$message_en,$message_fr);
 	
 	return elgg_echo('missions:now_participating_in_mission', array($entity->job_title));
 }
