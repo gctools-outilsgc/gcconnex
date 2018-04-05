@@ -156,6 +156,10 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 	//$phpmailer->From = $from;
 	//$phpmailer->FromName = $from_name;
 
+	if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+		return;
+	}
+
 	// Set destination address
 	if (isset($to)) {
 		$phpmailer->AddAddress($to, $to_name);

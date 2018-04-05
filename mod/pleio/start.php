@@ -20,15 +20,11 @@ function pleio_init() {
     elgg_unregister_action("logout");
     elgg_register_action("logout", dirname(__FILE__) . "/actions/logout.php", "public");
 
-    elgg_unregister_action("avatar/crop");
-    elgg_unregister_action("avatar/remove");
-    elgg_unregister_action("avatar/upload");
     elgg_unregister_action("user/passwordreset");
     elgg_unregister_action("user/requestnewpassword");
 
     elgg_unregister_action("admin/user/resetpassword");
 
-    elgg_unregister_menu_item("page", "users:unvalidated");
     elgg_unregister_menu_item("page", "users:add");
     elgg_unregister_action("useradd");
 
@@ -47,11 +43,11 @@ function pleio_init() {
 
     elgg_register_plugin_hook_handler("public_pages", "walled_garden", "pleio_public_pages_handler");
     elgg_register_plugin_hook_handler("action", "admin/site/update_basic", "pleio_admin_update_basic_handler");
-    elgg_register_plugin_hook_handler("entity:icon:url", "user", "pleio_user_icon_url_handler");
 
-    elgg_register_admin_menu_item("administer", "access_requests", "users");
-
-    elgg_register_admin_menu_item("administer", "import", "users");
+    // elgg_register_plugin_hook_handler("entity:icon:url", "user", "pleio_user_icon_url_handler");
+    // elgg_register_admin_menu_item("administer", "access_requests", "users");
+    // elgg_register_admin_menu_item("administer", "import", "users");
+    
     elgg_register_action("admin/user/import_step1", dirname(__FILE__) . "/actions/admin/user/import_step1.php", "admin");
     elgg_register_action("admin/user/import_step2", dirname(__FILE__) . "/actions/admin/user/import_step2.php", "admin");
 
@@ -94,6 +90,33 @@ function pleio_init() {
             $return = array("name" => $name, "avatar" => $avatar, "valid" => $valid, "admin" => $admin);
 
             return $return;
+        }
+
+        if( elgg_is_active_plugin('gcRegistration_invitation') ){
+            elgg_ws_expose_function(
+                "pleio.invited",
+                "pleio_invited",
+                array(
+                    "email" => array('type' => 'string', 'required' => true)
+                ),
+                'Verifies email address is in invitation list.',
+                'POST',
+                false,
+                false
+            );
+
+            function pleio_invited($email) {
+                $valid = json_encode(false);
+
+                // Checks against the email invitation list...
+                $invitation_query = "SELECT email FROM email_invitations WHERE email = '{$email}'";
+                $result = get_data($invitation_query);
+
+                if( count($result) > 0 ) 
+                    $valid = true;
+
+                return $valid;
+            }
         }
     }
 }

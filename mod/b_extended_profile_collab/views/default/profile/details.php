@@ -33,7 +33,7 @@ if ($user->canEdit()) {
     echo '<div class="panel-body overflow-body" style="padding-top: 15px; padding-bottom: 0;">';
     echo '<div class="basic-profile-standard-field-wrapper col-md-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
-    $fields = array('Name', 'user_type', 'Federal', 'Provincial', 'Institution', 'University', 'College', 'Highschool', 'Municipal', 'International', 'NGO', 'Community', 'Business', 'Media', 'Retired', 'Other', 'Job', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
+    $fields = array('Name', 'user_type', 'Federal', 'Provincial', 'Institution', 'University', 'College', 'Highschool', 'Municipal', 'International', 'NGO', 'Community', 'Business', 'Media', 'Retired', 'Other', 'Job', 'Location', 'Phone', 'Mobile', 'Website');
 
     foreach ($fields as $field) {
 

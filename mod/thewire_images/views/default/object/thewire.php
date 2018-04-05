@@ -85,7 +85,7 @@ $content = thewire_tools_filter($text);
 $attachment = thewire_image_get_attachments($post->getGUID());
 if ($attachment) {
 	$content .= "<div class='mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
-	$content .= "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
+	$content .= '<a class="elgg-lightbox" href="' . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . '">';
 	$content .= elgg_view('output/img', array(
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
 		'alt' => $attachment->original_filename,

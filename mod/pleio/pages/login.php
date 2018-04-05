@@ -29,7 +29,13 @@ if (!$auth || !$auth_client || !$auth_secret || !$auth_url) {
 if ($auth == 'oidc') {
     $oidc = new Jumbojett\OpenIDConnectClient($auth_url . 'openid', $auth_client, $auth_secret);
     $oidc->addScope(array('openid', 'profile', 'email'));
-    $oidc->authenticate();
+
+    try {
+        $oidc->authenticate();
+    } catch (Jumbojett\OpenIDConnectClientException $e) {
+        register_error($e->getMessage());
+        forward("/");
+    }
 
     $userid = $oidc->requestUserInfo('sub');
     $name = $oidc->requestUserInfo('name');
@@ -74,6 +80,8 @@ if ($auth == 'oidc') {
         if ($guid) {
             update_data("UPDATE {$db_prefix}users_entity SET pleio_guid = {$userid} WHERE guid = {$guid}");
         }
+        
+        $user = get_user($guid);
     } elseif (!$user && !$allow_registration) {
         throw new ShouldRegisterException;
     }

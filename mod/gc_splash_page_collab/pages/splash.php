@@ -9,6 +9,8 @@ $termsLink = $site_url .'terms';
 $frenchLink = $site_url .'login';
 $toggle_lang = $site_url .'mod/toggle_language/action/toggle_language/toggle';
 $gccollab_text = elgg_echo('wet:login_welcome');
+$register_text_en = elgg_echo('gcRegister:welcome_message', 'en');
+$register_text_fr = elgg_echo('gcRegister:welcome_message', 'fr');
 
 if( _elgg_services()->session->get('language') == 'fr'){
     $graphic_lang = 'fr';
@@ -116,6 +118,26 @@ if (language_selected == "English")
 		echo elgg_view('input/securitytoken');
 		?>
 		</form>
+</div>
+<div class="row">
+<div class="accordion">
+	<details class="acc-group">
+		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>Who can register?</summary>
+		<div class="tgl-panel">
+             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
+        		$register_text_en
+            </div>
+		</div>
+	</details>
+	<details class="acc-group">
+		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>Qui peut s'inscrire?</summary>
+		<div class="tgl-panel">
+             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
+    			$register_text_fr
+            </div>
+		</div>
+	</details>
+</div>
 </div>
 </div>
 <div class="sp-bx-bt col-xs-12">

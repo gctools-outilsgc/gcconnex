@@ -130,7 +130,7 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 
     if ($visibility == ACCESS_PRIVATE) { // ACCESS_PRIVATE or any string: for instance 'parent_group_acl'
         // Force all new group content to be available only to members
-                if ($visibility === ACCESS_PRIVATE) { // Only for ACCESS_PRIVATE
+                if ($visibility == ACCESS_PRIVATE) { // Only for ACCESS_PRIVATE
                     $group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
                 }
 

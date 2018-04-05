@@ -174,6 +174,7 @@ elgg_ws_expose_function(
 		"object" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"query" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"group" => array('type' => 'string', 'required' => false, 'default' => ""),
+		"guid" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
 		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
 		"from_date" => array('type' => 'string', 'required' => false, 'default' => ""),
@@ -186,7 +187,7 @@ elgg_ws_expose_function(
 	false
 );
 
-function query_the_posts($user, $password, $object, $query, $group, $limit, $offset, $from_date, $to_date, $lang)
+function query_the_posts($user, $password, $object, $query, $group, $guid, $limit, $offset, $from_date, $to_date, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -230,118 +231,94 @@ function query_the_posts($user, $password, $object, $query, $group, $limit, $off
 			login($user_entity);
 		}
 
-		$db_prefix = elgg_get_config('dbprefix');
+		if ($guid) {
 
-		$params = array(
-			'type' => $type,
-			'subtype' => $subtype,
-			'limit' => $limit,
-			'offset' => $offset
-		);
+			$data = json_decode(elgg_list_entities(array(
+				'type' => $type,
+				'subtype' => $subtype,
+				'guid' => $guid
+			)));
 
-		if ($query) {
-			if ($object == "group") {
-				$params['joins'] = array("JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid");
-				$params['wheres'] = array("(ge.name LIKE '%" . $query . "%' OR ge.description LIKE '%" . $query . "%')");
-			} else {
-				$params['joins'] = array("JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
-				$params['wheres'] = array("(oe.title LIKE '%" . $query . "%' OR oe.description LIKE '%" . $query . "%')");
+			$replies = json_decode(elgg_list_entities(array(
+				'type' => 'object',
+				'subtype' => 'comment',
+				'container_guid' => $item->guid
+			)));
+			if( count($replies) > 0 ){
+				$data[0]->replies = $replies;
 			}
-		}
 
-		if ($group) {
-			$params['container_guid'] = $group;
-		}
-
-		if ($from_date) {
-			$params['joins'] = array("JOIN {$db_prefix}entities fd ON e.guid = fd.guid");
-			$params['wheres'] = array("(fd.time_updated >= " . strtotime($from_date) . ")");
-		}
-		if ($to_date) {
-			$params['joins'] = array("JOIN {$db_prefix}entities td ON e.guid = td.guid");
-			$params['wheres'] = array("(td.time_updated <= " . strtotime($to_date) . ")");
-		}
-
-		$ia = elgg_set_ignore_access(true);
-		$data = json_decode(elgg_list_entities_from_metadata($params));
-
-		if( $object == "discussion" ){
-			foreach ($data as $discussion) {
-				$all_replies = elgg_list_entities_from_metadata(array(
-					'type' => 'object',
-					'subtype' => 'discussion_reply',
-					'container_guid' => $discussion->guid
-				));
-				$replies = json_decode($all_replies);
-
-				if(count($replies) > 0) {
-					$replies = array_reverse($replies);
-
-					$discussionsArray = array();
-					foreach ($replies as $reply) {
-						$discussionsArray[] = $reply;
-					}
-					$discussion->replies = $discussionsArray;
-				}
-			}
 		} else {
-			foreach ($data as $item) {
-				$replies = get_entity_comments($item->guid);
-				if( $replies->count > 0 ){
-					$item->replies = get_entity_comments($item->guid);
+
+			$db_prefix = elgg_get_config('dbprefix');
+
+			$params = array(
+				'type' => $type,
+				'subtype' => $subtype,
+				'limit' => $limit,
+				'offset' => $offset
+			);
+
+			if ($query) {
+				if ($object == "group") {
+					$params['joins'] = array("JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid");
+					$params['wheres'] = array("(ge.name LIKE '%" . $query . "%' OR ge.description LIKE '%" . $query . "%')");
+				} else {
+					$params['joins'] = array("JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
+					$params['wheres'] = array("(oe.title LIKE '%" . $query . "%' OR oe.description LIKE '%" . $query . "%')");
 				}
 			}
+
+			if ($group) {
+				$params['container_guid'] = $group;
+			}
+
+			if ($from_date) {
+				$params['joins'] = array("JOIN {$db_prefix}entities fd ON e.guid = fd.guid");
+				$params['wheres'] = array("(fd.time_updated >= " . strtotime($from_date) . ")");
+			}
+			if ($to_date) {
+				$params['joins'] = array("JOIN {$db_prefix}entities td ON e.guid = td.guid");
+				$params['wheres'] = array("(td.time_updated <= " . strtotime($to_date) . ")");
+			}
+
+			$ia = elgg_set_ignore_access(true);
+			$data = json_decode(elgg_list_entities_from_metadata($params));
+
+			if( $object == "discussion" ){
+				foreach ($data as $discussion) {
+					$replies = json_decode(elgg_list_entities_from_metadata(array(
+						'type' => 'object',
+						'subtype' => 'discussion_reply',
+						'container_guid' => $discussion->guid
+					)));
+
+					if( count($replies) > 0 ){
+						$replies = array_reverse($replies);
+
+						$discussionsArray = array();
+						foreach ($replies as $reply) {
+							$discussionsArray[] = $reply;
+						}
+						$discussion->replies = $discussionsArray;
+					}
+				}
+			} else {
+				foreach ($data as $item) {
+					$replies = json_decode(elgg_list_entities(array(
+						'type' => 'object',
+						'subtype' => 'comment',
+						'container_guid' => $item->guid
+					)));
+
+					if( count($replies) > 0 ){
+						$item->replies = $replies;
+					}
+				}
+			}
+			elgg_set_ignore_access($ia);
 		}
-		elgg_set_ignore_access($ia);
 	}
 
 	return $data;
-}
-
-elgg_ws_expose_function(
-	"login.redirect",
-	"login_and_redirect",
-	array(
-		"user" => array('type' => 'string', 'required' => true),
-		"password" => array('type' => 'string', 'required' => true),
-		"redirect_en" => array('type' => 'string', 'required' => true),
-		"redirect_fr" => array('type' => 'string', 'required' => true),
-		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
-	),
-	'Login user into GCcollab and redirect them',
-	'POST',
-	false,
-	false
-);
-
-function login_and_redirect($user, $password, $redirect_en, $redirect_fr, $lang)
-{
-	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
-	if (!$user_entity) {
-		header("Location: " . $_SERVER['HTTP_REFERER']);
-		exit();
-	}
-	if (!$user_entity instanceof ElggUser) {
-		header("Location: " . $_SERVER['HTTP_REFERER']);
-		exit();
-	}
-
-    $valid = elgg_authenticate($user_entity->username, $password);
-
-	if ($valid === true) {
-		login($user_entity);
-
-		if($lang == "fr"){
-			setcookie("gcconnex_lang", "fr");
-			header("Location: $redirect_fr");
-			exit();
-		} else {
-			setcookie("gcconnex_lang", "en");
-			header("Location: $redirect_en");
-			exit();
-		}
-	} else {
-		header("Location: " . $_SERVER['HTTP_REFERER']);
-		exit();
-	}
 }

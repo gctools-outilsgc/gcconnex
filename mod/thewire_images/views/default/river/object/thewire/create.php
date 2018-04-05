@@ -35,7 +35,7 @@ if (!empty($reshare)) {
 $attachment = thewire_image_get_attachments($object->getGUID());
 if ($attachment) {
 	$excerpt .= "<div class='mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
-	$excerpt .= "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
+	$excerpt .= '<a class="elgg-lightbox" href="' . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . '">';
 	$excerpt .= elgg_view('output/img', array(
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
 		'alt' => $attachment->original_filename,

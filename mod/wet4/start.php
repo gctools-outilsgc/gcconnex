@@ -507,17 +507,19 @@ function wet4_theme_pagesetup()
 	 */
 	$user = elgg_get_logged_in_user_entity();
 
-	$params = array(
-		"name" => "Colleagues",
-		"href" => "friends/" . $user->username,
-		"text" => '<i class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo("userMenu:colleagues") . '</span>',
-		"title" => elgg_echo('userMenu:colleagues'),
-		"class" => '',
-		'item_class' => '',
-		'priority' => '1'
-	);
+	if ($user instanceof ElggUser) {
+		$params = array(
+			"name" => "Colleagues",
+			"href" => "friends/" . $user->username,
+			"text" => '<i class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo("userMenu:colleagues") . '</span>',
+			"title" => elgg_echo('userMenu:colleagues'),
+			"class" => '',
+			'item_class' => '',
+			'priority' => '1'
+		);
 
-	elgg_register_menu_item("user_menu", $params);
+		elgg_register_menu_item("user_menu", $params);
+	}
 
 
 	$context = elgg_get_context();
@@ -538,10 +540,10 @@ function wet4_theme_pagesetup()
 			'priority' => '100',
 			'context' => 'settings',
 		);
+		
+		elgg_register_menu_item("page", $params);
 	}
 
-
-	elgg_register_menu_item("page", $params);
 
 	if (!empty($user)) {
 		$options = array(
