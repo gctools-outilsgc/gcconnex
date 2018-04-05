@@ -262,12 +262,11 @@ if (!$my_page_entity instanceof ElggEntity) {
 		$my_page_entity = $some_post;
 		$page_entity_type = $my_page_entity->getSubtype();
 	} else {
-    $some_post = get_entity($segments[sizeof($segments) - 2]);
-  }
-	
-	if ($some_post instanceof ElggEntity) {
-		$my_page_entity = $some_post;
-		$page_entity_type = $my_page_entity->getSubtype();
+		$some_post = get_entity($segments[sizeof($segments) - 2]);
+		if ($some_post instanceof ElggEntity) {
+			$my_page_entity = $some_post;
+			$page_entity_type = $my_page_entity->getSubtype();
+		}
 	}
 }
 
