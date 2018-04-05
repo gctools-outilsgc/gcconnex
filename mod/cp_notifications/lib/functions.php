@@ -725,10 +725,13 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
     else {
 
     	/// otherwise, set to opposite language
-    	$content_title = $content_array['content_title'][$language_preference];
-    	if (empty($content_title)) {
-    		$content_language = ($language_preference === 'en') ? 'fr' : 'en';
-    		$content_title = $content_array['content_title'][$content_language];
+    	$content_title = $content_array['content_title'];
+    	if (!empty($content_title)) {
+    		$content_language = ($language_preference === 'en') ? 'en' : 'fr';
+    		$content_title = $content_array['content_title'];
+    		
+    		$content_title = gc_explode_translation($content_title, $content_language); 
+    		$content_title = cp_translate_subtype($content_title, $content_language);
     	}
     }
 
@@ -757,7 +760,7 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
     	
 
-	}elseif ($heading === 'cp_mention' || $heading === 'mention') {
+	} elseif ($heading === 'cp_mention' || $heading === 'mention') {
 
 
 		if ($content_array['subtype'] === 'wire_mention') {
@@ -776,7 +779,7 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 			$author = $content_array['content_author'];
 
 			$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
-			$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:mention", array($author, cp_translate_subtype($content_array['subtype']),$url), $language_preference);
+			$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:mention", array($author, cp_translate_subtype($content_array['subtype']), $url), $language_preference);
 
 	  	}
 
@@ -799,17 +802,12 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
     } elseif ($content_array['subtype'] === 'thewire' && $heading !== 'likes') {
 
-    	if($content_array['content_description'] && (is_array($content_array['wire_image']))){
+    	if ($content_array['content_description'] && (is_array($content_array['wire_image']))){
 			$content_array['content_description'] .= elgg_echo('cp_notification_wire_image', $language_preference);
-    	}elseif($content_array['content_description'] == '' ){
+    	} elseif ($content_array['content_description'] == '' ){
 			$content_array['content_description'] = elgg_echo('cp_notification_wire_image_only', $language_preference);
 		}
-// error_log(print_r($content_array,true));
-// error_log('print array '.print_r($content_array['wire_image'],true));
 
-//  if(is_array($content_array['wire_image'])){
-//  	error_log('isset');
-//  }else{error_log('not isset');}
 		$url = " <a href='{$content_array['content_url']}'>".$content_array['content_description']."</a>";
 		$wire_fil = elgg_echo('cp_notifications:subtype:name:thewire', $language_preference);
 		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}_digest", array($author,$wire_fil, $url), $language_preference);

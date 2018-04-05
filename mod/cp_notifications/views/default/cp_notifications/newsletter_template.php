@@ -12,7 +12,6 @@ if (strcmp($language_preference,'set_digest_en') == 0)
 else 
   $language_preference = 'fr';
 
-
 ?>
 
 
