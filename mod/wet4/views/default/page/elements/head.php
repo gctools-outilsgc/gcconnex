@@ -33,7 +33,6 @@ $metas = elgg_extract('metas', $vars, array());
 $links = elgg_extract('links', $vars, array());
 
 
-
 // Load in global variable with entity to create metadata tags
 global $my_page_entity;
 
@@ -94,6 +93,8 @@ echo elgg_format_element('title', array(), $page_title, array('encode_text' => t
 
 
 foreach ($metas as $attributes) {
+	if ($attributes['name'] === 'description')
+		continue;
 	echo elgg_format_element('meta', $attributes);
 }
 
@@ -167,7 +168,6 @@ if ($my_page_entity) {
   $lastModDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
 
   $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="' . $pubDate . '"/>';
-  $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
 
 } else {
 
@@ -221,18 +221,11 @@ if (!$can_index) {
 }
 
 
-/*if (get_input('language') != 'en' || get_input('language') != 'fr') {
-  echo '<meta name="robots" content="noindex, follow">';
-}*/
-// TODO closed group - noindex
-
-
 // group profile url with the group name - noindex will be displayed if group is only accessible to group members
+// modified: if group profile url, do nothing, otherwise check user profile
 preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_array);
 if (sizeof($output_array) > 0) {
-  if ($my_page_entity instanceof ElggGroup && $my_page_entity->getContentAccessMode() !== "unrestricted") {
-    echo '<meta name="robots" content="noindex, follow">';
-  }
+	// do nothing
 } else {
   // if user profile url has a slash at the end, do not index
   preg_match("/\/profile\/.*\//", $_SERVER['REQUEST_URI'], $output_array);
@@ -259,16 +252,38 @@ if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
 }
 
 // Meta tags for the page
+
+if (!$my_page_entity instanceof ElggEntity) {
+	$segments = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'));
+	$segments = explode('/', $segments);
+	$some_post = get_entity($segments[sizeof($segments) - 1]);
+
+	if ($some_post instanceof ElggEntity) {
+		$my_page_entity = $some_post;
+		$page_entity_type = $my_page_entity->getSubtype();
+	} else {
+		$some_post = get_entity($segments[sizeof($segments) - 2]);
+		if ($some_post instanceof ElggEntity) {
+			$my_page_entity = $some_post;
+			$page_entity_type = $my_page_entity->getSubtype();
+		}
+	}
+}
+
+
+if ($my_page_entity instanceof ElggEntity) { 
+$description = strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr'));
+$description = str_replace("&quot;", '', $description);
+$description = str_replace('"', '', $description); // just in case ...
+
 ?>
 
-<?php if ($my_page_entity instanceof ElggEntity) { ?>
 <meta name="platform" content="gcconnex" />
 <meta name="dcterms.type" content= "<?php echo $page_entity_type; ?>" />
+<meta name="dcterms.description" content="<?php echo $description; ?>" /> 
 <meta name="dcterms.modified" content="<?php echo date("Y-m-d", $my_page_entity->time_updated); ?>" />
-<meta name="dcterms.description" content="<?php echo strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr')); ?>" /> 
-<?php } ?>
+<?php } ?> 
 
-<meta name="description" content="<?php echo $desc; ?>" />
 <meta name="dcterms.title" content="<?php echo $page_title ?>" />
 <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
 <?php echo $datemeta; ?>
