@@ -175,7 +175,7 @@ function career_menu_hander($hook, $type, $menu, $params){
 
         switch ($item->getName()) {
             case 'career':
-                $item->addChild(elgg_get_menu_item('subSite', 'Jobs Marketplace'));
+                //$item->addChild(elgg_get_menu_item('subSite', 'Jobs Marketplace'));
                 
                 if(elgg_is_active_plugin('missions')){
                     $item->addChild(elgg_get_menu_item('site', 'mission_main'));

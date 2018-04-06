@@ -312,7 +312,7 @@ return array(
 "missions:invalid_start_time_format" =>	"Format invalide d'heure de début pour ",
 "missions:invalid_duration_time_format" =>	"Format invalide de durée pour ",
 "missions:period" =>	"Période",
-"missions:notify_supervisor" =>	"Avis au superviseur d'une possibilité de ConneXions Carrière",
+"missions:notify_supervisor" =>	 "Avis au superviseur d'une possibilité du Carrefour de carrière ",
 "missions:error:opportunity_limit_reached" =>	"Le nombre limite de possibilités a été atteint.",
 "missions:endorse_person" =>	"Je tiens également à approuver %s.",
 "missions:require_feedback" =>	"Possibilités qui exigent de la rétroaction",
@@ -360,7 +360,7 @@ return array(
 "missions:graph_data" =>	"Données graphiques",
 "missions:add_department" =>	"Ajouter un ministère",
 "missions:add_this_department_to_graph" =>	"Ajouter ce ministère à mon graphique",
-"missions:micro_mission_analytics" =>	"Analytique des possibilités de ConneXions Carrière",
+"missions:micro_mission_analytics" =>	"Analytique des possibilités du Carrefour de carrière",
 "missions:pie_graph_for" =>	"Graphique circulaire pour",
 "missions:department_pie" =>	"Graphique circulaire d'un ministère",
 "missions:for_dates" =>	"pour les dates",
@@ -466,7 +466,7 @@ return array(
 "missions:you_have_applied_to_mission" =>	"Vous avez postulé à la possibilité '%s'. Votre demande a été compilée à partir de votre profil et envoyée à %s.",
 "missions:user_department" =>	"Ministère de l'utilisateur",
 "missions:error:no_departments_loaded" =>"Aucun ministère n'est chargé. L'analytique ne peut pas générer les graphiques.",
-"missions:invite_to_opt_in" =>	"Inviter à s'inscrire aux possibilités de ConneXions Carrière",
+"missions:invite_to_opt_in" =>	"Inviter à s'inscrire aux possibilités du Carrefour de carrière",
 "missions:check_micro_missions" =>	"Consultez les micro-missions ainsi que les autres possibilités interministérielles supportés par de Carrefour de carrière! Inscrivez-vous à partir de votre profil GCconnex pour participer!",
 "missions:view" =>	"Afficher",
 "missions:offer" =>	"Offrir",
@@ -523,7 +523,7 @@ return array(
 "admin:missions:main" =>	"Outil d'administration",
 "missions:has_been_reopened" =>	"La possibilité '%s' a été rouverte.",
 "missions:correct_action_and_guid" =>	"Êtes-vous certain d'avoir sélectionné le bon ID de possibilité et la bonne action?",
-"mission:guid_entered_not_mission" =>	"L'ID entré n'est pas une possibilité de ConneXions Carrière.",
+"mission:guid_entered_not_mission" =>	"L'ID entré n'est pas une possibilité du Carrefour de carrière.",
 "missions:mission_full" =>	"Possibilité pleine",
 "missions:error:please_select_mission" =>	"Veuillez choisir une possibilité.",
 "missions:error:exceeds_string_length" =>	"%s dépasse la limite de %s caractères.",
@@ -663,7 +663,9 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:settings:analytics_on" =>   "Afficher l'onglet des analytiques?",
 "missions:cannot_cancel_mission_with_participants" =>     "Veuillez supprimer tout participant actif et tout participant auxquels vous avez envoyé une offre avant la désactivation de cette possibilité.",
 "missions:required" =>    "(requis)",
-"missions:placeholder_a" =>   "Bienvenue de Carrefour de carrière! Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés. On encourage les employés à s'inscrire aux types de possibilité de perfectionnement professionnel et de mobilité au même niveau dans leur profil afin de pleinement profiter de cet outil. <a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation</a>.",
+"missions:placeholder_a" =>   "Bienvenue de Carrefour de carrière! Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés. On encourage les employés à s'inscrire aux types de possibilité de perfectionnement professionnel et de mobilité au même niveau dans leur profil afin de pleinement profiter de cet outil. <a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation</a>.
+</br></br>
+Joignez le groupe du <a href='https://gcconnex.gc.ca/groups/profile/7617072'>Carrefour de carrière</a> pour avoir accès aux lignes directrices, définitions, tutoriels et mises à jour!",
 
 /*Notifictaions*/
         "missions:new_micromission_notification"=>"Une nouvelle opportunité a été créée dans la Carrefour de carrière",

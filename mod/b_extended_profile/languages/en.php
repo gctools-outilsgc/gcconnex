@@ -173,7 +173,7 @@ $english = array(
         "gcconnex_profile:opt:opt_in_access" => "Who can see my opt-in choices: ",
         "gcconnex_profile:opt:yes" => "Yes",
         "gcconnex_profile:opt:no" => "No",
-        "gcconnex_profile:completed_missions" => "Completed Opportunities",
+        "gcconnex_profile:completed_missions" => "Completed Career Marketplace Opportunities",
 
     // opportunity types opt-in
             // at-level

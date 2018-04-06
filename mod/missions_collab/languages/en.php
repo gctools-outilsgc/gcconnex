@@ -31,13 +31,15 @@ return array(
     "missions:placeholder_d" => "Please note that information you input in these fields will be stored in your cache for several minutes. Inactivity for extended periods of time may result in lost information.",
     "missions:placeholder_f" => "",
     "missions:placeholder_j" => "",
-    "missions:placeholder_k" => "The 'opt-in' feature supports the functionality of the Career Marketplace in tandem with the information in your GCcollab profile to facilitate connecting employees with opportunities of interest.
+    "missions:placeholder_k" => "The 'opt-in' feature supports the functionality of the Career Marketplace within the Career Marketplace group, in tandem with the information in your GCcollab profile to facilitate connecting employees with opportunities of interest.
 
     The approval of your supervisor will be required before an offer for any type of opportunity can be accepted. By opting in to an opportunity type you certify that you have had an initial conversation with your supervisor about leveraging these professional development and mobility tools.",
     "missions:diagnostic_suite:no_account_has_email" => "The opportunity '%s' has an email which does not appear in any account on GCcollab: '%s'.",
     "missions:placeholder_a" =>   "Welcome to the Career Marketplace! This is a tool that quickly matches at-level mobility (i.e. micro-missions and job swapping) and development (i.e. mentoring and job shadowing) opportunities with talented employees by leveraging the content in employees&rsquo; GCcollab profiles.
 
-    Employees are encouraged to opt in to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.",
+    Employees are encouraged to opt in to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
+    
+    Join the <a href='https://gccollab.ca/groups/profile/6161'>Career Marketplace group</a> for guidelines, definitions, tutorials and updates!",
     "missions:placeholder_e" =>    "The below list of employees was automatically generated based on the skills you identified in your opportunity which were cross-referenced with employees&rsquo; GCcollab profiles. Note that being on this list does not guarantee the employee is qualified for your opportunity however it should provide a good starting point for proactively seeking out talented candidates.
 
     You can share your opportunity with any employee whether on this list or not. Employees who do not appear on this list are also welcome to express interest in your opportunity.",

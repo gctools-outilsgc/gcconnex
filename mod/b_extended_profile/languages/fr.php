@@ -181,7 +181,7 @@ $french = array(
         "gcconnex_profile:opt:opt_in_access" => "Qui peut voir mes choix d'inscription :",
         "gcconnex_profile:opt:yes"=> "Oui",
         "gcconnex_profile:opt:no" => "Non",
-        "gcconnex_profile:completed_missions" => "Possibilités complètés grâce à la plateforme de ConneXions carrière",
+        "gcconnex_profile:completed_missions" => "Possibilités complétés grâce au Carrefour de carrière",
         "gcconnex_profile:opt:skill_sharing" => "Partage des habiletés",
         "gcconnex_profile:opt:job_sharing" => "Partage d'emploi",
 
@@ -222,7 +222,7 @@ $french = array(
         
         "gcconnex_profile:opportunities" => "Opportunités",
         "gcconnex_profile:hide" => "Cacher",
-        "gcconnex_profile:confirm:hide" => "Cacher ce Micro-Mission signifie qu'il ne sera plus visible sous 'Possibilités complètés grâce à la plateforme de ConneXions carrière' dans votre profil et cette opération ne peut pas être inversée.",
+        "gcconnex_profile:confirm:hide" => "Cacher ce Micro-Mission signifie qu'il ne sera plus visible sous 'Possibilités complétés grâce au Carrefour de carrière' dans votre profil et cette opération ne peut pas être inversée.",
         "gcconnex_profile:show" => "Montrer"
 
 );
