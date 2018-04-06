@@ -200,7 +200,8 @@ $no_index_array = array(
   'photos/siteimagesowner', 'photos/siteimagesall',
   'thewire/all','thewire/owner','thewire/friends',
   'file_tools/list', 'newsfeed/', 'groups/', 'discussion/owner', 'ideas/group', 'photos/group', 'pages/all', 'missions/main',
-  'pages/history', 'pages/owner', 'splash/', '/mod', 'login/', 'file/all'
+  'pages/history', 'pages/owner', 'splash/', '/mod', 'login/', 'file/all', 'questions/owner',
+  'about-a_propos/', 'privacy-confidentialite/', 'terms/', 'register/'
 );
 
 /// replace the slashes (maybe use regex instead) then remove the base url and then put the slashes in before comparison 
