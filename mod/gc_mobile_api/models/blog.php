@@ -412,6 +412,4 @@ function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $
 			 return elgg_echo('blog:error:cannot_save');
 		 }
 	 }
-
-	 return "end, unknown result";
 }
