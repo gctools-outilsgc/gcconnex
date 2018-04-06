@@ -47,7 +47,13 @@
     if (!$titles->en && !$titles->fr) { return "require-title"; }
     if (!$bodies->en && !$bodies->fr) { return "require-body";  }
     if (!($titles->en && $bodies->en) && !($titles->fr && $bodies->fr)) { return "require-same-lang"; }
-    //Default Non-required
+    //Default any Missing
+    if (!$titles->en) { $titles->en = ''; }
+    if (!$titles->fr) { $titles->fr = ''; }
+    if (!$bodies->en) { $bodies->en = ''; }
+    if (!$bodies->fr) { $bodies->fr = ''; }
+    if (!$excerpts->en) { $excerpts->en = ''; }
+    if (!$excerpts->fr) { $excerpts->fr = ''; }
 
 		//If no group container, use user guid.
 		if ($container_guid==''){ $container_guid = $user_entity->guid; }
