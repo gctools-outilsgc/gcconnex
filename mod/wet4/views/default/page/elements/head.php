@@ -189,12 +189,12 @@ if ($my_page_entity instanceof ElggObject) {
 // determine whether to index page depending on the url
 $no_index_array = array(
   'activity/','activity/all','activity/owner','activity/friends','activity_tabs/mydept','activity_tabs/otherdept',
-  'blog/all','blog/owner/','blog/group','blog/friends',
+  'blog/all','blog/owner/','blog/group','blog/friends', 'blog/owner',
   'bookmarks/all','bookmarks/owner','bookmarks/friends','bookmarks/group',
   'event_calendar/list',
   'file/all','file/owner','file/friends', 'file/group',
   'photos/all','photos/owner','photos/friends',
-  'members','members/popular','/members/online','members/department',
+  'members','members/popular','/members/online','members/department', 'members/',
   'polls/all','polls/owner','polls/friends/',
   'groups/all','groups/owner','groups/invitation',
   'photos/siteimagesowner', 'photos/siteimagesall',
@@ -213,6 +213,9 @@ $current_url = $current_url[0];
 $current_url = explode("/", $current_url);
 $current_url = "{$current_url[0]}/{$current_url[1]}";
 
+// need this in case...
+//if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false)
+//  error_log(">>>{$current_url}");
 
 // if url is found, dont index
 $can_index = (in_array($current_url, $no_index_array)) ? false : true;
