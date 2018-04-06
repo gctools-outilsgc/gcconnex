@@ -41,12 +41,9 @@ function wet4_collab_theme_init() {
 
 function remove_menu_item_handler_collab($hook, $type, $menu, $params){
     foreach ($menu as $key => $item){
-        error_log($item->getName());
-        switch ($item->getName()){
-            case 'mission_main':
-                unset($menu[$key]);
-                break;
-        }
+        if ($item->getName() == 'mission_main'){
+			unset($menu[$key]);
+		}
     }
     return $menu;
 }

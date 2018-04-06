@@ -10,9 +10,6 @@ elgg_register_event_handler('init', 'system', 'wet4_theme_init');
 function wet4_theme_init()
 {
 
-		//error_log('is registered? '.elgg_is_menu_item_registered('subSite','Forum'));
-		//elgg_unregister_menu_item('subSite','Forum');
-
 	/* cyu - global change to sidebars, display when it is not the crawler
 	 * the following batch of elgg_extend_view overwrites the elements in the page
 	 */
@@ -256,10 +253,8 @@ function wet4_theme_init()
 function remove_menu_item_handler($hook, $type, $menu, $params){
 	
 	foreach ($menu as $key => $item){
-		switch ($item->getName()){
-			case 'mission_main':
-				unset($menu[$key]);
-				break;
+		if ($item->getName() == 'mission_main'){
+			unset($menu[$key]);
 		}
 	}
 	return $menu;
