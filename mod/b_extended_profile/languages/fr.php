@@ -54,7 +54,7 @@ $french = array(
     'gcconnex_profile:present' => 'Maintenant',
     'gcconnex_profile:about_me:empty' => 'Ajoutez des précisions à votre sujet en cliquant sur « Modifier » dans le coin supérieur droit de cette section.',
     'gcconnex_profile:about_me:access' => 'Accès aux renseignements à mon sujet ',
-    'gcconnex_profile:optin:access' => "Ces informations seront utilisées pour la Plateforme de possibilités et ne seront pas visibles par les utilisateurs qui naviguent sur votre profil.",
+    'gcconnex_profile:optin:access' => "Ces informations seront utilisées pour la Carrefour de carrière et ne seront pas visibles par les utilisateurs qui naviguent sur votre profil.",
 
     // BASIC PROFILE FORM
     'gcconnex_profile:basic:header' => 'Modifier le profil de base',
@@ -181,7 +181,7 @@ $french = array(
         "gcconnex_profile:opt:opt_in_access" => "Qui peut voir mes choix d'inscription :",
         "gcconnex_profile:opt:yes"=> "Oui",
         "gcconnex_profile:opt:no" => "Non",
-        "gcconnex_profile:completed_missions" => "Possibilités complètés grâce à la plateforme de ConneXions carrière",
+        "gcconnex_profile:completed_missions" => "Possibilités complétés grâce au Carrefour de carrière",
         "gcconnex_profile:opt:skill_sharing" => "Partage des habiletés",
         "gcconnex_profile:opt:job_sharing" => "Partage d'emploi",
 
@@ -222,7 +222,7 @@ $french = array(
         
         "gcconnex_profile:opportunities" => "Opportunités",
         "gcconnex_profile:hide" => "Cacher",
-        "gcconnex_profile:confirm:hide" => "Cacher ce Micro-Mission signifie qu'il ne sera plus visible sous 'Possibilités complètés grâce à la plateforme de ConneXions carrière' dans votre profil et cette opération ne peut pas être inversée.",
+        "gcconnex_profile:confirm:hide" => "Cacher ce Micro-Mission signifie qu'il ne sera plus visible sous 'Possibilités complétés grâce au Carrefour de carrière' dans votre profil et cette opération ne peut pas être inversée.",
         "gcconnex_profile:show" => "Montrer"
 
 );

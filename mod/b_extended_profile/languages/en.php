@@ -53,7 +53,7 @@ $english = array(
     'gcconnex_profile:present' => 'Present', // for work and education time ranges.. from XX date to Present
     'gcconnex_profile:about_me:empty' => 'Begin entering a description about yourself by clicking "Edit" in the top right corner of this box.',// prompt to add first skill
     'gcconnex_profile:about_me:access' => 'Who can see my description',
-    'gcconnex_profile:optin:access' => 'This information will be used by the Opportunities Platform and will not be visible to users browsing your profile.',
+    'gcconnex_profile:optin:access' => 'This information will be used by the Career Marketplace and will not be visible to users browsing your profile.',
 
     // BASIC INFORMATION PROFILE FORM
     'gcconnex_profile:basic:header' => 'Edit Basic Profile',
@@ -173,7 +173,7 @@ $english = array(
         "gcconnex_profile:opt:opt_in_access" => "Who can see my opt-in choices: ",
         "gcconnex_profile:opt:yes" => "Yes",
         "gcconnex_profile:opt:no" => "No",
-        "gcconnex_profile:completed_missions" => "Completed Career ConneXions Opportunities",
+        "gcconnex_profile:completed_missions" => "Completed Career Marketplace Opportunities",
 
     // opportunity types opt-in
             // at-level
@@ -213,7 +213,7 @@ $english = array(
         
         "gcconnex_profile:opportunities" => "Opportunities",
         "gcconnex_profile:hide" => "Hide",
-        "gcconnex_profile:confirm:hide" => "Hiding this Micro-Mission means that it will no longer appear under 'Completed Career ConneXions Opportunities' in your profile and this operation cannot be reversed.",
+        "gcconnex_profile:confirm:hide" => "Hiding this Micro-Mission means that it will no longer appear under 'Completed Opportunities' in your profile and this operation cannot be reversed.",
         "gcconnex_profile:show" => "Show"
 
 );

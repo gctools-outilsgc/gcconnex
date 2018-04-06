@@ -34,6 +34,18 @@ function wet4_collab_theme_init() {
 
     $calendar_css = elgg_get_simplecache_url('css', 'event_calendar/fullcalendar.min.css');
     elgg_register_css('elgg.full_calendar', $calendar_css);
+    
+    elgg_register_plugin_hook_handler('register', 'menu:site', 'remove_menu_item_handler_collab');
+
+}
+
+function remove_menu_item_handler_collab($hook, $type, $menu, $params){
+    foreach ($menu as $key => $item){
+        if ($item->getName() == 'mission_main'){
+			unset($menu[$key]);
+		}
+    }
+    return $menu;
 }
 
 function remove_custom_colleagues_menu_item($hook, $type, $return, $params) {

@@ -245,7 +245,22 @@ function wet4_theme_init()
     elgg_register_js('cluster-js-min', 'mod/wet4/vendors/clusterize.js/clusterize.min.js');
     elgg_register_js('cluster-js', 'mod/wet4/vendors/clusterize.js/clusterize.js');
 
-    register_plugin_hook('format', 'friendly:title', 'wet_seo_friendly_urls');
+	register_plugin_hook('format', 'friendly:title', 'wet_seo_friendly_urls');
+
+	
+	elgg_register_plugin_hook_handler('register', 'menu:site', 'remove_menu_item_handler');
+
+
+}
+function remove_menu_item_handler($hook, $type, $menu, $params){
+	
+	foreach ($menu as $key => $item){
+		if ($item->getName() == 'mission_main'){
+			unset($menu[$key]);
+		}
+	}
+	return $menu;
+
 }
 
 global $CONFIG;

@@ -49,7 +49,7 @@ return array(
       'freshdesk:ticket:types:group' => "Group-related",
       'freshdesk:ticket:types:data' => "Data request",
       'freshdesk:ticket:types:training' => "Training",
-      'freshdesk:ticket:types:jobs' => "Jobs Marketplace",
+      'freshdesk:ticket:types:jobs' => "Career Marketplace",
       'freshdesk:ticket:types:enhancement' => "Enhancement",
       'freshdesk:ticket:types:flag' => "Flag content or behaviour",
       'freshdesk:ticket:types:account' => "Account creation",

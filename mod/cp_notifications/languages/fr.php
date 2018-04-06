@@ -136,7 +136,7 @@ $french = array(
 	'cp_notifications:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
 	'cp_notifications:personal_content'=>'Envoyez-moi une notification lorsqu\'un changement est fait au contenu que j\'ai crée',
 	'cp_notifications:colleagueContent'=>'Envoyez-moi une notification lorsqu\'un(e) collègue crée du nouveau contenu',
-	'cp_notifications:personal_opportunities' => "Envoyez-moi une notification lorsqu'une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière", 
+	'cp_notifications:personal_opportunities' => "Envoyez-moi une notification lorsqu'une nouvelle opportunité que j'ai choisie est créée dans la Carrefour de carrière", 
 
 	'cp_notifications:no_group_content' => "(Aucun abonnement de contenu de groupe)", 
 
@@ -155,8 +155,8 @@ $french = array(
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Plateforme de possibilités", 
-	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Plateforme de possibilités", 
+	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Carrefour de carrière", 
+	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Carrefour de carrière", 
 
 	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", 
 	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", 
@@ -206,7 +206,7 @@ $french = array(
 	'cp_newsletter:heading:notify:cp_mention:plural' => "Personnes vous ont mentionné!", 
 
 
-	'cp_new_mission:subject' => "Une nouvelle possibilité a été affichée sur la Plateforme de possibilités",
+	'cp_new_mission:subject' => "Une nouvelle possibilité a été affichée sur la Carrefour de carrière",
 
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s?utm_source=notification_digest&utm_medium=email'> Paramètres de notification</a>.",
