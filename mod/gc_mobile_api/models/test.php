@@ -37,7 +37,7 @@
   	if (!elgg_is_logged_in()) {
   		login($user_entity);
   	}
-
+    $error = FALSE;
 		//check required fields being not empty
     $titles = json_decode($title);
     $bodies = json_decode($body);
@@ -63,21 +63,25 @@
     //Set int variables to correct
     if ($status == 1) { $status = 'published'; } else { $status = 'draft'; }
     if ($comments == 1) { $comments = 'On'; } else { $comments = 'Off'; }
-    if ($access == 1 ) { $access = ACCESS_DEFAULT; }
+    if ($access == 1 ) { $access = ACCESS_PUBLIC; }
     if ($status == 'draft') { $access = ACCESS_PRIVATE; }
+    $titles->en = htmlspecialchars($titles->en, ENT_QUOTES, 'UTF-8');
+    $titles->fr = htmlspecialchars($titles->fr, ENT_QUOTES, 'UTF-8');
+    $excerpts->en = elgg_get_excerpt($excerpts->en);
+    $excerpts->fr = elgg_get_excerpt($excerpts->fr);
 
     $values = array(
-    	'title' => htmlspecialchars($titles->en, ENT_QUOTES, 'UTF-8'),
-    	'title2' => htmlspecialchars($titles->fr, ENT_QUOTES, 'UTF-8'),
+    	'title' => JSON_encode($titles),
+    	'title2' => '',
     	//'title3' => '',
-    	'description' => $bodies->en,
-    	'description2' => $bodies->fr,
+    	'description' => JSON_encode($bodies),
+    	'description2' => '',
     	'description3' => '',
     	'status' => $status,
     	'access_id' => $access,
     	'comments_on' => $comments,
-    	'excerpt' => $excerpts->en,
-    	'excerpt2' => $excerpts->fr,
+    	'excerpt' => JSON_encode($excerpts),
+    	'excerpt2' => '',
     	'excerpt3' => '',
     	'tags' => '',
     	'publication_date' => '',
@@ -85,15 +89,55 @@
     	'show_owner' => 'no'
     );
 
-    return $values;
-    return elgg_echo("test: pre blog creation");
+    //return $values;
+    //return elgg_echo("test: pre blog creation");
 		//Create blog
 		$blog = new ElggBlog();
 		$blog->subtype = 'blog';
     $blog->container_guid = $container_guid;
 		$new_post = TRUE;
 
+    // assign values to the entity, stopping on error.
+    if (!$error) {
+    	foreach ($values as $name => $value) {
+    		if (($name != 'title2') && ($name != 'description2') &&  ($name != 'excerpt2')){ // remove input 2 in metastring table
+    		$blog->$name = $value;
+    		}
+    	}
+    }
 
+    if (!$error){
+      if ($blog->save()){
 
-  	return elgg_echo("api up");
+    			$icon_file = get_resized_image_from_uploaded_file("icon", 100, 100);
+    			$icon_sizes = elgg_get_config("icon_sizes");
+
+    			if (!empty($icon_file) && !empty($icon_sizes)) {
+    				// create icon
+    				$prefix = "blogs/" . $blog->getGUID();
+
+    				$fh = new ElggFile();
+    				$fh->owner_guid = $blog->getOwnerGUID();
+
+    				foreach ($icon_sizes as $icon_name => $icon_info) {
+    					$icon_file = get_resized_image_from_uploaded_file("icon", $icon_info["w"], $icon_info["h"], $icon_info["square"], $icon_info["upscale"]);
+    					if (!empty($icon_file)) {
+    						$fh->setFilename($prefix . $icon_name . ".jpg");
+
+    						if ($fh->open("write")) {
+    							$fh->write($icon_file);
+    							$fh->close();
+    						}
+    					}
+    				}
+
+    				$blog->icontime = time();
+  			}
+        // no longer a brand new post.
+		    $blog->deleteMetadata('new_post');
+
+      }
+    }
+
+  	return "end";
  }
