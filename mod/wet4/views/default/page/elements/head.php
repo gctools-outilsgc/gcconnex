@@ -191,7 +191,7 @@ $no_index_array = array(
   'activity/','activity/all','activity/owner','activity/friends','activity_tabs/mydept','activity_tabs/otherdept',
   'blog/all','blog/owner/','blog/group','blog/friends', 'blog/owner',
   'bookmarks/all','bookmarks/owner','bookmarks/friends','bookmarks/group',
-  'event_calendar/list',
+  'event_calendar/list', 'event_calendar/owner',
   'file/all','file/owner','file/friends', 'file/group',
   'photos/all','photos/owner','photos/friends',
   'members','members/popular','/members/online','members/department', 'members/',
@@ -200,7 +200,7 @@ $no_index_array = array(
   'photos/siteimagesowner', 'photos/siteimagesall',
   'thewire/all','thewire/owner','thewire/friends',
   'file_tools/list', 'newsfeed/', 'groups/', 'discussion/owner', 'ideas/group', 'photos/group', 'pages/all', 'missions/main',
-  'pages/history', 'splash/', '/mod', 'login/', 'file/all'
+  'pages/history', 'pages/owner', 'splash/', '/mod', 'login/', 'file/all'
 );
 
 /// replace the slashes (maybe use regex instead) then remove the base url and then put the slashes in before comparison 
