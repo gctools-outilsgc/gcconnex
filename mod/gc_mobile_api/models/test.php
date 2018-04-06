@@ -10,9 +10,9 @@
  	"post_blog",
  	array(
  		"user" => array('type' => 'string', 'required' => true),
- 		"title" => array('type' => 'string', 'required' => false, 'default' => ''),
+ 		"title" => array('type' => 'string', 'required' => true),
 		"excerpt" => array('type' =>'string', 'required' => false, 'default' => ''),
- 		"body" => array('type' =>'string', 'required' => false, 'default' => ''),
+ 		"body" => array('type' =>'string', 'required' => true),
 		"container_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
     "comments" => array('type' =>'int', 'required' => false, 'default' => 1),
     "access" => array('type' =>'int', 'required' => false, 'default' => 1),
@@ -40,7 +40,14 @@
 
 		//check required fields being not empty
 		if (($title == '' || $body == '')){ return "Missing required fields (title, or body)"; }
-
+    $titles = json_decode($title);
+    $bodies = json_decode($body);
+    $excerpts = json_decode($excerpt);
+    //Check Required
+    if (!$titles->en && !$titles->fr) { return "require-title"; }
+    if (!$bodies->en && !$bodies->fr) { return "require-body";  }
+    if (!($titles->en && $bodies->en) && !($titles->fr && $bodies->fr)) { return "require-same-lang"; }
+    //Default Non-required
 
 		//If no group container, use user guid.
 		if ($container_guid==''){ $container_guid = $user_entity->guid; }
