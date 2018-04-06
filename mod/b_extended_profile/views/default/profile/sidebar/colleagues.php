@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 User profile Colleagues
 */
@@ -7,6 +7,7 @@ $owner = elgg_get_page_owner_entity();
 
 $options = array(
     'type' => 'user',
+    'pagination' => FALSE,
     'relationship' => 'friend',
     'relationship_guid' => $owner->getGUID(),
     'list_type' => 'gallery',
