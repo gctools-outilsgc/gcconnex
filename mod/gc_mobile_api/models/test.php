@@ -97,6 +97,8 @@
     $blog->container_guid = $container_guid;
 		$new_post = TRUE;
 
+    $old_status = $blog->status;
+
     // assign values to the entity, stopping on error.
     if (!$error) {
     	foreach ($values as $name => $value) {
@@ -136,8 +138,40 @@
         // no longer a brand new post.
 		    $blog->deleteMetadata('new_post');
 
+        $status = $blog->status;
+      		// add to river if changing status or published, regardless of new post
+      		// because we remove it for drafts.
+      		if (($new_post || $old_status == 'draft' ||  $old_status == 'published') && $status == 'published') {
+      			elgg_create_river_item(array(
+      				'view' => 'river/object/blog/create',
+      				'action_type' => 'create',
+      				'subject_guid' => $blog->owner_guid,
+      				'object_guid' => $blog->getGUID(),
+      			));
+      			// we only want notifications sent when post published
+      			elgg_trigger_event('publish', 'object', $blog);
+
+      			// reset the creation time for posts that move from draft to published
+      			if ($guid) {
+      				$blog->time_created = time();
+      				$blog->save();
+      			}
+      		} elseif ($old_status == 'published' && $status == 'draft') {
+      			elgg_delete_river(array(
+      				'object_guid' => $blog->guid,
+      				'action_type' => 'create',
+      			));
+      		}
+      		if ($blog->status == 'published' || $save == false) {
+      			return ($blog->getURL());
+      		} else {
+      			return ("blog/edit/$blog->guid");
+      		}
+
+      } else {
+        return elgg_echo('blog:error:cannot_save');
       }
     }
 
-  	return "end";
+  	return "end, unknown result";
  }
