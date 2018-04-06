@@ -39,27 +39,54 @@
   	}
 
 		//check required fields being not empty
-		if (($title == '' || $body == '')){ return "Missing required fields (title, or body)"; }
     $titles = json_decode($title);
     $bodies = json_decode($body);
     $excerpts = json_decode($excerpt);
     //Check Required
-    if (!$titles->en && !$titles->fr) { return "require-title"; }
-    if (!$bodies->en && !$bodies->fr) { return "require-body";  }
+    if (!$titles->en && !$titles->fr) { return elgg_echo("blog:error:missing:title"); }
+    if (!$bodies->en && !$bodies->fr) { return elgg_echo("blog:error:missing:description");  }
     if (!($titles->en && $bodies->en) && !($titles->fr && $bodies->fr)) { return "require-same-lang"; }
-    //Default any Missing
+    //Default any Missing or faulty
     if (!$titles->en) { $titles->en = ''; }
     if (!$titles->fr) { $titles->fr = ''; }
     if (!$bodies->en) { $bodies->en = ''; }
     if (!$bodies->fr) { $bodies->fr = ''; }
     if (!$excerpts->en) { $excerpts->en = ''; }
     if (!$excerpts->fr) { $excerpts->fr = ''; }
+    if ($comments != 0 && $comments != 1) { $comments = 1; }
+    if ($access != 0 && $access != 1 && $access != -2 ) { $access = 1; }
+    if ($status != 0 && $status != 1) { $status = 0; }
 
 		//If no group container, use user guid.
 		if ($container_guid==''){ $container_guid = $user_entity->guid; }
 
-    return elgg_echo("test: pre blog creation");
+    //Set int variables to correct
+    if ($status == 1) { $status = 'published'; } else { $status = 'draft'; }
+    if ($comments == 1) { $comments = 'On'; } else { $comments = 'Off'; }
+    if ($access == 1 ) { $access = ACCESS_DEFAULT; }
+    if ($status == 'draft') { $access = ACCESS_PRIVATE; }
 
+    $values = array(
+    	'title' => htmlspecialchars($titles->en, ENT_QUOTES, 'UTF-8'),
+    	'title2' => htmlspecialchars($titles->fr, ENT_QUOTES, 'UTF-8'),
+    	//'title3' => '',
+    	'description' => $bodies->en,
+    	'description2' => $bodies->fr,
+    	'description3' => '',
+    	'status' => $status,
+    	'access_id' => $access,
+    	'comments_on' => $comments,
+    	'excerpt' => $excerpts->en,
+    	'excerpt2' => $excerpts->fr,
+    	'excerpt3' => '',
+    	'tags' => '',
+    	'publication_date' => '',
+    	'expiration_date' => '',
+    	'show_owner' => 'no'
+    );
+
+    return $values;
+    return elgg_echo("test: pre blog creation");
 		//Create blog
 		$blog = new ElggBlog();
 		$blog->subtype = 'blog';
