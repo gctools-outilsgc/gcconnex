@@ -117,7 +117,8 @@ if ($auth == 'oidc') {
 
         $user->save();
 
-        $returnto ? "{$site}login?returnto={$returnto}" : "{$site}login";
+        $session = elgg_get_session();
+        $returnto = $session->get('last_forward_from');
 
         if ($returnto && pleio_is_valid_returnto($returnto)) {
             forward($returnto);
