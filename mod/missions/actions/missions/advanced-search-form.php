@@ -54,7 +54,11 @@ if ($err != '') {
             $query_clean = mm_analyze_advanced_search_element($i, $advanced_form);
         }
         if(!empty($query_clean)) {
-            $array[$i] = $query_clean;
+            if ( is_array(current($query_clean)) ){
+                $array = array_merge($array, $query_clean);
+            }
+            else
+                $array[$i] = $query_clean;
         }
     }
     
