@@ -93,13 +93,13 @@ echo elgg_format_element('title', array(), $page_title, array('encode_text' => t
 
 
 foreach ($metas as $attributes) {
-	if ($attributes['name'] === 'description')
-		continue;
-	echo elgg_format_element('meta', $attributes);
+  if ($attributes['name'] === 'description')
+    continue;
+  echo elgg_format_element('meta', $attributes);
 }
 
 foreach ($links as $attributes) {
-	echo elgg_format_element('link', $attributes);
+  echo elgg_format_element('link', $attributes);
 }
 
 $js = elgg_get_loaded_js('head');
@@ -112,11 +112,11 @@ $ie_url = elgg_get_simplecache_url('css', 'ie');
 ?>
 
 <!--[if lt IE 9]>
-	<script src="<?php echo $html5shiv_url; ?>"></script>
+  <script src="<?php echo $html5shiv_url; ?>"></script>
 <![endif]-->
 
 <!--[if gt IE 8]>
-	<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
+  <link rel="stylesheet" href="<?php echo $ie_url; ?>" />
 <![endif]-->
 
 <script><?php echo $elgg_init; ?></script>
@@ -128,7 +128,7 @@ foreach ($css as $url) {
 }
 
 foreach ($js as $url) {
-	echo elgg_format_element('script', array('src' => $url));
+  echo elgg_format_element('script', array('src' => $url));
 }
 
 echo elgg_view_deprecated('page/elements/shortcut_icon', array(), "Use the 'head', 'page' plugin hook.", 1.9);
@@ -183,24 +183,25 @@ if (!$creator) $creator = 'GCconnex';
 // cyu - prevent crawler to index unsaved draft
 if ($my_page_entity instanceof ElggObject) {
   if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
-  	echo '<meta name="robots" content="noindex, follow">';
+    echo '<meta name="robots" content="noindex, follow">';
 }
 
 // determine whether to index page depending on the url
 $no_index_array = array(
   'activity/','activity/all','activity/owner','activity/friends','activity_tabs/mydept','activity_tabs/otherdept',
-  'blog/all','blog/owner/','blog/group','blog/friends',
+  'blog/all','blog/owner/','blog/group','blog/friends', 'blog/owner',
   'bookmarks/all','bookmarks/owner','bookmarks/friends','bookmarks/group',
-  'event_calendar/list',
+  'event_calendar/list', 'event_calendar/owner',
   'file/all','file/owner','file/friends', 'file/group',
   'photos/all','photos/owner','photos/friends',
-  'members','members/popular','/members/online','members/department',
+  'members','members/popular','/members/online','members/department', 'members/',
   'polls/all','polls/owner','polls/friends/',
   'groups/all','groups/owner','groups/invitation',
   'photos/siteimagesowner', 'photos/siteimagesall',
   'thewire/all','thewire/owner','thewire/friends',
   'file_tools/list', 'newsfeed/', 'groups/', 'discussion/owner', 'ideas/group', 'photos/group', 'pages/all', 'missions/main',
-  'pages/history', 'splash/', '/mod', 'login/', 'file/all'
+  'pages/history', 'pages/owner', 'splash/', '/mod', 'login/', 'file/all', 'questions/owner',
+  'about-a_propos/', 'privacy-confidentialite/', 'terms/', 'register/'
 );
 
 /// replace the slashes (maybe use regex instead) then remove the base url and then put the slashes in before comparison 
@@ -213,6 +214,9 @@ $current_url = $current_url[0];
 $current_url = explode("/", $current_url);
 $current_url = "{$current_url[0]}/{$current_url[1]}";
 
+// need this in case...
+//if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false)
+//  error_log(">>>{$current_url}");
 
 // if url is found, dont index
 $can_index = (in_array($current_url, $no_index_array)) ? false : true;
@@ -225,7 +229,7 @@ if (!$can_index) {
 // modified: if group profile url, do nothing, otherwise check user profile
 preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_array);
 if (sizeof($output_array) > 0) {
-	// do nothing
+  // do nothing
 } else {
   // if user profile url has a slash at the end, do not index
   preg_match("/\/profile\/.*\//", $_SERVER['REQUEST_URI'], $output_array);
@@ -254,20 +258,23 @@ if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
 // Meta tags for the page
 
 if (!$my_page_entity instanceof ElggEntity) {
-	$segments = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'));
-	$segments = explode('/', $segments);
-	$some_post = get_entity($segments[sizeof($segments) - 1]);
+  $segments = (strpos($_SERVER['REQUEST_URI'], '?') !== false) 
+  ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
+  : $_SERVER['REQUEST_URI'];
 
-	if ($some_post instanceof ElggEntity) {
-		$my_page_entity = $some_post;
-		$page_entity_type = $my_page_entity->getSubtype();
-	} else {
-		$some_post = get_entity($segments[sizeof($segments) - 2]);
-		if ($some_post instanceof ElggEntity) {
-			$my_page_entity = $some_post;
-			$page_entity_type = $my_page_entity->getSubtype();
-		}
-	}
+  $segments = explode('/', $segments);
+  $some_post = get_entity($segments[sizeof($segments) - 1]);
+
+  if ($some_post instanceof ElggEntity) {
+    $my_page_entity = $some_post;
+    $page_entity_type = $my_page_entity->getSubtype();
+  } else {
+    $some_post = get_entity($segments[sizeof($segments) - 2]);
+    if ($some_post instanceof ElggEntity) {
+      $my_page_entity = $some_post;
+      $page_entity_type = $my_page_entity->getSubtype();
+    }
+  }
 }
 
 
@@ -276,8 +283,9 @@ $description = strip_tags(gc_explode_translation($my_page_entity->description, '
 $description = str_replace("&quot;", '', $description);
 $description = str_replace('"', '', $description); // just in case ...
 
-?>
 
+?>
+ 
 <meta name="platform" content="gcconnex" />
 <meta name="dcterms.type" content= "<?php echo $page_entity_type; ?>" />
 <meta name="dcterms.description" content="<?php echo $description; ?>" /> 
@@ -309,3 +317,4 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 <![endif]-->
 
 <noscript><link rel="stylesheet" href="./css/noscript.css" /></noscript>
+
