@@ -80,7 +80,7 @@ textarea.error:focus{
 }
 
 .title-menu-container {
-  float:right;
+  text-align:right;
 }
 
 .title-menu-container ul {
