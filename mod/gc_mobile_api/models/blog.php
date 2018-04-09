@@ -50,6 +50,22 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+ "get.blogpostsbycontainer",
+ "get_blogposts_by_container",
+ array(
+	 "user" => array('type' => 'string', 'required' => true),
+	 "guid" => array('type' => 'int', 'required' => true),
+	 "limit" => array('type' => 'int', 'required' => false, 'default' => 10),
+	 "offset" => array('type' => 'int', 'required' => false, 'default' => 0),
+	 "lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+ ),
+ 'Retrieves a container\'s blogs based on user id and container guid. Used for groups, as a group\'s blogs have container_id of the group.',
+ 'POST',
+ true,
+ false
+);
+
+elgg_ws_expose_function(
  "post.blog",
  "post_blog",
  array(
@@ -68,6 +84,39 @@ elgg_ws_expose_function(
  true,
  false
 );
+
+function foreach_blogs($blogs, $user_entity, $lang)
+{
+	foreach ($blogs as $blog_post) {
+		$blog_post->title = gc_explode_translation($blog_post->title, $lang);
+		$blog_post->description = gc_explode_translation($blog_post->description, $lang);
+
+		$likes = elgg_get_annotations(array(
+			'guid' => $blog_post->guid,
+			'annotation_name' => 'likes'
+		));
+		$blog_post->likes = count($likes);
+
+		$liked = elgg_get_annotations(array(
+			'guid' => $blog_post->guid,
+			'annotation_owner_guid' => $user_entity->guid,
+			'annotation_name' => 'likes'
+		));
+		$blog_post->liked = count($liked) > 0;
+
+		$blog_post->comments = get_entity_comments($blog_post->guid);
+
+		$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
+
+		$group = get_entity($blog_post->container_guid);
+		$blog_post->group = gc_explode_translation($group->name, $lang);
+
+		if (is_callable(array($group, 'getURL'))) {
+			$blog_post->groupURL = $group->getURL();
+		}
+	}
+	return $blogs;
+}
 
 function get_blogpost($user, $guid, $lang)
 {
@@ -166,36 +215,9 @@ function get_blogposts($user, $limit, $offset, $filters, $lang)
 
 	$blog_posts = json_decode($all_blog_posts);
 
-	foreach ($blog_posts as $blog_post) {
-		$blog_post->title = gc_explode_translation($blog_post->title, $lang);
-		$blog_post->description = gc_explode_translation($blog_post->description, $lang);
+	$blogs = foreach_blogs($blog_posts, $user_entity, $lang);
 
-		$likes = elgg_get_annotations(array(
-			'guid' => $blog_post->guid,
-			'annotation_name' => 'likes'
-		));
-		$blog_post->likes = count($likes);
-
-		$liked = elgg_get_annotations(array(
-			'guid' => $blog_post->guid,
-			'annotation_owner_guid' => $user_entity->guid,
-			'annotation_name' => 'likes'
-		));
-		$blog_post->liked = count($liked) > 0;
-
-		$blog_post->comments = get_entity_comments($blog_post->guid);
-
-		$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
-
-		$group = get_entity($blog_post->container_guid);
-		$blog_post->group = gc_explode_translation($group->name, $lang);
-
-		if (is_callable(array($group, 'getURL'))) {
-			$blog_post->groupURL = $group->getURL();
-		}
-	}
-
-	return $blog_posts;
+	return $blogs;
 }
 
 function get_blogposts_by_owner($user, $limit, $offset, $lang, $target)
@@ -233,36 +255,46 @@ function get_blogposts_by_owner($user, $limit, $offset, $lang, $target)
 
 	$blog_posts = json_decode($all_blog_posts);
 
-	foreach ($blog_posts as $blog_post) {
-		$blog_post->title = gc_explode_translation($blog_post->title, $lang);
-		$blog_post->description = gc_explode_translation($blog_post->description, $lang);
+	$blogs = foreach_blogs($blog_posts, $user_entity, $lang);
 
-		$likes = elgg_get_annotations(array(
-			'guid' => $blog_post->guid,
-			'annotation_name' => 'likes'
-		));
-		$blog_post->likes = count($likes);
+	return $blogs;
+}
 
-		$liked = elgg_get_annotations(array(
-			'guid' => $blog_post->guid,
-			'annotation_owner_guid' => $user_entity->guid,
-			'annotation_name' => 'likes'
-		));
-		$blog_post->liked = count($liked) > 0;
+function get_blogposts_by_container($user, $guid, $limit, $offset, $lang)
+{
+ $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+ if (!$user_entity) {
+	 return "User was not found. Please try a different GUID, username, or email address";
+ }
+ if (!$user_entity instanceof ElggUser) {
+	 return "Invalid user. Please try a different GUID, username, or email address";
+ }
+ if (!elgg_is_logged_in()) {
+	 login($user_entity);
+ }
 
-		$blog_post->comments = get_entity_comments($blog_post->guid);
+ $group = get_entity($guid);
+ if (!$group) {
+	 return "Group was not found. Please try a different GUID";
+ }
+ if (!$group instanceof ElggGroup) {
+	 return "Invalid group. Please try a different GUID";
+ }
 
-		$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
+ $all_blog_posts = elgg_list_entities(array(
+	 'type' => 'object',
+	 'subtype' => 'blog',
+	 'container_guid' => $guid,
+	 'limit' => $limit,
+	 'offset' => $offset,
+	 'order_by' => 'e.last_action desc'
+ ));
 
-		$group = get_entity($blog_post->container_guid);
-		$blog_post->group = gc_explode_translation($group->name, $lang);
+ $blog_posts = json_decode($all_blog_posts);
 
-		if (is_callable(array($group, 'getURL'))) {
-			$blog_post->groupURL = $group->getURL();
-		}
-	}
+ $blogs_final = foreach_blogs($blog_posts, $user_entity, $lang);
 
-	return $blog_posts;
+ return $blogs_final;
 }
 
 function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $access, $status, $lang)
