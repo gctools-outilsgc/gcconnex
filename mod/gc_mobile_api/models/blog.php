@@ -50,6 +50,21 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+ "get.blogpostsbycolleague",
+ "get_blogposts_by_colleague",
+ array(
+	"user" => array('type' => 'string', 'required' => true),
+	"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
+	"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
+	"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+ ),
+ 'Retrieves a container\'s blogs based on user id and container guid. Used for groups, as a group\'s blogs have container_id of the group.',
+ 'POST',
+ true,
+ false
+);
+
+elgg_ws_expose_function(
  "get.blogpostsbycontainer",
  "get_blogposts_by_container",
  array(
@@ -259,6 +274,38 @@ function get_blogposts_by_owner($user, $limit, $offset, $lang, $target)
 
 	return $blogs;
 }
+
+function get_blogposts_by_colleague($user, $limit, $offset, $lang, $target)
+{
+ $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+ if (!$user_entity) {
+	 return "User was not found. Please try a different GUID, username, or email address";
+ }
+ if (!$user_entity instanceof ElggUser) {
+	 return "Invalid user. Please try a different GUID, username, or email address";
+ }
+
+ if (!elgg_is_logged_in()) {
+	 login($user_entity);
+ }
+
+ $all_blog_posts = elgg_list_entities_from_relationship(array(
+	 'type' => 'object',
+	 'subtype' => 'blog',
+	 'relationship' => 'friend',
+	 'relationship_guid' => $user_entity->guid,
+	 'relationship_join_on' => 'container_guid',
+	 'limit' => $limit,
+	 'offset' => $offset
+ ));
+
+ $blog_posts = json_decode($all_blog_posts);
+
+ $blogs = foreach_blogs($blog_posts, $user_entity, $lang);
+
+ return $blogs;
+}
+
 
 function get_blogposts_by_container($user, $guid, $limit, $offset, $lang)
 {
