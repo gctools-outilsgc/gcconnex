@@ -215,36 +215,9 @@ function get_blogposts($user, $limit, $offset, $filters, $lang)
 
 	$blog_posts = json_decode($all_blog_posts);
 
-	foreach ($blog_posts as $blog_post) {
-		$blog_post->title = gc_explode_translation($blog_post->title, $lang);
-		$blog_post->description = gc_explode_translation($blog_post->description, $lang);
+	$blogs = foreach_blogs($blog_posts, $user_entity, $lang);
 
-		$likes = elgg_get_annotations(array(
-			'guid' => $blog_post->guid,
-			'annotation_name' => 'likes'
-		));
-		$blog_post->likes = count($likes);
-
-		$liked = elgg_get_annotations(array(
-			'guid' => $blog_post->guid,
-			'annotation_owner_guid' => $user_entity->guid,
-			'annotation_name' => 'likes'
-		));
-		$blog_post->liked = count($liked) > 0;
-
-		$blog_post->comments = get_entity_comments($blog_post->guid);
-
-		$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
-
-		$group = get_entity($blog_post->container_guid);
-		$blog_post->group = gc_explode_translation($group->name, $lang);
-
-		if (is_callable(array($group, 'getURL'))) {
-			$blog_post->groupURL = $group->getURL();
-		}
-	}
-
-	return $blog_posts;
+	return $blogs;
 }
 
 function get_blogposts_by_owner($user, $limit, $offset, $lang, $target)
@@ -282,36 +255,9 @@ function get_blogposts_by_owner($user, $limit, $offset, $lang, $target)
 
 	$blog_posts = json_decode($all_blog_posts);
 
-	foreach ($blog_posts as $blog_post) {
-		$blog_post->title = gc_explode_translation($blog_post->title, $lang);
-		$blog_post->description = gc_explode_translation($blog_post->description, $lang);
+	$blogs = foreach_blogs($blog_posts, $user_entity, $lang);
 
-		$likes = elgg_get_annotations(array(
-			'guid' => $blog_post->guid,
-			'annotation_name' => 'likes'
-		));
-		$blog_post->likes = count($likes);
-
-		$liked = elgg_get_annotations(array(
-			'guid' => $blog_post->guid,
-			'annotation_owner_guid' => $user_entity->guid,
-			'annotation_name' => 'likes'
-		));
-		$blog_post->liked = count($liked) > 0;
-
-		$blog_post->comments = get_entity_comments($blog_post->guid);
-
-		$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
-
-		$group = get_entity($blog_post->container_guid);
-		$blog_post->group = gc_explode_translation($group->name, $lang);
-
-		if (is_callable(array($group, 'getURL'))) {
-			$blog_post->groupURL = $group->getURL();
-		}
-	}
-
-	return $blog_posts;
+	return $blogs;
 }
 
 function get_blogposts_by_container($user, $guid, $limit, $offset, $lang)
