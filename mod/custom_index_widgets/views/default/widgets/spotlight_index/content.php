@@ -170,6 +170,27 @@ if ($slider_type == "flexslider") {
 		    });
 		</script>
 	<?php
+} else if ($slider_type == "random") {
+
+	echo '<div id="' . $object_id . '">';
+	echo '<h2 class="wb-invisible">' . elgg_echo('widget_manager:widgets:image_slider:slider_type:random_heading') . '</h2>';
+
+	$count = count($configured_slides);
+	$rand = rand(0, $count - 1);
+	$slide = $configured_slides[$rand];
+
+	if (!empty($slide["link"])) {
+		echo '<a href="' . $slide["link"] . '">';
+	}
+	
+	echo '<img class="slider_img" alt="' . $slide["alt"] . '" src="' . $slide["url"] . '" />';
+	
+	if (!empty($slide["link"])) {
+		echo '</a>';
+	}
+	
+	echo '</div>';
+
 } else {
 
 	$slides_list = "";

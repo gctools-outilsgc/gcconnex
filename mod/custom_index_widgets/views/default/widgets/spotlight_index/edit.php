@@ -29,6 +29,7 @@ $direction_options_values = array(
 $slider_type_options = array(
 	"s3slider" => elgg_echo("widget_manager:widgets:image_slider:slider_type:s3slider"),
 	"flexslider" => elgg_echo("widget_manager:widgets:image_slider:slider_type:flexslider"),
+	"random" => elgg_echo("widget_manager:widgets:image_slider:slider_type:random"),
 );
 
 for ($i = 1; $i <= $max_slider_options; $i++) {
