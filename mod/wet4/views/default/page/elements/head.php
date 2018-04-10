@@ -226,9 +226,7 @@ $current_url = "{$current_url[0]}/{$current_url[1]}";
 
 // if url is found, dont index
 $can_index = (in_array($current_url, $no_index_array)) ? false : true;
-if (!$can_index) {
-  echo '<meta name="robots" content="noindex, follow">';
-}
+
 
 // group profile url with the group name - noindex will be displayed if group is only accessible to group members
 // modified: if group profile url, do nothing, otherwise check user profile
@@ -304,12 +302,12 @@ if ($page_entity_type == 'groupforumtopic') {
   $page_entity_type = 'discussions';
 }
 
-if ( !($my_page_entity instanceof ElggEntity) ) {
+if ( !($my_page_entity instanceof ElggEntity) || !$can_index) {
   echo '<meta name="robots" content="noindex, follow">';
 }
 
 if ($my_page_entity instanceof ElggEntity) { 
-$description = strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr'));
+$description = strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . " " . strip_tags(gc_explode_translation($my_page_entity->description, 'fr'));
 $description = str_replace("&quot;", '', $description);
 $description = str_replace('"', '', $description); // just in case ...
 
