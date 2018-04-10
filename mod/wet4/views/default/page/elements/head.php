@@ -201,7 +201,7 @@ $no_index_array = array(
   'thewire/all','thewire/owner','thewire/friends',
   'file_tools/list', 'newsfeed/', 'groups/', 'discussion/owner', 'ideas/group', 'photos/group', 'pages/all', 'missions/main',
   'pages/history', 'pages/owner', 'splash/', '/mod', 'login/', 'file/all', 'questions/owner',
-  'about-a_propos/', 'privacy-confidentialite/', 'terms/', 'register/'
+  'about-a_propos/', 'privacy-confidentialite/', 'terms/', 'register/', 'gcforums/view', 'gcforums/group', 'gcforums/create', 
 );
 
 /// replace the slashes (maybe use regex instead) then remove the base url and then put the slashes in before comparison 
@@ -218,6 +218,7 @@ $comment_entity_guid = $current_url[sizeof($current_url) - 2];
 
 $current_url = "{$current_url[0]}/{$current_url[1]}";
 
+
 // need this in case...
 //if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false)
 //  error_log(">>>{$current_url}");
@@ -225,11 +226,6 @@ $current_url = "{$current_url[0]}/{$current_url[1]}";
 // if url is found, dont index
 $can_index = (in_array($current_url, $no_index_array)) ? false : true;
 if (!$can_index) {
-  echo '<meta name="robots" content="noindex, follow">';
-}
-
-// noindex for forums except for the topics
-if (strpos($_SERVER['REQUEST_URI'], '/gcforums/topic/view/') === false) {
   echo '<meta name="robots" content="noindex, follow">';
 }
 
@@ -296,6 +292,11 @@ if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
 // condition for forums
 if ($page_entity_type == 'hjforumtopic') {
   $page_entity_type = 'forums';
+}
+
+// condition for forums
+if ($page_entity_type == 'thewire') {
+  $page_entity_type = 'wire';
 }
 
 if ($my_page_entity instanceof ElggEntity) { 
