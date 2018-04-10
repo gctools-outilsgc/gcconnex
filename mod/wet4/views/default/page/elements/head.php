@@ -304,6 +304,10 @@ if ($page_entity_type == 'groupforumtopic') {
   $page_entity_type = 'discussions';
 }
 
+if ( !($my_page_entity instanceof ElggEntity) ) {
+  echo '<meta name="robots" content="noindex, follow">';
+}
+
 if ($my_page_entity instanceof ElggEntity) { 
 $description = strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr'));
 $description = str_replace("&quot;", '', $description);
