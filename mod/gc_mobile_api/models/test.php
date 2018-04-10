@@ -71,8 +71,7 @@
 		 //convert any mobile variables returned as smaller options
 		 $access_id = $access;
 		 if ($access_id === 2){
-			 //figure out how the access to a group is named :/
-			 return "WIP";
+			 $access_id = $container->group_acl; //Sets access id to match group only id.
 		 }
 
 		 $topic->title = $title;
