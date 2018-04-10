@@ -229,10 +229,10 @@ function redirect_content_url($hook, $type, $url, $params) {
 	// only do this when the user agent is solr-crawler
 	if (strpos($_SERVER['REQUEST_URI'], '/comment/view/') !== false ) return;
 
-	if (strpos($_SERVER['REQUEST_URI'],"/view/") !== false)
+	if (strpos($_SERVER['REQUEST_URI'], "/view/") !== false)
 	{
 		$subtype = $params['entity']->getSubtype();
-		error_log("comment >>> <<<  {$subtype}");
+
 		if ($subtype === 'groupforumtopic') $subtype = 'discussion';
 		if ($subtype === 'page_top') $subtype = 'pages';
 		if ($subtype === 'idea') $subtype = 'ideas';

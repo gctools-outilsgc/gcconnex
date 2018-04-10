@@ -212,6 +212,10 @@ $current_url = str_replace(' ', '/', $current_url);
 $current_url = explode("?", $current_url);
 $current_url = $current_url[0];
 $current_url = explode("/", $current_url);
+
+// extract the comment guid
+$comment_entity_guid = $current_url[sizeof($current_url) - 2];
+
 $current_url = "{$current_url[0]}/{$current_url[1]}";
 
 // need this in case...
@@ -224,6 +228,10 @@ if (!$can_index) {
   echo '<meta name="robots" content="noindex, follow">';
 }
 
+// noindex for forums except for the topics
+if (strpos($_SERVER['REQUEST_URI'], '/gcforums/topic/view/') === false) {
+  echo '<meta name="robots" content="noindex, follow">';
+}
 
 // group profile url with the group name - noindex will be displayed if group is only accessible to group members
 // modified: if group profile url, do nothing, otherwise check user profile
@@ -247,17 +255,20 @@ if ($page_entity instanceof ElggEntity && $page_entity->getSubtype() === 'thewir
 $page_entity_type = "";
 if ($my_page_entity instanceof ElggEntity)
   $page_entity_type = $my_page_entity->getSubtype();
+
+
 if ($my_page_entity instanceof ElggUser) $page_entity_type = "user";
 if ($my_page_entity instanceof ElggGroup) $page_entity_type = "group";
 
-// condition for pages
-if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
-  $page_entity_type = 'pages';
-}
 
 // Meta tags for the page
 
-if (!$my_page_entity instanceof ElggEntity) {
+$comment_entity = get_entity($comment_entity_guid);
+if ($comment_entity instanceof ElggComment) {
+  $page_entity_type = "comments";
+  $my_page_entity = $comment_entity;
+
+} elseif (!$my_page_entity instanceof ElggEntity) {
   $segments = (strpos($_SERVER['REQUEST_URI'], '?') !== false) 
   ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
   : $_SERVER['REQUEST_URI'];
@@ -277,6 +288,15 @@ if (!$my_page_entity instanceof ElggEntity) {
   }
 }
 
+// condition for pages
+if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
+  $page_entity_type = 'pages';
+}
+
+// condition for forums
+if ($page_entity_type == 'hjforumtopic') {
+  $page_entity_type = 'forums';
+}
 
 if ($my_page_entity instanceof ElggEntity) { 
 $description = strip_tags(gc_explode_translation($my_page_entity->description, 'en')) . strip_tags(gc_explode_translation($my_page_entity->description, 'fr'));
