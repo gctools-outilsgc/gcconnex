@@ -201,7 +201,8 @@ $no_index_array = array(
   'thewire/all','thewire/owner','thewire/friends',
   'file_tools/list', 'newsfeed/', 'groups/', 'discussion/owner', 'ideas/group', 'photos/group', 'pages/all', 'missions/main',
   'pages/history', 'pages/owner', 'splash/', '/mod', 'login/', 'file/all', 'questions/owner',
-  'about-a_propos/', 'privacy-confidentialite/', 'terms/', 'register/', 'gcforums/view', 'gcforums/group', 'gcforums/create', 
+  'about-a_propos/', 'privacy-confidentialite/', 'terms/', 'register/', 'gcforums/view', 'gcforums/group', 'gcforums/create', 'questions/group',
+  'event_calendar/group', 'pages/group', 'polls/group'
 );
 
 /// replace the slashes (maybe use regex instead) then remove the base url and then put the slashes in before comparison 
@@ -297,6 +298,10 @@ if ($page_entity_type == 'hjforumtopic') {
 // condition for forums
 if ($page_entity_type == 'thewire') {
   $page_entity_type = 'wire';
+}
+
+if ($page_entity_type == 'groupforumtopic') {
+  $page_entity_type = 'discussions';
 }
 
 if ($my_page_entity instanceof ElggEntity) { 
