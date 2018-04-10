@@ -173,6 +173,7 @@ if ($slider_type == "flexslider") {
 } else if ($slider_type == "random") {
 
 	echo '<div id="' . $object_id . '">';
+	echo '<h2 class="wb-invisible">' . elgg_echo('widget_manager:widgets:image_slider:slider_type:random_heading') . '</h2>';
 
 	$count = count($configured_slides);
 	$rand = rand(0, $count - 1);

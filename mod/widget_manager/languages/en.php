@@ -147,6 +147,7 @@
 		'widget_manager:widgets:image_slider:slider_type:s3slider' => "s3Slider",
 		'widget_manager:widgets:image_slider:slider_type:flexslider' => "FlexSlider",
 		'widget_manager:widgets:image_slider:slider_type:random' => "Random",
+		'widget_manager:widgets:image_slider:slider_type:random_heading' => "Community Highlights",
 		'widget_manager:widgets:image_slider:seconds_per_slide' => "Seconds per slide",
 		'widget_manager:widgets:image_slider:slider_height' => "Height of slides (pixels)",
 		'widget_manager:widgets:image_slider:overlay_color' => "Overlay Color (hex)",
