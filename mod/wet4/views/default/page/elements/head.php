@@ -315,7 +315,7 @@ $description = str_replace('"', '', $description); // just in case ...
 ?>
  
 <meta name="platform" content="gcconnex" />
-<meta name="dcterms.type" content= "<?php echo $page_entity_type; ?>" />
+<meta name="dcterms.type" content= "<?php echo ucfirst($page_entity_type); ?>" />
 <meta name="dcterms.description" content="<?php echo $description; ?>" /> 
 <meta name="dcterms.modified" content="<?php echo date("Y-m-d", $my_page_entity->time_updated); ?>" />
 <?php } ?> 

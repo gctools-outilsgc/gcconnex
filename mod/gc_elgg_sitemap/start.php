@@ -82,7 +82,9 @@ function elgg_display_comment_handler($hook, $type, $return, $params) {
 
     if ($segments[0] === 'view') {
         $entity = get_entity($segments[1]);
-        $title = $entity->description;
+
+        // comments do not have a title
+        $title = "";
         $content = $entity->description;
 
         echo elgg_view_page($title, $content);
