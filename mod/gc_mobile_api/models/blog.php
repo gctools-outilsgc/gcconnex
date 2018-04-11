@@ -373,17 +373,25 @@ function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $
 	 if (!$excerpts->en) { $excerpts->en = ''; }
 	 if (!$excerpts->fr) { $excerpts->fr = ''; }
 	 if ($comments != 0 && $comments != 1) { $comments = 1; }
-	 if ($access != 0 && $access != 1 && $access != -2 ) { $access = 1; }
+	 if ($access != 0 && $access != 1 && $access != -2 && $access !=2 ) { $access = 1; }
 	 if ($status != 0 && $status != 1) { $status = 0; }
 
-	 //If no group container, use user guid.
-	 if ($container_guid==''){ $container_guid = $user_entity->guid; }
+	 // if there is a container_guid, .: group, and access is set to group only, set access to proper group only
+	 if (!empty($container_guid) && $access == 2){
+		 $container = get_entity($container_guid);
+		 //validate container and ability to write to it
+		 if (!$container || !$container->canWriteToContainer(0, 'object', 'blog')) {
+ 			return elgg_echo('blog:error:cannot_write_to_container');
+ 		} else {
+			$access = $container->group_acl;
+		}
+		 //If no group container, use user guid.
+	 } else if ($container_guid=='') { $container_guid = $user_entity->guid; }
 
 	 //Set int variables to correct
 	 if ($status == 1) { $status = 'published'; } else { $status = 'draft'; }
 	 if ($comments == 1) { $comments = 'On'; } else { $comments = 'Off'; }
-	 if ($access == 1 ) { $access = ACCESS_PUBLIC; }
-	 if ($status == 'draft') { $access = ACCESS_PRIVATE; }
+	 if ($status == 'draft') { $access = 0; }
 	 $titles->en = htmlspecialchars($titles->en, ENT_QUOTES, 'UTF-8');
 	 $titles->fr = htmlspecialchars($titles->fr, ENT_QUOTES, 'UTF-8');
 	 $excerpts->en = elgg_get_excerpt($excerpts->en);
