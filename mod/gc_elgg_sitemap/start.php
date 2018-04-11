@@ -61,6 +61,7 @@ function gc_elgg_sitemap_init() {
 		elgg_register_plugin_hook_handler('view', 'members/nav', 'elgg_members_menu_handler');
 		elgg_register_plugin_hook_handler('view', 'event_calendar/filter_menu', 'elgg_members_menu_handler');
 
+		elgg_register_plugin_hook_handler('route', 'comment', 'elgg_display_comment_handler');
 
 	    elgg_register_plugin_hook_handler('register','menu:owner_block','group_navigation_handler');
 		elgg_extend_view('groups/profile/summary', 'group_tabs', 600);
@@ -74,6 +75,23 @@ function gc_elgg_sitemap_init() {
 		elgg_register_plugin_hook_handler('view', 'b_extended_profile/skills', 'elgg_view_topbar_handler');
 
 	}
+}
+
+function elgg_display_comment_handler($hook, $type, $return, $params) {
+    $segments = elgg_extract('segments', $return, array());
+
+    if ($segments[0] === 'view') {
+        $entity = get_entity($segments[1]);
+
+        // comments do not have a title
+        $title = "";
+        $content = $entity->description;
+
+        echo elgg_view_page($title, $content);
+
+        // in the route hook, return false says, "stop rendering, we've handled this request"
+        return false;
+    }
 }
 
 function elgg_view_topbar_handler($hook, $type, $return, $params) {
@@ -209,9 +227,14 @@ function get_sanitized_url() {
  */
 function redirect_content_url($hook, $type, $url, $params) {
 
-	if (strpos($_SERVER['REQUEST_URI'],"/view/") !== false)
+	// display only the comment when the url is directing to a specific comment
+	// only do this when the user agent is solr-crawler
+	if (strpos($_SERVER['REQUEST_URI'], '/comment/view/') !== false ) return;
+
+	if (strpos($_SERVER['REQUEST_URI'], "/view/") !== false)
 	{
 		$subtype = $params['entity']->getSubtype();
+
 		if ($subtype === 'groupforumtopic') $subtype = 'discussion';
 		if ($subtype === 'page_top') $subtype = 'pages';
 		if ($subtype === 'idea') $subtype = 'ideas';
@@ -266,19 +289,20 @@ function elgg_comment_view_handler($hook, $type, $value, $params) {
 
 	if ($type === 'page/elements/comments') {
 
-		$comments = elgg_list_entities(array(
+		$comments = elgg_get_entities(array(
 			'type' => 'object',
 			'subtype' => 'comment',
 			'container_guid' => $params['vars']['entity']->guid,
-			'reverse_order_by' => true,
-			'full_view' => true,
-			'limit' => 15,
-			'preload_owners' => true,
-			'distinct' => false,
-			'url_fragment' => $attr['id'],
+			'limit' => 0,
+			'distinct' => false
 		));
+
+		foreach ($comments as $comment) {
+			$comment_list .= "<a href='{$comment->getURL()}'>{$comment->description}</a> <br/>";
+		}
 	}
-	return $comments;
+
+	return $comment_list;
 }
 
 function elgg_event_calendar_list_handler($hook, $type, $value, $params) {
