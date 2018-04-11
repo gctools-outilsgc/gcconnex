@@ -68,11 +68,15 @@
 		 $title2 = htmlspecialchars($titles->fr, ENT_QUOTES, 'UTF-8');
 		 $title =  gc_implode_translation($title1, $title2);
 		 $desc = gc_implode_translation($message->en, $message->fr);
-		 //convert any mobile variables returned as smaller options
+
+     if ($access == 1 && !$container->isPublicMembership()){
+       $access = 2; //Access cannot be public if group is not public. Default to group only.
+     }
 		 $access_id = $access;
 		 if ($access_id === 2){
 			 $access_id = $container->group_acl; //Sets access id to match group only id.
 		 }
+
 
 		 $topic->title = $title;
 		 $topic->title2 = $title2;
