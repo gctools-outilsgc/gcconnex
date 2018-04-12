@@ -9,8 +9,7 @@
 
 			<?php // get the language parameter ?>
 			var url_string = window.location.href;
-			var url = new URL(url_string);
-			var language_param = url.searchParams.get("language");
+			var language_param = getParams("language");
 
 			if (language_param != null) cookie_value = language_param;
 
@@ -62,6 +61,17 @@
 		    return "";
 		}
 		
+		// url.searchParams() is not compatible with Internet Explorer
+		function getParams(name) {
+		    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+		    if (results==null){
+		       return null;
+		    }
+		    else{
+		       return decodeURI(results[1]) || 0;
+		    }
+		}
+
 	</script>
 		
 
@@ -85,4 +95,3 @@
 		</div>
 	</div>
 
-	
