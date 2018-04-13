@@ -404,7 +404,7 @@ function get_blog_edit($user, $guid, $lang)
  return $blog_post;
 }
 
-function save_blog($user, $title, $excerpt, $body, $container_guid, $comments, $access, $status, $lang)
+function save_blog($user, $title, $excerpt, $body, $container_guid, $blog_guid, $comments, $access, $status, $lang)
 {
  $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	 if (!$user_entity) {
