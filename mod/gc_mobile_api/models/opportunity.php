@@ -96,7 +96,11 @@ elgg_ws_expose_function(
 	"create_opportinities1",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
-		"message" => array('type' => 'string', 'required' => true),
+		"title" => array('type' => 'string', 'required' => true),
+		"email" => array('type' => 'string', 'required' => true),
+		"phone" => array('type' => 'string', 'required' => true),
+		"departement" => array('type' => 'string', 'required' => true),
+		"agree" => array('type' => 'string', 'required' => true),	
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves a opportunity based on user id and opportunity id',
@@ -627,7 +631,7 @@ function accept_post($user, $guid, $lang)
 	return elgg_echo('missions:now_participating_in_mission', array($entity->job_title));
 }
 
-function create_opportinities1($user, $message, $lang)
+function create_opportinities1($user, $title, $email, $phone, $departement, $agree, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -641,7 +645,7 @@ function create_opportinities1($user, $message, $lang)
 		login($user_entity);
 	}
 	
-error_log('message :'.$message .'user: '.$user. 'lang: '.$lang);
+error_log('title :'.$title .'email :'.$email .'phone :'.$phone .'departement :'.$departement .'agree :'.$agree .'user: '.$user. 'lang: '.$lang);
 
-	return $message;
+	return $title;
 }
