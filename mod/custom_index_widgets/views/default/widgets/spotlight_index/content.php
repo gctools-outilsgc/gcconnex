@@ -100,7 +100,7 @@ if ($slider_type == "flexslider") {
 			echo '<a href="' . $slide["link"] . '">';
 		}
 		
-		echo '<img class="slider_img" alt="' . $slide["alt"] . '" src="' . $slide["url"] . '" />';
+		echo '<img class="slider_img" style="max-width: 100%;" alt="' . $slide["alt"] . '" src="' . $slide["url"] . '" />';
 		
 		if (!empty($slide["text"])) {
 			echo '<div class="flex-caption">' . $slide["text"] . '</div>';
@@ -183,7 +183,7 @@ if ($slider_type == "flexslider") {
 		echo '<a href="' . $slide["link"] . '">';
 	}
 	
-	echo '<img class="slider_img" alt="' . $slide["alt"] . '" src="' . $slide["url"] . '" />';
+	echo '<img class="slider_img" style="max-width: 100%;" alt="' . $slide["alt"] . '" src="' . $slide["url"] . '" />';
 	
 	if (!empty($slide["link"])) {
 		echo '</a>';
