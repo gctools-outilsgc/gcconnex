@@ -95,20 +95,21 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
- "post.blog",
- "post_blog",
+ "save.blog",
+ "save_blog",
  array(
 	 "user" => array('type' => 'string', 'required' => true),
 	 "title" => array('type' => 'string', 'required' => true),
 	 "excerpt" => array('type' =>'string', 'required' => false, 'default' => ''),
 	 "body" => array('type' =>'string', 'required' => true),
 	 "container_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
+	 "blog_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
 	 "comments" => array('type' =>'int', 'required' => false, 'default' => 1),
 	 "access" => array('type' =>'int', 'required' => false, 'default' => 1),
 	 "status" => array('type' =>'int', 'required' => false, 'default' => 0),
 	 "lang" => array('type' => 'string', 'required' => false, 'default' => "en")
  ),
- 'Posts/Saves a new blog post',
+ 'Posts/Saves a blog post',
  'POST',
  true,
  false
@@ -403,7 +404,7 @@ function get_blog_edit($user, $guid, $lang)
  return $blog_post;
 }
 
-function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $access, $status, $lang)
+function save_blog($user, $title, $excerpt, $body, $container_guid, $comments, $access, $status, $lang)
 {
  $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	 if (!$user_entity) {
@@ -475,13 +476,24 @@ function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $
 		 'show_owner' => 'no'
 	 );
 
-	 //return $values;
-	 //return elgg_echo("test: pre blog creation");
-	 //Create blog
-	 $blog = new ElggBlog();
-	 $blog->subtype = 'blog';
-	 $blog->container_guid = $container_guid;
-	 $new_post = TRUE;
+	 $blog = new stdClass();
+	 $revision_text = '';
+	 if ($blog_guid){
+		 $entity = get_entity($blog_guid);
+		 if (elgg_instanceof($entity, 'object', 'blog') && $entity->canEdit()) {
+			 	$blog = $entity;
+		 } else {
+			 return elgg_echo('blog:error:post_not_found');
+		 }
+		 $revision_text = $blog->description;
+		 $new_post = $blog->new_post; //what?
+	 } else {
+		 //Create blog
+		 $blog = new ElggBlog();
+		 $blog->subtype = 'blog';
+		 $blog->container_guid = $container_guid;
+		 $new_post = TRUE;
+	 }
 
 	 $old_status = $blog->status;
 
@@ -521,8 +533,14 @@ function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $
 
 					 $blog->icontime = time();
 			 }
+
+			 // remove autosave draft if exists
+			 $blog->deleteAnnotations('blog_auto_save');
 			 // no longer a brand new post.
 			 $blog->deleteMetadata('new_post');
+			 if (!$new_post && $revision_text) {
+				 $blog->annotate('blog_revision', $revision_text);
+			 }
 
 			 $status = $blog->status;
 				 // add to river if changing status or published, regardless of new post
