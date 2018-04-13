@@ -244,8 +244,6 @@ function get_discussion_edit($user, $guid, $lang)
 
  $discussion->title = json_decode($discussion->title);
  $discussion->description = json_decode($discussion->description);
- //access id?
- //status?
  $container = get_entity($discussion->container_guid);
  $discussion->group->public = $container->isPublicMembership();
  if (!$discussion->group->public && !$container->isMember($user_entity)){

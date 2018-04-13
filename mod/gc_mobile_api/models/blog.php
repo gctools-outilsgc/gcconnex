@@ -81,6 +81,20 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+ "get.blogedit",
+ "get_blog_edit",
+ array(
+	 "user" => array('type' => 'string', 'required' => true),
+	 "guid" => array('type' => 'int', 'required' => true),
+	 "lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+ ),
+ 'Retrieves a blog post based on user id and blog post id, with only info needed for edit form',
+ 'POST',
+ true,
+ false
+);
+
+elgg_ws_expose_function(
  "post.blog",
  "post_blog",
  array(
@@ -342,6 +356,51 @@ function get_blogposts_by_container($user, $guid, $limit, $offset, $lang)
  $blogs_final = foreach_blogs($blog_posts, $user_entity, $lang);
 
  return $blogs_final;
+}
+
+function get_blog_edit($user, $guid, $lang)
+{
+ $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+ if (!$user_entity) {
+	 return "User was not found. Please try a different GUID, username, or email address";
+ }
+ if (!$user_entity instanceof ElggUser) {
+	 return "Invalid user. Please try a different GUID, username, or email address";
+ }
+
+ $entity = get_entity($guid);
+ if (!isset($entity)) {
+	 return "Blog was not found. Please try a different GUID";
+ }
+
+ if (!elgg_is_logged_in()) {
+	 login($user_entity);
+ }
+
+ $blog_posts = elgg_list_entities(array(
+	 'type' => 'object',
+	 'subtype' => 'blog',
+	 'guid' => $guid
+ ));
+ $blog_post = json_decode($blog_posts)[0];
+
+ $blog_post->title = json_decode($blog_post->title);
+ //$blog_post->excerpt = json_decode($blog_post->excerpt); //not correct
+ $blog_post->description = json_decode($blog_post->description);
+
+ $container = get_entity($blog_post->container_guid);
+ if ($container instanceof ElggGroup){
+	 $blog_post->group->public = $container->isPublicMembership();
+	 if (!$blog_post->group->public && !$container->isMember($user_entity)){
+		return elgg_echo('discussion:error:permissions');
+	 }
+ }
+
+ if (is_callable(array($group, 'getURL'))) {
+	 $blog_post->groupURL = $group->getURL();
+ }
+
+ return $blog_post;
 }
 
 function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $access, $status, $lang)
