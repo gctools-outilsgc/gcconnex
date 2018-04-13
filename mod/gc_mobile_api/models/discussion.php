@@ -35,6 +35,20 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+	"get.discussionedit",
+	"get_discussion_edit",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a discussion based on guid, returns only information required for edit',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
  "post.discussion",
  "post_discussion",
  array(
@@ -194,6 +208,53 @@ function get_discussions($user, $limit, $offset, $filters, $lang)
 	return $discussions;
 }
 
+function get_discussion_edit($user, $guid, $lang)
+{
+ $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+ if (!$user_entity) {
+	 return "User was not found. Please try a different GUID, username, or email address";
+ }
+ if (!$user_entity instanceof ElggUser) {
+	 return "Invalid user. Please try a different GUID, username, or email address";
+ }
+
+ if (!elgg_is_logged_in()) {
+	 login($user_entity);
+ }
+
+ $entity = get_entity($guid);
+ if (!$entity) {
+	 return "Discussion was not found. Please try a different GUID";
+ }
+ if (!elgg_instanceof($entity, "object", "groupforumtopic")) {
+	 return "Invalid discussion. Please try a different GUID";
+ }
+
+
+
+ $discussions = elgg_list_entities(array(
+	 'type' => 'object',
+	 'subtype' => 'groupforumtopic',
+	 'guid' => $guid
+ ));
+ $discussion = json_decode($discussions)[0];
+ if ($discussion->owner_guid != $user_entity->getGUID()){
+	 return elgg_echo('discussion:error:permissions');
+ }
+
+ $discussion->title = json_decode($discussion->title);
+ $discussion->description = json_decode($discussion->description);
+ //access id?
+ //status?
+ $container = get_entity($discussion->container_guid);
+ $discussion->group->public = $container->isPublicMembership();
+ if (!$discussion->group->public && !$container->isMember($user_entity)){
+	 return elgg_echo('discussion:error:permissions');
+ }
+
+ return $discussion;
+}
+
 function post_discussion($user, $title, $message, $container_guid, $access, $open, $topic_guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
@@ -229,7 +290,7 @@ function post_discussion($user, $title, $message, $container_guid, $access, $ope
 			$topic = new ElggObject();
 			$topic->subtype = 'groupforumtopic';
 		} else {
-			$topic = get_entity($guid);
+			$topic = get_entity($topic_guid);
 			if (!elgg_instanceof($topic, 'object', 'groupforumtopic') || !$topic->canEdit()) {
 				return elgg_echo('discussion:topic:notfound');
 			}
