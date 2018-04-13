@@ -290,7 +290,7 @@ function post_discussion($user, $title, $message, $container_guid, $access, $ope
 			$topic = new ElggObject();
 			$topic->subtype = 'groupforumtopic';
 		} else {
-			$topic = get_entity($guid);
+			$topic = get_entity($topic_guid);
 			if (!elgg_instanceof($topic, 'object', 'groupforumtopic') || !$topic->canEdit()) {
 				return elgg_echo('discussion:topic:notfound');
 			}
