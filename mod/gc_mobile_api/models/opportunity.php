@@ -77,6 +77,34 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"accept.post",
+	"accept_post",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a opportunity based on user id and opportunity id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"create.opportinities1",
+	"create_opportinities1",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"message" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a opportunity based on user id and opportunity id',
+	'POST',
+	true,
+	false
+);
+
 function get_opportunity($user, $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
@@ -597,4 +625,23 @@ function accept_post($user, $guid, $lang)
 		mm_notify_user($entity->guid, $user_entity->guid, $subject, '','',$message_en,$message_fr);
 	
 	return elgg_echo('missions:now_participating_in_mission', array($entity->job_title));
+}
+
+function create_opportinities1($user, $message, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+	
+error_log('message :'.$message .'user: '.$user. 'lang: '.$lang);
+
+	return $message;
 }
