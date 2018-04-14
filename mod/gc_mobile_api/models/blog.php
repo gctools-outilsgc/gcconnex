@@ -81,20 +81,35 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
- "post.blog",
- "post_blog",
+ "get.blogedit",
+ "get_blog_edit",
+ array(
+	 "user" => array('type' => 'string', 'required' => true),
+	 "guid" => array('type' => 'int', 'required' => true),
+	 "lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+ ),
+ 'Retrieves a blog post based on user id and blog post id, with only info needed for edit form',
+ 'POST',
+ true,
+ false
+);
+
+elgg_ws_expose_function(
+ "save.blog",
+ "save_blog",
  array(
 	 "user" => array('type' => 'string', 'required' => true),
 	 "title" => array('type' => 'string', 'required' => true),
 	 "excerpt" => array('type' =>'string', 'required' => false, 'default' => ''),
 	 "body" => array('type' =>'string', 'required' => true),
 	 "container_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
+	 "blog_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
 	 "comments" => array('type' =>'int', 'required' => false, 'default' => 1),
 	 "access" => array('type' =>'int', 'required' => false, 'default' => 1),
 	 "status" => array('type' =>'int', 'required' => false, 'default' => 0),
 	 "lang" => array('type' => 'string', 'required' => false, 'default' => "en")
  ),
- 'Posts/Saves a new blog post',
+ 'Posts/Saves a blog post',
  'POST',
  true,
  false
@@ -344,7 +359,52 @@ function get_blogposts_by_container($user, $guid, $limit, $offset, $lang)
  return $blogs_final;
 }
 
-function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $access, $status, $lang)
+function get_blog_edit($user, $guid, $lang)
+{
+ $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+ if (!$user_entity) {
+	 return "User was not found. Please try a different GUID, username, or email address";
+ }
+ if (!$user_entity instanceof ElggUser) {
+	 return "Invalid user. Please try a different GUID, username, or email address";
+ }
+
+ $entity = get_entity($guid);
+ if (!isset($entity)) {
+	 return "Blog was not found. Please try a different GUID";
+ }
+
+ if (!elgg_is_logged_in()) {
+	 login($user_entity);
+ }
+
+ $blog_posts = elgg_list_entities(array(
+	 'type' => 'object',
+	 'subtype' => 'blog',
+	 'guid' => $guid
+ ));
+ $blog_post = json_decode($blog_posts)[0];
+
+ $blog_post->title = json_decode($blog_post->title);
+ //$blog_post->excerpt = json_decode($blog_post->excerpt); //not correct
+ $blog_post->description = json_decode($blog_post->description);
+
+ $container = get_entity($blog_post->container_guid);
+ if ($container instanceof ElggGroup){
+	 $blog_post->group->public = $container->isPublicMembership();
+	 if (!$blog_post->group->public && !$container->isMember($user_entity)){
+		return elgg_echo('discussion:error:permissions');
+	 }
+ }
+
+ if (is_callable(array($group, 'getURL'))) {
+	 $blog_post->groupURL = $group->getURL();
+ }
+
+ return $blog_post;
+}
+
+function save_blog($user, $title, $excerpt, $body, $container_guid, $blog_guid, $comments, $access, $status, $lang)
 {
  $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	 if (!$user_entity) {
@@ -416,13 +476,24 @@ function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $
 		 'show_owner' => 'no'
 	 );
 
-	 //return $values;
-	 //return elgg_echo("test: pre blog creation");
-	 //Create blog
-	 $blog = new ElggBlog();
-	 $blog->subtype = 'blog';
-	 $blog->container_guid = $container_guid;
-	 $new_post = TRUE;
+	 $blog = new stdClass();
+	 $revision_text = '';
+	 if ($blog_guid){
+		 $entity = get_entity($blog_guid);
+		 if (elgg_instanceof($entity, 'object', 'blog') && $entity->canEdit()) {
+			 	$blog = $entity;
+		 } else {
+			 return elgg_echo('blog:error:post_not_found');
+		 }
+		 $revision_text = $blog->description;
+		 $new_post = $blog->new_post; //what?
+	 } else {
+		 //Create blog
+		 $blog = new ElggBlog();
+		 $blog->subtype = 'blog';
+		 $blog->container_guid = $container_guid;
+		 $new_post = TRUE;
+	 }
 
 	 $old_status = $blog->status;
 
@@ -462,8 +533,14 @@ function post_blog($user, $title, $excerpt, $body, $container_guid, $comments, $
 
 					 $blog->icontime = time();
 			 }
+
+			 // remove autosave draft if exists
+			 $blog->deleteAnnotations('blog_auto_save');
 			 // no longer a brand new post.
 			 $blog->deleteMetadata('new_post');
+			 if (!$new_post && $revision_text) {
+				 $blog->annotate('blog_revision', $revision_text);
+			 }
 
 			 $status = $blog->status;
 				 // add to river if changing status or published, regardless of new post
