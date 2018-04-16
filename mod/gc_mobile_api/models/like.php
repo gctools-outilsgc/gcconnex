@@ -188,6 +188,18 @@ function like_count($guid, $user, $lang)
 
 function like_users($guid, $user, $lang)
 {
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
 	$entity = get_entity($guid);
 	if (!$entity) {
 		return "Object was not found. Please try a different GUID";
