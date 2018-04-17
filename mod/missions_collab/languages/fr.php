@@ -12,6 +12,8 @@ return array(
     "missions:casual" => "Emploi occasionnel",
     "missions:student" => "Intégration des étudiants",
     "missions:collaboration" => "Collaboration",
+    "missions:skillsharing" => "Partage des habiletés",
+    "missions:interchange" => "Échanges Canada",
     
     "missions:your_department" =>	"Votre organisation, agence ou département",
     "missions:application_paragraph" =>	"Veuillez rédiger le message que vous souhaitez envoyer à ce créateur de possibilités.",
@@ -39,7 +41,7 @@ return array(
     "missions:diagnostic_suite:no_account_has_email" =>  "La possibilité '%s' a un courriel qui ne figure pas dans aucun compte dans GCcollab : '%s'.",
     "missions:placeholder_a" =>   "Bienvenue à la Carrefour de carrière! Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCcollab des employés. On encourage les employés à s'inscrire aux types de possibilité de perfectionnement professionnel et de mobilité au même niveau dans leur profil afin de pleinement profiter de cet outil.
     
-    Joignez le groupe du <a href='https://gccollab.ca/groups/profile/6161'>Carrefour de carrière</a> pour avoir accès aux lignes directrices, définitions, tutoriels et mises à jour!",
+    </br></br>Joignez le groupe du <a href='https://gccollab.ca/groups/profile/6161'>Carrefour de carrière</a> pour avoir accès aux lignes directrices, définitions, tutoriels et mises à jour!",
     "missions:placeholder_e" =>   "La liste d'employés ci-dessous a été automatiquement générée en fonction des compétences que vous avez indiquées dans votre possibilité ou vos paramètres de recherche, lesquels ont été comparés aux profils GCcollab des employés. Notez que la présence d'un employé sur cette liste ne garantit pas qu'il est qualifié pour votre possibilité; toutefois, cela devrait vous offrir un bon point de départ pour retrouver des candidats talentueux de façon proactive.
 
     Vous pouvez inviter n'importe quel employé à votre possibilité, qu'il figure à la liste ou non. Les employés qui n'apparaissent pas dans cette liste sont aussi les bienvenus à faire part de leur intérêt dans votre possibilité.",

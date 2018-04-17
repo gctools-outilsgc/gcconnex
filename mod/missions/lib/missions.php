@@ -859,6 +859,18 @@ function check_if_opted_in($current_user) {
 		if($current_user->opt_in_collaboration_create == 'gcconnex_profile:opt:yes') {
 			return true;
 		}
+		if($current_user->opt_in_skillsharing_seek == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_skillsharing_create == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_interchange_seek == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_interchange_create == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
 	}
 
 	return false;

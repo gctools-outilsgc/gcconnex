@@ -231,7 +231,7 @@ $input_gl_group = elgg_view('input/dropdown', array(
         $('#post-mission-type-dropdown-input').change(function () {
             //Nick - this makes it so micromissions cannot have a group and level 
             var value = $(this).val();
-            if (value == 'missions:mentoring' || value == 'missions:collaboration') {
+            if (value == 'missions:mentoring' || value == 'missions:collaboration' || value == 'missions:skillsharing' || value == 'missions:interchange') {
             	//Deactivate and clear the group and level inputs
             	$('#post-mission-gl-group').attr('disabled', true);
                 $('#post-mission-gl-group').val('');

@@ -12,6 +12,8 @@ return array(
     "missions:casual" => "Casual Work",
     "missions:student" => "Student Integration",
     "missions:collaboration" => "Collaboration",
+    "missions:skillsharing" => "Skill Sharing",
+    "missions:interchange" => "Interchange Canada",
     
     "missions:your_department" =>   "Your organization, agency or department",
     "missions:application_paragraph" => "Please write out the message you wish to send to this opportunity creator. Note that the public portions of your GCcollab profile will be included in the email to the opportunity creator.",
@@ -39,7 +41,7 @@ return array(
 
     Employees are encouraged to opt in to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
     
-    Join the <a href='https://gccollab.ca/groups/profile/6161'>Career Marketplace group</a> for guidelines, definitions, tutorials and updates!",
+    </br></br>Join the <a href='https://gccollab.ca/groups/profile/6161'>Career Marketplace group</a> for guidelines, definitions, tutorials and updates!",
     "missions:placeholder_e" =>    "The below list of employees was automatically generated based on the skills you identified in your opportunity which were cross-referenced with employees&rsquo; GCcollab profiles. Note that being on this list does not guarantee the employee is qualified for your opportunity however it should provide a good starting point for proactively seeking out talented candidates.
 
     You can share your opportunity with any employee whether on this list or not. Employees who do not appear on this list are also welcome to express interest in your opportunity.",

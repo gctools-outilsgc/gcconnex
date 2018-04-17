@@ -208,6 +208,18 @@ function mm_analyze_advanced_search_element($place, $array)
                     case elgg_echo('gcconnex_profile:opt:collaboration_create'):
                         $name_option = 'opt_in_collaboration_create';
                         break;
+                    case elgg_echo('gcconnex_profile:opt:skillsharing_seek'):
+                        $name_option = 'opt_in_skillsharing_seek';
+                        break;
+                    case elgg_echo('gcconnex_profile:opt:skillsharing_create'):
+                        $name_option = 'opt_in_skillsharing_create';
+                        break;
+                    case elgg_echo('gcconnex_profile:opt:interchange_seek'):
+                        $name_option = 'opt_in_interchange_seek';
+                        break;
+                    case elgg_echo('gcconnex_profile:opt:interchange_create'):
+                        $name_option = 'opt_in_interchange_create';
+                        break;
                 }
                 $returner['name'] = $name_option;
                 $returner['operand'] = '=';
