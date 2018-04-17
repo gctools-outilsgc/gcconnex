@@ -154,7 +154,7 @@ foreach($opt_in_set as $k => $v){
 						        'name' => 'studentseek_check',
 						        'checked' => $opt_in_set[19],
 						        'id' => 'gcconnex-opt-in-studentseek-check',
-			                    'label' => elgg_echo('gcconnex_profile:opt:student_seek') 
+			                    'label' => elgg_echo('gcconnex_profile:opt:seeking') 
 			               	));
 		                ?>
                 	</li>
@@ -164,7 +164,7 @@ foreach($opt_in_set as $k => $v){
 						        'name' => 'studentcreate_check',
 						        'checked' => $opt_in_set[20],
 						        'id' => 'gcconnex-opt-in-studentcreate-check',
-			                    'label' => elgg_echo('gcconnex_profile:opt:student_create')
+			                    'label' => elgg_echo('gcconnex_profile:opt:offering')
 			            	));
 		                ?>
                 	</li>
@@ -179,7 +179,7 @@ foreach($opt_in_set as $k => $v){
 						        'name' => 'interchangeseek_check',
 						        'checked' => $opt_in_set[25],
 						        'id' => 'gcconnex-opt-in-interchangeseek-check',
-			                    'label' => elgg_echo('gcconnex_profile:opt:interchange_seek') 
+			                    'label' => elgg_echo('gcconnex_profile:opt:seeking') 
 			               	));
 		                ?>
                 	</li>
@@ -189,7 +189,7 @@ foreach($opt_in_set as $k => $v){
 						        'name' => 'interchangecreate_check',
 						        'checked' => $opt_in_set[26],
 						        'id' => 'gcconnex-opt-in-interchangecreate-check',
-			                    'label' => elgg_echo('gcconnex_profile:opt:interchange_create')
+			                    'label' => elgg_echo('gcconnex_profile:opt:offering')
 			            	));
 		                ?>
                 	</li>
@@ -363,7 +363,7 @@ foreach($opt_in_set as $k => $v){
 								'name' => 'collaborationseek_check',
 								'checked' => $opt_in_set[21],
 								'id' => 'gcconnex-opt-in-collaborationseek-check',
-								'label' => elgg_echo('gcconnex_profile:opt:collaboration_seek'),
+								'label' => elgg_echo('gcconnex_profile:opt:seeking'),
 							));
 		                ?>
 		            </li>
@@ -374,7 +374,7 @@ foreach($opt_in_set as $k => $v){
 								'name' => 'collaborationcreate_check',
 								'checked' => $opt_in_set[22],
 								'id' => 'gcconnex-opt-in-collaborationcreate-check',
-								'label' => elgg_echo('gcconnex_profile:opt:collaboration_create'),
+								'label' => elgg_echo('gcconnex_profile:opt:offering'),
 							));
 		                ?>
 		            </li>
@@ -391,7 +391,7 @@ foreach($opt_in_set as $k => $v){
 								'name' => 'skillsharingseek_check',
 								'checked' => $opt_in_set[23],
 								'id' => 'gcconnex-opt-in-skillsharingseek-check',
-								'label' => elgg_echo('gcconnex_profile:opt:skillsharing_seek'),
+								'label' => elgg_echo('gcconnex_profile:opt:seeking'),
 							));
 		                ?>
 		            </li>
@@ -402,7 +402,7 @@ foreach($opt_in_set as $k => $v){
 								'name' => 'skillsharingcreate_check',
 								'checked' => $opt_in_set[24],
 								'id' => 'gcconnex-opt-in-skillsharingcreate-check',
-								'label' => elgg_echo('gcconnex_profile:opt:skillsharing_create'),
+								'label' => elgg_echo('gcconnex_profile:opt:offering'),
 							));
 		                ?>
 		            </li>
