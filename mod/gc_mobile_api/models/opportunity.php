@@ -98,7 +98,7 @@ elgg_ws_expose_function(
 		"user" => array('type' => 'string', 'required' => true),
 		"title" => array('type' => 'string', 'required' => true),
 		"email" => array('type' => 'string', 'required' => true),
-		"phone" => array('type' => 'string', 'required' => true),
+		"phone" => array('type' => 'string', 'required' => false),
 		"departement" => array('type' => 'string', 'required' => true),
 		"agree" => array('type' => 'string', 'required' => true),	
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
@@ -109,6 +109,41 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"create.opportinities2",
+	"create_opportinities2",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"title" => array('type' => 'string', 'required' => true),
+		"offert" => array('type' => 'string', 'required' => true),
+		"type" => array('type' => 'string', 'required' => true),
+		"program" => array('type' => 'string', 'required' => true),
+		"num_opt" => array('type' => 'string', 'required' => false),	
+		"start_date" => array('type' => 'string', 'required' => true),
+		"completion_date" => array('type' => 'string', 'required' => false),
+		"deadline" => array('type' => 'string', 'required' => true),
+		"description" => array('type' => 'string', 'required' => true),	
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a opportunity based on user id and opportunity id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"create.opportinities3",
+	"create_opportinities3",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"formData" => array('type' => 'array', 'required' => true),	
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a opportunity based on user id and opportunity id',
+	'POST',
+	true,
+	false
+);
 function get_opportunity($user, $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
@@ -648,4 +683,43 @@ function create_opportinities1($user, $title, $email, $phone, $departement, $agr
 error_log('title :'.$title .'email :'.$email .'phone :'.$phone .'departement :'.$departement .'agree :'.$agree .'user: '.$user. 'lang: '.$lang);
 
 	return $title;
+}
+
+
+function create_opportinities2($user, $title, $offert, $type, $program, $num_opt,$start_date,$completion_date,$deadline,$description, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+	
+error_log('title :'.$title .'offer :'.$offert .'type :'.$type .'program :'.$program .'num_opt :'.$num_opt .'start_date: '.$start_date. 'lang: '.$lang);
+
+	return $title;
+}
+
+function create_opportinities3($user, $formData,$lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+	
+error_log('data :'.print_r($formData,true) . 'lang: '.$lang);
+
+	return 'test '.$formData;
 }
