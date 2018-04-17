@@ -515,6 +515,10 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->opt_in_student_create = $opt_in_set[20];
             $user->opt_in_collaboration_seek = $opt_in_set[21];
             $user->opt_in_collaboration_create = $opt_in_set[22];
+            $user->opt_in_skillsharing_seek = $opt_in_set[23];
+            $user->opt_in_skillsharing_create = $opt_in_set[24];
+            $user->opt_in_interchange_seek = $opt_in_set[25];
+            $user->opt_in_interchange_create = $opt_in_set[26];
             
             /*$user->opt_in_peer_coached = $opt_in_set[6];
               $user->opt_in_peer_coaching = $opt_in_set[7];
