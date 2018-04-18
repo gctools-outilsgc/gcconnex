@@ -1,10 +1,15 @@
 
-	<?php global $SESSION; ?>
+	<?php
+		global $SESSION;
+		$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
+		$domain = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? '.' . $clean_domain : $clean_domain;
+		$cookie_name = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? "gccollab_lang" : "connex_lang";
+	?>
 
 	<script type="text/javascript">
 		
 		function form_submit(language_selected) {
-			var cookie_name = "connex_lang";
+			var cookie_name = "<?php echo $cookie_name; ?>";
 			var cookie_value = getCookie(cookie_name);
 
 			<?php // get the language parameter ?>
@@ -41,7 +46,8 @@
 			today.setTime( today.getTime() );
 			expires = 1000 * 60 * 60 * 24;
 			var expires_date = new Date( today.getTime() + (expires) );
-			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString();
+			var domain = "<?php echo $domain; ?>";
+			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString() + ";domain=" + domain + ";";
 		}
 
 		function getCookie(cname) {
