@@ -96,11 +96,7 @@ elgg_ws_expose_function(
 	"create_opportinities1",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
-		"title" => array('type' => 'string', 'required' => true),
-		"email" => array('type' => 'string', 'required' => true),
-		"phone" => array('type' => 'string', 'required' => false),
-		"departement" => array('type' => 'string', 'required' => true),
-		"agree" => array('type' => 'string', 'required' => true),	
+		"formData" => array('type' => 'array', 'required' => true),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves a opportunity based on user id and opportunity id',
@@ -114,15 +110,7 @@ elgg_ws_expose_function(
 	"create_opportinities2",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
-		"title" => array('type' => 'string', 'required' => true),
-		"offert" => array('type' => 'string', 'required' => true),
-		"type" => array('type' => 'string', 'required' => true),
-		"program" => array('type' => 'string', 'required' => true),
-		"num_opt" => array('type' => 'string', 'required' => false),	
-		"start_date" => array('type' => 'string', 'required' => true),
-		"completion_date" => array('type' => 'string', 'required' => false),
-		"deadline" => array('type' => 'string', 'required' => true),
-		"description" => array('type' => 'string', 'required' => true),	
+		"formData" => array('type' => 'array', 'required' => true),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves a opportunity based on user id and opportunity id',
@@ -666,7 +654,7 @@ function accept_post($user, $guid, $lang)
 	return elgg_echo('missions:now_participating_in_mission', array($entity->job_title));
 }
 
-function create_opportinities1($user, $title, $email, $phone, $departement, $agree, $lang)
+function create_opportinities1($user, $formData, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -679,14 +667,38 @@ function create_opportinities1($user, $title, $email, $phone, $departement, $agr
 	if (!elgg_is_logged_in()) {
 		login($user_entity);
 	}
-	
-error_log('title :'.$title .'email :'.$email .'phone :'.$phone .'departement :'.$departement .'agree :'.$agree .'user: '.$user. 'lang: '.$lang);
 
-	return $title;
+
+
+	elgg_make_sticky_form('firstfill');
+	$_SESSION['mission_duplicating_override_first'] = true;
+	unset($_SESSION['mission_uncheck_post_mission_disclaimer']);
+	
+	$err = '';
+	
+	$first_form = elgg_get_sticky_values('firstfill');
+
+	$first_form['name'] = $formData["name"];
+	$first_form['department'] = $formData["departement"];
+	$first_form['email'] = $formData["email"];
+	$first_form['phone'] = $formData["phone"];
+	$first_form['disclaimer'] = $formData["agree"];
+
+	// Error checking function.
+$err .= mm_first_post_error_check($first_form);
+	if ($err == '') {
+		$_SESSION['missions_pass_department_to_second_form'] = mo_get_last_input_node($first_form);
+		forward(elgg_get_site_url() . 'missions/mission-post/step-two');
+	} else {
+		error_log('error in first form: '.$err);
+	}
+
+
+	return $formData["name"];
 }
 
 
-function create_opportinities2($user, $title, $offert, $type, $program, $num_opt,$start_date,$completion_date,$deadline,$description, $lang)
+function create_opportinities2($user, $formData, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -699,10 +711,39 @@ function create_opportinities2($user, $title, $offert, $type, $program, $num_opt
 	if (!elgg_is_logged_in()) {
 		login($user_entity);
 	}
-	
-error_log('title :'.$title .'offer :'.$offert .'type :'.$type .'program :'.$program .'num_opt :'.$num_opt .'start_date: '.$start_date. 'lang: '.$lang);
 
-	return $title;
+	elgg_make_sticky_form('secondfill');
+	$_SESSION['mission_duplicating_override_second'] = true;
+	
+	$err = '';
+	$first_form = elgg_get_sticky_values('firstfill');
+	$second_form = elgg_get_sticky_values('secondfill');
+
+	$second_form['job_title'] = $formData["name"];
+	$second_form['role_type'] = $formData["offert"];
+	$second_form['job_type'] = $formData["type"];
+	$second_form['job_area'] = $formData["program"];
+	$second_form['number'] = $formData["num_opt"];
+	$second_form['start_date'] = $formData["start_date"];
+	$second_form['completion_date'] = $formData["completion_date"];
+	$second_form['deadline'] = $formData["deadline"];
+	$second_form['description'] = $formData["description"];
+	
+	// Error checking function.
+	$err .= mm_first_post_error_check($first_form);
+	$err .= mm_second_post_error_check($second_form);
+	
+	if ($err == '') {
+		forward(elgg_get_site_url() . 'missions/mission-post/step-three');
+	} else {
+		error_log('error in first form: '.$err);
+	}
+	
+
+
+	error_log('first :'.print_r($first_form,true));
+	error_log('second :'.print_r($second_form,true));
+	return $formData["title"];
 }
 
 function create_opportinities3($user, $formData,$lang)
@@ -718,6 +759,255 @@ function create_opportinities3($user, $formData,$lang)
 	if (!elgg_is_logged_in()) {
 		login($user_entity);
 	}
+
+elgg_make_sticky_form('thirdfill');
+elgg_make_sticky_form('ldropfill');
+elgg_make_sticky_form('tdropfill');
+$_SESSION['mission_duplicating_override_third'] = true;
+
+$first_form = elgg_get_sticky_values('firstfill');
+$second_form = elgg_get_sticky_values('secondfill');
+$third_form = elgg_get_sticky_values('thirdfill');
+
+
+
+
+
+
+
+$err = '';
+
+// Error checking function.
+$first_form['name'] = $first_form['formData']["name"];
+$first_form['department'] = $first_form['formData']["departement"];
+$first_form['email'] = $first_form['formData']["email"];
+$first_form['phone'] = $first_form['formData']["phone"];
+$first_form['disclaimer'] = $first_form['formData']["agree"];
+
+ $err .= mm_first_post_error_check($first_form);
+ $second_form['job_title'] = $second_form['formData']["title"];
+ $second_form['role_type'] = $second_form['formData']["offert"];
+ $second_form['job_type'] = $second_form['formData']["type"];
+ $second_form['job_area'] = $second_form['formData']["program"];
+ $second_form['number'] = $second_form['formData']["num_opt"];
+ $second_form['start_date'] = $second_form['formData']["start_date"];
+ $second_form['completion_date'] = $second_form['formData']["completion_date"];
+ $second_form['deadline'] = $second_form['formData']["deadline"];
+ $second_form['description'] = $second_form['formData']["description"];
+ error_log(print_r($second_form,true));
+
+ $err .= mm_second_post_error_check($second_form);
+
+ $third_form['key_skills'] = $third_form['formData']["skills"];
+ $third_form['time_commitment'] = $third_form['formData']["hours"];
+ $third_form['time_interval'] = $third_form['formData']["repetition"];
+ $third_form['timezone'] = $third_form['formData']["timezone"];
+ $third_form['mon_start'] = $third_form['formData']["mon_start"];
+ $third_form['mon_duration'] = $third_form['formData']["mon_duration"];
+ $third_form['tue_start'] = $third_form['formData']["tue_start"];
+ $third_form['tue_duration'] = $third_form['formData']["tue_duration"];
+ $third_form['wed_start'] = $third_form['formData']["wed_start"];
+ $third_form['wed_duration'] = $third_form['formData']["wed_duration"];
+ $third_form['thu_start'] = $third_form['formData']["thu_start"];
+ $third_form['thu_duration'] = $third_form['formData']["thu_duration"];
+ $third_form['fri_start'] = $third_form['formData']["fri_start"];
+ $third_form['fri_duration'] = $third_form['formData']["fri_duration"];
+ $third_form['sat_start'] = $third_form['formData']["sat_start"];
+ $third_form['sat_duration'] = $third_form['formData']["sat_duration"];
+ $third_form['sun_start'] = $third_form['formData']["sun_start"];
+ $third_form['sun_duration'] = $third_form['formData']["sun_duration"];
+ $third_form['remotely'] = $third_form['formData']["remotly"];
+ $third_form['location'] = $third_form['formData']["location"];
+ $third_form['security'] = $third_form['formData']["security"];
+
+error_log(print_r($third_form,true));
+ $err .= mm_third_post_error_check($third_form);
+
+// A specialized function for checking for errors in the time fields
+$err .= mm_validate_time_all($third_form);
+
+ if($err == '') {
+ 	$err .= mm_third_post_special_error_check($third_form);
+ }
+ if ($err != '') {
+	error_log('error in first form: '.$err);
+	return $err;
+
+}else {
+
+    // Creation of an ELGGObject of subtype Mission
+    $mission = new ElggObject();
+    $mission->subtype = 'mission';
+    $mission->title = $second_form['job_title'];
+    $mission->description = $second_form['description'];
+    $mission->access_id = ACCESS_LOGGED_IN;
+    $mission->owner_guid = elgg_get_logged_in_user_guid();
+
+    // Attaches the form data as metadata to the object
+    $mission->name = $first_form['name'];
+
+    // If the organization tree is loaded, then the custom dropdown values will be processed and stored.
+    if(mo_get_tree_root()) {
+	   	$department_string = mo_get_last_input_node($first_form);
+		$department_paths = mo_string_all_ancestors($department_string);
+		$mission->department = $department_string;
+		$mission->department_path_english = $department_paths['english_path'];
+		$mission->department_path_french = $department_paths['french_path'];
+    }
+    // If the organization tree is not loaded, then the basic free text entry will be stored.
+    else {
+    	$mission->department = $first_form['department'];
+		$mission->department_path_english = $first_form['department'];
+		$mission->department_path_french = $first_form['department'];
+    }
+
+    $mission->email = $first_form['email'];
+    $mission->phone = $first_form['phone'];
+
+    $accounts = get_user_by_email($first_form['email']);
+//Compare email and username for user with more than one account
+		foreach ($accounts as $key) {
+			if($key->name == $first_form['name']){
+				$guid_account[] = $key;
+			}
+		}
+
+		if($guid_account){
+			    $mission->account = array_pop($guid_account)->guid;
+		}else{
+			    $mission->account = array_pop($accounts)->guid;
+		}
+
+
+    $mission->job_title = $second_form['job_title'];
+    $mission->role_type = $second_form['role_type'];
+    $mission->job_type = $second_form['job_type'];
+	// Stores the value of program area selected unless it is other.
+    if($second_form['job_area'] != 'missions:other') {
+    	$mission->program_area = $second_form['job_area'];
+    }
+	// When other is selected, the free text entry is stored instead.
+    else {
+    	$mission->program_area = $second_form['other_text'];
+    }
+    $mission->number = $second_form['number'];
+    $mission->start_date = $second_form['start_date'];
+    $mission->completion_date = $second_form['completion_date'];
+    $mission->deadline = $second_form['deadline'];
+    $mission->descriptor = $second_form['description'];
+    $mission->openess = $second_form['openess'];
+
+		//Nick - Adding group and level to the mission meta data
+		if($second_form['group']){
+			$mission->gl_group = $second_form['group'];
+			$mission->gl_level = $second_form['level'];
+		}
+
+    $mission->remotely = $third_form['remotely'];
+    $mission->security = $third_form['security'];
+    $mission->location = $third_form['location'];
+    $mission->time_commitment = $third_form['time_commitment'];
+    $mission->time_interval = $third_form['time_interval'];
+    $mission->timezone = $third_form['timezone'];
+
+    // Stores the multiple skill fields in a comma separated string.
+    $count = 0;
+    $key_skills = '';
+    $skill_array = array();
+    foreach($third_form as $key => $value) {
+    	if(!(strpos($key, 'skill') === false) && $value) {
+    		$skill_array[$count] = $value;
+    		if($count == 0) {
+    			$key_skills .= $value;
+    		}
+    		else {
+    			$key_skills .= ', ' . $value;
+    		}
+    		$count++;
+    	}
+    }
+    $mission->key_skills = $key_skills;
+
+    $mission->english = mm_pack_language($third_form['lwc_english'], $third_form['lwe_english'], $third_form['lop_english'], 'english');
+    $mission->french = mm_pack_language($third_form['lwc_french'], $third_form['lwe_french'], $third_form['lop_french'], 'french');
+	$mission->mon_start = $third_form['mon_start'];
+    $mission->mon_duration = $third_form['mon_duration'];
+    $mission->tue_start = $third_form['tue_start'];
+    $mission->tue_duration = $third_form['tue_duration'];
+    $mission->wed_start = $third_form['wed_start'];
+    $mission->wed_duration = $third_form['wed_duration'];
+    $mission->thu_start = $third_form['thu_start'];
+    $mission->thu_duration = $third_form['thu_duration'];
+    $mission->fri_start = $third_form['fri_start'];
+    $mission->fri_duration = $third_form['fri_duration'];
+    $mission->sat_start = $third_form['sat_start'];
+    $mission->sat_duration = $third_form['sat_duration'];
+    $mission->sun_start = $third_form['sun_start'];
+    $mission->sun_duration = $third_form['sun_duration'];
+
+    $mission->state = 'posted';
+    $mission->version = elgg_get_plugin_setting('mission_version', 'missions');
+
+    $mission->time_to_post = time() - $_SESSION['mission_creation_begin_timestamp'];
+
+    // Sends the object and all its metadata to the database
+    $mission->save();
+
+    $mission->meta_guid = $mission->guid;
+
+    $mission->save();
+
+    // Generate an analytics record to track "posted".
+    $analytics_record = new ElggObject();
+    $analytics_record->subtype = 'mission-posted';
+    $analytics_record->title = 'Mission Posted Report';
+    $analytics_record->mission_guid = $mission->guid;
+    $analytics_record->access_id = ACCESS_LOGGED_IN;
+    $analytics_record->save();
+
+    // Creates a relationships between the user (manager) and the mission.
+    add_entity_relationship($mission->account, 'mission_posted', $mission->guid);
+
+    // Add to the river so it can be seen on the main page.
+    elgg_create_river_item(array(
+        'view' => 'river/object/mission/create',
+        'action_type' => 'create',
+        'subject_guid' => $mission->owner_guid,
+        'object_guid' => $mission->getGUID()
+    ));
+
+    $_SESSION['mission_skill_match_array'] = $skill_array;
+    unset($_SESSION['mission_duplicating_override_first']);
+    unset($_SESSION['mission_duplicating_override_second']);
+    unset($_SESSION['mission_duplicating_override_third']);
+
+    if(count($skill_array) == 0) {
+		elgg_clear_sticky_form('firstfill');
+		elgg_clear_sticky_form('secondfill');
+		elgg_clear_sticky_form('thirdfill');
+		elgg_clear_sticky_form('ldropfill');
+		elgg_clear_sticky_form('tdropfill');
+    	system_message(elgg_echo('missions:succesfully_posted', array($mission->job_title)));
+    	forward(elgg_get_site_url() . 'missions/main');
+    }
+    else {
+	    if($third_form['hidden_java_state'] == 'noscript') {
+	    	// Required action security tokens.
+	    	$ts = time();
+	    	$token = generate_action_token($ts);
+	    	set_input('__elgg_ts', $ts);
+	    	set_input('__elgg_token', $token);
+
+	    	action('missions/post-mission-skill-match');
+	    }
+	    else {
+		    $_SESSION['mission_skill_match_is_interlude'] = true;
+		    system_message(elgg_echo('missions:saved_beginning_skill_match', array($key_skills)));
+		    forward(REFERER);
+	    }
+    }
+
+}
 	
 error_log('data :'.print_r($formData,true) . 'lang: '.$lang);
 
