@@ -3,7 +3,7 @@
 		global $SESSION;
 		$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
 		$domain = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? '.' . $clean_domain : $clean_domain;
-		$cookie_name = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? "gccollab_lang" : "connex_lang";
+		$cookie_name = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? "lang" : "connex_lang";
 	?>
 
 	<script type="text/javascript">

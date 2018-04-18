@@ -28,7 +28,7 @@ $body .= <<<__BODY
 <main role="main">
 	<script type="text/javascript">
 		function form_submit(lang) {
-			set_cookie("gccollab_lang", lang);
+			set_cookie("lang", lang);
 			parent.location.href = "$loginLink";
 		}
 

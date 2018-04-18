@@ -164,7 +164,7 @@ class Translator {
 		}
 
 		// GC change: use toggle language cookie if it is there.
-		$cookie_name = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? "gccollab_lang" : "connex_lang";
+		$cookie_name = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? "lang" : "connex_lang";
 		if ( isset($_COOKIE[$cookie_name]) )
   			_elgg_services()->session->set( 'language', $_COOKIE[$cookie_name] );
  		else
