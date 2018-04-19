@@ -295,25 +295,25 @@ if (elgg_is_xhr) {
                 </ul>
             </li>
             <li class="clearfix">
-                <?php echo elgg_echo('missions:skillsharing'); ?>
+                <?php echo elgg_echo( 'missions:skill_share' ); ?>
                 <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
                     <li class="clearfix pull-left mrgn-lft-md">
-                        <?php
-                            echo elgg_view("input/checkbox", array(
-                                'name' => 'skillsharingseek_check',
-                                'checked' => true,
-                                'id' => 'gcconnex-opt-in-skillsharingseek-check',
-                                'label' => elgg_echo('gcconnex_profile:opt:seeking') 
-                            ));
-                        ?>
+                    <?php
+                        echo elgg_view("input/checkbox", array(
+                            'name' => 'skillseeker_check',
+                            'checked' => true,
+                            'id' => 'gcconnex-opt-in-skillseeker-check',
+                            'label' => elgg_echo('gcconnex_profile:opt:participants')
+                        ));
+                    ?>
                     </li>
                     <li class="clearfix pull-left mrgn-lft-md">
                         <?php
                             echo elgg_view("input/checkbox", array(
-                                'name' => 'skillsharingcreate_check',
+                                'name' => 'skillcreator_check',
                                 'checked' => true,
-                                'id' => 'gcconnex-opt-in-skillsharingcreate-check',
-                                'label' => elgg_echo('gcconnex_profile:opt:offering')
+                                'id' => 'gcconnex-opt-in-skillcreator-check',
+                                'label' => elgg_echo('gcconnex_profile:opt:host')
                             ));
                         ?>
                     </li>
@@ -352,40 +352,6 @@ if (elgg_is_xhr) {
                 </li>
                 </ul>
             </li>
-            
-            
-            <li class="clearfix">
-                <?php echo elgg_echo( 'missions:skill_share' ); ?>
-                
-                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
-                <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'skillseeker_check',
-			         'checked' => false,
-			         'id' => 'gcconnex-opt-in-shadowing-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
-	               ));
-                    
-                ?>
-                </li>
-            
-            <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'skillcreator_check',
-			         'checked' => false,
-			         'id' => 'gcconnex-opt-in-shadowing-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
-	               ));
-                    
-                ?>
-            </li>
-                </ul>
-            </li>
-            
             
             <li class="clearfix">
                 <?php echo elgg_echo( 'missions:peer_coaching' ); ?>

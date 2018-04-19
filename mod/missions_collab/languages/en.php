@@ -12,7 +12,6 @@ return array(
     "missions:casual" => "Casual Work",
     "missions:student" => "Student Integration",
     "missions:collaboration" => "Collaboration",
-    "missions:skillsharing" => "Skill Sharing",
     "missions:interchange" => "Interchange Canada",
     
     "missions:your_department" =>   "Your organization, agency or department",

@@ -12,7 +12,6 @@ return array(
     "missions:casual" => "Emploi occasionnel",
     "missions:student" => "Intégration des étudiants",
     "missions:collaboration" => "Collaboration",
-    "missions:skillsharing" => "Partage des habiletés",
     "missions:interchange" => "Échanges Canada",
     
     "missions:your_department" =>	"Votre organisation, agence ou département",

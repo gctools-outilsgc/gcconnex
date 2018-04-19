@@ -102,8 +102,6 @@ $french = array(
     'gcconnex_profile:opt:student_create' => 'Intégration des étudiants hôte',
     'gcconnex_profile:opt:collaboration_seek' => 'Collaboration participant',
     'gcconnex_profile:opt:collaboration_create' => 'Collaboration hôte',
-    'gcconnex_profile:opt:skillsharing_seek' => 'Partage des habiletés participant',
-    'gcconnex_profile:opt:skillsharing_create' => 'Partage des habiletés hôte',
     'gcconnex_profile:opt:interchange_seek' => 'Échanges Canada participant',
     'gcconnex_profile:opt:interchange_create' => 'Échanges Canada hôte',
 

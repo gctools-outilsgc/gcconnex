@@ -98,8 +98,6 @@ $english = array(
     'gcconnex_profile:opt:student_create' => 'Student Integration Opportunity Creator',
     'gcconnex_profile:opt:collaboration_seek' => 'Collaboration Seeker',
     'gcconnex_profile:opt:collaboration_create' => 'Collaboration Opportunity Creator',
-    'gcconnex_profile:opt:skillsharing_seek' => 'Skill Sharing Seeker',
-    'gcconnex_profile:opt:skillsharing_create' => 'Skill Sharing Opportunity Creator',
     'gcconnex_profile:opt:interchange_seek' => 'Interchange Canada Seeker',
     'gcconnex_profile:opt:interchange_create' => 'Interchange Canada Opportunity Creator',
 

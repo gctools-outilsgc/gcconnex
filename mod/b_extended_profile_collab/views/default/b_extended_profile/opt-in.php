@@ -91,10 +91,11 @@
 				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:collaboration_create');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_collaboration_create) . '</span></li>';
 
-				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skillsharing_seek');
-				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_skillsharing_seek) . '</span></li>';
-				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skillsharing_create');
-				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_skillsharing_create) . '</span></li>';
+				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssSeek) . '</span></li>';
+                echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing_create');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssCreate) . '</span></li>';
+
 			/* MW - Changed for GCcollab version of Opp Platform
 				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:shadowed');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_shadowed) . '</span></li>';
@@ -108,11 +109,6 @@
         
                 echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:peer_coaching');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_pcCreate) . '</span></li>';
-				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing');
-				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssSeek) . '</span></li>';
-        
-                echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing_create');
-				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssCreate) . '</span></li>';
 			*/
                 
                 

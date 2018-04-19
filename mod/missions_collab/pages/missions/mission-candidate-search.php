@@ -65,7 +65,6 @@ if(!empty($entity->key_skills)){
 		'missions:casual'	=>	'opt_in_casual_seek',
 		'missions:student'	=>	'opt_in_student_seek',
 		'missions:collaboration'	=>	'opt_in_collaboration_seek',
-		'missions:skillsharing'	=>	'opt_in_skillsharing_seek',
 		'missions:interchange'	=>	'opt_in_interchange_seek',
 	);
 
