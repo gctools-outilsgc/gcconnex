@@ -177,7 +177,7 @@ foreach($opt_in_set as $k => $v){
 		                <?php
 		                	echo elgg_view("input/checkbox", array(
 						        'name' => 'interchangeseek_check',
-						        'checked' => $opt_in_set[25],
+						        'checked' => $opt_in_set[23],
 						        'id' => 'gcconnex-opt-in-interchangeseek-check',
 			                    'label' => elgg_echo('gcconnex_profile:opt:seeking') 
 			               	));
@@ -187,7 +187,7 @@ foreach($opt_in_set as $k => $v){
 		                <?php
 		                	echo elgg_view("input/checkbox", array(
 						        'name' => 'interchangecreate_check',
-						        'checked' => $opt_in_set[26],
+						        'checked' => $opt_in_set[24],
 						        'id' => 'gcconnex-opt-in-interchangecreate-check',
 			                    'label' => elgg_echo('gcconnex_profile:opt:offering')
 			            	));
