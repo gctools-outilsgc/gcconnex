@@ -820,7 +820,6 @@ $first_form['disclaimer'] = $first_form['formData']["agree"];
  $third_form['location'] = $third_form['formData']["location"];
  $third_form['security'] = $third_form['formData']["security"];
 
-error_log(print_r($third_form,true));
  $err .= mm_third_post_error_check($third_form);
 
 // A specialized function for checking for errors in the time fields
@@ -1005,11 +1004,10 @@ $err .= mm_validate_time_all($third_form);
 		    system_message(elgg_echo('missions:saved_beginning_skill_match', array($key_skills)));
 		    forward(REFERER);
 	    }
-    }
-
-}
+	}
 	
-error_log('data :'.print_r($formData,true) . 'lang: '.$lang);
+return 'Post with success ';
+}
 
-	return 'test '.$formData;
+	
 }
