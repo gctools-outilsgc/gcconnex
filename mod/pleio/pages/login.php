@@ -45,31 +45,32 @@ if ($auth == 'oidc') {
     $user = get_user_by_pleio_guid_or_email($userid, $email);
     $allow_registration = elgg_get_config("allow_registration");
 
-    /*** Username Generation ***/
-    $query = "SELECT count(*) as num FROM {$db_prefix}users_entity WHERE username = '". $username ."'";
-    $result = get_data($query);
-
-    // check if username exists and increment it
-    if ( $result[0]->num > 0 ){
-        $unamePostfix = 0;
-        $usrnameQuery = $username;
-        
-        do {
-            $unamePostfix++;
-            $tmpUsrnameQuery = $usrnameQuery . $unamePostfix;
-            
-            $query1 = "SELECT count(*) as num FROM {$db_prefix}users_entity WHERE username = '". $tmpUsrnameQuery ."'";
-            $tmpResult = get_data($query1);
-            
-            $uname = $tmpUsrnameQuery;
-        } while ( $tmpResult[0]->num > 0);
-    } else {
-        $uname = $username;
-    }
-    $username = $uname;
-    /*** End Username Generation ***/
-
     if (!$user && $allow_registration) {
+
+        /*** Username Generation ***/
+        $query = "SELECT count(*) as num FROM {$db_prefix}users_entity WHERE username = '". $username ."'";
+        $result = get_data($query);
+
+        // check if username exists and increment it
+        if ( $result[0]->num > 0 ){
+            $unamePostfix = 0;
+            $usrnameQuery = $username;
+            
+            do {
+                $unamePostfix++;
+                $tmpUsrnameQuery = $usrnameQuery . $unamePostfix;
+                
+                $query1 = "SELECT count(*) as num FROM {$db_prefix}users_entity WHERE username = '". $tmpUsrnameQuery ."'";
+                $tmpResult = get_data($query1);
+                
+                $uname = $tmpUsrnameQuery;
+            } while ( $tmpResult[0]->num > 0);
+        } else {
+            $uname = $username;
+        }
+        $username = $uname;
+        /*** End Username Generation ***/
+        
         $guid = register_user(
             $username,
             generate_random_cleartext_password(),

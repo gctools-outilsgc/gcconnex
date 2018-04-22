@@ -29,7 +29,7 @@ $email = elgg_get_plugin_setting('email','contactform');
     $french_notice = elgg_get_plugin_setting('disable_feedback_message_fr','contactform');
     if (strcmp($disable_feedback,'yes') == 0) {
 
-        if (strcmp($_COOKIE['connex_lang'], 'fr') == 0 )
+        if (strcmp($_COOKIE['lang'], 'fr') == 0 )
             echo "<div align='center' style='padding:5px 5px 5px 5px;'> {$french_notice} </div>";
         else
             echo "<div align='center' style='padding:5px 5px 5px 5px;'> {$english_notice} </div>";
