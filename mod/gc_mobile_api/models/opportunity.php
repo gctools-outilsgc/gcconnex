@@ -986,8 +986,7 @@ $err .= mm_validate_time_all($third_form);
 		elgg_clear_sticky_form('thirdfill');
 		elgg_clear_sticky_form('ldropfill');
 		elgg_clear_sticky_form('tdropfill');
-    	system_message(elgg_echo('missions:succesfully_posted', array($mission->job_title)));
-    	forward(elgg_get_site_url() . 'missions/main');
+    	return elgg_echo('missions:succesfully_posted', array($mission->job_title));
     }
     else {
 	    if($third_form['hidden_java_state'] == 'noscript') {
