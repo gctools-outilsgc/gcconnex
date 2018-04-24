@@ -67,31 +67,11 @@ $body .= <<<__BODY
 		?>
 		</form>
 </div>
-<div class="row">
-<div class="accordion">
-	<details class="acc-group">
-		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>Who can register?</summary>
-		<div class="tgl-panel">
-             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
-        		$register_text_en
-            </div>
-		</div>
-	</details>
-	<details class="acc-group">
-		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>Qui peut s'inscrire?</summary>
-		<div class="tgl-panel">
-             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
-    			$register_text_fr
-            </div>
-		</div>
-	</details>
-</div>
-</div>
 </div>
 <div class="sp-bx-bt col-xs-12">
 <div class="row">
 <div class="col-xs-7 col-md-8">
-<a href="$termsLink " class="sp-lk">Terms & Conditions of Use</a> <span class="glyphicon glyphicon-asterisk"></span> <a href="/termes" class="sp-lk" lang="fr">Conditions d'utilisation</a>
+<a href="$termsLink" onclick="form_submit('en')" class="sp-lk">Terms & Conditions of Use</a> <span class="glyphicon glyphicon-asterisk"></span> <a href="/termes" onclick="form_submit('fr')" class="sp-lk" lang="fr">Conditions d'utilisation</a>
 </div>
 <div class="col-xs-5 col-md-4 text-right mrgn-bttm-md">
 <object type="image/svg+xml" tabindex="-1" role="img" data="$site_url/mod/gccollab_theme/graphics/wmms-blk.svg" width="127" aria-label="Symbol of the Government of Canada / Symbole du gouvernement du Canada"></object>
