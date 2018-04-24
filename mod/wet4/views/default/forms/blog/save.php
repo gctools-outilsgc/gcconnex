@@ -29,6 +29,8 @@ $json_title = json_decode($vars['title']);
 $json_desc = json_decode($vars['description']);
 $json_exc = json_decode($vars['excerpt']);
 
+error_log($vars['excerpt']);
+
 if ( $json_title ){
   $vars['title2'] = $json_title->fr;
   $vars['title'] = $json_title->en;
@@ -40,9 +42,11 @@ if ( $json_desc ){
 }
 
 if ( $json_exc ){
-  $excerpt2 = $json_desc->fr;
-  $excerpt = $json_desc->en;
+  $vars['excerpt2'] = $json_exc->fr;
+  $vars['excerpt'] = $json_exc->en;
 }
+
+error_log('fr '.$excerpt2." en ".$excerpt);
 
 
 if ($vars['guid']) {
@@ -98,21 +102,14 @@ $excerpt_label = elgg_echo('blog:excerpt:en');
 $excerpt_input = elgg_view('input/text', array(
 	'name' => 'excerpt',
 	'id' => 'blog_excerpt_en',
-	'value' => _elgg_html_decode($excerpt)
+	'value' => _elgg_html_decode($vars['excerpt'])
 ));
 
 $excerpt_label2 = elgg_echo('blog:excerpt:fr');
 $excerpt_input2 = elgg_view('input/text', array(
 	'name' => 'excerpt2',
 	'id' => 'blog_excerpt_fr',
-	'value' => _elgg_html_decode($excerpt2)
-));
-
-$excerpt_label3 = elgg_echo('blog:excerpt:fr');
-$excerpt_input3 = elgg_view('input/text', array(
-	'name' => 'excerpt3',
-	'id' => 'blog_excerpt3',
-	'value' => _elgg_html_decode($excerpt2)
+	'value' => _elgg_html_decode($vars['excerpt2'])
 ));
 
 $body_label = elgg_echo('blog:body:en');
