@@ -28,12 +28,10 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 			if ($_GET["language"] == 'fr') { 
 				if ($_COOKIE['connex_lang'] != 'fr') {
 					setcookie('connex_lang', 'fr', 0, '/');
-					Header('Location: '.$_SERVER['REQUEST_URI']);
 				}
 			} elseif ($_GET["language"] == 'en') {
 				if ($_COOKIE['connex_lang'] != 'en') {
 					setcookie('connex_lang', 'en', 0, '/');
-					Header('Location: '.$_SERVER['REQUEST_URI']);
 				}
 			} else {
 				if ($_GET["language"] == '' || $_GET["language"] != 'en' || $_GET["language"] != 'fr'  )  {
