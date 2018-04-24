@@ -67,6 +67,19 @@ function get_comments_all($user, $guid, $limit, $offset, $lang)
 	$replies = json_decode($all_replies);
 	$comments = array();
 	foreach ($replies as $reply) {
+		$likes = elgg_get_annotations(array(
+			'guid' => $reply->guid,
+			'annotation_name' => 'likes'
+		));
+		$reply->likes = count($likes);
+
+		$liked = elgg_get_annotations(array(
+			'guid' => $reply->guid,
+			'annotation_owner_guid' => $user_entity->guid,
+			'annotation_name' => 'likes'
+		));
+		$reply->liked = count($liked) > 0;
+
 		$reply->userDetails = get_user_block($reply->owner_guid, $lang);
 		$comments[] = $reply;
 	}

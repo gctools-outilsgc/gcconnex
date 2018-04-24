@@ -11,6 +11,7 @@ $options = array(
     'relationship' => 'friend',
     'relationship_guid' => $owner->getGUID(),
     'list_type' => 'gallery',
+    'limit' => 14,
     'size' => 'small'
 );
 
@@ -18,6 +19,7 @@ $options = array(
 $options['wheres'][] = get_mutual_friendship_where_clause();
 $list = elgg_list_entities_from_relationship($options);
 
+$options['limit'] = 0;
 $count = count(elgg_get_entities_from_relationship($options));
 $friendCount = "({$count})";
 

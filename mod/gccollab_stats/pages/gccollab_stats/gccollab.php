@@ -352,7 +352,10 @@
                             if(school != 'total') institutionData.push([school, count]);
                         });
                         institutionData.sort(SortInstitutionByName);
-                        academicMembersDrilldown.push({'name': institutionName[key], 'id': institutionName[key], 'data': institutionData});
+
+                        if(key == 'college' || key == 'university'){
+                            academicMembersDrilldown.push({'name': institutionName[key], 'id': institutionName[key], 'data': institutionData});
+                        }
                     });
                     academicMembers.sort(SortByName);
                     academicMembersDrilldown.sort(SortByName);
@@ -449,7 +452,10 @@
                             if(school != 'total') institutionData.push([school, count]);
                         });
                         institutionData.sort(SortInstitutionByName);
-                        studentMembersDrilldown.push({'name': institutionName[key], 'id': institutionName[key], 'data': institutionData});
+                        
+                        if(key == 'college' || key == 'university' || key == 'highschool'){
+                            studentMembersDrilldown.push({'name': institutionName[key], 'id': institutionName[key], 'data': institutionData});
+                        }
                     });
                     studentMembers.sort(SortByName);
                     studentMembersDrilldown.sort(SortByName);

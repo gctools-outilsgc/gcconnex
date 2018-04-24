@@ -23,7 +23,7 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 		// checks to make sure that the url does not affect the ajax calls
 		if (strpos($_SERVER['REQUEST_URI'], 'ajax') !== false) return;
 		
-		if (strpos($_SERVER['REQUEST_URI'], '/view') !== false || strpos($_SERVER['REQUEST_URI'], '/profile') !== false) {
+		if (strpos($_SERVER['REQUEST_URI'], '/comment/view/') === false && strpos($_SERVER['REQUEST_URI'], '/view') !== false || strpos($_SERVER['REQUEST_URI'], '/profile') !== false) {
 
 			if ($_GET["language"] == 'fr') { 
 				if ($_COOKIE['connex_lang'] != 'fr') {
