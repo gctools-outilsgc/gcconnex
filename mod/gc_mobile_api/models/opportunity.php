@@ -668,11 +668,7 @@ function create_opportinities1($user, $formData, $lang)
 		login($user_entity);
 	}
 
-
-
 	elgg_make_sticky_form('firstfill');
-	$_SESSION['mission_duplicating_override_first'] = true;
-	unset($_SESSION['mission_uncheck_post_mission_disclaimer']);
 	
 	$err = '';
 	
@@ -685,18 +681,13 @@ function create_opportinities1($user, $formData, $lang)
 	$first_form['disclaimer'] = $formData["agree"];
 
 	// Error checking function.
-$err .= mm_first_post_error_check($first_form);
-	if ($err == '') {
-		$_SESSION['missions_pass_department_to_second_form'] = mo_get_last_input_node($first_form);
-		forward(elgg_get_site_url() . 'missions/mission-post/step-two');
-	} else {
-		error_log('error in first form: '.$err);
+	$err .= mm_first_post_error_check($first_form);
+	if ($err != '') {
+		return('error in first form: '.$err);
 	}
 
-
-	return $formData["name"];
+	return true;
 }
-
 
 function create_opportinities2($user, $formData, $lang)
 {
@@ -716,10 +707,9 @@ function create_opportinities2($user, $formData, $lang)
 	$_SESSION['mission_duplicating_override_second'] = true;
 	
 	$err = '';
-	$first_form = elgg_get_sticky_values('firstfill');
 	$second_form = elgg_get_sticky_values('secondfill');
 
-	$second_form['job_title'] = $formData["name"];
+	$second_form['job_title'] = $formData["title"];
 	$second_form['role_type'] = $formData["offert"];
 	$second_form['job_type'] = $formData["type"];
 	$second_form['job_area'] = $formData["program"];
@@ -730,20 +720,13 @@ function create_opportinities2($user, $formData, $lang)
 	$second_form['description'] = $formData["description"];
 	
 	// Error checking function.
-	$err .= mm_first_post_error_check($first_form);
 	$err .= mm_second_post_error_check($second_form);
 	
-	if ($err == '') {
-		forward(elgg_get_site_url() . 'missions/mission-post/step-three');
-	} else {
-		error_log('error in first form: '.$err);
+	if ($err != '') {
+		return('error in second form: '.$err);
 	}
 	
-
-
-	error_log('first :'.print_r($first_form,true));
-	error_log('second :'.print_r($second_form,true));
-	return $formData["title"];
+	return true;
 }
 
 function create_opportinities3($user, $formData,$lang)
@@ -761,19 +744,11 @@ function create_opportinities3($user, $formData,$lang)
 	}
 
 elgg_make_sticky_form('thirdfill');
-elgg_make_sticky_form('ldropfill');
-elgg_make_sticky_form('tdropfill');
 $_SESSION['mission_duplicating_override_third'] = true;
 
 $first_form = elgg_get_sticky_values('firstfill');
 $second_form = elgg_get_sticky_values('secondfill');
 $third_form = elgg_get_sticky_values('thirdfill');
-
-
-
-
-
-
 
 $err = '';
 
@@ -829,7 +804,6 @@ $err .= mm_validate_time_all($third_form);
  	$err .= mm_third_post_special_error_check($third_form);
  }
  if ($err != '') {
-	error_log('error in first form: '.$err);
 	return $err;
 
 }else {
@@ -975,18 +949,8 @@ $err .= mm_validate_time_all($third_form);
         'object_guid' => $mission->getGUID()
     ));
 
-    $_SESSION['mission_skill_match_array'] = $skill_array;
-    unset($_SESSION['mission_duplicating_override_first']);
-    unset($_SESSION['mission_duplicating_override_second']);
-    unset($_SESSION['mission_duplicating_override_third']);
-
     if(count($skill_array) == 0) {
-		elgg_clear_sticky_form('firstfill');
-		elgg_clear_sticky_form('secondfill');
-		elgg_clear_sticky_form('thirdfill');
-		elgg_clear_sticky_form('ldropfill');
-		elgg_clear_sticky_form('tdropfill');
-    	return elgg_echo('missions:succesfully_posted', array($mission->job_title));
+    	$message = elgg_echo('missions:succesfully_posted', array($mission->job_title));
     }
     else {
 	    if($third_form['hidden_java_state'] == 'noscript') {
@@ -1000,12 +964,11 @@ $err .= mm_validate_time_all($third_form);
 	    }
 	    else {
 		    $_SESSION['mission_skill_match_is_interlude'] = true;
-		    system_message(elgg_echo('missions:saved_beginning_skill_match', array($key_skills)));
-		    forward(REFERER);
+		    $message = (elgg_echo('missions:saved_beginning_skill_match', array($key_skills)));
 	    }
 	}
 	
-return 'Post with success ';
+return $message;
 }
 
 	
