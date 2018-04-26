@@ -105,11 +105,11 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
          * END MODIFIED CODE
          */
 
-        if ( (has_content($user, 'english') || has_content($user, 'french')) && (stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) ) {
+        /*if ( (has_content($user, 'english') || has_content($user, 'french')) && (stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) ) {
             init_ajax_block(elgg_echo('gcconnex_profile:sle'), 'languages', $user);
             echo elgg_view('b_extended_profile/languages');
             finit_ajax_block('languages');
-        }
+        }*/
 
         /*
          * MODIFIED CODE
