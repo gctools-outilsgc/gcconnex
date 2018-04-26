@@ -18,6 +18,20 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+	"event.add.calendar",
+	"event_add_calendar",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves an event based on user id and event id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
 	"get.events",
 	"get_events",
 	array(
@@ -175,4 +189,35 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 	}
 
 	return $events;
+}
+
+function event_add_calendar($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	
+elgg_load_library('elgg:event_calendar');
+
+$event_guid = $guid;
+$event = get_entity($event_guid);
+if (elgg_instanceof($event, 'object', 'event_calendar')) {
+	$user_guid = elgg_get_logged_in_user_guid();
+	if (!event_calendar_has_personal_event($event_guid,$user_guid)) {
+		if (event_calendar_add_personal_event($event_guid,$user_guid)) {
+			return(elgg_echo('event_calendar:add_to_my_calendar_response'));
+		} else {
+			return(elgg_echo('event_calendar:add_to_my_calendar_error'));
+		}
+	}
+}
 }
