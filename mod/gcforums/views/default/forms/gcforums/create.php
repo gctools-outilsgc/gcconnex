@@ -23,7 +23,7 @@ switch ($subtype) {
 		break;
 
 	case 'hjforumpost':
-		$content = general_information_form();
+		$content = general_information_form($object);
 		break;
 }
 
@@ -69,12 +69,14 @@ echo "</div>";
 
 
 
-
+// this deals with comments or replies
 /// title, description, and access
 function general_information_form($object = null)
 {
 	$sub_return = array();
-	if ($object) {
+
+	// don't show field for title and access for forum post
+	if ($object && $object->getSubtype() !== 'hjforumtopic') {
 		$lblTitle = elgg_echo('gforums:title_label');
 		$txtTitle = elgg_view('input/text', array(
 			'name' => 'txtTitle',
@@ -93,6 +95,11 @@ function general_information_form($object = null)
 		$lblDescription = elgg_echo('gforums:description_label');
 	}
 
+	// for forum post... make sure the access id matches the topic
+	if ($object && $object->getSubtype() === 'hjforumpost') {
+		$ddAccess = $object->getContainerEntity()->access_id;
+	}
+
 	$txtDescription = elgg_view('input/longtext', array(
 		'name' => 'txtDescription',
 		'value' => '',
@@ -103,6 +110,7 @@ function general_information_form($object = null)
 		'description' => array($lblDescription, $txtDescription),
 		'access' => array($lblAccess, $ddAccess)
 	);
+
 
 	$return = array_merge($return, $sub_return);
 

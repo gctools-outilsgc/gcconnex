@@ -187,19 +187,25 @@ function render_forum_topics($topic_guid)
 
 			$content .= "<div class='topic-content'>{$topic->description}</div>";
 			$content .= "<h3>Comments</h3>";
+
+			// some comments were accidentally saved as private 0
+			$old_access = elgg_set_ignore_access();
 			$comments = elgg_get_entities(array(
 				'types' => 'object',
 				'container_guids' => $topic->guid,
 				'limit' => 0,
 			));
-
+			
 			/// comments
 			$content .= "<div class='topic-main-comments'>";
 			foreach ($comments as $comment) {
+				$comment->access_id = $entity->access_id;
+				$comment->save();
+
 				$options = render_edit_options($comment->getGUID(), $comment->getGUID());
 				if ($options == '') $options = '-';
-				$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$comment->guid})" : "";
-				$owner_icon = elgg_view_entity_icon($topic->getOwnerEntity(), 'small');
+				$admin_only = (elgg_is_admin_logged_in()) ? "(id:{$comment->guid} | acl:{$comment->access_id})" : "";
+				$owner_icon = elgg_view_entity_icon($comment->getOwnerEntity(), 'small');
 				$content .= "
 				<div class='topic-comments'>
 					<div class='topic-comment-options'>{$options} {$admin_only}</div>
@@ -210,6 +216,8 @@ function render_forum_topics($topic_guid)
 				</div> <br/>";
 			}
 			$content .= "</div>";
+			
+			elgg_set_ignore_access($old_access);
 
 			$vars['group_guid'] = $group_guid;
 			$vars['topic_guid'] = $topic->guid;
