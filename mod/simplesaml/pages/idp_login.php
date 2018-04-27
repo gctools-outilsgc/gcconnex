@@ -4,6 +4,22 @@
  *
  * No credentials will be provided to the external site, only a name, email and a generated UID
  */
+
+ $lang = htmlspecialchars($_GET['lang']);
+
+ if (!$lang){
+	 $lang = 'en';
+ }
+ if ($_COOKIE["connex_lang"]){
+	 if($lang!=$_COOKIE['connex_lang']){
+		 setcookie("connex_lang", $lang);
+		 header("Refresh:0");
+	 }
+ } else {
+	 setcookie("connex_lang", $lang);
+	 header("Refresh:0");
+ }
+
 elgg_load_css('special-saml');
 // where to go after authentication
 $returnTo = get_input("ReturnTo");
