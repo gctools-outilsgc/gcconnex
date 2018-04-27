@@ -29,8 +29,6 @@ $json_title = json_decode($vars['title']);
 $json_desc = json_decode($vars['description']);
 $json_exc = json_decode($vars['excerpt']);
 
-error_log($vars['excerpt']);
-
 if ( $json_title ){
   $vars['title2'] = $json_title->fr;
   $vars['title'] = $json_title->en;
@@ -45,9 +43,6 @@ if ( $json_exc ){
   $vars['excerpt2'] = $json_exc->fr;
   $vars['excerpt'] = $json_exc->en;
 }
-
-error_log('fr '.$excerpt2." en ".$excerpt);
-
 
 if ($vars['guid']) {
 	// add a delete button if editing
