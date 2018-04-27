@@ -199,8 +199,11 @@ function render_forum_topics($topic_guid)
 			/// comments
 			$content .= "<div class='topic-main-comments'>";
 			foreach ($comments as $comment) {
-				$comment->access_id = $entity->access_id;
-				$comment->save();
+				// condition, do not change access id all the time
+				if ($comment->access_id != $entity->access_id) {
+					$comment->access_id = $entity->access_id;
+					$comment->save();
+				}
 
 				$options = render_edit_options($comment->getGUID(), $comment->getGUID());
 				if ($options == '') $options = '-';
