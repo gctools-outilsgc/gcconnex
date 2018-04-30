@@ -18,20 +18,20 @@ if ($lang!='en'||$lang!='fr'){
 //$lang = htmlspecialchars($_GET["lang"]);
 
 $clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
-$domain = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? '.' . $clean_domain : $clean_domain;
+$domain = '.' . $clean_domain;
 
 if (!$lang){
 	$lang = 'en';
 }
 
-if ($_COOKIE["connex_lang"]){
+if ($_COOKIE["lang"]){
 
-	if ($lang!=$_COOKIE["connex_lang"]){
-		setcookie("connex_lang", $lang, 0, '/', $domain);
+	if ($lang!=$_COOKIE["lang"]){
+		setcookie("lang", $lang, 0, '/', $domain);
 		header("Refresh:0");
 	}
 }else {
-	setcookie("connex_lang", $lang, 0, '/', $domain);
+	setcookie("lang", $lang, 0, '/', $domain);
 	header("Refresh:0");
 } 
 

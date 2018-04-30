@@ -9,7 +9,7 @@
 
 
 // english or french page
-$gc_language = $_COOKIE['connex_lang'];
+$gc_language = $_COOKIE['lang'];
 if ($gc_language === '' || $gc_language === 'en' || !$gc_language)
 	$action = 'http://intranet.canada.ca/search-recherche/query-recherche-eng.aspx';
 else

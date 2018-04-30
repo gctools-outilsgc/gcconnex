@@ -17,7 +17,7 @@ $toggle_lang = $site_url .'mod/toggle_language/action/toggle_language/toggle';
 $CONFIG->splashLanguage ="false";
 $gcconnex_text = elgg_echo('wet:login_welcome');
 $clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
-$domain = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? '.' . $clean_domain : $clean_domain;
+$domain = '.' . $clean_domain;
 //Create The body of the splash
 //Add the toggle language JS to the page to set lang
 //Page forwards to login with users selected language
@@ -30,7 +30,7 @@ $body .= <<<__BODY
 		function form_submit(language_selected) {
 			//document.getElementById('formtoggle').submit();
 
-			var c_name = "connex_lang";
+			var c_name = "lang";
 			var c_value = document.cookie;
 			var c_start = c_value.indexOf(" " + c_name + "=");
 
