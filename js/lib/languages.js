@@ -25,7 +25,7 @@ elgg.get_language = function() {
 	var user = elgg.get_logged_in_user_entity();
 
 	var site = elgg.get_site_url();
-	var cookie_name = (site.indexOf('collab') !== -1) ? "lang" : "connex_lang";
+	var cookie_name = (site && site.indexOf('collab') !== -1) ? "lang" : "connex_lang";
 
 	// GC change: use toggle language cookie if it is there.
 	if ( document.cookie.indexOf(cookie_name) > -1 ){
