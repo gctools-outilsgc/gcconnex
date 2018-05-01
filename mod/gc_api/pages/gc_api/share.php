@@ -12,14 +12,16 @@
 //get data about page to be shared. Passed via GET encoded as JSON string
 $data = json_decode($_GET['data']); //GET and decode into php object
 //get language passed from script (english default)
+$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
+$domain = '.' . $clean_domain;
 $lang = $data->lang;
 if ($lang == '') {
 	$lang = 'en';
 }
 //set language cookie and reload page so proper language is displayed.
-if ($_COOKIE["connex_lang"]!=$lang) {
+if ($_COOKIE["lang"]!=$lang) {
 	$SESSION['language'] = $lang;
-	setcookie("connex_lang", $lang, 0, '/');
+	setcookie("lang", $lang, 0, '/', $domain);
 	echo '<script>window.location.reload();</script>';
 }
 //in order to ensure user is redirected to the proper page after login, we manually set session variable
