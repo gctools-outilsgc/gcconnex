@@ -70,8 +70,6 @@ function get_event($user, $guid, $lang)
 		//return "Invalid event. Please try a different GUID";
 	}
 
-
-
 	$events = elgg_list_entities(array(
 		'type' => 'object',
 		'subtype' => 'event_calendar',
@@ -90,13 +88,25 @@ function get_event($user, $guid, $lang)
 		'annotation_owner_guid' => $user_entity->guid,
 		'annotation_name' => 'likes'
 	));
+
+	$options = array(
+		'type' => 'user',
+		'relationship' => 'personal_event',
+		'relationship_guid' => $event->guid,
+		'inverse_relationship' => true,
+		'count' => true,
+		'limit' => false,
+	);
+		$count = elgg_get_entities_from_relationship($options);
+
+		error_log('test count '.print_r($count,true));
+
 	$event->liked = count($liked) > 0;
 
 	$event->title = gc_explode_translation($event->title, $lang);
 	$event->description = gc_explode_translation($event->description, $lang);
 
 	$event->userDetails = get_user_block($event->owner_guid, $lang);
-
 	$eventObj = get_entity($event->guid);
 	$event->startDate = date("Y-m-d H:i:s", $eventObj->start_date);
 	$event->endDate = date("Y-m-d H:i:s", $eventObj->end_date);
@@ -205,19 +215,18 @@ function event_add_calendar($user, $guid, $lang)
 		login($user_entity);
 	}
 
-	
-elgg_load_library('elgg:event_calendar');
+	elgg_load_library('elgg:event_calendar');
 
-$event_guid = $guid;
-$event = get_entity($event_guid);
-if (elgg_instanceof($event, 'object', 'event_calendar')) {
-	$user_guid = elgg_get_logged_in_user_guid();
-	if (!event_calendar_has_personal_event($event_guid,$user_guid)) {
-		if (event_calendar_add_personal_event($event_guid,$user_guid)) {
-			return(elgg_echo('event_calendar:add_to_my_calendar_response'));
-		} else {
-			return(elgg_echo('event_calendar:add_to_my_calendar_error'));
+	$event_guid = $guid;
+	$event = get_entity($event_guid);
+	if (elgg_instanceof($event, 'object', 'event_calendar')) {
+
+		if (!event_calendar_has_personal_event($event_guid,$user_entity->guid)) {
+			if (event_calendar_add_personal_event($event_guid,$user_entity->guid)) {
+				return(elgg_echo('event_calendar:add_to_my_calendar_response'));
+			} else {
+				return(elgg_echo('event_calendar:add_to_my_calendar_error'));
+			}
 		}
 	}
-}
 }
