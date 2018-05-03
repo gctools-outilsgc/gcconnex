@@ -227,6 +227,8 @@ function event_add_calendar($user, $guid, $lang)
 			} else {
 				return(elgg_echo('event_calendar:add_to_my_calendar_error'));
 			}
+		}else{
+			return 'Already in your calendar';
 		}
 	}
 }
