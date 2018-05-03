@@ -37,7 +37,7 @@ if (elgg_is_xhr()) {
     $french = $user->french;
 
     // first official language
-    echo "<label for='first_official_language'>First official language</label>";
+    echo "<label for='first_official_language'>".elgg_echo('gcconnex_profile:fol')."</label>";
     $params = array(
         'name' => 'first_official_language',
         'id' => 'first_official_language',

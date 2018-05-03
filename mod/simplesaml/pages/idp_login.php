@@ -4,6 +4,37 @@
  *
  * No credentials will be provided to the external site, only a name, email and a generated UID
  */
+
+$relay = htmlspecialchars(urldecode($_GET["ReturnTo"]));
+$relay = parse_url($relay, PHP_URL_QUERY);
+$relay = strstr($relay,'RelayState=');
+$relay = urldecode(strstr($relay,'http'));
+$relay = parse_url($relay, PHP_URL_QUERY);
+$relay = strstr($relay,'lang=');
+$lang = substr($relay, strpos($relay,'=')+1, 2);
+if ($lang!='en'||$lang!='fr'){
+	$lang = 'en';
+}
+//$lang = htmlspecialchars($_GET["lang"]);
+
+$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
+$domain = '.' . $clean_domain;
+
+if (!$lang){
+	$lang = 'en';
+}
+
+if ($_COOKIE["lang"]){
+
+	if ($lang!=$_COOKIE["lang"]){
+		setcookie("lang", $lang, 0, '/', $domain);
+		header("Refresh:0");
+	}
+}else {
+	setcookie("lang", $lang, 0, '/', $domain);
+	header("Refresh:0");
+} 
+
 elgg_load_css('special-saml');
 // where to go after authentication
 $returnTo = get_input("ReturnTo");

@@ -45,7 +45,7 @@ $search_attrs = elgg_format_attributes(array(
 	'value' => $display_query,
 ));
 
-$gc_language = $_COOKIE['connex_lang'];
+$gc_language = $_COOKIE['lang'];
 ?>
 <!-- Basically just moved the search to this file to output the section -->
 

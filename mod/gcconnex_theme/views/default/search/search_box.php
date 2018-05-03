@@ -20,7 +20,7 @@ if (isset($vars['class'])) {
 }
 
 $placeholder = elgg_echo('wet:searchgctools');
-$gc_language = $_COOKIE['connex_lang'];
+$gc_language = $_COOKIE['lang'];
 $selected_language = ($gc_language === '' || $gc_language === 'en' || !$gc_language) ? 'eng' : 'fra';
 
 ?>

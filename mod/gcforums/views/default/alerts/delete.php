@@ -28,7 +28,7 @@ $button_size = ($is_menu_buttons) ? "" : "btn-sm";
 				</p>
 			</div>
 			<div class="modal-footer">
-				<button id="btnDeleteEntity" type="button" class="btn btn-danger <?php echo $button_size; ?>" data-toggle="modal" data-target="#myModal"><?php echo $delete; ?></button>
+				<a href="<?php echo $url; ?>"><button id="btnDeleteEntity" type="button" class="btn btn-danger <?php echo $button_size; ?>" data-toggle="modal" data-target="#myModal"><?php echo $delete_button; ?></button></a>
 				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $cancel_button; ?></button>
 			</div>
 		</div>
