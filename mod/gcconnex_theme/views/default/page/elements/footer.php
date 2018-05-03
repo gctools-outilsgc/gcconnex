@@ -55,11 +55,6 @@ if (_elgg_services()->session->get('language') == 'en') {
 				</h3>
 				<ul class="list-unstyled">
 					<li>
-						<a href="<?php echo elgg_echo('wet:tutorialLink');?>" target="_blank">
-							<?php echo elgg_echo('wet:footTutorials');?>
-						</a>
-					</li>
-					<li>
 						<?php
 							if (elgg_is_active_plugin('freshdesk_help')) {
 								echo '<a href="'. elgg_get_site_url() . 'help/knowledgebase">'.elgg_echo('freshdesk:page:title').'</a>';
