@@ -50,7 +50,6 @@ et nous nous ferons un plaisir de vous aider.</li>
 			
 'gcRegister:terms_and_conditions' => 'J\'ai lu, j\'ai compris et j\accepte les <a target="_blank" href="http://gcconnex.gc.ca/terms">Conditions d\'utilisation</a>.',
 'gcRegister:validation_notice' => '<b>Remarque :</b> Vous ne pourrez pas ouvrir une session sur Gcconnex avant d\'avoir reçu un courriel de validation.',
-'gcRegister:tutorials_notice' => '<a href="http://www.gcpedia.gc.ca/wiki/Tutorials_on_GC2.0_Tools_/_Tutoriels_sur_les_outils_GC2.0/GCconnex">Tutoriels de GCconnex</a>',
 			
 // error messages that pop up			// messages d'erreur qui apparaissent
 			
