@@ -42,6 +42,11 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                             <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt="GCcollab"></span>Wiki
                         </a>
                         </li>
+                        <li class="pull-left tool-link">
+                        <a href="https://wiki.gccollab.ca" style="color:#6b5088;">
+                            <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/message_icon.png" alt="GCcollab"></span>Message
+                        </a>
+                        </li>
                     </ul>
                 </section>
                 <section class="wb-mb-links visible-xs col-xs-4 col-sm-3" id="wb-glb-mn">
