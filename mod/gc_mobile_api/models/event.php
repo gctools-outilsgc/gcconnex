@@ -89,18 +89,6 @@ function get_event($user, $guid, $lang)
 		'annotation_name' => 'likes'
 	));
 
-	$options = array(
-		'type' => 'user',
-		'relationship' => 'personal_event',
-		'relationship_guid' => $event->guid,
-		'inverse_relationship' => true,
-		'count' => true,
-		'limit' => false,
-	);
-		$count = elgg_get_entities_from_relationship($options);
-
-		error_log('test count '.print_r($count,true));
-
 	$event->liked = count($liked) > 0;
 
 	$event->title = gc_explode_translation($event->title, $lang);
