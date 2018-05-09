@@ -87,6 +87,31 @@ if (elgg_is_xhr) {
                     </li>
                 </ul>
             </li>
+            <li class="clearfix">
+                <?php echo elgg_echo('missions:interchange'); ?>
+                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
+                    <li class="clearfix pull-left mrgn-lft-md">
+                        <?php
+                            echo elgg_view("input/checkbox", array(
+                                'name' => 'interchangeseek_check',
+                                'checked' => true,
+                                'id' => 'gcconnex-opt-in-interchangeseek-check',
+                                'label' => elgg_echo('gcconnex_profile:opt:seeking') 
+                            ));
+                        ?>
+                    </li>
+                    <li class="clearfix pull-left mrgn-lft-md">
+                        <?php
+                            echo elgg_view("input/checkbox", array(
+                                'name' => 'interchangecreate_check',
+                                'checked' => true,
+                                'id' => 'gcconnex-opt-in-interchangecreate-check',
+                                'label' => elgg_echo('gcconnex_profile:opt:offering')
+                            ));
+                        ?>
+                    </li>
+                </ul>
+            </li>
 
         <?php /* MW - Changed for GCcollab version of Opp Platform
         <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:atlevel'); ?></h4>
@@ -269,6 +294,31 @@ if (elgg_is_xhr) {
                     </li>
                 </ul>
             </li>
+            <li class="clearfix">
+                <?php echo elgg_echo( 'missions:skill_share' ); ?>
+                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
+                    <li class="clearfix pull-left mrgn-lft-md">
+                    <?php
+                        echo elgg_view("input/checkbox", array(
+                            'name' => 'skillseeker_check',
+                            'checked' => true,
+                            'id' => 'gcconnex-opt-in-skillseeker-check',
+                            'label' => elgg_echo('gcconnex_profile:opt:participants')
+                        ));
+                    ?>
+                    </li>
+                    <li class="clearfix pull-left mrgn-lft-md">
+                        <?php
+                            echo elgg_view("input/checkbox", array(
+                                'name' => 'skillcreator_check',
+                                'checked' => true,
+                                'id' => 'gcconnex-opt-in-skillcreator-check',
+                                'label' => elgg_echo('gcconnex_profile:opt:host')
+                            ));
+                        ?>
+                    </li>
+                </ul>
+            </li>
 
             <?php /* MW - Changed for GCcollab version of Opp Platform
             <li class="clearfix">
@@ -302,40 +352,6 @@ if (elgg_is_xhr) {
                 </li>
                 </ul>
             </li>
-            
-            
-            <li class="clearfix">
-                <?php echo elgg_echo( 'missions:skill_share' ); ?>
-                
-                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
-                <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'skillseeker_check',
-			         'checked' => false,
-			         'id' => 'gcconnex-opt-in-shadowing-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
-	               ));
-                    
-                ?>
-                </li>
-            
-            <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'skillcreator_check',
-			         'checked' => false,
-			         'id' => 'gcconnex-opt-in-shadowing-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
-	               ));
-                    
-                ?>
-            </li>
-                </ul>
-            </li>
-            
             
             <li class="clearfix">
                 <?php echo elgg_echo( 'missions:peer_coaching' ); ?>

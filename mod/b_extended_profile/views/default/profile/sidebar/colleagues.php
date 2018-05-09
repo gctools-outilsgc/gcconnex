@@ -20,7 +20,6 @@ $options['wheres'][] = get_mutual_friendship_where_clause();
 $list = elgg_list_entities_from_relationship($options);
 $count = count(elgg_get_entities_from_relationship($options));
 
-
 $all_link = elgg_view('output/url', array(
 	'href' => 'friends/' . $owner->username,
 	'text' => elgg_echo('profile:viewall:coll'),

@@ -76,7 +76,7 @@ function gccollab_theme_init() {
  *
  */
 function expages_collab_public($hook, $handler, $return, $params){
-    $pages = array('about', 'a_propos', 'terms', 'termes', 'privacy', 'confidentialite', 'faq', 'qfp', 'participating_organizations', 'organismes_participants', 'help/knowledgebase');     // GCChange change - Ilia: Bilingual page url
+    $pages = array('about', 'a_propos', 'terms', 'termes', 'privacy', 'confidentialite', 'faq', 'qfp', 'participating_organizations', 'organismes_participants', 'help/knowledgebase', 'help/embed');     // GCChange change - Ilia: Bilingual page url
     return array_merge($pages, $return);
 }
 
