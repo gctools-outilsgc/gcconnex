@@ -18,6 +18,9 @@ function gc_lang_url_handler_init($param1, $param2, $param3) {
  */
 function global_url_handler($hook, $type, $returnvalue, $params) {
 
+	$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
+	$domain = '.' . $clean_domain;
+
 	// do not include the gsa crawler, this will be used for public and solr crawler
 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
 		// checks to make sure that the url does not affect the ajax calls
@@ -26,14 +29,12 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 		if (strpos($_SERVER['REQUEST_URI'], '/comment/view/') === false && strpos($_SERVER['REQUEST_URI'], '/view') !== false || strpos($_SERVER['REQUEST_URI'], '/profile') !== false) {
 
 			if ($_GET["language"] == 'fr') { 
-				if ($_COOKIE['connex_lang'] != 'fr') {
-					setcookie('connex_lang', 'fr', 0, '/');
-					Header('Location: '.$_SERVER['REQUEST_URI']);
+				if ($_COOKIE['lang'] != 'fr') {
+					setcookie('lang', 'fr', 0, '/', $domain);
 				}
 			} elseif ($_GET["language"] == 'en') {
-				if ($_COOKIE['connex_lang'] != 'en') {
-					setcookie('connex_lang', 'en', 0, '/');
-					Header('Location: '.$_SERVER['REQUEST_URI']);
+				if ($_COOKIE['lang'] != 'en') {
+					setcookie('lang', 'en', 0, '/', $domain);
 				}
 			} else {
 				if ($_GET["language"] == '' || $_GET["language"] != 'en' || $_GET["language"] != 'fr'  )  {

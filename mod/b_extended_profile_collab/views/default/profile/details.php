@@ -644,7 +644,8 @@ if(strcmp($user->user_type, 'federal') == 0 ) {
     echo '<div class="gcconnex-profile-job">' . $user->job . '</div>';
 // otherwise show basic info
 } else {
-    echo '<h3 class="mrgn-tp-0">' . elgg_echo("gcconnex-profile-card:{$user->user_type}") . '</h3>';
+    $user_type = $user->user_type != "" ? "gcconnex-profile-card:" . $user->user_type : "unknown";
+    echo '<h3 class="mrgn-tp-0">' . elgg_echo($user_type) . '</h3>';
     echo '<div class="gcconnex-profile-job">' . $user->job . '</div>';
     echo '<div class="gcconnex-profile-dept">' . $user->{$user->user_type} . '</div>';
 }

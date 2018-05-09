@@ -7,8 +7,8 @@ $site = elgg_get_site_entity();
 $title = get_input('txtTitle');
 $description = get_input('txtDescription');
 $access = get_input('ddAccess');
-
 $container_guid = get_input('entity_guid');
+
 $group_guid = get_input('group_guid');
 $subtype = get_input('subtype');
 $type = 'object';

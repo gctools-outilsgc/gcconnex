@@ -129,8 +129,9 @@ echo elgg_in_context($context);
 if(elgg_in_context('profile') || elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), "group")){
 	if ($entity instanceof ElggUser) {
 		$user = $entity;
+		$user_type = $user->user_type != "" ? "gcconnex-profile-card:" . $user->user_type : "unknown";
 		
-		echo '<div class="mvs clearfix"><strong>'.elgg_echo("gcconnex-profile-card:{$user->user_type}", array($user->user_type)).'</strong></div>';
+		echo '<div class="mvs clearfix"><strong>'.elgg_echo($user_type).'</strong></div>';
 
 		// if user is public servant
 		if(strcmp($user->user_type, 'federal') == 0 ) {

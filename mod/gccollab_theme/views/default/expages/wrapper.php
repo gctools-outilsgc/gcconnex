@@ -18,7 +18,7 @@ for (var i = 0; i < cookie_var.length; i++) {
 	var cookie_variable = (cookie_var[i]).replace(/ /g, "")
 	var curr_lang = cookie_variable.split('=');
 
-	if (curr_lang[0] == 'connex_lang')
+	if (curr_lang[0] == 'lang')
 		selected_language = curr_lang[1];
 }
 

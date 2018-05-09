@@ -1,21 +1,12 @@
-
-
-header{
-	
-}
-
-.list-inline {
-    
-}
 header .brand, .alert-warning{
 	visibility: hidden;
 }
 #wb-srch{
 	visibility: hidden;
 }
-#app-brand{
+/*#app-brand{
 	visibility: hidden;
-}
+}*/
 nav{
 	visibility: hidden;
 }
@@ -58,7 +49,7 @@ h2{
 .elgg-page-footer{
 	visibility: hidden;
 }
-.lang_toggle {
+/*.lang_toggle {
   position: absolute !important;
   float: none;
   top:170px;
@@ -76,7 +67,7 @@ h2{
   border: 1px solid grey !important;
   cursor:pointer;
   
-}
+}*/
 .c_table{
 	display:none;
 }

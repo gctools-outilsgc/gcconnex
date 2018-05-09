@@ -6,7 +6,7 @@
 $site_url = elgg_get_site_url();
 $jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
 $termsLink = $site_url .'terms';
-$frenchLink = $site_url .'login';
+$loginLink = $site_url .'login';
 $toggle_lang = $site_url .'mod/toggle_language/action/toggle_language/toggle';
 $gccollab_text = elgg_echo('wet:login_welcome');
 $register_text_en = elgg_echo('gcRegister:welcome_message', 'en');
@@ -27,69 +27,17 @@ $body .= <<<__BODY
 </div>
 <main role="main">
 	<script type="text/javascript">
-		function form_submit(language_selected) {
-			//document.getElementById('formtoggle').submit();
-
-			var c_name = "connex_lang";
-			var c_value = document.cookie;
-			var c_start = c_value.indexOf(" " + c_name + "=");
-
-			if (c_start == -1){
-				c_start = c_value.indexOf(c_name + "=");
-			}
-
-			if (c_start == -1)
-			{
-				c_value = null;
-			} else {
-
-				c_start = c_value.indexOf("=", c_start) + 1;
-				var c_end = c_value.indexOf(";", c_start);
-				if (c_end == -1) {
-					c_end = c_value.length;
-				}
-				c_value = unescape(c_value.substring(c_start,c_end));
-			}
-
-			// modified by cyu - oct 1 2013
-			// first time you visit the site.. the cookie language is set to null
-			if (c_value == null)
-			{
-				//alert("null is caught..");
-				// we need to check what the user selected...
-				if (language_selected == "English")
-				{
-					set_cookie(c_name, "en");
-
-				} else
-				if (language_selected == "French")
-				{
-					set_cookie(c_name,"fr");
-				}
-
-				parent.location.href= "$frenchLink";
-			} else {
-//Just force language on splash
-
-if (language_selected == "English")
-				{
-					set_cookie(c_name, "en");
-
-				} else
-				if (language_selected == "French")
-				{
-					set_cookie(c_name,"fr");
-				}
-				parent.location.href= "$frenchLink";
-			}
+		function form_submit(lang) {
+			set_cookie("lang", lang);
+			parent.location.href = "$loginLink";
 		}
-		function set_cookie(name,value) {
+
+		function set_cookie(name, value) {
 			var today = new Date();
-			today.setTime( today.getTime() );
+			today.setTime(today.getTime());
 			expires = 1000 * 60 * 60 * 24;
 			var expires_date = new Date( today.getTime() + (expires) );
-			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString();
-
+			document.cookie = name + "=" + escape(value) + ";path=/" + ";expires=" + expires_date.toGMTString() + ";domain=.gccollab.ca;";
 		}
 	</script>
 
@@ -104,11 +52,11 @@ if (language_selected == "English")
 <div class="row">
 <section class="col-xs-6 text-right">
 <h2 class="wb-inv">GCcollab English</h2>
-<p><a href="javascript:form_submit('English')" class="btn btn-primary">English</a></p>
+<p><a href="#" onclick="form_submit('en')" class="btn btn-primary">English</a></p>
 </section>
 <section class="col-xs-6" lang="fr">
 <h2 class="wb-inv">GCcollab Français</h2>
-<p><a href="javascript:form_submit('French')" class="btn btn-primary">Fran&#231;ais</a></p>
+<p><a href="#" onclick="form_submit('fr')" class="btn btn-primary">Fran&#231;ais</a></p>
 </section>
 
 <form action="$toggle_lang" method="post" id="formtoggle">
@@ -119,31 +67,11 @@ if (language_selected == "English")
 		?>
 		</form>
 </div>
-<div class="row">
-<div class="accordion">
-	<details class="acc-group">
-		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>Who can register?</summary>
-		<div class="tgl-panel">
-             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
-        		$register_text_en
-            </div>
-		</div>
-	</details>
-	<details class="acc-group">
-		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>Qui peut s'inscrire?</summary>
-		<div class="tgl-panel">
-             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
-    			$register_text_fr
-            </div>
-		</div>
-	</details>
-</div>
-</div>
 </div>
 <div class="sp-bx-bt col-xs-12">
 <div class="row">
 <div class="col-xs-7 col-md-8">
-<a href="$termsLink " class="sp-lk">Terms & Conditions of Use</a> <span class="glyphicon glyphicon-asterisk"></span> <a href="/termes" class="sp-lk" lang="fr">Conditions d'utilisation</a>
+<a href="$termsLink" onclick="form_submit('en')" class="sp-lk">Terms & Conditions of Use</a> <span class="glyphicon glyphicon-asterisk"></span> <a href="/termes" onclick="form_submit('fr')" class="sp-lk" lang="fr">Conditions d'utilisation</a>
 </div>
 <div class="col-xs-5 col-md-4 text-right mrgn-bttm-md">
 <object type="image/svg+xml" tabindex="-1" role="img" data="$site_url/mod/gccollab_theme/graphics/wmms-blk.svg" width="127" aria-label="Symbol of the Government of Canada / Symbole du gouvernement du Canada"></object>
@@ -164,7 +92,7 @@ __BODY;
 $body .= elgg_view('page/elements/foot');
 
 $head = elgg_view('page/elements/head', array(
-    'title' => 'GCcollab',
+    'title' => elgg_get_site_entity()->name,
 ));
 
 $params = array(

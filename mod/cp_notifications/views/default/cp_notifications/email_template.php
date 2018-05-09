@@ -347,7 +347,9 @@ switch ($msg_type) {
 		$entity_answer = array(
 			'answer' => 'réponse',
 		);
-
+		$mission = array(
+			'mission' => 'possibilité',
+		);
 		// cyu - updated as per required (06-15-2016)
 		$topic_author = get_entity($vars['cp_topic']->owner_guid);
 
@@ -375,10 +377,13 @@ switch ($msg_type) {
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_answer))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_answer',array($topic_author->getURL(), $topic_author->username, $entity_answer[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $title_answer2),'fr');
 		
+		else if (array_key_exists($vars['cp_topic']->getSubtype(),$mission))	
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_mission',array($topic_author->getURL(), $topic_author->username, $mission[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
+
 		else
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m2',array($topic_author->getURL(), $topic_author->username, $entity_m2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
 
-
+		
 		if ($vars['cp_topic']->description1) {
              $cp_topic_description = strip_tags($vars['cp_topic']->description1);
         }

@@ -16,6 +16,8 @@ $frenchLink = $site_url .'login';
 $toggle_lang = $site_url .'mod/toggle_language/action/toggle_language/toggle';
 $CONFIG->splashLanguage ="false";
 $gcconnex_text = elgg_echo('wet:login_welcome');
+$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
+$domain = '.' . $clean_domain;
 //Create The body of the splash
 //Add the toggle language JS to the page to set lang
 //Page forwards to login with users selected language
@@ -28,7 +30,7 @@ $body .= <<<__BODY
 		function form_submit(language_selected) {
 			//document.getElementById('formtoggle').submit();
 
-			var c_name = "connex_lang";
+			var c_name = "lang";
 			var c_value = document.cookie;
 			var c_start = c_value.indexOf(" " + c_name + "=");
 
@@ -86,8 +88,8 @@ if (language_selected == "English")
 			today.setTime( today.getTime() );
 			expires = 1000 * 60 * 60 * 24;
 			var expires_date = new Date( today.getTime() + (expires) );
-			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString();
-
+			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString() + ";domain=$domain";
+			
 		}
 	</script>
 

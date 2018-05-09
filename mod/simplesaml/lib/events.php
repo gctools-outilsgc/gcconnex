@@ -44,7 +44,9 @@ function simplesaml_login_event_handler($event, $type, $object) {
 		}
 	}
 	///////////////////////////////
-	setcookie('connex_lang', elgg_get_logged_in_user_entity()->language, time()+(1000 * 60 * 60 * 24), '/');
+	$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
+	$domain = '.' . $clean_domain;
+	setcookie('lang', elgg_get_logged_in_user_entity()->language, time()+(1000 * 60 * 60 * 24), '/', $domain);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//auto login to GCpedia
 
