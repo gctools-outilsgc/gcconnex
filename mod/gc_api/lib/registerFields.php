@@ -73,6 +73,16 @@ function get_register_fields() {
 	$fields['municipal']['en'] = $provs->provinces_en;
 	$fields['municipal']['fr'] = $provs->provinces_fr;
 
+	//other
+	$otherObj = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => 'other',
+	));
+	$others = get_entity($otherObj[0]->guid);
+
+	$fields['other']['en'] = $others->other_en;
+	$fields['other']['fr'] = $others->other_fr;
+
 	return $fields;
 
 }
