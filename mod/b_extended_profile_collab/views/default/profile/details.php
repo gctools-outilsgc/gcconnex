@@ -12,6 +12,7 @@ echo '<style>#editProfile header { background-color: #46246A; }
 
 $user = elgg_get_page_owner_entity();
 $profile_fields = elgg_get_config('profile_fields');
+setlocale(LC_ALL, 'en_US.utf8');
 
 // display the username, title, phone, mobile, email, website
 // fa classes are the font-awesome icons
@@ -177,6 +178,7 @@ if ($user->canEdit()) {
             } else {
                 $federal_departments = json_decode($departments->federal_departments_fr, true);
             }
+            uasort($federal_departments, 'strcoll');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -192,6 +194,7 @@ if ($user->canEdit()) {
             echo '<div class="col-sm-8">';
 
             $institution_list = array("university" => elgg_echo('gcconnex-profile-card:university'), "college" => elgg_echo('gcconnex-profile-card:college'), "highschool" => elgg_echo('gcconnex-profile-card:highschool'));
+            uasort($institution_list, 'strcoll');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -218,6 +221,7 @@ if ($user->canEdit()) {
             } else {
                 $universities = json_decode($unis->universities_fr, true);
             }
+            uasort($universities, 'strcoll');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -244,6 +248,7 @@ if ($user->canEdit()) {
             } else {
                 $colleges = json_decode($cols->colleges_fr, true);
             }
+            uasort($colleges, 'strcoll');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -271,6 +276,7 @@ if ($user->canEdit()) {
             } else {
                 $provincial_departments = json_decode($provs->provinces_fr, true);
             }
+            uasort($provincial_departments, 'strcoll');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -294,6 +300,7 @@ if ($user->canEdit()) {
             } else {
                 $ministries = json_decode($mins->ministries_fr, true);
             }
+            uasort($ministries, 'strcoll');
 
             foreach($provincial_departments as $province => $name){
                 $prov_value = ($user->get('provincial') == $province) ? $user->get('ministry'): "";
@@ -362,6 +369,7 @@ if ($user->canEdit()) {
             } else {
                 $federal_departments = json_decode($depts->federal_departments_fr, true);
             }
+            uasort($federal_departments, 'strcoll');
 
             echo elgg_view('input/text', array(
                 'name' => $field,
@@ -396,6 +404,7 @@ if ($user->canEdit()) {
             } else {
                 $other = json_decode($others->other_fr, true);
             }
+            uasort($other, 'strcoll');
 
             echo elgg_view('input/text', array(
                 'name' => $field,
