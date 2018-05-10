@@ -12,7 +12,7 @@ $relay = urldecode(strstr($relay,'http'));
 $relay = parse_url($relay, PHP_URL_QUERY);
 $relay = strstr($relay,'lang=');
 $lang = substr($relay, strpos($relay,'=')+1, 2);
-if ($lang!='en'||$lang!='fr'){
+if ($lang!='en'&&$lang!='fr'){
 	$lang = 'en';
 }
 //$lang = htmlspecialchars($_GET["lang"]);
