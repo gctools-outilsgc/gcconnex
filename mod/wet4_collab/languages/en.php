@@ -51,5 +51,6 @@ return array(
 
 	'event_calendar:print' => "Print this calendar",
 
-	'c_bin:sort_guid' => 'Date joined'
+	'c_bin:sort_guid' => 'Date joined',
+	'event_calendar:already_in' => 'Already in the calendar'
 );
