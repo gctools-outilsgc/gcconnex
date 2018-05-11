@@ -294,7 +294,6 @@ $account_exist_message = elgg_echo('registration:userexists');
 					'class'=>'submit_test btn-primary',
 					'onclick' => 'return check_fields2();'));
 				echo '</div>';
-				echo '<center>'.elgg_echo('gcRegister:tutorials_notice').'</center>';
 				?>
 				<br/>
 			</div>

@@ -19,7 +19,7 @@ if (elgg_is_xhr()) {
 
 	echo elgg_format_element('div',array('class'=> 'mrgn-bttm-sm mrgn-tp-sm alert alert-info'),elgg_echo('gcconnex_profile:optin:access'));
 	
-	$opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate, $user->opt_in_missionCreate, $user->opt_in_casual_seek, $user->opt_in_casual_create, $user->opt_in_student_seek, $user->opt_in_student_create, $user->opt_in_collaboration_seek, $user->opt_in_collaboration_create);
+	$opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate, $user->opt_in_missionCreate, $user->opt_in_casual_seek, $user->opt_in_casual_create, $user->opt_in_student_seek, $user->opt_in_student_create, $user->opt_in_collaboration_seek, $user->opt_in_collaboration_create, $user->opt_in_interchange_seek, $user->opt_in_interchange_create);
     //Nick - Loop through array of selected things and change their value to match the meta data        
 foreach($opt_in_set as $k => $v){
     if($v == 'gcconnex_profile:opt:yes'){
@@ -164,6 +164,31 @@ foreach($opt_in_set as $k => $v){
 						        'name' => 'studentcreate_check',
 						        'checked' => $opt_in_set[20],
 						        'id' => 'gcconnex-opt-in-studentcreate-check',
+			                    'label' => elgg_echo('gcconnex_profile:opt:offering')
+			            	));
+		                ?>
+                	</li>
+                </ul>
+            </li>
+            <li class="clearfix">
+                <?php echo elgg_echo('missions:interchange'); ?>
+                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
+                	<li class="clearfix pull-left mrgn-lft-md">
+		                <?php
+		                	echo elgg_view("input/checkbox", array(
+						        'name' => 'interchangeseek_check',
+						        'checked' => $opt_in_set[23],
+						        'id' => 'gcconnex-opt-in-interchangeseek-check',
+			                    'label' => elgg_echo('gcconnex_profile:opt:seeking') 
+			               	));
+		                ?>
+                	</li>
+	                <li class="clearfix pull-left mrgn-lft-md">
+		                <?php
+		                	echo elgg_view("input/checkbox", array(
+						        'name' => 'interchangecreate_check',
+						        'checked' => $opt_in_set[24],
+						        'id' => 'gcconnex-opt-in-interchangecreate-check',
 			                    'label' => elgg_echo('gcconnex_profile:opt:offering')
 			            	));
 		                ?>
@@ -338,7 +363,7 @@ foreach($opt_in_set as $k => $v){
 								'name' => 'collaborationseek_check',
 								'checked' => $opt_in_set[21],
 								'id' => 'gcconnex-opt-in-collaborationseek-check',
-								'label' => elgg_echo('gcconnex_profile:opt:collaboration_seek'),
+								'label' => elgg_echo('gcconnex_profile:opt:seeking'),
 							));
 		                ?>
 		            </li>
@@ -349,7 +374,36 @@ foreach($opt_in_set as $k => $v){
 								'name' => 'collaborationcreate_check',
 								'checked' => $opt_in_set[22],
 								'id' => 'gcconnex-opt-in-collaborationcreate-check',
-								'label' => elgg_echo('gcconnex_profile:opt:collaboration_create'),
+								'label' => elgg_echo('gcconnex_profile:opt:offering'),
+							));
+		                ?>
+		            </li>
+                </ul>
+            </li>
+
+            <li class="clearfix">
+                <?php echo elgg_echo( 'missions:skill_share' ); ?>
+                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
+	                <li class="clearfix pull-left mrgn-lft-md">
+	                <?php
+						echo elgg_view("input/checkbox", array(
+							'name' => 'skillseeker_check',
+							'checked' => $opt_in_set[9],
+							'id' => 'gcconnex-opt-in-skillseeker-check',
+							'class' => 'pull-left',
+							'label' => elgg_echo('gcconnex_profile:opt:participants')
+						));
+	                ?>
+	                </li>
+	            
+		            <li class="clearfix pull-left mrgn-lft-md">
+		                <?php
+							echo elgg_view("input/checkbox", array(
+								'name' => 'skillcreator_check',
+								'checked' => $opt_in_set[10],
+								'id' => 'gcconnex-opt-in-skillcreator-check',
+								'class' => 'pull-left',
+								'label' => elgg_echo('gcconnex_profile:opt:host')
 							));
 		                ?>
 		            </li>
@@ -388,40 +442,6 @@ foreach($opt_in_set as $k => $v){
                 </li>
                 </ul>
             </li>
-            
-            
-            <li class="clearfix">
-                <?php echo elgg_echo( 'missions:skill_share' ); ?>
-                
-                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
-                <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'skillseeker_check',
-			         'checked' => $opt_in_set[9],
-			         'id' => 'gcconnex-opt-in-skillseeker-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
-	               ));
-                    
-                ?>
-                </li>
-            
-            <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'skillcreator_check',
-			         'checked' => $opt_in_set[10],
-			         'id' => 'gcconnex-opt-in-skillcreator-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
-	               ));
-                    
-                ?>
-            </li>
-                </ul>
-            </li>
-            
             
             <li class="clearfix">
                 <?php echo elgg_echo( 'missions:peer_coaching' ); ?>

@@ -427,6 +427,7 @@ function event_add_calendar($user, $guid, $lang)
 			}
 		}else{
 			return elgg_echo('event_calendar:already_in');
+
 		}
 	}
 }

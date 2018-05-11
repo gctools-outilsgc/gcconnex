@@ -46,6 +46,11 @@
 
 				echo '<script>$(document).ready(function() { $(".casual-tooltip").tooltip(); $(".student-tooltip").tooltip(); });</script>';
 
+				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:interchange_seek');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_interchange_seek) . '</span></li>';
+				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:interchange_create');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_interchange_create) . '</span></li>';
+
 		/* MW - Changed for GCcollab version of Opp Platform
         echo '<div class="col-sm-6 "><h3 class="h4 mrgn-tp-0">'. elgg_echo('gcconnex_profile:opt:atlevel').'</h3>';
 			echo '<ul class="list-unstyled">';
@@ -85,6 +90,12 @@
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_collaboration_seek) . '</span></li>';
 				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:collaboration_create');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_collaboration_create) . '</span></li>';
+
+				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssSeek) . '</span></li>';
+                echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing_create');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssCreate) . '</span></li>';
+
 			/* MW - Changed for GCcollab version of Opp Platform
 				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:shadowed');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_shadowed) . '</span></li>';
@@ -98,11 +109,6 @@
         
                 echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:peer_coaching');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_pcCreate) . '</span></li>';
-				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing');
-				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssSeek) . '</span></li>';
-        
-                echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing_create');
-				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssCreate) . '</span></li>';
 			*/
                 
                 
