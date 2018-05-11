@@ -21,23 +21,13 @@ if (isset($vars['collection'])) {
 	$highlight = 'all';
 }
 
-echo "<div class=\"mtm\"><label for='collection_name'>" . elgg_echo("friends:collectionname") . "</label><br/>";
+echo "<div class='mbl'><label for='collection_name'>" . elgg_echo("friends:collectionname") . "</label>";
 echo elgg_view("input/text", array(
-		"name" => "collection_name",
-		"id" => "collection_name",
-		"value" => $title,
-    'required '=> "required",
-	));
-echo "</div>";
-
-echo "<div>";
-if ($vars['collection_members']) {
-	echo elgg_echo("friends:collectionfriends") . "<br />";
-	foreach ($vars['collection_members'] as $mem) {
-		echo elgg_view_entity_icon($mem, 'tiny');
-		echo $mem->name;
-	}
-}
+	"name" => "collection_name",
+	"id" => "collection_name",
+	"value" => $title,
+    "required" => "required",
+));
 echo "</div>";
 
 $members = get_members_of_access_collection($vars['collection']->id, true);
@@ -45,16 +35,9 @@ if (!$members) {
 	$members = array();
 }
 
-echo "<div><label for='friends_collection'>" . elgg_echo("friends:addfriends") . "</label>";
-echo elgg_view('input/friendspicker', array(
-	'entities' => $vars['friends'],
-	'name' => 'friends_collection',
-	'id' => 'friends_collection',
-   	'value' => $members,
-	'highlight' => $highlight,
-    'collection_id' => $vars['collection']->id,
-	'formtarget' => $site_url . 'action/friends/collections/edit',
-));
+echo "<div id='colleague_collection_invite_users' class='mbl'>";
+echo "<div><label for='colleague_collection_autocomplete'>" . elgg_echo("group_tools:group:invite:users:description") . "</label></div>";
+echo elgg_view("input/colleague_collection_autocomplete", array("name" => "friends_collection", "id" => "colleague_collection", "group_guid" => elgg_get_logged_in_user_guid(), "relationship" => "site", "members" => $members));
 echo "</div>";
 
 echo '<div class="elgg-foot">';
@@ -64,5 +47,7 @@ if (isset($vars['collection'])) {
 		'value' => $vars['collection']->id,
 	));
 }
-//echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save'), 'class' => 'btn btn-primary'));
+echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save'), 'class' => 'btn btn-primary'));
 echo '</div>';
+
+?>
