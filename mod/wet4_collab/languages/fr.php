@@ -51,5 +51,6 @@ return array(
 
 	'event_calendar:print' => "Imprimer ce calendrier",
 
-	'c_bin:sort_guid' => "Date d'inscription"
+	'c_bin:sort_guid' => "Date d'inscription",
+	'event_calendar:already_in' => 'Déjà dans le calendrier'
 );
