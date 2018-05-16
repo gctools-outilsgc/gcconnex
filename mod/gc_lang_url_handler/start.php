@@ -21,6 +21,14 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 	$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
 	$domain = '.' . $clean_domain;
 
+	$site_url = elgg_get_site_url();
+	$site_url = preg_replace("(^https?://)", "", $site_url);
+	$site_url = explode("/", $site_url);
+
+	if (preg_match("/localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $site_url[0])) {
+		$domain = $site_url[0];
+	}
+
 	// do not include the gsa crawler, this will be used for public and solr crawler
 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
 		// checks to make sure that the url does not affect the ajax calls
@@ -37,10 +45,16 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 					setcookie('lang', 'en', 0, '/', $domain);
 				}
 			} else {
-				if ($_GET["language"] == '' || $_GET["language"] != 'en' || $_GET["language"] != 'fr'  )  {
-					
+				
+				if ($_GET["language"] == '' || $_GET["language"] != 'en' || $_GET["language"] != 'fr')
 					forward("?language=" . get_current_language());
-				}
+
+
+			}
+
+			// make sure both cookie and url param match			
+			if ($url_language !== $cookie_language) {
+				forward("?language={$url_language}");
 			}
 
 		} else {
