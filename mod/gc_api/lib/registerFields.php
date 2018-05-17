@@ -44,6 +44,10 @@ function get_register_fields() {
 					));
 	$depts = get_entity($deptObj[0]->guid);
 
+	$deptTest = json_decode($depts->federal_departments_en, true);
+
+	$fields['test'] = $deptTest;
+
 	$fields['federal']['en'] = $depts->federal_departments_en;
 	$fields['federal']['fr'] = $depts->federal_departments_fr;
 
@@ -66,8 +70,21 @@ function get_register_fields() {
 	));
 	$mins = get_entity($minObj[0]->guid);
 
-	$fields['provincial']['ministry']['en'] = $mins->ministries_en;
-	$fields['provincial']['ministry']['fr'] = $mins->ministries_fr;
+	//create more usable keys
+	$enMin = json_decode($mins->ministries_en, true);
+	foreach($enMin as $province => $ministry){
+		$enMin[str_replace(" ", "", strtolower($province))] = $ministry;
+	  unset($enMin[$province]);
+	}
+
+	$frMin = json_decode($mins->ministries_fr, true);
+	foreach($frMin as $province => $ministry){
+		$frMin[str_replace(" ", "", strtolower($province))] = $ministry;
+	  unset($frMin[$province]);
+	}
+
+	$fields['provincial']['ministry']['en'] = json_encode($enMin);
+	$fields['provincial']['ministry']['fr'] = json_encode($frMin);
 
 	//municipal
 	$fields['municipal']['en'] = $provs->provinces_en;
