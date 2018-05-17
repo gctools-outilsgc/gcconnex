@@ -100,7 +100,7 @@ if ($minChars < 1) {
 				};
 			});
 
-		if(members !== ''){
+		if(members !== '' && members !== 'null'){
 			$.each(JSON.parse(members), function(key, value) {
 				$.getJSON(elgg.get_site_url() + "groups/group_invite_autocomplete", {
 					q: value,
