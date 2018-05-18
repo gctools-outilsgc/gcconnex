@@ -218,6 +218,20 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"get.subgroup",
+	"get_subgroup",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Declines a group invite to a group based on user id and group id',
+	'POST',
+	true,
+	false
+);
+
 function get_group($user, $guid, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
@@ -1096,4 +1110,75 @@ function decline_group_invite($user, $guid, $lang)
 	}
 
 	return false;
+}
+
+function get_subgroup($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "Viewer user was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid viewer user. Please try a different GUID, username, or email address";
+	}
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$group = get_entity($guid);
+
+
+	// invisible groups require overriding access to delete invite
+	$old_access = elgg_set_ignore_access(true);
+	$group = get_entity($guid);
+
+	$options = array(
+		'types' => array('group'),
+		'relationship' => 'au_subgroup_of',
+		'relationship_guid' => $group->guid,
+		'inverse_relationship' => true,
+		'limit' => 10,
+	);
+//error_log($group->guid);
+	// if ($sortbytitle) {
+	// 	$options['joins'] = array("JOIN " . elgg_get_config('dbprefix') . "groups_entity g ON e.guid = g.guid");
+	// 	$options['order_by'] = "g.name ASC";
+	// }
+	$subgroup = elgg_list_entities_from_relationship($options);
+error_log(print_r($subgroup,true));
+
+//$subgroup = json_decode($subgroup);
+
+	foreach ($subgroup as $group) {
+		$group->name = gc_explode_translation($group->name, $lang);
+		
+				$likes = elgg_get_annotations(array(
+					'guid' => $group->guid,
+					'annotation_name' => 'likes'
+				));
+				$group->likes = count($likes);
+		
+				$liked = elgg_get_annotations(array(
+					'guid' => $group->guid,
+					'annotation_owner_guid' => $user_entity->guid,
+					'annotation_name' => 'likes'
+				));
+				$group->liked = count($liked) > 0;
+		
+				$groupObj = get_entity($group->guid);
+				$group->member = $groupObj->isMember($user_entity);
+				$group->owner = ($groupObj->getOwnerEntity() == $user_entity);
+				$group->iconURL = $groupObj->geticon();
+				$group->count = $groupObj->getMembers(array('count' => true));
+		
+				$group->comments = get_entity_comments($group->guid);
+				$group->tags = $groupObj->interests;
+		
+				$group->userDetails = get_user_block($group->owner_guid, $lang);
+				$group->description = gc_explode_translation($group->description, $lang);
+
+	}
+	return $subgroup;
+
+	//return $subgroup;
 }
