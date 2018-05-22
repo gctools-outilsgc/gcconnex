@@ -17,8 +17,8 @@ if (!$owner) {
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
 
-	$title = elgg_echo('album:user', array($owner->name));
-	elgg_push_breadcrumb($owner->name);
+	$title = elgg_echo('album:user', array(gc_explode_translation($owner->name,$lang)));
+	elgg_push_breadcrumb(gc_explode_translation($owner->name,$lang));
 
 
 
