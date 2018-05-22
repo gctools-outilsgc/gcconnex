@@ -85,10 +85,7 @@ elgg_ws_expose_function(
 	"get_see_calendar",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
-		"from" => array('type' => 'string', 'required' => false, 'default' => ""),
-		"to" => array('type' => 'string', 'required' => false, 'default' => ""),
-		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
-		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
+		"guid" => array('type' => 'int', 'required' => true),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves an event based on user id and event id',
@@ -485,6 +482,13 @@ function get_see_calendar($user, $guid, $lang)
 	$offset = get_input('offset', 0);
 	$users = event_calendar_get_users_for_event($guid, $limit, $offset, false);
 
-	return $users;
+	$data = array();
+	foreach ($users as $user) {
+		$user_obj = get_user($user->guid);
+		$user_data = get_user_block($user->guid, $lang);
+		$data[] = $user_data;
+	}
+
+	return $data;
 
 }
