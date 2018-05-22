@@ -25,6 +25,9 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 	$site_url = preg_replace("(^https?://)", "", $site_url);
 	$site_url = explode("/", $site_url);
 
+	$cookie_language = $_COOKIE['lang'];
+	$url_language = $_GET['language'];
+
 	if (preg_match("/localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $site_url[0])) {
 		$domain = $site_url[0];
 	}
@@ -36,31 +39,39 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 		
 		if (strpos($_SERVER['REQUEST_URI'], '/comment/view/') === false && strpos($_SERVER['REQUEST_URI'], '/view') !== false || strpos($_SERVER['REQUEST_URI'], '/profile') !== false) {
 
-			if ($_GET["language"] == 'fr') { 
-				if ($_COOKIE['lang'] != 'fr') {
-					setcookie('lang', 'fr', 0, '/', $domain);
-				}
-			} elseif ($_GET["language"] == 'en') {
-				if ($_COOKIE['lang'] != 'en') {
-					setcookie('lang', 'en', 0, '/', $domain);
-				}
-			} else {
-				
-				if ($_GET["language"] == '' || $_GET["language"] != 'en' || $_GET["language"] != 'fr')
-					forward("?language=" . get_current_language());
 
+			// if url is set to french, then set cookie to french
+			if ($url_language == 'fr') { 
+				setcookie('lang', $url_language, 0, '/', $domain);
+			} 
 
+			// if url is set to english, then set cookie to english
+			if ($url_language == 'en') {
+				setcookie('lang', $url_language, 0, '/', $domain);
+			} 
+			
+			// if nothing is set in the url, then set url param based on the cookie selection
+			if ($url_language == '') {
+				// if both url param and cookie are not set then set them based on user settings
+				if ($cookie_language == '') {
+					setcookie('lang', get_current_language(), 0, '/', $domain);
+					forward("?language=".get_current_language());
+
+				// if only the url parameter is not set, then set using the cookie language
+				} else {
+					forward("?language=" . $cookie_language);
+				}
+				return true;
 			}
 
-			// make sure both cookie and url param match			
-			if ($url_language !== $cookie_language) {
-				forward("?language={$url_language}");
+
+			// once the cookie has been set, just refresh the page so that elgg picks up on cookie changes
+			if ($url_language !== $cookie_language)  {
+				forward("?language=" . $url_language);
 			}
 
-		} else {
-
-			return;
 		}
+
 	}
 }
 
