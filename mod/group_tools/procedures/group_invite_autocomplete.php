@@ -33,14 +33,25 @@ if (!empty($user) && !empty($q) && !empty($group_guid)) {
 	if ($relationship != "email") {
 		$dbprefix = elgg_get_config("dbprefix");
 		
-		// find existing users
-		$query_options = array(
-			"type" => "user",
-			"limit" => $limit,
-			"joins" => array("JOIN {$dbprefix}users_entity u ON e.guid = u.guid"),
-			"wheres" => array("(u.name LIKE '%{$q}%' OR u.username LIKE '%{$q}%')", "u.banned = 'no'"),
-			"order_by" => "u.name asc"
-		);
+		if( is_numeric($q) ){
+			// find existing users
+			$query_options = array(
+				"type" => "user",
+				"limit" => $limit,
+				"joins" => array("JOIN {$dbprefix}users_entity u ON e.guid = u.guid"),
+				"wheres" => array("u.guid = {$q}", "u.banned = 'no'"),
+				"order_by" => "u.name asc"
+			);
+		} else {
+			// find existing users
+			$query_options = array(
+				"type" => "user",
+				"limit" => $limit,
+				"joins" => array("JOIN {$dbprefix}users_entity u ON e.guid = u.guid"),
+				"wheres" => array("(u.name LIKE '%{$q}%' OR u.username LIKE '%{$q}%')", "u.banned = 'no'"),
+				"order_by" => "u.name asc"
+			);
+		}
 		
 		if (!$include_self) {
 			if (empty($current_users)) {
