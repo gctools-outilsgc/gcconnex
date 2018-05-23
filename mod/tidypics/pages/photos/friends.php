@@ -52,10 +52,15 @@ elgg_register_menu_item('title', array(
 	'name' => 'addphotos',
 	'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
 	'text' => elgg_echo("photos:addphotos"),
-	'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+	'link_class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-primary btn-md'
 ));
 
-elgg_register_title_button();
+elgg_register_menu_item('title', array(
+	'name' => 'add',
+	'href' => "photos/add/" . $owner->getGUID(),
+	'text' => elgg_echo("photos:add"),
+	'link_class' => 'elgg-button elgg-button-action btn btn-primary btn-md'
+));
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'friends',

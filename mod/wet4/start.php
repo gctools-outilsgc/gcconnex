@@ -389,9 +389,11 @@ function _elgg_set_landing_page()
 
 function consistent_menu_styler($hook, $type, $menu, $params) {
 	$classes = array('btn', 'btn-primary', 'btn-md');
-	foreach ($menu as $key => $item) {
-							$item->setLinkClass($classes);
-		 }
+	if(elgg_get_context() != 'photos'){
+		foreach ($menu as $key => $item) {
+			$item->setLinkClass($classes);
+		}
+	}
 
 	return $menu;
 }
