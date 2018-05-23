@@ -66,6 +66,6 @@ return array(
   'freshdesk:valid' => "Ce champ est obligatoire.",
   'freshdesk:valid:filetypes' => "Format de fichier non valide. Extensions de fichiers autorisées: txt, gif, jpg, jpeg and png.",
 
-  'freshdesk:ticket:information' => "Avant de soumettre un billet, cherchez-le contenu d'aide pour trouver des informations sur les questions les plus courantes. Vous ne trouvez pas la réponse? Envoyez un billet en remplissant le formulaire ci-dessous. Veuillez décrire votre problème clairement et ajouter une capture d’écran, si possible. Un agent de du bureau d’aide répondra à votre demande dans les 2 prochains jours ouvrables.",
-  'freshdesk:ticket:information:note' => "<b>Remarque:</b> Nous utilisons maintenant Freshdesk comme outil de tierce partie pour gérer les activités du bureau d’aide. Après avoir créé votre billet, vous devriez recevoir un courriel de confirmation avec un lien vers votre billet."
+  'freshdesk:ticket:information' => "Avant de soumettre un billet, cherchez-le contenu d'aide pour trouver des informations sur les questions les plus courantes. Vous ne trouvez pas la réponse? Envoyez un billet en remplissant le formulaire ci-dessous. Veuillez décrire votre problème clairement et ajouter une capture d’écran, si possible. Un agent du bureau d’aide répondra à votre demande dans les 2 prochains jours ouvrables.",
+  'freshdesk:ticket:information:note' => "<b>Remarque:</b> Nous utilisons maintenant Freshdesk comme outil tiers pour gérer les activités du bureau d’aide. Après avoir créé votre billet, vous devriez recevoir un courriel de confirmation avec un lien vers votre billet."
     );
