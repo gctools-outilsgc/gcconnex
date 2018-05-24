@@ -51,6 +51,11 @@ function solr_api_init() {
                 'required' => false,
                 'description' => 'the subtype of entity in string format, not required',
             ],
+			'offset' => [
+                'type' => 'int',
+                'required' => true,
+                'description' => 'the subtype of entity in string format, not required',
+            ],
 
         ],
         'retrieves all entities filtered by type [and subtype]',
@@ -63,7 +68,13 @@ function solr_api_init() {
 	elgg_ws_expose_function(
         'get.user_list',
         'get_user_list',
-        null,
+        [
+        	'offset' => [
+        		'type' => 'int',
+        		'required' => true,
+        		'description' => 'paging mechanism'
+        	]
+        ],
         'retrieves a user list',
         'GET',
         false,
@@ -96,7 +107,7 @@ function solr_api_init() {
 		false
 	);
 }
- 
+
 
 function delete_updated_index_list($guids) {
 
@@ -170,11 +181,12 @@ function get_list_of_deleted_records() {
 	return $arr;
 }
  
-function get_user_list() {
+function get_user_list($offset) {
 
 	$users = elgg_get_entities(array(
 		'type' => 'user',
-		'limit' => 20
+		'limit' => 10,
+		'offset' => $offset
 	));
 
 	foreach ($users as $user) {
@@ -248,12 +260,13 @@ function get_group_list($offset) {
 }
 
 
-function get_entity_list($type, $subtype) {
+function get_entity_list($type, $subtype, $offset) {
 
 	$entities = elgg_get_entities(array(
 		'type' => $type,
 		'subtype' => $subtype,
-		'limit' => 15
+		'limit' => 10,
+		'offset' => $offset
 	));
 
 	foreach ($entities as $entity) {
