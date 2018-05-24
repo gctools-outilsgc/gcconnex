@@ -54,8 +54,11 @@ function global_url_handler($hook, $type, $returnvalue, $params) {
 			if ($url_language == '') {
 				// if both url param and cookie are not set then set them based on user settings
 				if ($cookie_language == '') {
-					setcookie('lang', get_current_language(), 0, '/', $domain);
-					forward("?language=".get_current_language());
+					$current_language = get_current_language();
+					if ($current_language == '') $current_language = 'en';
+					
+					setcookie('lang', $current_language, 0, '/', $domain);
+					forward("?language=".$current_language);
 
 				// if only the url parameter is not set, then set using the cookie language
 				} else {
