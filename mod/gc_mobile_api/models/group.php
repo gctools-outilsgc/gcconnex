@@ -1125,10 +1125,8 @@ function get_subgroup($user, $guid, $lang)
 		login($user_entity);
 	}
 
-	$group = get_entity($guid);
+	$group_entity = get_entity($guid);
 
-
-	// invisible groups require overriding access to delete invite
 	$old_access = elgg_set_ignore_access(true);
 	$group = get_entity($guid);
 
@@ -1139,46 +1137,22 @@ function get_subgroup($user, $guid, $lang)
 		'inverse_relationship' => true,
 		'limit' => 10,
 	);
-//error_log($group->guid);
-	// if ($sortbytitle) {
-	// 	$options['joins'] = array("JOIN " . elgg_get_config('dbprefix') . "groups_entity g ON e.guid = g.guid");
-	// 	$options['order_by'] = "g.name ASC";
-	// }
-	$subgroup = elgg_list_entities_from_relationship($options);
-error_log(print_r($subgroup,true));
 
-//$subgroup = json_decode($subgroup);
+	$all_subgroup = elgg_list_entities_from_relationship($options);
+	$subgroups = json_decode($all_subgroup);
 
-	foreach ($subgroup as $group) {
-		$group->name = gc_explode_translation($group->name, $lang);
-		
-				$likes = elgg_get_annotations(array(
-					'guid' => $group->guid,
-					'annotation_name' => 'likes'
-				));
-				$group->likes = count($likes);
-		
-				$liked = elgg_get_annotations(array(
-					'guid' => $group->guid,
-					'annotation_owner_guid' => $user_entity->guid,
-					'annotation_name' => 'likes'
-				));
-				$group->liked = count($liked) > 0;
-		
-				$groupObj = get_entity($group->guid);
-				$group->member = $groupObj->isMember($user_entity);
-				$group->owner = ($groupObj->getOwnerEntity() == $user_entity);
-				$group->iconURL = $groupObj->geticon();
-				$group->count = $groupObj->getMembers(array('count' => true));
-		
-				$group->comments = get_entity_comments($group->guid);
-				$group->tags = $groupObj->interests;
-		
-				$group->userDetails = get_user_block($group->owner_guid, $lang);
-				$group->description = gc_explode_translation($group->description, $lang);
-
+	$data = array();
+	foreach ($subgroups as $subgroup) {
+		$subgroup_obj = get_user($subgroup->guid);
+		$subgroup_data->name = gc_explode_translation($subgroup->name,$lang);
+		$subgroup_data->url = $subgroup->url;
+		$subgroup_data->guid = $subgroup->guid;
+		$subgroupObj = get_entity($subgroup->guid);
+		$subgroup_data->owner = ($subgroupObj->getOwnerEntity() == $user_entity);
+		$subgroup_data->iconURL = $subgroupObj->geticon();
+		$subgroup_data->count = $subgroupObj->getMembers(array('count' => true));
+		$subgroup_data->description = gc_explode_translation($subgroup->description, $lang);
+		$data[] = $subgroup_data;
 	}
-	return $subgroup;
-
-	//return $subgroup;
+	return $data;
 }
