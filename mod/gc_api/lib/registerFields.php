@@ -61,13 +61,29 @@ function get_register_fields() {
 	$fields['provincial']['fr'] = $provs->provinces_fr;
 
 	$minObj = elgg_get_entities(array(
-		'type' => 'object',
-		'subtype' => 'ministries',
-	));
+			'type' => 'object',
+			'subtype' => 'ministries',
+		));
 	$mins = get_entity($minObj[0]->guid);
 
-	$fields['provincial']['ministry']['en'] = $mins->ministries_en;
-	$fields['provincial']['ministry']['fr'] = $mins->ministries_fr;
+	//create more usable keys
+	$enMin = json_decode($mins->ministries_en, true);
+	foreach($enMin as $province => $ministry){
+		$enMin[str_replace(" ", "", strtolower($province))] = $ministry;
+		 unset($enMin[$province]);
+	}
+	$frMin = json_decode($mins->ministries_fr, true);
+	foreach($frMin as $province => $ministry){
+		$frMin[str_replace(" ", "", strtolower($province))] = $ministry;
+		 unset($frMin[$province]);
+	}
+
+	$fields['provincial']['ministry']['en'] = json_encode($enMin);
+	$fields['provincial']['ministry']['fr'] = json_encode($frMin);
+	
+	//municipal
+	$fields['municipal']['en'] = $provs->provinces_en;
+	$fields['municipal']['fr'] = $provs->provinces_fr;
 
 	//municipal
 	$fields['municipal']['en'] = $provs->provinces_en;

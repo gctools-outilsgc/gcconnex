@@ -37,7 +37,7 @@ $group_title = gc_explode_translation($owner->title,$lang);
 if (elgg_instanceof($owner, 'group')) {
 	elgg_push_breadcrumb($group_title, "photos/group/$owner->guid/all");
 } else {
-	elgg_push_breadcrumb($group_title, "photos/owner/$owner->username");
+	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
 }
 
 	elgg_push_breadcrumb(gc_explode_translation($album->title, $lang));
@@ -71,7 +71,7 @@ if ($album->getContainerEntity()->canWriteToContainer()) {
 			'name' => 'upload',
 			'href' => 'photos/upload/' . $album->getGUID(),
 			'text' => elgg_echo('images:upload'),
-			'link_class' => 'elgg-button elgg-button-action',
+			'link_class' => 'elgg-button elgg-button-action btn btn-primary btn-md',
             'item_class' => 'mrgn-rght-sm',
 	));
 }
