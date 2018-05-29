@@ -1,23 +1,34 @@
 <?php
 
+// REFERENCE: http://learn.elgg.org/en/stable/guides/web-services.html#api-authentication
+// Admin > Web Services > Create API Keys
+
 elgg_register_event_handler('init','system','solr_api_init');
 
 
+function your_plugin_auth_handler($credentials) {
+   error_log("credentials...");
+}
+
+function api_hook_handler() {
+	return "hey hey";
+}
+
 function solr_api_init() {
 
-
-
 	elgg_register_event_handler('delete', 'object', 'intercept_object_deletion'); 
-	//elgg_register_event_handler('create','object','cp_create_notification',900);
+
+	// Register the authentication handler
+	//register_pam_handler('your_plugin_auth_handler');
+	//elgg_register_plugin_hook_handler('rest:output', 'get_entity_list', 'api_hook_handler');
+
 	// @TODO limit access to only the specified user agent string for more strict security
-	// @TODO list all subtypes and types
-
-	// http://192.168.245.130/gcconnex/services/api/rest/json/?method=get.entity_list&type=object&subtype=blog
-	// http://192.168.245.130/gcconnex/services/api/rest/json/?method=get.user_list
-	// http://192.168.245.130/gcconnex/services/api/rest/json/?method=get.group_list
- 
-
 	// @TODO will need authentication mechanism for this
+
+
+	//$method, $function, array $parameters = NULL, $description = "",
+	//	$call_method = "GET", $require_api_auth = false, $require_user_auth = false
+
 	elgg_ws_expose_function(
 		'delete.updated_index_list',
 		'delete_updated_index_list',
@@ -30,13 +41,11 @@ function solr_api_init() {
 		],
 		'deletes record that already updated the solr index',
 		'POST',
-		false,
+		true,
 		false
 	);
 
 
-	// api expose function calls
-	// parameters: method, function, array of parameters, description, call method/get or post, require api authentication, require user authentication
 	elgg_ws_expose_function(
         'get.entity_list',
         'get_entity_list',
@@ -60,7 +69,7 @@ function solr_api_init() {
         ],
         'retrieves all entities filtered by type [and subtype]',
         'GET',
-        false,
+        true,
         false
 	);
 
@@ -77,9 +86,12 @@ function solr_api_init() {
         ],
         'retrieves a user list',
         'GET',
-        false,
+        true,
         false
 	);
+
+	//$method, $function, array $parameters = NULL, $description = "",
+	//	$call_method = "GET", $require_api_auth = false, $require_user_auth = false
 
 	elgg_ws_expose_function(
         'get.group_list',
@@ -93,9 +105,10 @@ function solr_api_init() {
         ],
         'retrieves a group list',
         'GET',
-        false,
+        true,
         false
 	);
+
 
 	elgg_ws_expose_function(
 		'get.list_of_deleted_records',
@@ -103,7 +116,7 @@ function solr_api_init() {
 		null,
 		'retrieves a list of deleted content',
 		'GET',
-		false,
+		true,
 		false
 	);
 }
@@ -113,34 +126,34 @@ function delete_updated_index_list($guids) {
 
 	$ids = array();
 	foreach ($guids as $guid) {
-
-		error_log(".... guid array: " . $guid);
-
-		if (is_numeric($guid)) {
-			error_log("guid is an int");
-			$ids[] = "id = {$guid}";
-		}
-
+		// guid must be an integer
+		if (is_numeric($guid)) 
+			$ids[] = $guid;
+		else
+			return "there is an issue deleting a record in the database, please see function delete_updated_index_list()";
 	}
-	error_log("the size is.. " . sizeof($ids));
+
 	if (sizeof($ids) > 0) {
-		$ids = implode(" OR ",$ids);
-		$query = "DELETE FROM deleted_object_tracker WHERE {$ids}";
-		error_log("query: " . $query);
+		$ids = implode(",", $ids);
+		$query = "DELETE FROM deleted_object_tracker WHERE id IN ({$ids})";
 		$result = delete_data($query);
 	}
 
-	return "ehhh";
+	$arr[] = array('message' => 'deleted the following guid');
+	$arr[] = $ids;
+
+	return $arr;
 }
 
-
+// this is not an api call, this is a hook that will initiate once user attempts deletion
 function intercept_object_deletion($event, $type, $object) {
 	$unixtime = time();
 	error_log("deleting ... id: {$object->guid}  //  title: {$object->title} on " . time());
 
-
-	$query = "INSERT INTO deleted_object_tracker (id, time_deleted) VALUES ({$object->guid}, {$unixtime})";
 	
+	$query = "INSERT INTO deleted_object_tracker (id, time_deleted) VALUES ({$object->guid}, {$unixtime})";
+
+	// just in case for some reason, the user is able to delete the same thing twice
 	try {
 		$insert_record = insert_data($query);
 	} catch (Exception $e) {
@@ -158,9 +171,6 @@ function intercept_object_deletion($event, $type, $object) {
 	return false;
 }
 
-function clear_deleted_object_tracker_table() {
-
-}
 
 // api calls with sample set of limit 15
 function get_list_of_deleted_records() {
@@ -177,10 +187,10 @@ function get_list_of_deleted_records() {
 			'time_deleted' => $deleted_record->time_deleted
 		);
 	}
-
 	return $arr;
 }
- 
+
+
 function get_user_list($offset) {
 
 	$users = elgg_get_entities(array(
@@ -205,22 +215,16 @@ function get_user_list($offset) {
 			'url' => $user->getURL()
 		);
 	}
-	
     return $arr;
 }
 
 function get_group_list($offset) {
 
-	error_log("group list : {$offset}");
-	$query = "SELECT COUNT(guid) FROM elgggroups_entity;";
-	$offset = "";
-
 	$groups = elgg_get_entities(array(
 		'type' => 'group',
-		'limit' => 20
+		'limit' => 10,
+		'offset' => $offset
 	));
-
-	$arr[] = array('total_groups' => 50);
 
 	foreach ($groups as $group) {
 
@@ -229,7 +233,7 @@ function get_group_list($offset) {
 			$name_array['en'] = str_replace('"', '\"', $name_array['en']);
 			$name_array['fr'] = str_replace('"', '\"', $name_array['fr']);
 		} else {
-			$name_array['en'] = $group->name;
+			$name_array['en'] = $group->name_array;
 			$name_array['fr'] = $group->name;
 		}
 
@@ -242,8 +246,6 @@ function get_group_list($offset) {
 			$description_array['fr'] = $group->description;
 		}
 
-
-
 		$arr[] = array(
 			'guid' => $group->getGUID(),
 			'name' => $name_array,
@@ -255,7 +257,6 @@ function get_group_list($offset) {
 			'url' => $group->getURL()
 		);
 	}
-	
     return $arr;
 }
 
@@ -273,8 +274,13 @@ function get_entity_list($type, $subtype, $offset) {
 
 		if (isJson($entity->title)) {
 			$title_array = json_decode($entity->title, true);
-			$title_array['en'] = str_replace('"', '\"', $title_array['en']);
-			$title_array['fr'] = str_replace('"', '\"', $title_array['fr']);
+			if (!isset($title_array['en']) || !isset($title_array['en'])) {
+				$title_array['en'] = str_replace('"', '\"', $title_array);
+				$title_array['fr'] = str_replace('"', '\"', $title_array);
+			} else {
+				$title_array['en'] = str_replace('"', '\"', $title_array['en']);
+				$title_array['fr'] = str_replace('"', '\"', $title_array['fr']);
+			}
 		} else {
 			$title_array['en'] = $entity->title;
 			$title_array['fr'] = $entity->title;
@@ -282,8 +288,13 @@ function get_entity_list($type, $subtype, $offset) {
 
 		if (isJson($entity->description)) {
 			$description_array = json_decode($entity->description, true);
-			$description_array['en'] = str_replace('"', '\"', $description_array['en']);
-			$description_array['fr'] = str_replace('"', '\"', $description_array['fr']);
+			if (!isset($description_array['en']) || !isset($description_array['en'])) {
+				$description_array['en'] = str_replace('"', '\"', $description_array);
+				$description_array['fr'] = str_replace('"', '\"', $description_array);
+			} else {
+				$description_array['en'] = str_replace('"', '\"', $description_array['en']);
+				$description_array['fr'] = str_replace('"', '\"', $description_array['fr']);
+			}
 		} else {
 			$description_array['en'] = $entity->description;
 			$description_array['fr'] = $entity->description;
@@ -301,11 +312,11 @@ function get_entity_list($type, $subtype, $offset) {
 			'url' => $entity->getURL()
 		);
 	}
-	
-    return $arr;
+
+	return $arr;
 }
 
-
+ 
 
 function isJson($string) {
 	json_decode($string);
