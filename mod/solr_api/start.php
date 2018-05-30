@@ -8,9 +8,6 @@ elgg_register_event_handler('init','system','solr_api_init');
 
 function solr_api_init() {
 
-	// @TODO limit access to only the specified user agent string for more strict security
-	// @TODO will need authentication mechanism for this
-
 	//$method, $function, array $parameters = NULL, $description = "",
 	//	$call_method = "GET", $require_api_auth = false, $require_user_auth = false
 
@@ -71,12 +68,9 @@ function solr_api_init() {
         ],
         'retrieves a user list',
         'GET',
-        false,
+        true,
         false
 	);
-
-	//$method, $function, array $parameters = NULL, $description = "",
-	//	$call_method = "GET", $require_api_auth = false, $require_user_auth = false
 
 	elgg_ws_expose_function(
         'get.group_list',
@@ -133,9 +127,7 @@ function delete_updated_index_list($guids) {
 // this is not an api call, this is a hook that will initiate once user attempts deletion
 function intercept_object_deletion($event, $type, $object) {
 	$unixtime = time();
-	error_log("deleting ... id: {$object->guid}  //  title: {$object->title} on " . time());
 
-	
 	$query = "INSERT INTO deleted_object_tracker (id, time_deleted) VALUES ({$object->guid}, {$unixtime})";
 
 	// just in case for some reason, the user is able to delete the same thing twice
@@ -213,7 +205,7 @@ function get_group_list($offset) {
 
 	foreach ($groups as $group) {
 
-		if (isJson($group->name)) {
+		if (is_Json($group->name)) {
 			$name_array = json_decode($group->name, true);
 			$name_array['en'] = str_replace('"', '\"', $name_array['en']);
 			$name_array['fr'] = str_replace('"', '\"', $name_array['fr']);
@@ -222,7 +214,7 @@ function get_group_list($offset) {
 			$name_array['fr'] = $group->name;
 		}
 
-		if (isJson($group->description)) {
+		if (is_Json($group->description)) {
 			$description_array = json_decode($group->description, true);
 			$description_array['en'] = str_replace('"', '\"', $description_array['en']);
 			$description_array['fr'] = str_replace('"', '\"', $description_array['fr']);
@@ -257,7 +249,7 @@ function get_entity_list($type, $subtype, $offset) {
 
 	foreach ($entities as $entity) {
 
-		if (isJson($entity->title)) {
+		if (is_Json($entity->title)) {
 			$title_array = json_decode($entity->title, true);
 			if (!isset($title_array['en']) || !isset($title_array['en'])) {
 				$title_array['en'] = str_replace('"', '\"', $title_array);
@@ -271,7 +263,7 @@ function get_entity_list($type, $subtype, $offset) {
 			$title_array['fr'] = $entity->title;
 		}
 
-		if (isJson($entity->description)) {
+		if (is_Json($entity->description)) {
 			$description_array = json_decode($entity->description, true);
 			if (!isset($description_array['en']) || !isset($description_array['en'])) {
 				$description_array['en'] = str_replace('"', '\"', $description_array);
@@ -303,8 +295,8 @@ function get_entity_list($type, $subtype, $offset) {
 
  
 
-// function isJson($string) {
-// 	json_decode($string);
-// 	return (json_last_error() == JSON_ERROR_NONE);
-// }
+function is_Json($string) {
+	json_decode($string);
+	return (json_last_error() == JSON_ERROR_NONE);
+}
 
