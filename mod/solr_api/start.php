@@ -86,7 +86,7 @@ function solr_api_init() {
         ],
         'retrieves a user list',
         'GET',
-        true,
+        false,
         false
 	);
 
