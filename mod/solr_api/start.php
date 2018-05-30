@@ -6,25 +6,10 @@
 elgg_register_event_handler('init','system','solr_api_init');
 
 
-function your_plugin_auth_handler($credentials) {
-   error_log("credentials...");
-}
-
-function api_hook_handler() {
-	return "hey hey";
-}
-
 function solr_api_init() {
-
-	elgg_register_event_handler('delete', 'object', 'intercept_object_deletion'); 
-
-	// Register the authentication handler
-	//register_pam_handler('your_plugin_auth_handler');
-	//elgg_register_plugin_hook_handler('rest:output', 'get_entity_list', 'api_hook_handler');
 
 	// @TODO limit access to only the specified user agent string for more strict security
 	// @TODO will need authentication mechanism for this
-
 
 	//$method, $function, array $parameters = NULL, $description = "",
 	//	$call_method = "GET", $require_api_auth = false, $require_user_auth = false
@@ -193,30 +178,30 @@ function get_list_of_deleted_records() {
 
 function get_user_list($offset) {
 
-	$users = elgg_get_entities(array(
-		'type' => 'user',
-		'limit' => 10,
-		'offset' => $offset
-	));
+	$site_url = elgg_get_site_url();
+	$query = "	SELECT e.guid, ue.name, ue.username, ue.email, e.type, e.time_created, e.enabled
+				FROM elggusers_entity ue 
+					LEFT JOIN elggentities e ON ue.guid = e.guid 
+				WHERE e.enabled = 'yes'
+				LIMIT 10 OFFSET {$offset}";
+
+	$users = get_data($query);
 
 	foreach ($users as $user) {
-
-		$name_array['en'] = $user->name;
-		$name_array['fr'] = $user->name;
-
-		$arr[] = array(
-			'guid' => $user->getGUID(),
-			'name' => $name_array,
+		$arr[] = array (
+			'guid' => $user->guid,
+			'name' => array('en' => $user->name, 'fr' => $user->name),
 			'username' => $user->username,
 			'email' => $user->email,
-			'type' => $user->getType(),
+			'type' => $user->type,
 			'date_created' => date("Y-m-d\TH:m:s\Z", $user->time_created),
 			'date_modified' => date("Y-m-d\TH:m:s\Z", $user->time_created),
-			'url' => $user->getURL()
+			'url' => "{$site_url}profile/{$user->username}"
 		);
 	}
     return $arr;
 }
+
 
 function get_group_list($offset) {
 
@@ -318,8 +303,8 @@ function get_entity_list($type, $subtype, $offset) {
 
  
 
-function isJson($string) {
-	json_decode($string);
-	return (json_last_error() == JSON_ERROR_NONE);
-}
+// function isJson($string) {
+// 	json_decode($string);
+// 	return (json_last_error() == JSON_ERROR_NONE);
+// }
 
