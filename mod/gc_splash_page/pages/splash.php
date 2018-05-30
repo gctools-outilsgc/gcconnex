@@ -22,12 +22,12 @@ $domain = '.' . $clean_domain;
 $securitytoken = elgg_view('input/securitytoken');
 
 // PLEASE CHANGE IF THIS DOES NOT WORK ON YOUR LOCALHOST
-$site_url = elgg_get_site_url();
-$site_url = preg_replace("(^https?://)", "", $site_url);
-$site_url = explode("/", $site_url);
+$get_site_url = elgg_get_site_url();
+$get_site_url = preg_replace("(^https?://)", "", $get_site_url);
+$get_site_url = explode("/", $get_site_url);
 
-if (preg_match("/localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $site_url[0])) {
-	$domain = $site_url[0];
+if (preg_match("/localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $get_site_url[0])) {
+	$domain = $get_site_url[0];
 }
 
 $cookie_name = "lang";
