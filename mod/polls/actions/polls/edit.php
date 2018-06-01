@@ -94,8 +94,7 @@ if ($guid) {
 		} else {
 			$poll->access_id = $access_id;
 			$poll->question = $question3;
-			//$poll->question2 = $question2;
-			//$poll->title3 = gc_implode_translation($question,$question2);
+			$poll->title = $question3;
 				
 			if (!$poll->save()) {
 				register_error(elgg_echo("polls:error"));
@@ -111,8 +110,6 @@ if ($guid) {
 			polls_delete_choices($poll);
 			polls_delete_choices2($poll);
 			polls_delete_choices3($poll);
-			//polls_add_choices3($poll,$new_choices3);
-			//polls_add_choices2($poll,$new_choices2);
 			polls_add_choices($poll,$new_choices);
 			if (is_array($tagarray)) {
 				$poll->tags = $tagarray;
@@ -155,7 +152,6 @@ if ($guid) {
 		$poll->container_guid = $container_guid;
 		$poll->access_id = $access_id;
 		$poll->question = $question3;
-		//$poll->question2 = $question2;
 		$poll->title = $question3;
 		
 		if(!$poll->question){
@@ -176,8 +172,6 @@ if ($guid) {
 		elgg_clear_sticky_form('polls');
 
 		polls_add_choices($poll,$new_choices);
-		//polls_add_choices2($poll,$new_choices2);
-		//polls_add_choices3($poll,$new_choices3);
 	
 		if (is_array($tagarray)) {
 			$poll->tags = $tagarray;
