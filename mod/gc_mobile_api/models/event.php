@@ -39,6 +39,7 @@ elgg_ws_expose_function(
 		"from" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"to" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
+		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves an event based on user id and event id',
@@ -102,6 +103,10 @@ elgg_ws_expose_function(
 		"title" => array('type' => 'string', 'required' => true),
 		"excerpt" => array('type' =>'string', 'required' => false, 'default' => ''),
 		"body" => array('type' =>'string', 'required' => true),
+		"startdate" => array('type' =>'string', 'required' => true),
+		"starttime" => array('type' =>'string', 'required' => true),
+		"enddate" => array('type' =>'string', 'required' => true),
+		"endtime" => array('type' =>'string', 'required' => true),
 		"container_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
 		"blog_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
 		"comments" => array('type' =>'int', 'required' => false, 'default' => 1),
@@ -198,7 +203,6 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 		'type' => 'object',
 		'subtype' => 'event_calendar',
 		'limit' => $limit,
-		'offset' => $offset,
 		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'DESC', 'as' => 'integer'))
 	);
 
@@ -515,7 +519,7 @@ function get_see_calendar($user, $guid, $lang)
 }
 
 
-function save_event($user, $title, $excerpt, $body, $container_guid, $event_guid, $comments, $access, $status, $lang)
+function save_event($user, $title, $excerpt, $body, $starttime, $startdate, $endtime, $enddate, $container_guid, $event_guid, $comments, $access, $status, $lang)
 {
  $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	 if (!$user_entity) {
@@ -573,6 +577,10 @@ function save_event($user, $title, $excerpt, $body, $container_guid, $event_guid
 		 'title2' => '',
 		 'description' => JSON_encode($bodies),
 		 'description2' => '',
+		 'start_date' => $startdate,
+		'start_time' => $starttime,
+		'end_date' => $enddate,
+		'end_time' => $endtime,
 		 'status' => $status,
 		 'access_id' => $access,
 		 'comments_on' => $comments,
@@ -585,7 +593,6 @@ function save_event($user, $title, $excerpt, $body, $container_guid, $event_guid
 	 );
 
 	 $event = new stdClass();
-	 $revision_text = '';
 	 if ($event_guid){
 		 $entity = get_entity($event_guid);
 		 if (elgg_instanceof($entity, 'object', 'event') && $entity->canEdit()) {
@@ -593,14 +600,18 @@ function save_event($user, $title, $excerpt, $body, $container_guid, $event_guid
 		 } else {
 			 return elgg_echo('blog:error:post_not_found');
 		 }
-		 $revision_text = $event->description;
 		 $new_post = $event->new_post; //what?
 	 } else {
 		 //Create blog
-		 $event = new ElggEvent();
+		 $user_guid = $user_entity->guid;
+		 $event = new ElggObject();
 		 $event->subtype = 'event';
-		 $event->container_guid = $container_guid;
-		 $new_post = TRUE;
+		 $event->owner_guid = $user_guid;
+		 if ($group_guid) {
+			$event->container_guid = $group_guid;
+		} else {
+			$event->container_guid = $event->owner_guid;
+		}
 	 }
 
 	 $old_status = $event->status;
@@ -619,14 +630,16 @@ function save_event($user, $title, $excerpt, $body, $container_guid, $event_guid
 
 			if (!$event_guid && $event->web_conference) {
 				if (!event_calendar_create_bbb_conf($event)) {
-					register_error(elgg_echo('event_calendar:conference_create_error'));
+					return (elgg_echo('event_calendar:conference_create_error'));
 				}
 			}
-			if ($group_guid && (elgg_get_plugin_setting('autogroup', 'event_calendar') == 'yes')) {
-				event_calendar_add_personal_events_from_group($event->guid, $group_guid);
+			if ($container_guid && (elgg_get_plugin_setting('autogroup', 'event_calendar') == 'yes')) {
+				event_calendar_add_personal_events_from_group($event->guid, $container_guid);
 			}
+		return'save';
+		}else {
+			return elgg_echo('blog:error:cannot_save');
 		}
-		return $event;
 
 	} else {
 		return elgg_echo('blog:error:cannot_save');
