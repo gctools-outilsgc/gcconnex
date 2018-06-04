@@ -265,7 +265,7 @@ function get_entity_list($type, $subtype, $offset) {
 
 		if (is_Json($entity->description)) {
 			$description_array = json_decode($entity->description, true);
-			if (!isset($description_array['en']) || !isset($description_array['en'])) {
+			if (!isset($description_array['en']) || !isset($description_array['fr'])) {
 				$description_array['en'] = str_replace('"', '\"', $description_array);
 				$description_array['fr'] = str_replace('"', '\"', $description_array);
 			} else {
