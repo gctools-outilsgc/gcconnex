@@ -1,10 +1,18 @@
 <?php
+/* File: .../solr_api/start.php
+ *
+ * REFERENCE: http://learn.elgg.org/en/stable/guides/web-services.html#api-authentication
+ * To get the API Key, web services must be enabled: Admin > Web Services > Create API Keys
+ * Please note that the API calls will display limit of 10
+ *
+ * Author: Christine Yu <internalfire5@live.com>
+ * Company: Government of Canada
+ * Date: June 1st 2018
+ *
+ */
 
-// REFERENCE: http://learn.elgg.org/en/stable/guides/web-services.html#api-authentication
-// Admin > Web Services > Create API Keys
 
 elgg_register_event_handler('init','system','solr_api_init');
-
 
 function solr_api_init() {
 
@@ -102,7 +110,6 @@ function solr_api_init() {
 
 
 function delete_updated_index_list($guids) {
-
 	$ids = array();
 	foreach ($guids as $guid) {
 		// guid must be an integer
@@ -124,6 +131,7 @@ function delete_updated_index_list($guids) {
 	return $arr;
 }
 
+
 // this is not an api call, this is a hook that will initiate once user attempts deletion
 function intercept_object_deletion($event, $type, $object) {
 	$unixtime = time();
@@ -140,25 +148,15 @@ function intercept_object_deletion($event, $type, $object) {
 	$query = "SELECT * FROM deleted_object_tracker";
 	$deleted_records = get_data($query);
 
-	foreach ($deleted_records as $deleted_record) {
-		error_log("the id: " . $deleted_record->id);
-	}
-
-
-	return false;
+	return true;
 }
 
 
-// api calls with sample set of limit 15
 function get_list_of_deleted_records() {
-
 	$query = "SELECT * FROM deleted_object_tracker";
 	$deleted_records = get_data($query);
 
 	foreach ($deleted_records as $deleted_record) {
-		error_log("the id: " . $deleted_record->id);
-		//$datetime = new DateTime("@{$deleted_record->time_deleted}");
-		//$datetime->setTimeZone(new DateTimeZone('America/New York'));
 		$arr[] = array(
 			'guid' => $deleted_record->id,
 			'time_deleted' => $deleted_record->time_deleted
@@ -169,11 +167,12 @@ function get_list_of_deleted_records() {
 
 
 function get_user_list($offset) {
-
 	$site_url = elgg_get_site_url();
+	$db_prefix = elgg_get_config('dbprefix');
+
 	$query = "	SELECT e.guid, ue.name, ue.username, ue.email, e.type, e.time_created, e.enabled
-				FROM elggusers_entity ue 
-					LEFT JOIN elggentities e ON ue.guid = e.guid 
+				FROM {$db_prefix}users_entity ue 
+					LEFT JOIN {$db_prefix}entities e ON ue.guid = e.guid 
 				WHERE e.enabled = 'yes'
 				LIMIT 10 OFFSET {$offset}";
 
@@ -196,7 +195,7 @@ function get_user_list($offset) {
 
 
 function get_group_list($offset) {
-
+	// @TODO use SQL query syntax instead of using function elgg_get_entities()
 	$groups = elgg_get_entities(array(
 		'type' => 'group',
 		'limit' => 10,
@@ -239,7 +238,6 @@ function get_group_list($offset) {
 
 
 function get_entity_list($type, $subtype, $offset) {
-
 	$entities = elgg_get_entities(array(
 		'type' => $type,
 		'subtype' => $subtype,
@@ -293,8 +291,8 @@ function get_entity_list($type, $subtype, $offset) {
 	return $arr;
 }
 
- 
 
+// @TODO check if this function already exist in other modules
 function is_Json($string) {
 	json_decode($string);
 	return (json_last_error() == JSON_ERROR_NONE);
