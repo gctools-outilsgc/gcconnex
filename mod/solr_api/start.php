@@ -247,15 +247,17 @@ function get_entity_list($type, $subtype, $offset) {
 
 	foreach ($entities as $entity) {
 
+
 		if (is_Json($entity->title)) {
 			$title_array = json_decode($entity->title, true);
-			if (!isset($title_array['en']) || !isset($title_array['en'])) {
+			if (!isset($title_array['en']) || !isset($title_array['fr'])) {
 				$title_array['en'] = str_replace('"', '\"', $title_array);
 				$title_array['fr'] = str_replace('"', '\"', $title_array);
 			} else {
-				$title_array['en'] = str_replace('"', '\"', $title_array['en']);
-				$title_array['fr'] = str_replace('"', '\"', $title_array['fr']);
+				$title_array['en'] = str_replace('"', '\"', gc_explode_translation($entity->title, 'en'));
+				$title_array['fr'] = str_replace('"', '\"', gc_explode_translation($entity->title, 'fr'));
 			}
+
 		} else {
 			$title_array['en'] = $entity->title;
 			$title_array['fr'] = $entity->title;
@@ -267,8 +269,8 @@ function get_entity_list($type, $subtype, $offset) {
 				$description_array['en'] = str_replace('"', '\"', $description_array);
 				$description_array['fr'] = str_replace('"', '\"', $description_array);
 			} else {
-				$description_array['en'] = str_replace('"', '\"', $description_array['en']);
-				$description_array['fr'] = str_replace('"', '\"', $description_array['fr']);
+				$description_array['en'] = str_replace('"', '\"', gc_explode_translation($entity->description, 'en'));
+				$description_array['fr'] = str_replace('"', '\"', gc_explode_translation($entity->description, 'fr'));
 			}
 		} else {
 			$description_array['en'] = $entity->description;
