@@ -519,7 +519,7 @@ function get_see_calendar($user, $guid, $lang)
 }
 
 
-function save_event($user, $title, $excerpt, $body, $starttime, $startdate, $endtime, $enddate, $container_guid, $event_guid, $comments, $access, $status, $lang)
+function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $enddate, $endtime, $container_guid, $event_guid, $comments, $access, $status, $lang)
 {
  $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	 if (!$user_entity) {
@@ -531,117 +531,229 @@ function save_event($user, $title, $excerpt, $body, $starttime, $startdate, $end
 	 if (!elgg_is_logged_in()) {
 		 login($user_entity);
 	 }
-	 $error = FALSE;
-	 //check required fields being not empty
-	 $titles = json_decode($title);
-	 $bodies = json_decode($body);
-	 $excerpts = json_decode($excerpt);
-	 //Check Required
-	 if (!$titles->en && !$titles->fr) { return elgg_echo("blog:error:missing:title"); }
-	 if (!$bodies->en && !$bodies->fr) { return elgg_echo("blog:error:missing:description");  }
-	 if (!($titles->en && $bodies->en) && !($titles->fr && $bodies->fr)) { return "require-same-lang"; }
-	 //Default any Missing or faulty
-	 if (!$titles->en) { $titles->en = ''; }
-	 if (!$titles->fr) { $titles->fr = ''; }
-	 if (!$bodies->en) { $bodies->en = ''; }
-	 if (!$bodies->fr) { $bodies->fr = ''; }
-	 if (!$excerpts->en) { $excerpts->en = ''; }
-	 if (!$excerpts->fr) { $excerpts->fr = ''; }
-	 if ($comments != 0 && $comments != 1) { $comments = 1; }
-	 if ($access != 0 && $access != 1 && $access != -2 && $access !=2 ) { $access = 1; }
-	 if ($status != 0 && $status != 1) { $status = 0; }
 
-	 // if there is a container_guid, .: group, and access is set to group only, set access to proper group only
-	 if (!empty($container_guid) && $access == 2){
-		 $container = get_entity($container_guid);
-		 //validate container and ability to write to it
-		 if (!$container || !$container->canWriteToContainer(0, 'object', 'blog')) {
- 			return elgg_echo('blog:error:cannot_write_to_container');
- 		} else {
-			$access = $container->group_acl;
-		}
-		 //If no group container, use user guid.
-	 } else if ($container_guid=='') { $container_guid = $user_entity->guid; }
 
-	 //Set int variables to correct
-	 if ($status == 1) { $status = 'published'; } else { $status = 'draft'; }
-	 if ($comments == 1) { $comments = 'On'; } else { $comments = 'Off'; }
-	 if ($status == 'draft') { $access = 0; }
-	 $titles->en = htmlspecialchars($titles->en, ENT_QUOTES, 'UTF-8');
-	 $titles->fr = htmlspecialchars($titles->fr, ENT_QUOTES, 'UTF-8');
-	 $excerpts->en = elgg_get_excerpt($excerpts->en);
-	 $excerpts->fr = elgg_get_excerpt($excerpts->fr);
+	$startdate = new DateTime($startdate);
+	$enddate = new DateTime($enddate);	
 
-	 $values = array(
-		 'title' => JSON_encode($titles),
-		 'title2' => '',
-		 'description' => JSON_encode($bodies),
-		 'description2' => '',
-		 'start_date' => $startdate,
-		'start_time' => $starttime,
-		'end_date' => $enddate,
-		'end_time' => $endtime,
-		 'status' => $status,
-		 'access_id' => $access,
-		 'comments_on' => $comments,
-		 'excerpt' => JSON_encode($excerpts),
-		 'excerpt2' => '',
-		 'tags' => '',
-		 'publication_date' => '',
-		 'expiration_date' => '',
-		 'show_owner' => 'no'
-	 );
+	 $event_calendar_times = elgg_get_plugin_setting('times', 'event_calendar');
+	 $event_calendar_region_display = elgg_get_plugin_setting('region_display', 'event_calendar');
+	 $event_calendar_type_display = elgg_get_plugin_setting('type_display', 'event_calendar');
+	 $event_calendar_spots_display = elgg_get_plugin_setting('spots_display', 'event_calendar');
+	 $event_calendar_hide_end = elgg_get_plugin_setting('hide_end', 'event_calendar');
+	 $event_calendar_more_required = elgg_get_plugin_setting('more_required', 'event_calendar');
+	 $event_calendar_personal_manage = elgg_get_plugin_setting('personal_manage', 'event_calendar');
+	 $event_calendar_repeating_events = elgg_get_plugin_setting('repeating_events', 'event_calendar');
+	 // temporary place to store values
+	 $e = new stdClass();
+	 $e->schedule_type = '0';
 
-	 $event = new stdClass();
-	 if ($event_guid){
-		 $entity = get_entity($event_guid);
-		 if (elgg_instanceof($entity, 'object', 'event') && $entity->canEdit()) {
-			 	$event = $entity;
-		 } else {
-			 return elgg_echo('blog:error:post_not_found');
-		 }
-		 $new_post = $event->new_post; //what?
-	 } else {
-		 //Create blog
+		 $required_fields = array('title', 'start_date', 'end_date', 'venue');
+	 
+ 
+
 		 $user_guid = $user_entity->guid;
 		 $event = new ElggObject();
-		 $event->subtype = 'event';
+		 $event->subtype = 'event_calendar';
 		 $event->owner_guid = $user_guid;
-		 if ($group_guid) {
-			$event->container_guid = $group_guid;
-		} else {
-			$event->container_guid = $event->owner_guid;
-		}
-	 }
-
-	 $old_status = $event->status;
-
-	 // assign values to the entity, stopping on error.
-	 if (!$error) {
-		 foreach ($values as $name => $value) {
-			 if (($name != 'title2') && ($name != 'description2') &&  ($name != 'excerpt2')){ // remove input 2 in metastring table
-			 $event->$name = $value;
+		$event->container_guid = $event->owner_guid;
+	 
+ 
+	 if ($e->schedule_type != 'poll') {
+		 if ($e->schedule_type == 'all_day') {
+			 $start_date_text = $startdate;
+		 } else {
+			 $start_date_text = $startdate;
+		 }
+		 // TODO: is the timezone bit necessary?
+		 $e->start_date = strtotime($start_date_text." ".date_default_timezone_get());
+		 $end_date_text = $enddate;
+		 if ($end_date_text) {
+			 $e->end_date = strtotime($end_date_text." ".date_default_timezone_get());
+		 } else {
+			 $e->end_date = '';
+		 }
+ 
+		 if ($e->schedule_type != 'all_day' && $event_calendar_times != 'no') {
+			//  $hour = get_input('start_time_hour', '');
+			//  $minute = get_input('start_time_minute', '');
+			//  $meridian = get_input('start_time_meridian', '');
+			// if (is_numeric($hour) && is_numeric($minute)) {
+				 $e->start_time = $starttime;//event_calendar_convert_to_time($hour, $minute, $meridian);
+			// } else {
+			//	 $e->start_time = '';
+			// }
+			//  $hour = get_input('end_time_hour', '');
+			//  $minute = get_input('end_time_minute', '');
+			//  $meridian = get_input('end_time_meridian', '');
+			//  if (is_numeric($hour) && is_numeric($minute)) {
+			// 	 $e->end_time = event_calendar_convert_to_time($hour, $minute, $meridian);
+			//  } else {
+				 $e->end_time =$endtime;
+			 //}
+			 if (is_numeric($e->start_date) && is_numeric($e->start_time)) {
+				 // Set start date to the Unix start time, if set.
+				 // This allows sorting by date *and* time.
+				 $e->start_date += $e->start_time*60;
 			 }
+		 } else {
+			 $e->start_time = 0;
+			 $e->end_time = '';
 		 }
 	 }
+	$start_time_exp = explode(':',$starttime);
+	$start_time =60*$start_time_exp[0]+$start_time_exp[1];
 
-	 if (!$error){
-		 if ($event->save()){
+	 $e->start_time = $start_time;  
+	 $end_time_exp = explode(':',$endtime);
+	 $end_time =60*$end_time_exp[0]+$end_time_exp[1];
+ 
+	  $e->end_time = $end_time;  
+ 	error_log($start_time);
+	 $e->access_id = $access;
+	 $e->title = JSON_encode($title);
+	 $e->title2 = '';
+	 $e->brief_description = JSON_encode($excerpt);
+	 $e->venue = "somewhere";
+	 $e->fees = 'too much';
+	 $e->language = 'both';
+	 $e->teleconference_radio = true;
+	 $e->teleconference = true;
+	 $e->calendar_additional = 'more';
+	 $e->start_date = $startdate->getTimestamp();
+	 $e->end_date = $enddate->getTimestamp();
+	// $e->start_time = 760;
+	// $e->end_time = 1000;
+	//  $e->calendar_additional2 = get_input('calendar_additional2');
+	//  $e->calendar_additional = gc_implode_translation($e->calendar_additional,$e->calendar_additional2);
+	// $e->contact = get_input('contact');
+	 //$e->organiser = get_input('organiser');
+	 //$e->tags = string_to_tag_array(get_input('tags'));
+	 $e->description = JSON_encode($description);
+	// $e->description2 = get_input('description2');
+	 //$e->description = gc_implode_translation($e->description,$e->description2);
+	 //$e->send_reminder = get_input('send_reminder');
+	 //$e->reminder_number = get_input('reminder_number');
+	 //$e->reminder_interval = get_input('reminder_interval');
+	 //$e->web_conference = get_input('web_conference');
+	 //$e->group_guid = get_input('group_guid');
+	 //$e->real_end_time = event_calendar_get_end_time($e);
+	 //$e->room = get_input('room');
+	 //$e->contact_phone = get_input('contact_phone');
+	 //$e->contact_email = get_input('contact_email');
+	 //$e->contact_checkbox = get_input('contact_checkbox');
+ 
+	 // sanity check
+	 if ($e->schedule_type == 'fixed' && $e->real_end_time <= $e->start_date) {
+		 register_error(elgg_echo('event_calander:end_before_start:error'));
+		 return "error 1";
+	 }
+ 
+	 if ($e->teleconference_radio == 'no'){
+		 $e->teleconference = '';
+		 $e->calendar_additional = '';
+ 
+	 }
+ 
+ if((!$e->title)||(!$e->start_date) || (!$e->end_date)){
+	 return 'error 2';
+ }
+ 
+ //Validation if recurrence box is check
+ if ($event_calendar_repeating_events != 'no') {
+	 $validation ='';
+	 $repeats = get_input('repeats');
+	 $e->repeats = $repeats;
+	 if ($repeats == 'yes') {
+ 
+		 $dow = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+		 foreach ($dow as $w) {
+			 $v = 'event-calendar-repeating-'.$w.'-value';
+			 $event->$v = get_input($v);
+				 if($event->$v == 1){
+					 $validation = '1';
+				 }
+		 }
+		 if (!$validation){
+			 return false;
+		 }
+	 }
+	}
+	$keys = array(
+		'title',
+		'title2',
+		'brief_description',
+		'access_id',
+		'start_date',
+		'start_time',
+		'end_date',
+		'end_time',
+		'venue',
+		'fees',
+		'language',
+		'teleconference_radio',
+		'teleconference',
+		'calendar_additional',
+		'calendar_additional2',
+		'contact',
+		'organiser',
+		'tags',
+		'description',
+		'description2',
+		'send_reminder',
+		'reminder_number',
+		'reminder_interval',
+		'web_conference',
+		'real_end_time',
+		'schedule_type',
+		'group_guid',
+		'room',
+		'email',
+		'contact_phone',
+		'contact_email',
+		'contact_checkbox',
+		);
 
-			if (!$event_guid && $event->web_conference) {
-				if (!event_calendar_create_bbb_conf($event)) {
-					return (elgg_echo('event_calendar:conference_create_error'));
-				}
-			}
-			if ($container_guid && (elgg_get_plugin_setting('autogroup', 'event_calendar') == 'yes')) {
-				event_calendar_add_personal_events_from_group($event->guid, $container_guid);
-			}
-		return'save';
-		}else {
-			return elgg_echo('blog:error:cannot_save');
+	foreach ($keys as $key) {
+		if(($key != 'title2') && ($key != 'description2') && ($key != 'calendar_additional2') ){
+			$event->$key = $e->$key;
 		}
 
-	} else {
-		return elgg_echo('blog:error:cannot_save');
 	}
+
+	if ($event->save()) {
+		error_log('save');
+		if (!$event_guid && $event->web_conference) {
+			if (!event_calendar_create_bbb_conf($event)) {
+				register_error(elgg_echo('event_calendar:conference_create_error'));
+			}
+		}
+		if ($group_guid && (elgg_get_plugin_setting('autogroup', 'event_calendar') == 'yes')) {
+			event_calendar_add_personal_events_from_group($event->guid, $group_guid);
+		}
+	}
+
+
+$event_guid = $event->guid;
+
+
+
+		$event_calendar_autopersonal = elgg_get_plugin_setting('autopersonal', 'event_calendar');
+		if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes'))
+		add_entity_relationship($user_entity->guid,'personal_event', $event_guid);
+
+		$action = 'create';
+
+		elgg_create_river_item(array(
+			'view' => "river/object/event_calendar/$action",
+			'action_type' => $action,
+			'subject_guid' => $user_entity->guid,
+			'object_guid' => $event->guid,
+		));
+	
+		if ($event->schedule_type == 'poll')
+			forward('event_poll/add/'.$event->guid);
+	
+	//	forward($event->getURL());
+		return elgg_echo('event_calendar:add_event_response');
 }
