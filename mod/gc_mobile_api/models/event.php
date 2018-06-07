@@ -101,14 +101,25 @@ elgg_ws_expose_function(
 	array(
 		"user" => array('type' => 'string', 'required' => true),
 		"title" => array('type' => 'string', 'required' => true),
-		"excerpt" => array('type' =>'string', 'required' => false, 'default' => ''),
 		"body" => array('type' =>'string', 'required' => true),
 		"startdate" => array('type' =>'string', 'required' => true),
-		"starttime" => array('type' =>'string', 'required' => true),
+		"starttime" => array('type' =>'string', 'required' => false,'default' => ''),
 		"enddate" => array('type' =>'string', 'required' => true),
-		"endtime" => array('type' =>'string', 'required' => true),
+		"endtime" => array('type' =>'string', 'required' => false,'default' => ''),
+		"venue" => array('type' =>'string', 'required' => true),
+		"room" => array('type' =>'string', 'required' => false,'default' => ''),		
+		"allday" => array('type' =>'string', 'required' => false,'default' => ''),
+		"web_conference" => array('type' =>'string', 'required' => false,'default' => ''),				
+		"url" => array('type' =>'string', 'required' => false,'default' => ''),				
+		"additionnal" => array('type' =>'string', 'required' => false,'default' => ''),						
+		"fees" => array('type' =>'string', 'required' => false,'default' => ''),								
+		"contact_checkbox" => array('type' =>'string', 'required' => false,'default' => ''),								
+		"contact_text" => array('type' =>'string', 'required' => false,'default' => ''),								
+		"contact_email_text" => array('type' =>'string', 'required' => false,'default' => ''),								
+		"contact_phone_text" => array('type' =>'string', 'required' => false,'default' => ''),
+		'picker_language'=> array('type' =>'string', 'required' => false,'default' => ''),															
 		"container_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
-		"blog_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
+		"event_guid" => array('type' =>'string', 'required' => false, 'default' => ''),
 		"comments" => array('type' =>'int', 'required' => false, 'default' => 1),
 		"access" => array('type' =>'int', 'required' => false, 'default' => 1),
 		"status" => array('type' =>'int', 'required' => false, 'default' => 0),
@@ -519,7 +530,7 @@ function get_see_calendar($user, $guid, $lang)
 }
 
 
-function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $enddate, $endtime, $container_guid, $event_guid, $comments, $access, $status, $lang)
+function save_event($user, $title, $body, $startdate, $starttime, $enddate, $endtime,$venue,$room,$allday,$web_conference,$url, $additionnal, $fees,$contact_checkbox,$contact_text,$contact_email_text,$contact_phone_text,$picker_language, $container_guid, $event_guid, $comments, $access, $status, $lang)
 {
  $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	 if (!$user_entity) {
@@ -532,31 +543,21 @@ function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $end
 		 login($user_entity);
 	 }
 
-
 	$startdate = new DateTime($startdate);
 	$enddate = new DateTime($enddate);	
 
-	 $event_calendar_times = elgg_get_plugin_setting('times', 'event_calendar');
-	 $event_calendar_region_display = elgg_get_plugin_setting('region_display', 'event_calendar');
-	 $event_calendar_type_display = elgg_get_plugin_setting('type_display', 'event_calendar');
-	 $event_calendar_spots_display = elgg_get_plugin_setting('spots_display', 'event_calendar');
-	 $event_calendar_hide_end = elgg_get_plugin_setting('hide_end', 'event_calendar');
-	 $event_calendar_more_required = elgg_get_plugin_setting('more_required', 'event_calendar');
-	 $event_calendar_personal_manage = elgg_get_plugin_setting('personal_manage', 'event_calendar');
 	 $event_calendar_repeating_events = elgg_get_plugin_setting('repeating_events', 'event_calendar');
 	 // temporary place to store values
 	 $e = new stdClass();
-	 $e->schedule_type = '0';
+	 $e->schedule_type = $allday;
 
-		 $required_fields = array('title', 'start_date', 'end_date', 'venue');
-	 
- 
-
+		 $titles = json_decode($title);
+		 $bodies = json_decode($body);
 		 $user_guid = $user_entity->guid;
 		 $event = new ElggObject();
 		 $event->subtype = 'event_calendar';
 		 $event->owner_guid = $user_guid;
-		$event->container_guid = $event->owner_guid;
+		 $event->container_guid = $event->owner_guid;
 	 
  
 	 if ($e->schedule_type != 'poll') {
@@ -574,75 +575,50 @@ function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $end
 			 $e->end_date = '';
 		 }
  
-		 if ($e->schedule_type != 'all_day' && $event_calendar_times != 'no') {
-			//  $hour = get_input('start_time_hour', '');
-			//  $minute = get_input('start_time_minute', '');
-			//  $meridian = get_input('start_time_meridian', '');
-			// if (is_numeric($hour) && is_numeric($minute)) {
-				 $e->start_time = $starttime;//event_calendar_convert_to_time($hour, $minute, $meridian);
-			// } else {
-			//	 $e->start_time = '';
-			// }
-			//  $hour = get_input('end_time_hour', '');
-			//  $minute = get_input('end_time_minute', '');
-			//  $meridian = get_input('end_time_meridian', '');
-			//  if (is_numeric($hour) && is_numeric($minute)) {
-			// 	 $e->end_time = event_calendar_convert_to_time($hour, $minute, $meridian);
-			//  } else {
-				 $e->end_time =$endtime;
-			 //}
-			 if (is_numeric($e->start_date) && is_numeric($e->start_time)) {
-				 // Set start date to the Unix start time, if set.
-				 // This allows sorting by date *and* time.
-				 $e->start_date += $e->start_time*60;
-			 }
+		 if ($e->schedule_type != 'all_day') {
+			$start_time_exp = explode(':',$starttime);
+			$start_time =60*$start_time_exp[0]+$start_time_exp[1];
+			$e->start_time = $start_time; 
+			
+			$end_time_exp = explode(':',$endtime);
+	 		$end_time =60*$end_time_exp[0]+$end_time_exp[1];
+ 			$e->end_time = $end_time;  
+			if (is_numeric($e->start_date) && is_numeric($e->start_time)) {
+				// Set start date to the Unix start time, if set.
+				// This allows sorting by date *and* time.
+				$e->start_date += $e->start_time*60;
+			}
 		 } else {
-			 $e->start_time = 0;
-			 $e->end_time = '';
+			$e->start_time = '';
+			$e->end_time = '';
 		 }
 	 }
-	$start_time_exp = explode(':',$starttime);
-	$start_time =60*$start_time_exp[0]+$start_time_exp[1];
-
-	 $e->start_time = $start_time;  
-	 $end_time_exp = explode(':',$endtime);
-	 $end_time =60*$end_time_exp[0]+$end_time_exp[1];
- 
-	  $e->end_time = $end_time;  
- 	error_log($start_time);
 	 $e->access_id = $access;
-	 $e->title = JSON_encode($title);
-	 $e->title2 = '';
-	 $e->brief_description = JSON_encode($excerpt);
-	 $e->venue = "somewhere";
-	 $e->fees = 'too much';
-	 $e->language = 'both';
-	 $e->teleconference_radio = true;
-	 $e->teleconference = true;
-	 $e->calendar_additional = 'more';
+	 $e->title = JSON_encode($titles);
+	 $e->venue = $venue;
+	 $e->fees = $fees;
+	 $e->language = $picker_language;
+	 $e->teleconference_radio = $web_conference;
+	 $e->teleconference = $url;
 	 $e->start_date = $startdate->getTimestamp();
 	 $e->end_date = $enddate->getTimestamp();
-	// $e->start_time = 760;
-	// $e->end_time = 1000;
-	//  $e->calendar_additional2 = get_input('calendar_additional2');
-	//  $e->calendar_additional = gc_implode_translation($e->calendar_additional,$e->calendar_additional2);
-	// $e->contact = get_input('contact');
-	 //$e->organiser = get_input('organiser');
+	 $e->calendar_additional = $additional;
+	 $e->contact_checkbox = $contact_checkbox;
+	 $e->contact = $contact_text;
+	 $e->contact_phone = $contact_phone_text;
+	 $e->contact_email = $contact_email_text;
+	 if($contact_checkbox != 1){
+		$e->contact_phone = $user_entity->phone;
+		$e->contact_email = $user_entity->email;
+		$e->contact = $user_entity->name;
+	 }
+	 
+	 $e->organiser = $user_entity->name;
 	 //$e->tags = string_to_tag_array(get_input('tags'));
-	 $e->description = JSON_encode($description);
-	// $e->description2 = get_input('description2');
-	 //$e->description = gc_implode_translation($e->description,$e->description2);
-	 //$e->send_reminder = get_input('send_reminder');
-	 //$e->reminder_number = get_input('reminder_number');
-	 //$e->reminder_interval = get_input('reminder_interval');
-	 //$e->web_conference = get_input('web_conference');
+	 $e->description = JSON_encode($bodies);
 	 //$e->group_guid = get_input('group_guid');
-	 //$e->real_end_time = event_calendar_get_end_time($e);
-	 //$e->room = get_input('room');
-	 //$e->contact_phone = get_input('contact_phone');
-	 //$e->contact_email = get_input('contact_email');
-	 //$e->contact_checkbox = get_input('contact_checkbox');
- 
+	 $e->room = $room;
+	 
 	 // sanity check
 	 if ($e->schedule_type == 'fixed' && $e->real_end_time <= $e->start_date) {
 		 register_error(elgg_echo('event_calander:end_before_start:error'));
@@ -656,7 +632,7 @@ function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $end
 	 }
  
  if((!$e->title)||(!$e->start_date) || (!$e->end_date)){
-	 return 'error 2';
+	 return 'Missing title, start date or end date';
  }
  
  //Validation if recurrence box is check
@@ -681,8 +657,6 @@ function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $end
 	}
 	$keys = array(
 		'title',
-		'title2',
-		'brief_description',
 		'access_id',
 		'start_date',
 		'start_time',
@@ -694,19 +668,17 @@ function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $end
 		'teleconference_radio',
 		'teleconference',
 		'calendar_additional',
-		'calendar_additional2',
 		'contact',
 		'organiser',
-		'tags',
+		//'tags',
 		'description',
-		'description2',
 		'send_reminder',
 		'reminder_number',
 		'reminder_interval',
 		'web_conference',
 		'real_end_time',
 		'schedule_type',
-		'group_guid',
+		//'group_guid',
 		'room',
 		'email',
 		'contact_phone',
@@ -718,7 +690,6 @@ function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $end
 		if(($key != 'title2') && ($key != 'description2') && ($key != 'calendar_additional2') ){
 			$event->$key = $e->$key;
 		}
-
 	}
 
 	if ($event->save()) {
@@ -733,27 +704,22 @@ function save_event($user, $title, $excerpt, $body, $startdate, $starttime, $end
 		}
 	}
 
+	$event_guid = $event->guid;
+	$event_calendar_autopersonal = elgg_get_plugin_setting('autopersonal', 'event_calendar');
+	if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes'))
+	add_entity_relationship($user_entity->guid,'personal_event', $event_guid);
 
-$event_guid = $event->guid;
+	$action = 'create';
 
-
-
-		$event_calendar_autopersonal = elgg_get_plugin_setting('autopersonal', 'event_calendar');
-		if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes'))
-		add_entity_relationship($user_entity->guid,'personal_event', $event_guid);
-
-		$action = 'create';
-
-		elgg_create_river_item(array(
-			'view' => "river/object/event_calendar/$action",
-			'action_type' => $action,
-			'subject_guid' => $user_entity->guid,
-			'object_guid' => $event->guid,
-		));
+	elgg_create_river_item(array(
+		'view' => "river/object/event_calendar/$action",
+		'action_type' => $action,
+		'subject_guid' => $user_entity->guid,
+		'object_guid' => $event->guid,
+	));
 	
-		if ($event->schedule_type == 'poll')
-			forward('event_poll/add/'.$event->guid);
+	if ($event->schedule_type == 'poll')
+		forward('event_poll/add/'.$event->guid);
 	
-	//	forward($event->getURL());
-		return elgg_echo('event_calendar:add_event_response');
+	return elgg_echo('event_calendar:add_event_response');
 }
