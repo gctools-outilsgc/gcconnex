@@ -3,6 +3,16 @@
 		global $SESSION;
 		$clean_domain = str_replace(array('https://', 'http://', '/', 'www.'), '', elgg_get_site_url());
 		$domain ='.' . $clean_domain;
+
+		// PLEASE CHANGE IF THIS DOES NOT WORK ON YOUR LOCALHOST
+		$site_url = elgg_get_site_url();
+		$site_url = preg_replace("(^https?://)", "", $site_url);
+		$site_url = explode("/", $site_url);
+
+		if (preg_match("/localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $site_url[0])) {
+			$domain = $site_url[0];
+		}
+
 		$cookie_name = "lang";
 	?>
 
