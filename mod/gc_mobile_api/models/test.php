@@ -203,6 +203,8 @@ function get_newsfeed2($user, $limit, $offset, $lang)
 				$event->object['group_guid'] = $other->guid;
 			}
 			if ($event->action == "comment") {
+				$event->object['container_type'] = $other->getSubtype();
+				$event->object['container_guid'] = $other->getGUID();
 				$other_other = get_entity($other->container_guid);
 				if ($other_other instanceof ElggGroup) {
 					$event->object['group_title'] = gc_explode_translation($other_other->title, $lang);
