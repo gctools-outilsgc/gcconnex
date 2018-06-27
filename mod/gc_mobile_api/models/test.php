@@ -34,22 +34,17 @@ function get_newsfeed2($user, $limit, $offset, $lang)
 
 	$db_prefix = elgg_get_config('dbprefix');
 
-	if ($user_entity) {
-		// check if user exists and has friends or groups
-		$hasfriends = $user_entity->getFriends();
-		$hasgroups = $user_entity->getGroups();
-		if ($hasgroups) {
-			// loop through group guids
-			$groups = $user_entity->getGroups(array('limit'=>0));
-			$group_guids = array();
-			foreach ($groups as $group) {
-				$group_guids[] = $group->getGUID();
-			}
-		}
-	} else {
-		$hasfriends = false;
-		$hasgroups = false;
+
+	// check if user has friends or groups
+	$hasfriends = $user_entity->getFriends();
+	$hasgroups = $user_entity->getGroups();
+	if ($hasgroups) {
+		// loop through group guids
+		$groups = $user_entity->getGroups(array('limit'=>0));
 		$group_guids = array();
+		foreach ($groups as $group) {
+			$group_guids[] = $group->getGUID();
+		}
 	}
 
 	$actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
