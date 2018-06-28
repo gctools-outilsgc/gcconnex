@@ -1,6 +1,6 @@
 <?php
 /**
- * group_operator/add.php 
+ * group_operator/add.php
  *
  * Elgg group operators adding action
  *
@@ -11,9 +11,37 @@
 action_gatekeeper("group_operators/add");
 $mygroup = get_entity(get_input('mygroup'));
 $who = get_entity(get_input('who'));
+$backup_test = get_input('groups-owner-guid');
 
-$success = false;
-if ($mygroup instanceof ElggGroup && $who instanceof ElggUser && $mygroup->canEdit()) {
+//added additional checks to find user
+if (!($who instanceof ElggUser)){
+
+	//test if username has been given
+	$user_by_username = get_user_by_username($backup_test);
+	if($user_by_username){
+		$who = $user_by_username;
+	} else {
+
+		//now check if they used display name
+		$db_prefix = elgg_get_config('dbprefix');
+		$display_name_check = get_data("SELECT * FROM {$db_prefix}users_entity WHERE name = '{$backup_test}'");
+		foreach($display_name_check as $user){
+			$member = get_entity($user->guid);
+
+			if($mygroup->isMember($member)){
+				$who = $member;
+			}
+		}
+
+		//final check to see if we found the target user after checking username/display name
+		if (!($who instanceof ElggUser)){
+			register_error(elgg_echo('group_operator:find:user:error'));
+			forward(REFERER);
+		}
+	}
+}
+
+if ($mygroup instanceof ElggGroup && $mygroup->canEdit()) {
 	if ($mygroup->isMember($who) && !check_entity_relationship($who->guid, 'operator', $mygroup->guid)) {
 		add_entity_relationship($who->guid, 'operator', $mygroup->guid);
 		system_message(elgg_echo('group_operators:added', array($who->name, $group->name)));
