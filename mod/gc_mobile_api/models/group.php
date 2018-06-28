@@ -375,6 +375,12 @@ function get_groups($user, $limit, $offset, $filters, $lang)
 
 		$groupObj = get_entity($group->guid);
 		$group->member = $groupObj->isMember($user_entity);
+		$group->public = $groupObj->isPublicMembership();
+		if (!$group->public && !$group->member){
+			$group->access = false;
+		} else {
+			$group->access = true;
+		}
 		$group->owner = ($groupObj->getOwnerEntity() == $user_entity);
 		$group->iconURL = $groupObj->geticon();
 		$group->count = $groupObj->getMembers(array('count' => true));
@@ -383,7 +389,12 @@ function get_groups($user, $limit, $offset, $filters, $lang)
 		$group->tags = $groupObj->interests;
 
 		$group->userDetails = get_user_block($group->owner_guid, $lang);
-		$group->description = gc_explode_translation($group->description, $lang);
+		if ($group->access){
+			$group->description = clean_text(gc_explode_translation($group->description, $lang));
+			$group->description = substr($group->description, 0, 250);
+		} else {
+			$group->description = elgg_echo("groups:access:private", $lang);
+		}
 	}
 
 	return $groups;
@@ -593,7 +604,7 @@ function get_group_discussions($user, $guid, $limit, $offset, $lang)
 
 	$discussions = json_decode($discussions);
 	foreach ($discussions as $discussion) {
-		
+
 		$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
 		$discussion->title = gc_explode_translation($discussion->title, $lang);
 		$discussion->description = gc_explode_translation($discussion->description, $lang);
