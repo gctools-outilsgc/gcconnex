@@ -7,7 +7,7 @@ if ($user) {
     
     $link = elgg_view("output/url", [
         "href" => $auth_url . "profile",
-        "text" => "GCcollab Account",
+        "text" => elgg_echo("gccollab_account"),
         "target" => "_blank"
     ]);
 
