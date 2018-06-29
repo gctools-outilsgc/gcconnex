@@ -718,22 +718,17 @@ function get_newsfeed($user, $limit, $offset, $lang)
 
 	$db_prefix = elgg_get_config('dbprefix');
 
-	if ($user_entity) {
-		// check if user exists and has friends or groups
-		$hasfriends = $user_entity->getFriends();
-		$hasgroups = $user_entity->getGroups();
-		if ($hasgroups) {
-			// loop through group guids
-			$groups = $user_entity->getGroups(array('limit'=>0));
-			$group_guids = array();
-			foreach ($groups as $group) {
-				$group_guids[] = $group->getGUID();
-			}
-		}
-	} else {
-		$hasfriends = false;
-		$hasgroups = false;
+
+	// check if user has friends or groups
+	$hasfriends = $user_entity->getFriends();
+	$hasgroups = $user_entity->getGroups();
+	if ($hasgroups) {
+		// loop through group guids
+		$groups = $user_entity->getGroups(array('limit'=>0));
 		$group_guids = array();
+		foreach ($groups as $group) {
+			$group_guids[] = $group->getGUID();
+		}
 	}
 
 	$actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
@@ -887,6 +882,8 @@ function get_newsfeed($user, $limit, $offset, $lang)
 				$event->object['group_guid'] = $other->guid;
 			}
 			if ($event->action == "comment") {
+				$event->object['container_type'] = $other->getSubtype();
+				$event->object['container_guid'] = $other->getGUID();
 				$other_other = get_entity($other->container_guid);
 				if ($other_other instanceof ElggGroup) {
 					$event->object['group_title'] = gc_explode_translation($other_other->title, $lang);
