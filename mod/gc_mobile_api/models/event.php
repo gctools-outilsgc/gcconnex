@@ -56,6 +56,7 @@ elgg_ws_expose_function(
 		"from" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"to" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
+		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves an event based on user id and event id',
@@ -214,6 +215,7 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 		'type' => 'object',
 		'subtype' => 'event_calendar',
 		'limit' => $limit,
+		'offset' => $offset,
 		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer'))
 	);
 	$now = time();
@@ -294,7 +296,7 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 	return $events;
 }
 
-function get_events_by_owner($user, $from, $to, $limit, $lang)
+function get_events_by_owner($user, $from, $to, $limit, $offset, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -313,16 +315,23 @@ function get_events_by_owner($user, $from, $to, $limit, $lang)
 		'subtype' => 'event_calendar',
 		'limit' => $limit,
 		'offset' => $offset,
-		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'DESC', 'as' => 'integer')),
+		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer')),
 		'filter' => 'mine',
 		'relationship' => 'personal_event',
 		'relationship_guid' => $user_entity->entity,
 	);
 
-	if ($from) {
+	$now = time();
+	if ($from && ($now<strtotime($from))) {
 		$params['metadata_name_value_pairs'][] = array(
 			'name' => 'start_date',
 			'value' => strtotime($from),
+			'operand' => '>='
+		);
+	} else {
+		$params['metadata_name_value_pairs'][] = array(
+			'name' => 'start_date',
+			'value' => $now,
 			'operand' => '>='
 		);
 	}
@@ -337,7 +346,6 @@ function get_events_by_owner($user, $from, $to, $limit, $lang)
 	$all_events = elgg_list_entities_from_relationship($params);
 
 	$events = json_decode($all_events);
-	$now = time();
 	$one_day = 60*60*24;
 	foreach ($events as $event) {
 
@@ -377,7 +385,7 @@ function get_events_by_owner($user, $from, $to, $limit, $lang)
 	return $events;
 }
 
-function get_events_by_colleagues($user, $from, $to, $limit, $lang)
+function get_events_by_colleagues($user, $from, $to, $limit, $offset, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -404,7 +412,8 @@ function get_events_by_colleagues($user, $from, $to, $limit, $lang)
 			'type' => 'object',
 			'subtype' => 'event_calendar',
 			'limit' => $limit,
-			'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'DESC', 'as' => 'integer')),
+			'offset' => $offset,
+			'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer')),
 			'filter' => 'friends',
 			'relationship' => 'personal_event',
 			'relationship_guid' => $user_entity->entity,
@@ -412,10 +421,17 @@ function get_events_by_colleagues($user, $from, $to, $limit, $lang)
 			'wheres' => array("r.relationship = 'personal_event'","r.guid_one IN ($friend_list)"),
 		);
 
-		if ($from) {
+		$now = time();
+		if ($from && ($now<strtotime($from))) {
 			$params['metadata_name_value_pairs'][] = array(
 				'name' => 'start_date',
 				'value' => strtotime($from),
+				'operand' => '>='
+			);
+		} else {
+			$params['metadata_name_value_pairs'][] = array(
+				'name' => 'start_date',
+				'value' => $now,
 				'operand' => '>='
 			);
 		}
@@ -429,7 +445,6 @@ function get_events_by_colleagues($user, $from, $to, $limit, $lang)
 
 		$all_events = elgg_list_entities_from_metadata($params);
 		$events = json_decode($all_events);
-		$now = time();
 		$one_day = 60*60*24;
 		foreach ($events as $event) {
 
