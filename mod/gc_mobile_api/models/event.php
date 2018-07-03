@@ -214,13 +214,19 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 		'type' => 'object',
 		'subtype' => 'event_calendar',
 		'limit' => $limit,
-		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'DESC', 'as' => 'integer'))
+		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer'))
 	);
-
-	if ($from) {
+	$now = time();
+	if ($from && ($now<strtotime($from))) {
 		$params['metadata_name_value_pairs'][] = array(
 			'name' => 'start_date',
 			'value' => strtotime($from),
+			'operand' => '>='
+		);
+	} else {
+		$params['metadata_name_value_pairs'][] = array(
+			'name' => 'start_date',
+			'value' => $now,
 			'operand' => '>='
 		);
 	}
@@ -234,7 +240,6 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 
 	$all_events = elgg_list_entities_from_metadata($params);
 	$events = json_decode($all_events);
-	$now = time();
 	$one_day = 60*60*24;
 
 	foreach ($events as $event) {
