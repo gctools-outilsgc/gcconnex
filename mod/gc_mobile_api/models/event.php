@@ -313,6 +313,9 @@ function get_events_by_owner($user, $target, $from, $to, $limit, $offset, $lang)
 	if ($target != ''){
 		$target_entity = get_entity($target);
 	}
+	if ((!$target_entity instanceof ElggUser) && (!$target_entity instanceof ElggGroup)) {
+		return "Invalid target. Please try a different GUID.";
+	}
 
 	$params = array(
 		'type' => 'object',
