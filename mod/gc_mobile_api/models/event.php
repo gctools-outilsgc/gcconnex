@@ -53,6 +53,7 @@ elgg_ws_expose_function(
 	"get_events_by_owner",
 	array(
 		"user" => array('type' => 'string', 'required' => true),
+		"target" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"from" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"to" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
@@ -296,7 +297,7 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 	return $events;
 }
 
-function get_events_by_owner($user, $from, $to, $limit, $offset, $lang)
+function get_events_by_owner($user, $target, $from, $to, $limit, $offset, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -305,9 +306,12 @@ function get_events_by_owner($user, $from, $to, $limit, $offset, $lang)
 	if (!$user_entity instanceof ElggUser) {
 		return "Invalid user. Please try a different GUID, username, or email address";
 	}
-
 	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
+	$target_entity = $user_entity;
+	if ($target != ''){
+		$target_entity = get_entity($target);
 	}
 
 	$params = array(
@@ -316,9 +320,7 @@ function get_events_by_owner($user, $from, $to, $limit, $offset, $lang)
 		'limit' => $limit,
 		'offset' => $offset,
 		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer')),
-		'filter' => 'mine',
-		'relationship' => 'personal_event',
-		'relationship_guid' => $user_entity->entity,
+		'container_guid' => $target_entity->guid,
 	);
 
 	$now = time();
