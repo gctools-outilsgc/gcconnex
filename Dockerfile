@@ -12,10 +12,12 @@ RUN apk --no-cache add \
   php5-xml \
   php5-zlib \
   curl
-RUN mkdir /app && curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
+RUN mkdir /app && mkdir /app/pleio && curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
 RUN ln -s /usr/bin/php5 /usr/bin/php
 WORKDIR /app
 COPY composer.json composer.json /app/
+COPY mod/pleio/composer.json /app/pleio/
+
 ARG COMPOSER_ALLOW_SUPERUSER=1
 ARG COMPOSER_NO_INTERACTION=1
 RUN composer install
@@ -64,6 +66,7 @@ RUN { \
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
 COPY . /var/www/html
+COPY --from=0 /app/mod/pleio/vendor/ /var/www/html/mod/pleio/vendor/
 RUN chown apache:apache /var/www/html
 
 WORKDIR /var/www/html
