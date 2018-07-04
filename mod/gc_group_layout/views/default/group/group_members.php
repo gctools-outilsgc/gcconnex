@@ -1,24 +1,34 @@
 <?php
 
-$urloffset = $_GET['offset'];
-if (!$urloffset) {
-    $urloffset = 0;
-}
-error_log($urloffset);
-$url = "http://192.168.0.26/gcconnex/services/api/rest/json/?method=get.user_list&api_key=b9e52e09cb8c5df4d5ac1eb6adb0ab6d4507fc00&offset={$urloffset}";
+// @TODO clean up the conditions
+$offset = $_GET['offset'];
+$limit = $_GET['limit'];
+if (!$offset) $offset = 0;
+if (!$limit) $limit = 5;
+
+$guid = $vars['group_guid'];
+$site_url = elgg_get_site_url();
+
+$url = "{$site_url}services/api/rest/json/?method=get.group_member_list&group_guid={$guid}&offset={$offset}&limit={$limit}";
 
 $items = json_decode(file_get_contents($url), true);
 
+$total_items = $items['result']['count'];
+$items = $items['result']['members'];
 
-$items = $items['result'];
-$num = 50;
-$pages = ceil($num / 10);
+
+$pages = ceil($total_items / $limit);
 $tbody = "";
+
 foreach ($items as $item) {
 
     $user = get_entity($item['guid']);
     $user_icon = elgg_view_entity_icon($user, 'medium');
-    error_log("item: {$item['guid']}");
+
+    
+    $user_title = ($user->job) ? "<div class='mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix'>{$user->job}</div>" : "";
+    $user_location = ($user->location) ? "<li class='elgg-menu-item-location'><span>{$user->location}</span></li>" : "";
+
     $tbody .= "
     <tr class='testing' role='row'>
         <td class='data-table-list-item sorting_1'> 
@@ -27,28 +37,35 @@ foreach ($items as $item) {
                     {$user_icon}
                 </div>
                 <div class='mrgn-tp-sm col-xs-10 noWrap'>
-                    <h3 class='mrgn-bttm-0 summary-title'><a href='{$item['url']}' rel='me'>{$item['name']['en']}</a></h3>
-                    <div class='mvs clearfix'><strong>gcconnex-profile-card:</strong></div>
+                    <h3 class='mrgn-bttm-0 summary-title'><a href='{$item['url']}' rel='me'>{$item['name']}</a></h3>
+                    $user_title
+                    <div>
+                        <ul class='elgg-menu elgg-menu-entity list-inline mrgn-tp-sm elgg-menu-hz elgg-menu-entity-default'>
+                            $user_location
+                            <li class='elgg-menu-item-friend><a href='#'>Remove friend</a></li>
+                            <li class='elgg-menu-item-remove-user'><a href='#'>Remove from group</a></li>
+                        </ul>
+                    </div>
                 </div>
             </article>
         </td>
         <td class='data-table-list-item'>
-            <p style='padding-top:10px;'>2018-07-01 00:42</p>
+            <p style='padding-top:10px;'>{$item['date_joined']}</p>
         </td>
     </tr>";
 }
 
 $paginate = "";
 
-
+// @TODO jqueryfy the pagination
 $paginate .= "<ul class='elgg-pagination pagination'>";
 $paginate .= "<li class='elgg-state-disabled'><span>Previous</span></li>";
 //$paginate .= "<li class='elgg-state-selected active'><span>1</span></li>";
-for ($k=0; $k<=$pages; $k++) {
-    $offset = $k * 5;
+for ( $k=0; $k<$pages; $k++ ) {
+    $pagination_offset = $k * $limit;
     $page_num = $k + 1;
-    $url = "http://192.168.0.26/gcconnex/services/api/rest/json/?method=get.user_list&api_key=b9e52e09cb8c5df4d5ac1eb6adb0ab6d4507fc00&offset={$offset}";
-    $paginate .= "<li><a onclick='return get_user_list({$offset})' href='#customTable'>$page_num</a></li>";
+    $url = "{$site_url}services/api/rest/json/?method=get.group_member_list&group_guid={$guid}&offset={$pagination_offset}&limit={$limit}";
+    $paginate .= "<li><a onclick='return get_user_list({$pagination_offset}, {$limit}, {$guid})' href='#customTable'>$page_num</a></li>";
 }
 $paginate .= "<li><a href='#'>Next</a></li>";
 $paginate .= "</ul>";
@@ -61,9 +78,16 @@ $paginate .= "</ul>";
 
 */
 
+// @TODO jquerify this portion
+$display_offset = $offset + 1;
+$display_limit = $offset + $limit;
+
 echo <<<___HTML
 
-Showing 10 out of $num
+Showing $display_offset to $display_limit out of $total_items entries
+
+<textbox></textbox>
+
 <div id='customTable'>
 <table id="example" class="display" style="width:100%">
         <thead>
@@ -89,13 +113,15 @@ ___HTML;
 
 <script>
 
-function get_user_list(offset) {
-    console.log("getting user: "+offset);
+function get_user_list(offset, limit, guid) {
+    console.log("getting user: " + offset + " / " + limit);
 
     $('#body-member-list').children().remove();
     elgg.action('groups/retrieve_member_list', {
         data: {
             list_offset: offset,
+            list_limit: limit,
+            group_guid: guid,
         },
         success: function (content_array) {
             for (var item in content_array.output.member_list)

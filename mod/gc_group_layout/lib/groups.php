@@ -443,7 +443,7 @@ function groups_handle_members_page($guid) {
 
 	$content .= " <br/>-----<br/>";
 
-	$content .= elgg_view('group/group_members');
+	$content .= elgg_view('group/group_members', array('group_guid' => $guid));
 
 	$params = array(
 		'content' => $content,

@@ -144,7 +144,7 @@ function get_group_member_list($group_guid, $offset, $limit) {
 	FROM elggentity_relationships r 
 		LEFT JOIN elggusers_entity ue ON r.guid_one = ue.guid
 	WHERE r.guid_two = {$group_guid} AND r.relationship = 'member' 
-	LIMIT {$limit} OFFSET {$offset}";
+	ORDER BY ue.name ASC LIMIT {$limit} OFFSET {$offset}";
 
 	$users = get_data($query);
 	
