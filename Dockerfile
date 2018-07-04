@@ -66,7 +66,7 @@ RUN { \
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
 COPY . /var/www/html
-COPY --from=0 /app/mod/pleio/vendor/ /var/www/html/mod/pleio/vendor/
+COPY --from=0 /app/pleio/vendor/ /var/www/html/mod/pleio/vendor/
 RUN chown apache:apache /var/www/html
 
 WORKDIR /var/www/html
