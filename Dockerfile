@@ -59,7 +59,7 @@ RUN { \
 		echo 'opcache.revalidate_freq=60'; \
 		echo 'opcache.fast_shutdown=1'; \
 		echo 'opcache.enable_cli=1'; \
-} > /etc/php7/conf.d/opcache-recommended.ini
+} > /etc/php5/conf.d/opcache-recommended.ini
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
