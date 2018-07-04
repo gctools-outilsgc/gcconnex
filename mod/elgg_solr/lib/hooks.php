@@ -1,5 +1,9 @@
 <?php
 
+
+
+
+
 /**
  * Return default results for searches on objects.
  *
@@ -226,7 +230,7 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 
     // get an update query instance
     $query = $client->createSelect($select);
-	
+
 	$title_boost = elgg_solr_get_title_boost();
 	$description_boost = elgg_solr_get_description_boost();
 	
@@ -246,7 +250,7 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 	
 	// this query is now a dismax query
 	$query->setQuery($params['query']);
-	
+
 	$default_sorts = array(
 		'score' => 'desc',
 		'time_created' => 'desc'

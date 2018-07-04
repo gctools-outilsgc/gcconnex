@@ -39,6 +39,8 @@ function elgg_solr_init() {
 		elgg_register_plugin_hook_handler('search', 'tags', 'elgg_solr_tag_search');
 
 
+		//elgg_register_plugin_hook_handler('search', );
+
 		if ($is_elgg18) {
 			// this is elgg 1.8 need to handle comments as annotations
 			elgg_unregister_plugin_hook_handler('search', 'comments', 'search_comments_hook');

@@ -30,7 +30,8 @@ $selected_language = ($gc_language === '' || $gc_language === 'en' || !$gc_langu
 	/// using javascript function to send the query and params to the intranet (gsa) to resolve the encoding issue
 	function submit_search_query(selected_language) {
 
-		var url = "http://intranet.canada.ca/search-recherche/query-recherche-" + selected_language + ".aspx";
+		//var url = "http://intranet.canada.ca/search-recherche/query-recherche-" + selected_language + ".aspx";
+		var url = "http://192.168.1.18/gcconnex/search";
 		var encode_url = url + "?" + "q=" + escape(document.getElementById('wb-srch-q').value) + "&a=" + document.getElementById('a').value + "&s=" + document.getElementById('s').value + "&chk4=" + document.getElementById('chk4').value;
 		document.location.href = encode_url;
 	}
