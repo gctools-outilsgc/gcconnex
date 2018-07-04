@@ -441,6 +441,10 @@ function groups_handle_members_page($guid) {
 		'order_by' => 'u.name ASC',
 	));
 
+	$content .= " <br/>-----<br/>";
+
+	$content .= elgg_view('group/group_members');
+
 	$params = array(
 		'content' => $content,
 		'title' => $title,
