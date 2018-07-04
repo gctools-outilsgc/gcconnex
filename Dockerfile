@@ -22,6 +22,9 @@ ARG COMPOSER_ALLOW_SUPERUSER=1
 ARG COMPOSER_NO_INTERACTION=1
 RUN composer install
 
+WORKDIR /app/pleio
+RUN composer install
+
 # Second stage, build usable container
 FROM alpine:3.7
 LABEL maintainer="Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>"
