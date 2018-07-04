@@ -11,6 +11,7 @@ RUN apk --no-cache add \
   php5-openssl \
   php5-xml \
   php5-zlib \
+  php5-curl \
   curl
 RUN mkdir /app && mkdir /app/pleio && curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
 RUN ln -s /usr/bin/php5 /usr/bin/php
@@ -41,6 +42,8 @@ RUN \
     php5-json \
     php5-mysql \
     php5-xml \
+	php5-curl \
+	curl \
     php5-opcache \
   && apk update \
   && apk --no-cache add php5-mysqli \
