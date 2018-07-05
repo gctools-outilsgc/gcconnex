@@ -45,6 +45,7 @@ RUN \
 	php5-curl \
 	curl \
     php5-opcache \
+	php5-memcached \
   && apk update \
   && apk --no-cache add php5-mysqli \
   && mkdir -p /var/www/html/vendor \
@@ -67,6 +68,7 @@ RUN { \
 		echo 'opcache.revalidate_freq=60'; \
 		echo 'opcache.fast_shutdown=1'; \
 		echo 'opcache.enable_cli=1'; \
+		echo 'opcache.enable_file_override=1'; \
 } > /etc/php5/conf.d/opcache-recommended.ini
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
