@@ -222,13 +222,13 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 	$now = time();
 	if ($from && ($now<strtotime($from))) {
 		$params['metadata_name_value_pairs'][] = array(
-			'name' => 'start_date',
+			'name' => 'end_date',
 			'value' => strtotime($from),
 			'operand' => '>='
 		);
 	} else {
 		$params['metadata_name_value_pairs'][] = array(
-			'name' => 'start_date',
+			'name' => 'end_date',
 			'value' => $now,
 			'operand' => '>='
 		);
@@ -329,13 +329,13 @@ function get_events_by_owner($user, $target, $from, $to, $limit, $offset, $lang)
 	$now = time();
 	if ($from && ($now<strtotime($from))) {
 		$params['metadata_name_value_pairs'][] = array(
-			'name' => 'start_date',
+			'name' => 'end_date',
 			'value' => strtotime($from),
 			'operand' => '>='
 		);
 	} else {
 		$params['metadata_name_value_pairs'][] = array(
-			'name' => 'start_date',
+			'name' => 'end_date',
 			'value' => $now,
 			'operand' => '>='
 		);
@@ -429,13 +429,13 @@ function get_events_by_colleagues($user, $from, $to, $limit, $offset, $lang)
 		$now = time();
 		if ($from && ($now<strtotime($from))) {
 			$params['metadata_name_value_pairs'][] = array(
-				'name' => 'start_date',
+				'name' => 'end_date',
 				'value' => strtotime($from),
 				'operand' => '>='
 			);
 		} else {
 			$params['metadata_name_value_pairs'][] = array(
-				'name' => 'start_date',
+				'name' => 'end_date',
 				'value' => $now,
 				'operand' => '>='
 			);
