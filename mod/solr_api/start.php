@@ -126,6 +126,11 @@ function solr_api_init() {
 				'type' => 'int',
 				'required' => true,
 				'description' => 'limit number of results'
+			],
+			'name' => [
+				'type' => 'string',
+				'required' => false,
+				'description' => 'search member'
 			]
 		],
 		'retrieves a list of group members',
@@ -137,13 +142,15 @@ function solr_api_init() {
 }
 
 // retrieves a list of group members with defined limit and offset
-function get_group_member_list($group_guid, $offset, $limit) {
+function get_group_member_list($group_guid, $offset, $limit, $name) {
 	$users = array();
-
+	error_log('name: ' . $name);
+	$name_param = ($name != '') ? "AND ue.name LIKE '{$name}%' " : '';
+	
 	$query = "SELECT ue.guid, r.time_created AS date_joined, ue.name, ue.username, ue.email
 	FROM elggentity_relationships r 
 		LEFT JOIN elggusers_entity ue ON r.guid_one = ue.guid
-	WHERE r.guid_two = {$group_guid} AND r.relationship = 'member' 
+	WHERE r.guid_two = {$group_guid} AND r.relationship = 'member' {$name_param}
 	ORDER BY ue.name ASC LIMIT {$limit} OFFSET {$offset}";
 
 	$users = get_data($query);
@@ -153,7 +160,7 @@ function get_group_member_list($group_guid, $offset, $limit) {
 	$query = "SELECT COUNT(*) AS member_count
 	FROM elggentity_relationships r 
 		LEFT JOIN elggusers_entity ue ON r.guid_one = ue.guid
-	WHERE r.guid_two = {$group_guid} AND r.relationship = 'member'";
+WHERE r.guid_two = {$group_guid} AND r.relationship = 'member' {$name_param}";
 
 	$member_count = get_data($query);
 
@@ -164,7 +171,7 @@ function get_group_member_list($group_guid, $offset, $limit) {
 				'name' => $user->name,
 				'username' => $user->username,
 				'email' => $user->email,
-				'date_joined' => date("Y-m-d\TH:m:s\Z", $user->date_joined),
+				'date_joined' => date("Y-m-d H:m:s", $user->date_joined),
 				'url' => "{$site_url}profile/{$user->username}",
 			);
 	}
