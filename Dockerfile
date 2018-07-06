@@ -44,8 +44,8 @@ RUN \
     php5-xml \
 	php5-curl \
 	curl \
-    php5-opcache \
-	php5-memcache \
+#    php5-opcache \
+#	php5-memcache \
   && apk update \
   && apk --no-cache add php5-mysqli \
   && mkdir -p /var/www/html/vendor \
@@ -61,15 +61,6 @@ RUN \
   && sed -i '/Options Indexes FollowSymLinks/c\\' /etc/apache2/httpd.conf \
   && sed -i '/<Directory "\/var\/www\/localhost\/htdocs">/c\<Directory "\/var\/www\/html">\nDirectoryIndex index.php\nOptions FollowSymLinks MultiViews\nAllowOverride All\nOrder allow,deny\nallow from all\n' /etc/apache2/httpd.conf
 
-RUN { \
-		echo 'opcache.memory_consumption=128'; \
-		echo 'opcache.interned_strings_buffer=8'; \
-		echo 'opcache.max_accelerated_files=4000'; \
-		echo 'opcache.revalidate_freq=60'; \
-		echo 'opcache.fast_shutdown=1'; \
-		echo 'opcache.enable_cli=1'; \
-		echo 'opcache.enable_file_override=1'; \
-} > /etc/php5/conf.d/opcache-recommended.ini
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
