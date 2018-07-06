@@ -146,7 +146,7 @@ function get_group_member_list($group_guid, $offset, $limit, $name) {
 	$users = array();
 	error_log('name: ' . $name);
 	$name_param = ($name != '') ? "AND ue.name LIKE '{$name}%' " : '';
-	
+	 
 	$query = "SELECT ue.guid, r.time_created AS date_joined, ue.name, ue.username, ue.email
 	FROM elggentity_relationships r 
 		LEFT JOIN elggusers_entity ue ON r.guid_one = ue.guid

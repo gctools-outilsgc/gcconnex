@@ -30,16 +30,22 @@ foreach ($items as $item) {
     $user_title = ($user->job) ? "<div class='mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix'>{$user->job}</div>" : "";
     $user_location = ($user->location) ? "<li class='elgg-menu-item-location'><span>{$user->location}</span></li>" : "";
 
+    // friend options
+    // @TODO colleague request pending
     if ($user->isFriendsWith($current_user->getGUID())) {
-        $addFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$item[guid]}");
-        $user_addFriend = "<li class='elgg-menu-item-friend><a href='{$addFriendURL}'>Remove friend</a></li>";
+        $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/remove?friend={$item[guid]}");
+        $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>Remove friend</a>";
+    } else {
+        $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$item[guid]}");
+        $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>Add friend</a>";
     }
 
     if ($group->canEdit()) {
-        $removeMemberURL = "";
-        $user_RemoveMember = "<li class='elgg-menu-item-remove-user'><a href='#'>Remove from group</a></li>";
+        $removeMemberURL = elgg_add_action_tokens_to_url("action/groups/remove?user_guid={$item[guid]}");
+        $user_RemoveMember = "<a href='{$removeMemberURL}'>Remove from group</a>";
     }
 
+    // condition for no members
     $tbody .= "
     <tr class='testing' role='row'>
         <td class='data-table-list-item sorting_1'> 
@@ -53,12 +59,13 @@ foreach ($items as $item) {
                     <div>
                         <ul class='elgg-menu elgg-menu-entity list-inline mrgn-tp-sm elgg-menu-hz elgg-menu-entity-default'>
                             $user_location
-                            $user_addFriend
+                            $user_addRemoveFriend
                             $user_RemoveMember
                         </ul>
                     </div>
                 </div>
             </article>
+            <div class='clearfix'></div>
         </td>
         <td class='data-table-list-item'>
             <p style='padding-top:10px;'>{$item['date_joined']}</p>
@@ -68,15 +75,15 @@ foreach ($items as $item) {
 
 $paginate = "";
 
-// @TODO jqueryfy the pagination
-$paginate .= "<ul class='elgg-pagination pagination'>";
+// @TODO Next and Previous
+$paginate .= "<ul id='custom-pagination' class='elgg-pagination pagination'>";
 $paginate .= "<li class='elgg-state-disabled'><span>Previous</span></li>";
-//$paginate .= "<li class='elgg-state-selected active'><span>1</span></li>";
+
 for ( $k=0; $k<$pages; $k++ ) {
     $pagination_offset = $k * $limit;
     $page_num = $k + 1;
     $url = "{$site_url}services/api/rest/json/?method=get.group_member_list&group_guid={$guid}&offset={$pagination_offset}&limit={$limit}";
-    $paginate .= "<li><a onclick='return get_user_list({$pagination_offset}, {$limit}, {$guid})' href='#customTable'>$page_num</a></li>";
+    $paginate .= "<li id='pagination-page-{$page_num}'><a onclick='return get_user_list({$pagination_offset}, {$limit}, {$guid})' href='#customTable'>$page_num</a></li>";
 }
 $paginate .= "<li><a href='#'>Next</a></li>";
 $paginate .= "</ul>";
@@ -90,13 +97,7 @@ $dropdown = "<select id='dpLimit' aria-controls='wb-tables-id-0'>
 <option value='100'>100</option>
 </select>";
 
-$searchbox = "<div style='padding:16px;'>
-<label>Search for Group member</label>
-<input type='textbox' id='txtSearchMember' value=''></input>
-</div>";
-
-//<ul class="elgg-pagination pagination"><li class="elgg-state-disabled "><span>Previous</span></li><li class="elgg-state-selected active"><span>1</span></li><li><a href="http://192.168.0.26/gccollab/blog/all?offset=10#">2</a></li><li><a href="http://192.168.0.26/gccollab/blog/all?offset=10#">Next</a></li></ul>
-
+$searchbox = "<label>Search entries</label> <input type='textbox' id='txtSearchMember' value=''></input>";
 
 
 // @TODO jquerify this portion
@@ -105,16 +106,16 @@ $display_limit = $offset + $limit;
 
 echo <<<___HTML
 
-
-
-Showing $display_offset to $display_limit out of $total_items entries | Show {$dropdown} entries
-
-{$searchbox}
+<div style='width:100%; overflow:hidden; padding: 5px 5px 25px 5px;'>
+    <div style='float:right; padding-top:5px; padding-bottom:5px;'>{$searchbox}</div>
+    <div style='padding-top:10px; padding-bottom:5px;'>Showing $display_offset to $display_limit out of $total_items entries | <strong>Show {$dropdown} entries</strong></div>
+    
+</div>
 
 <div id='customTable'>
 <table id="example" class="display" style="width:100%">
         <thead>
-            <tr>
+            <tr style='border-bottom:1pt solid gray;'>
                 <th style="width:665px; font-weight:700; font-size:1.2em;">Group members</th>
                 <th style="width:665px; font-weight:700; font-size:1.2em;">Date joined</th>
             </tr> 
@@ -124,7 +125,7 @@ Showing $display_offset to $display_limit out of $total_items entries | Show {$d
         </tbody>
     </table>
 
-    $paginate
+    <div style='padding-top:15px; padding-bottom:5px;'>$paginate</div>
 </div>
 
 ___HTML;
@@ -138,12 +139,9 @@ ___HTML;
 
 $('#dpLimit').change(function(event) {
     var limit = $('#dpLimit').val();
-    console.log("limit - " + limit);
-    
     var offset = 0;
     var name = $('#txtSearchMember').val();
-    var guid = 334;
-    console.log("name: " + name);
+    var guid = elgg.get_page_owner_guid();
 
     $('#body-member-list').children().remove();
     elgg.action('groups/retrieve_member_list',{
@@ -160,9 +158,6 @@ $('#dpLimit').change(function(event) {
         }
     });
 
-    return 'heyhey';
-
-
 });
 
 $('#txtSearchMember').keyup(function(event) {
@@ -171,8 +166,8 @@ $('#txtSearchMember').keyup(function(event) {
         var limit = $('#dpLimit').val();
         var offset = 0;
         var name = $('#txtSearchMember').val();
-        var guid = 334;
-        console.log("name: " + name);
+        var guid = elgg.get_page_owner_guid();
+        
         $('#body-member-list').children().remove();
         elgg.action('groups/retrieve_member_list',{
             data: {
@@ -188,16 +183,15 @@ $('#txtSearchMember').keyup(function(event) {
             }
         });
 
-        return 'heyhey';
     }
 });
 
 
 function get_user_list(offset, limit, guid) {
-    console.log("getting user: " + offset + " / " + limit);
 
-    
-
+    var page = (offset / limit) + 1;
+    $('#custom-pagination li').removeClass('elgg-state-selected active');
+    $('#pagination-page-' + page).addClass('elgg-state-selected active');
     $('#body-member-list').children().remove();
     elgg.action('groups/retrieve_member_list', {
         data: {
@@ -212,7 +206,6 @@ function get_user_list(offset, limit, guid) {
         }
     });
 
-    return 'heyhey';
 }
 
 </script>
