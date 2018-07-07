@@ -36,16 +36,10 @@ RUN \
 	  curl \
     libmemcached-dev zlib-dev \
 # core php extensions
-  && docker-php-ext-install -j$(nproc) apache2 \
-  ctype \
-  curl \
-  dom \
-  gd \
-  iconv \
+  && docker-php-ext-install -j$(nproc) gd \
   json \
   mysql \
   mysqli \
-  xml \
   curl \
   opcache \
 # memcached php5 extension
