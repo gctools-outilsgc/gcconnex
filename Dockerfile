@@ -37,20 +37,20 @@ RUN \
     libmemcached-dev zlib-dev \
 # core php extensions
   && docker-php-ext-install -j$(nproc) apache2 \
-  && docker-php-ext-install -j$(nproc) ctype \
-  && docker-php-ext-install -j$(nproc) curl \
-  && docker-php-ext-install -j$(nproc) dom \
-  && docker-php-ext-install -j$(nproc) gd \
-  && docker-php-ext-install -j$(nproc) iconv \
-  && docker-php-ext-install -j$(nproc) json \
-  && docker-php-ext-install -j$(nproc) mysql \
-  && docker-php-ext-install -j$(nproc) mysqli \
-  && docker-php-ext-install -j$(nproc) xml \
-  && docker-php-ext-install -j$(nproc) curl \
-  && docker-php-ext-install -j$(nproc) opcache \
+  ctype \
+  curl \
+  dom \
+  gd \
+  iconv \
+  json \
+  mysql \
+  mysqli \
+  xml \
+  curl \
+  opcache \
 # memcached php5 extension
   && pecl install memcached-2.2.0 \
-  && docker-php-ext-enable memcached
+  && docker-php-ext-enable memcached \
   && mkdir -p /var/www/html/vendor \
   && mkdir -p /data \
   && mkdir -p /run/apache2 \
