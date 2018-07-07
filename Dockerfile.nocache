@@ -27,30 +27,25 @@ WORKDIR /app/pleio
 RUN composer install
 
 # Second stage, build usable container
-FROM php:5.6-fpm-alpine3.7
-LABEL maintainer="Ilia Salem"
+FROM alpine:3.7
+LABEL maintainer="Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>"
 RUN \
-  apk update \
-  && apk --no-cache add \
+  apk --no-cache add \
     apache2 \
-	  curl \
-    libmemcached-dev zlib-dev \
-# core php extensions
-  && docker-php-ext-install -j$(nproc) apache2 \
-  && docker-php-ext-install -j$(nproc) ctype \
-  && docker-php-ext-install -j$(nproc) curl \
-  && docker-php-ext-install -j$(nproc) dom \
-  && docker-php-ext-install -j$(nproc) gd \
-  && docker-php-ext-install -j$(nproc) iconv \
-  && docker-php-ext-install -j$(nproc) json \
-  && docker-php-ext-install -j$(nproc) mysql \
-  && docker-php-ext-install -j$(nproc) mysqli \
-  && docker-php-ext-install -j$(nproc) xml \
-  && docker-php-ext-install -j$(nproc) curl \
-  && docker-php-ext-install -j$(nproc) opcache \
-# memcached php5 extension
-  && pecl install memcached-2.2.0 \
-  && docker-php-ext-enable memcached
+    php5 \
+    php5-apache2 \
+    php5-ctype \
+    php5-curl \
+    php5-dom \
+    php5-gd \
+    php5-iconv \
+    php5-json \
+    php5-mysql \
+    php5-xml \
+    php5-curl \
+    curl \
+  && apk update \
+  && apk --no-cache add php5-mysqli \
   && mkdir -p /var/www/html/vendor \
   && mkdir -p /data \
   && mkdir -p /run/apache2 \
@@ -64,15 +59,6 @@ RUN \
   && sed -i '/Options Indexes FollowSymLinks/c\\' /etc/apache2/httpd.conf \
   && sed -i '/<Directory "\/var\/www\/localhost\/htdocs">/c\<Directory "\/var\/www\/html">\nDirectoryIndex index.php\nOptions FollowSymLinks MultiViews\nAllowOverride All\nOrder allow,deny\nallow from all\n' /etc/apache2/httpd.conf
 
-RUN { \
-		echo 'opcache.memory_consumption=128'; \
-		echo 'opcache.interned_strings_buffer=8'; \
-		echo 'opcache.max_accelerated_files=4000'; \
-		echo 'opcache.revalidate_freq=60'; \
-		echo 'opcache.fast_shutdown=1'; \
-		echo 'opcache.enable_cli=1'; \
-		echo 'opcache.enable_file_override=1'; \
-} > /etc/php5/conf.d/opcache-recommended.ini
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
