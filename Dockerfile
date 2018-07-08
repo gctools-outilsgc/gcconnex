@@ -45,6 +45,7 @@ RUN \
     php5-curl \
     curl \
     php5-opcache \
+    libmemcached-libs \
   && apk update \
   && apk --no-cache add php5-mysqli \
   && mkdir -p /var/www/html/vendor \
@@ -80,6 +81,7 @@ RUN set -xe \
     $PHPIZE_DEPS \
     && sed -i 's/^exec $PHP -C -n/exec $PHP -C/g' $(which pecl) \
     && pecl install memcached-2.2.0 \
+    && mv $(INSTALL_ROOT)/usr/lib/php5/modules/memcached.so /usr/lib/php5/modules/memcached.so \
     && echo "extension=memcached.so" > /etc/php5/conf.d/memcached.ini \
     && rm -rf /usr/share/php \
     && rm -rf /tmp/* \
