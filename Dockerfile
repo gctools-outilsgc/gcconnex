@@ -73,18 +73,17 @@ RUN { \
 # install memcached
 ENV PHPIZE_DEPS autoconf file g++ gcc libc-dev make pkgconf re2c php5-dev php5-pear \
  zlib-dev libmemcached-dev cyrus-sasl-dev libevent-dev openssl-dev
+ENV PHP_PEAR_PHP_BIN /usr/bin/php5
 RUN set -xe \
     && apk add --no-cache \
     --virtual .phpize-deps \
     $PHPIZE_DEPS \
     && sed -i 's/^exec $PHP -C -n/exec $PHP -C/g' $(which pecl) \
-    && pecl channel-update pecl.php.net \
     && pecl install memcached-2.2.0 \
     && echo "extension=memcached.so" > /etc/php5/conf.d/memcached.ini \
     && rm -rf /usr/share/php \
     && rm -rf /tmp/* \
     && apk del .phpize-deps
-COPY php/php.ini /etc/php5/
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
