@@ -33,15 +33,8 @@ RUN \
   apk update \
   && apk --no-cache add \
     apache2 \
-	  curl \
-    libmemcached-dev zlib-dev \
-# core php extensions
-  && docker-php-ext-install -j$(nproc) gd \
-  json \
-  mysql \
-  mysqli \
-  curl \
-  opcache \
+    libpng \
+    libmemcached-dev zlib-dev autoconf gcc libc-dev make \
 # memcached php5 extension
   && pecl install memcached-2.2.0 \
   && docker-php-ext-enable memcached \
@@ -66,7 +59,7 @@ RUN { \
 		echo 'opcache.fast_shutdown=1'; \
 		echo 'opcache.enable_cli=1'; \
 		echo 'opcache.enable_file_override=1'; \
-} > /etc/php5/conf.d/opcache-recommended.ini
+} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
