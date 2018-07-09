@@ -73,51 +73,67 @@ foreach ($items as $item) {
     </tr>";
 }
 
-$paginate = "";
 
-// @TODO Next and Previous
+// pagination for "scrolling" through the list of members
+$next = 'next';
+$previous = 'previous';
+
+$paginate = "";
 $paginate .= "<ul id='custom-pagination' class='elgg-pagination pagination'>";
-$paginate .= "<li class='elgg-state-disabled'><span>Previous</span></li>";
+$paginate .= "<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>Previous</span></li>";
 
 for ( $k=0; $k<$pages; $k++ ) {
     $pagination_offset = $k * $limit;
-    $page_num = $k + 1;
+    $page_number = $k + 1;
     $url = "{$site_url}services/api/rest/json/?method=get.group_member_list&group_guid={$guid}&offset={$pagination_offset}&limit={$limit}";
-    $paginate .= "<li id='pagination-page-{$page_num}'><a onclick='return get_user_list({$pagination_offset}, {$limit}, {$guid})' href='#customTable'>$page_num</a></li>";
+    $paginate .= "<li id='pagination-page-{$page_number}'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$page_number</a></li>";
 }
-$paginate .= "<li><a href='#'>Next</a></li>";
+$paginate .= "<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>Next</a></li>";
 $paginate .= "</ul>";
 
 
-$dropdown = "<select id='dpLimit' aria-controls='wb-tables-id-0'>
-<option value='5'>5</option>
-<option value='10'>10</option>
-<option value='25'>25</option>
-<option value='50'>50</option>
-<option value='100'>100</option>
+// dropdown form to show number of entries per page
+$dropdown = "
+<select id='dpLimit' aria-controls='wb-tables-id-0'>
+    <option value='5'>5</option>
+    <option value='10'>10</option>
+    <option value='25'>25</option>
+    <option value='50'>50</option>
+    <option value='100'>100</option>
 </select>";
 
-$searchbox = "<label>Search entries</label> <input type='textbox' id='txtSearchMember' value=''></input>";
 
 
 // @TODO jquerify this portion
 $display_offset = $offset + 1;
 $display_limit = $offset + $limit;
 
+// text with translations
+$txtGroupMembers = elgg_echo('group:member_list');
+$txtDateJoined = elgg_echo('group:member_date_joined');
+$txtRemoveGroup = elgg_echo('group:member_remove_group');
+$txtAddFriend = elgg_echo('group:member_add_friend');
+$txtRemoveFriend = elgg_echo('group:member_remove_friend');
+$txtShowEntries = elgg_echo('group:show_entries', array($display_offset, $display_limit, $total_items, $dropdown));
+$txtSearchEntries = elgg_echo('group:search_entries');
+
+$searchbox = "<label>{$txtSearchEntries}</label> <input type='textbox' id='txtSearchMember' value=''></input>";
+
+
+// assemble the view with components displayed
 echo <<<___HTML
 
 <div style='width:100%; overflow:hidden; padding: 5px 5px 25px 5px;'>
     <div style='float:right; padding-top:5px; padding-bottom:5px;'>{$searchbox}</div>
-    <div style='padding-top:10px; padding-bottom:5px;'>Showing $display_offset to $display_limit out of $total_items entries | <strong>Show {$dropdown} entries</strong></div>
-    
+    <div style='padding-top:10px; padding-bottom:5px;'>{$txtShowEntries}</div>    
 </div>
-
+<input id='txtHiddenOffset'></input>
 <div id='customTable'>
-<table id="example" class="display" style="width:100%">
+    <table id="example" class="display" style="width:100%">
         <thead>
             <tr style='border-bottom:1pt solid gray;'>
-                <th style="width:665px; font-weight:700; font-size:1.2em;">Group members</th>
-                <th style="width:665px; font-weight:700; font-size:1.2em;">Date joined</th>
+                <th style="width:665px; font-weight:700; font-size:1.2em;">{$txtGroupMembers}</th>
+                <th style="width:665px; font-weight:700; font-size:1.2em;">{$txtDateJoined}</th>
             </tr> 
         </thead>
         <tbody id='body-member-list'>
@@ -125,7 +141,7 @@ echo <<<___HTML
         </tbody>
     </table>
 
-    <div style='padding-top:15px; padding-bottom:5px;'>$paginate</div>
+    <div style='padding-top:15px; padding-bottom:5px;'>{$paginate}</div>
 </div>
 
 ___HTML;
@@ -133,9 +149,16 @@ ___HTML;
 ?>
 
 
+
 <?php // javascript/ajaxy functions will be here ?>
 
 <script>
+
+$(document).ready(function() {
+    $('#pagination-page-1').addClass('elgg-state-selected active');
+    $('#txtHiddenOffset').val(0);
+});
+
 
 $('#dpLimit').change(function(event) {
     var limit = $('#dpLimit').val();
@@ -157,8 +180,8 @@ $('#dpLimit').change(function(event) {
                 $('#body-member-list').append(content_array.output.member_list[item]);
         }
     });
-
 });
+
 
 $('#txtSearchMember').keyup(function(event) {
     if (event.keyCode == 13) {
@@ -186,10 +209,47 @@ $('#txtSearchMember').keyup(function(event) {
     }
 });
 
+function navigate_group_member(direction) {
 
-function get_user_list(offset, limit, guid) {
+    console.log("navigation 0 " + direction);
+    // when direction is 0:previous and 1:next
 
+    var name = $('#txtSearchMember').val();
+    var guid = elgg.get_page_owner_guid();
+    var limit = $('#dpLimit').val();
+
+    current_offset = $('#txtHiddenOffset').val();
+
+    if (direction == 0) {
+        current_offset = current_offset - limit;
+    }
+
+    if (direction == 1) {
+        current_offset = current_offset + limit;
+    }
+
+    $('#txtHiddenOffset').val(current_offset);
+    console.log("current offset : " + current_offset);
+    //get_user_list($current_offset);
+} 
+
+function get_user_list(offset) {
+
+    var name = $('#txtSearchMember').val();
+    var guid = elgg.get_page_owner_guid();
+    var limit = $('#dpLimit').val();
+
+    <?php // save the offset in a text field since HTML is stateless ?>
+    $('#txtHiddenOffset').val(offset);
+
+    console.log("offset: " + offset);
+
+    offset = $('#txtHiddenOffset').val();
+    
     var page = (offset / limit) + 1;
+
+
+
     $('#custom-pagination li').removeClass('elgg-state-selected active');
     $('#pagination-page-' + page).addClass('elgg-state-selected active');
     $('#body-member-list').children().remove();
