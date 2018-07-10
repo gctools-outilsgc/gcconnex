@@ -31,13 +31,19 @@ foreach ($items as $item) {
     $user_location = ($user->location) ? "<li class='elgg-menu-item-location'><span>{$user->location}</span></li>" : "";
 
     // friend options
-    // @TODO colleague request pending
-    if ($user->isFriendsWith($current_user->getGUID())) {
+    // @TODO Ajaxify this
+    if ($user->isFriendOf($current_user->getGUID())) {
         $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/remove?friend={$item[guid]}");
-        $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>Remove friend</a>";
+        $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend:remove")."</a>";
     } else {
-        $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$item[guid]}");
-        $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>Add friend</a>";
+        // pending request
+        if (check_entity_relationship($current_user->getGUID(), "friendrequest", $user->getGUID())) {
+            $addRemoveFriendURL = elgg_add_action_tokens_to_url("friend_request/{$current_user->username}#friend_request_sent_listing");
+            $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend_request:friend:add:pending")."</a>";
+        } else {
+            $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$item[guid]}");
+            $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend:add")."</a>";
+        }
     }
 
     if ($group->canEdit()) {
@@ -45,7 +51,8 @@ foreach ($items as $item) {
         $user_RemoveMember = "<a href='{$removeMemberURL}'>Remove from group</a>";
     }
 
-    // condition for no members
+    // @TODO condition for no members
+    // @TODO the links should be listed
     $tbody .= "
     <tr class='testing' role='row'>
         <td class='data-table-list-item sorting_1'> 
@@ -58,9 +65,9 @@ foreach ($items as $item) {
                     $user_title
                     <div>
                         <ul class='elgg-menu elgg-menu-entity list-inline mrgn-tp-sm elgg-menu-hz elgg-menu-entity-default'>
-                            $user_location
-                            $user_addRemoveFriend
-                            $user_RemoveMember
+                            <p>$user_location</p>
+                            <p>$user_addRemoveFriend</p>
+                            <p>$user_RemoveMember</p>
                         </ul>
                     </div>
                 </div>
@@ -75,20 +82,18 @@ foreach ($items as $item) {
 
 
 // pagination for "scrolling" through the list of members
-$next = 'next';
-$previous = 'previous';
+$next = elgg_echo('group:next_set');
+$previous = elgg_echo('group:previous_set');
 
 $paginate = "";
 $paginate .= "<ul id='custom-pagination' class='elgg-pagination pagination'>";
-$paginate .= "<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>Previous</span></li>";
+$paginate .= "<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>{$previous}</span></li>";
 
-for ( $k=0; $k<$pages; $k++ ) {
+for ( $k=1; $k<=$pages; $k++ ) {
     $pagination_offset = $k * $limit;
-    $page_number = $k + 1;
-    $url = "{$site_url}services/api/rest/json/?method=get.group_member_list&group_guid={$guid}&offset={$pagination_offset}&limit={$limit}";
-    $paginate .= "<li id='pagination-page-{$page_number}'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$page_number</a></li>";
+    $paginate .= "<li id='pagination-page-{$k}'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$k</a></li>";
 }
-$paginate .= "<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>Next</a></li>";
+$paginate .= "<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>{$next}</a></li>";
 $paginate .= "</ul>";
 
 
@@ -100,11 +105,11 @@ $dropdown = "
     <option value='25'>25</option>
     <option value='50'>50</option>
     <option value='100'>100</option>
-</select>";
+</select>"; 
+
+$txtDropDown = '<label>' . elgg_echo('group:show_entries_dropdown', array($dropdown)) . '</label>';
 
 
-
-// @TODO jquerify this portion
 $display_offset = $offset + 1;
 $display_limit = $offset + $limit;
 
@@ -114,7 +119,7 @@ $txtDateJoined = elgg_echo('group:member_date_joined');
 $txtRemoveGroup = elgg_echo('group:member_remove_group');
 $txtAddFriend = elgg_echo('group:member_add_friend');
 $txtRemoveFriend = elgg_echo('group:member_remove_friend');
-$txtShowEntries = elgg_echo('group:show_entries', array($display_offset, $display_limit, $total_items, $dropdown));
+$txtShowEntries = elgg_echo('group:show_entries', array($display_offset, $display_limit, $total_items)) . $txtDropDown;
 $txtSearchEntries = elgg_echo('group:search_entries');
 
 $searchbox = "<label>{$txtSearchEntries}</label> <input type='textbox' id='txtSearchMember' value=''></input>";
@@ -127,7 +132,7 @@ echo <<<___HTML
     <div style='float:right; padding-top:5px; padding-bottom:5px;'>{$searchbox}</div>
     <div style='padding-top:10px; padding-bottom:5px;'>{$txtShowEntries}</div>    
 </div>
-<input id='txtHiddenOffset'></input>
+<input type='hidden' id='txtHiddenOffset'></input>
 <div id='customTable'>
     <table id="example" class="display" style="width:100%">
         <thead>
@@ -161,7 +166,7 @@ $(document).ready(function() {
 
 
 $('#dpLimit').change(function(event) {
-    var limit = $('#dpLimit').val();
+    var limit = parseInt($('#dpLimit').val());
     var offset = 0;
     var name = $('#txtSearchMember').val();
     var guid = elgg.get_page_owner_guid();
@@ -178,6 +183,29 @@ $('#dpLimit').change(function(event) {
         success: function (content_array) {
             for (var item in content_array.output.member_list)
                 $('#body-member-list').append(content_array.output.member_list[item]);
+            
+            var member_count = parseInt(content_array.output.member_count);
+            if (member_count <= limit) {
+                $('#custom-pagination').children().remove();
+            } else {
+                
+                $('#custom-pagination').children().remove();
+
+                // pagination
+                var pages = Math.ceil(member_count / limit);
+                var pagination_children = '';
+                var pagination_offset;
+                var k;
+                $('#custom-pagination').append("<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>"+elgg.echo('group:next_set')+"</span></li>");
+                for ( k=1; k<=pages; k++ ) {
+                    console.log("k: " + k + " // limit: " + limit );
+                    pagination_offset = k * limit;
+                    $('#custom-pagination').append("<li id='pagination-page-"+k+"'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+k+"</a></li>");
+                }
+                $('#custom-pagination').append("<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>"+elgg.echo('group:previous_set')+"</a></li>");
+                $('#pagination-page-1').addClass('elgg-state-selected active');
+            }
+            console.log(content_array.output.member_count);
         }
     });
 });
@@ -210,27 +238,25 @@ $('#txtSearchMember').keyup(function(event) {
 });
 
 function navigate_group_member(direction) {
-
-    console.log("navigation 0 " + direction);
     // when direction is 0:previous and 1:next
 
     var name = $('#txtSearchMember').val();
     var guid = elgg.get_page_owner_guid();
-    var limit = $('#dpLimit').val();
+    var limit = parseInt($('#dpLimit').val());
 
-    current_offset = $('#txtHiddenOffset').val();
+    current_offset = parseInt($('#txtHiddenOffset').val());
 
-    if (direction == 0) {
+    if (direction == 0 && current_offset > 0) {
         current_offset = current_offset - limit;
     }
 
+    // @TODO do not exceed the number of members
     if (direction == 1) {
         current_offset = current_offset + limit;
     }
 
     $('#txtHiddenOffset').val(current_offset);
-    console.log("current offset : " + current_offset);
-    //get_user_list($current_offset);
+    get_user_list(current_offset);
 } 
 
 function get_user_list(offset) {
@@ -241,15 +267,9 @@ function get_user_list(offset) {
 
     <?php // save the offset in a text field since HTML is stateless ?>
     $('#txtHiddenOffset').val(offset);
-
-    console.log("offset: " + offset);
-
     offset = $('#txtHiddenOffset').val();
     
     var page = (offset / limit) + 1;
-
-
-
     $('#custom-pagination li').removeClass('elgg-state-selected active');
     $('#pagination-page-' + page).addClass('elgg-state-selected active');
     $('#body-member-list').children().remove();

@@ -1,6 +1,5 @@
 <?php
 
-
 if (!elgg_is_xhr()) {
 	register_error('Sorry, Ajax only!');
 	forward();
@@ -8,33 +7,26 @@ if (!elgg_is_xhr()) {
 
 $option = get_input('option');
 
-error_log('option ' . $option);
-
 $name = get_input('member_name');
 $offset = (int)get_input('list_offset');
 $limit = (int)get_input('list_limit');
 $guid = (int)get_input('group_guid');
 
+$group = get_entity($guid);
 $site_url = elgg_get_site_url();
 
 $name_param = ($name != '') ? "&name={$name}" : "";
 
 $url = "{$site_url}services/api/rest/json/?method=get.group_member_list&group_guid={$guid}&offset={$offset}&limit={$limit}{$name_param}";
-
-error_log("%%%%%%%%% URL: " . $url);
-
 $items = json_decode(file_get_contents($url), true);
-
 
 $members = $items['result']['members'];
 $total_items = $items['result']['count'];
 
-error_log("information: {$members}");
-
 $pages = ceil($total_items / 10);
 $tbody = array();
 
-error_log('count :  ' . $total_items);
+$current_user = elgg_get_logged_in_user_entity();
 
 if ($total_items == 0) {
 
@@ -59,6 +51,27 @@ if ($total_items == 0) {
         $user_title = ($user->job) ? "<div class='mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix'>{$user->job}</div>" : "";
         $user_location = ($user->location) ? "<li class='elgg-menu-item-location'><span>{$user->location}</span></li>" : "";
 
+        // remove add pending friend request
+        if ($user->isFriendOf($current_user->getGUID())) {
+            $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/remove?friend={$member[guid]}");
+            $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend:remove")."</a>";
+        } else {
+            // pending request
+            if (check_entity_relationship($current_user->getGUID(), "friendrequest", $user->getGUID())) {
+                $addRemoveFriendURL = elgg_add_action_tokens_to_url("friend_request/{$current_user->username}#friend_request_sent_listing");
+                $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend_request:friend:add:pending")."</a>";
+            } else {
+                $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$member[guid]}");
+                $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend:add")."</a>";
+            }
+        }
+        
+        
+        if ($group->canEdit()) {
+            $removeMemberURL = elgg_add_action_tokens_to_url("action/groups/remove?user_guid={$member[guid]}");
+            $user_RemoveMember = "<a href='{$removeMemberURL}'>Remove from group</a>";
+        }
+
         $tbody[] = "
         <tr class='testing' role='row'>
             <td class='data-table-list-item sorting_1'> 
@@ -71,9 +84,9 @@ if ($total_items == 0) {
                         $user_title
                         <div>
                             <ul class='elgg-menu elgg-menu-entity list-inline mrgn-tp-sm elgg-menu-hz elgg-menu-entity-default'>
-                                $user_location
-                                <li class='elgg-menu-item-friend><a href='#'>Remove friend</a></li>
-                                <li class='elgg-menu-item-remove-user'><a href='#'>Remove from group</a></li>
+                                <p>$user_location</p>
+                                <p>$user_addRemoveFriend</p>
+                                <p>$user_RemoveMember</p>
                             </ul>
                         </div>
                     </div>
