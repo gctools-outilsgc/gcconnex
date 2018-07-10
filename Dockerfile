@@ -46,6 +46,7 @@ RUN \
     curl \
     php5-opcache \
     libmemcached-libs \
+	php5-memcache \
   && apk update \
   && apk --no-cache add php5-mysqli \
   && mkdir -p /var/www/html/vendor \
