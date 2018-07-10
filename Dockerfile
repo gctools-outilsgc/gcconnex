@@ -81,8 +81,8 @@ RUN set -xe \
     $PHPIZE_DEPS \
     && sed -i 's/^exec $PHP -C -n/exec $PHP -C/g' $(which pecl) \
     && pecl install memcache-2.2.7 \
-    && mv $(INSTALL_ROOT)/usr/lib/php5/modules/memcached.so /usr/lib/php5/modules/memcached.so \
-    && echo "extension=memcached.so" > /etc/php5/conf.d/memcached.ini \
+    && mv $(INSTALL_ROOT)/usr/lib/php5/modules/memcache.so /usr/lib/php5/modules/memcache.so \
+    && echo "extension=memcache.so" > /etc/php5/conf.d/memcache.ini \
     && rm -rf /usr/share/php \
     && rm -rf /tmp/* \
     && apk del .phpize-deps
