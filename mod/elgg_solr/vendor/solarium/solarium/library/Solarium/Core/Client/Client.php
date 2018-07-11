@@ -783,7 +783,7 @@ class Client extends Configurable
         $request = $this->createRequest($query);
         $response = $this->executeRequest($request, $endpoint);
         $result = $this->createResult($query, $response);
-
+error_log($request);
         $this->eventDispatcher->dispatch(
             Events::POST_EXECUTE,
             new PostExecuteEvent($query, $result)

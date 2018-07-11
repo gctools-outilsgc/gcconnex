@@ -33,7 +33,7 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 	
 	$default_sorts = array(
 		'score' => 'desc',
-		'time_created' => 'desc'
+		'date_created' => 'desc'
 	);
 	
 	$sorts = $params['sorts'] ? $params['sorts'] : $default_sorts;
@@ -253,7 +253,7 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 
 	$default_sorts = array(
 		'score' => 'desc',
-		'time_created' => 'desc'
+		'date_created' => 'desc'
 	);
 	
 	$sorts = $params['sorts'] ? $params['sorts'] : $default_sorts;
@@ -406,14 +406,11 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 function elgg_solr_user_search($hook, $type, $return, $params) {
 
     $select = array(
+		'querydefaultfield' => 'text_en',
         'start'  => $params['offset'],
-        'rows'   => $params['limit'] ? $params['limit'] : 10,
-        'fields' => array('id','name','username', 'description', 'score')
+		'rows'   => $params['limit'] ? $params['limit'] : 10,
+		'query' => $params['query']
     );
-
-    if( $params['user_type'] ){
-    	$select['fields'][] = 'user_type';
-    }
 	
 	if ($params['select'] && is_array($params['select'])) {
         $select = array_merge($select, $params['select']);
@@ -426,41 +423,12 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
     $query = $client->createSelect($select);
 	
 	$default_sorts = array(
-		'score' => 'desc',
-		'time_created' => 'desc'
+		'date_created' => 'desc'
 	);
-	
-	$sorts = $params['sorts'] ? $params['sorts'] : $default_sorts;
-	$query->addSorts($sorts);
-	
-	$title_boost = elgg_solr_get_title_boost();
-	$description_boost = elgg_solr_get_description_boost();
-	
-	// get the dismax component and set a boost query
-	$dismax = $query->getEDisMax();
-	$qf = "name^{$title_boost} username^{$title_boost} description^{$description_boost}";
-
-	if( $params['user_type'] ){
-		$qf .= " user_type^{$title_boost}";
-	}
 
 	if ($params['qf']) {
 		$qf = $params['qf'];
 	}
-	$dismax->setQueryFields($qf);
-	$dismax->setQueryAlternative('*:*');
-	
-	// no time boost for users
-	/*
-	$boostQuery = elgg_solr_get_boost_query();
-	if ($boostQuery) {
-		$dismax->setBoostQuery($boostQuery);
-	}
-	 * 
-	 */
-	
-	// this query is now a dismax query
-	$query->setQuery($params['query']);
 
 	// make sure we're only getting users
 	$params['fq']['type'] = 'type:user';
@@ -479,13 +447,15 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 
     if (!empty($filter_queries)) {
         foreach ($filter_queries as $key => $value) {
+			if ($key == 'subtype') continue;
             $query->createFilterQuery($key)->setQuery($value);
-        }
+		}
     }
-
+	
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-	$hlfields = array('name', 'username', 'description');
+	$hlfields = array('text_en');
+	
 	if ($params['hlfields']) {
 		$hlfields = $params['hlfields'];
 	}
@@ -516,7 +486,8 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
     }
 
     // Count the total number of documents found by solr
-    $count = $resultset->getNumFound();
+	$count = $resultset->getNumFound();
+	
 	$hl_prefix = elgg_solr_get_hl_prefix();
 	$hl_suffix = elgg_solr_get_hl_suffix();
 	
@@ -526,11 +497,11 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 	$purifier = new HTMLPurifier($config);
 	
     foreach ($resultset as $document) {
-		$search_results[$document->id] = array();
+		$search_results[$document->guid] = array();
 		$snippet = '';
             
 		// highlighting results can be fetched by document id (the field defined as uniquekey in this schema)
-        $highlightedDoc = $highlighting->getResult($document->id);
+        $highlightedDoc = $highlighting->getResult($document->guid);
 
         if($highlightedDoc){
             foreach($highlightedDoc as $field => $highlight) {
@@ -547,10 +518,9 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 					$snippet = $purifier->purify($snippet);
 				}
 				
-				$search_results[$document->id][$field] = $snippet;
+				$search_results[$document->guid][$field] = $snippet;
             }
         }
-		$search_results[$document->id]['score'] = $document->score;
     }
 
 	// get the entities
@@ -563,21 +533,13 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 		));
 	}
 	
-	$show_score = elgg_get_plugin_setting('show_score', 'elgg_solr');
 	foreach ($search_results as $guid => $matches) {
 		foreach ($entities_unsorted as $e) {
 			if ($e->guid == $guid) {
 				
 				$desc_suffix = '';
-				if ($show_score == 'yes' && elgg_is_admin_logged_in()) {
-					$desc_suffix .= elgg_view('output/longtext', array(
-						'value' => elgg_echo('elgg_solr:relevancy', array($matches['score'])),
-						'class' => 'elgg-subtext'
-					));
-				}
-			
-				if ($matches['name']) {
-					$name = $matches['name'];
+				if ($matches['name_en']) {
+					$name = $matches['name_en'];
 					if ($matches['username']) {
 						$name .= ' (@' . $matches['username'] . ')';
 					}
@@ -600,11 +562,9 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 				}
 				
 				// anything not already matched can be lumped in with the description
-				unset($matches['name']);
+				unset($matches['name_en']);
 				unset($matches['username']);
-				unset($matches['score']);
 				$desc_suffix .= implode('...', $matches);
-				
 				$desc_hl = search_get_highlighted_relevant_substrings($e->description, $params['query']);
 				$e->setVolatileData('search_matched_description', $desc_hl . $desc_suffix);
 				$entities[] = $e;
@@ -640,7 +600,7 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
 	
 	$default_sorts = array(
 		'score' => 'desc',
-		'time_created' => 'desc'
+		'date_created' => 'desc'
 	);
 	
 	$sorts = $params['sorts'] ? $params['sorts'] : $default_sorts;
@@ -868,7 +828,7 @@ function elgg_solr_tag_search($hook, $type, $return, $params) {
 	$query_parts = array();
 	foreach ($search_tag_names as $tagname) {
 		// @note - these need to be treated as literal exact matches, so encapsulate in double-quotes
-		$query_parts[] = 'tags:"' . elgg_solr_escape_special_chars($tagname . '%%' . $params['query']) . '"';
+		//$query_parts[] = 'tags:"' . elgg_solr_escape_special_chars($tagname . '%%' . $params['query']) . '"';
 	}
 	
 	if (!$query_parts) {
@@ -894,7 +854,7 @@ function elgg_solr_tag_search($hook, $type, $return, $params) {
 	
 	$default_sorts = array(
 		'score' => 'desc',
-		'time_created' => 'desc'
+		'date_created' => 'desc'
 	);
 	
 	$sorts = $params['sorts'] ? $params['sorts'] : $default_sorts;
@@ -916,7 +876,7 @@ function elgg_solr_tag_search($hook, $type, $return, $params) {
 
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-    $hl->setFields(array('tags'));
+    //$hl->setFields(array('tags'));
     $hl->setSimplePrefix('<span data-hl="elgg-solr">');
 	$hl->setSimplePostfix('</span>');
 
@@ -999,7 +959,7 @@ function elgg_solr_tag_search($hook, $type, $return, $params) {
 				$e->setVolatileData('search_matched_title', $title);
 				$e->setVolatileData('search_matched_description', elgg_get_excerpt($description) . $desc_suffix);
 				
-				$e->setVolatileData('search_matched_extra', $matches['tags']);
+				//$e->setVolatileData('search_matched_extra', $matches['tags']);
 				$entities[] = $e;
 			}
 		}
@@ -1071,7 +1031,7 @@ function elgg_solr_comment_search($hook, $type, $return, $params) {
     $select = array(
         'start'  => $params['offset'],
         'rows'   => $params['limit'] ? $params['limit'] : 10,
-        'fields' => array('id', 'container_guid', 'description', 'owner_guid', 'time_created', 'score'),
+        'fields' => array('id', 'container_guid', 'description', 'owner_guid', 'date_created', 'score'),
     );
 	
 	if ($params['select'] && is_array($params['select'])) {
@@ -1086,7 +1046,7 @@ function elgg_solr_comment_search($hook, $type, $return, $params) {
 	
 	$default_sort = array(
 		'score' => 'desc',
-		'time_created' => 'desc'
+		'date_created' => 'desc'
 	);
 	$sorts = $params['sorts'] ? $params['sorts'] : $default_sort;
 	
@@ -1214,7 +1174,7 @@ function elgg_solr_comment_search($hook, $type, $return, $params) {
 			'annotation_id' => substr(strstr(elgg_strip_tags($document->id), ':'), 1),
 			'text' => $snippet,
 			'owner_guid' => $document->owner_guid,
-			'time_created' => $document->time_created,
+			'date_created' => $document->date_created,
 		);
 		$entity->setVolatileData('search_comments_data', $comments_data);
 
