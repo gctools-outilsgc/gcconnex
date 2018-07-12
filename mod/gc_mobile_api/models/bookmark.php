@@ -110,9 +110,13 @@ function get_bookmark($user, $guid, $lang)
     $bookmarkObject = get_entity($bookmark->guid);
     $bookmark->description = gc_explode_translation($bookmarkObject->description, $lang);
     $bookmark->address = $bookmarkObject->address;
-
     $bookmark->userDetails = get_user_block($bookmark->owner_guid, $lang); //Should go through and only pass revelant infromation
     $bookmark->group_guid = "";
+		$bookmark->comment_count = elgg_get_entities(array(
+			'container_guid' => $guid,
+			'count' => true,
+			'distinct' => false,
+		));
     if ($bookmark->container_guid != $bookmark->owner_guid){
       $bookmark->group_guid = $bookmark->container_guid;
       $bookmarkGroup = get_entity($bookmark->group_guid);

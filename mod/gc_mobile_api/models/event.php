@@ -193,7 +193,11 @@ function get_event($user, $guid, $lang)
 		$event->group = gc_explode_translation($group->name, $lang);
 		$event->groupGUID = $eventObj->group_guid;
 	}
-
+	$event->comment_count = elgg_get_entities(array(
+		'container_guid' => $guid,
+		'count' => true,
+		'distinct' => false,
+	));
 
 	return $event;
 }
