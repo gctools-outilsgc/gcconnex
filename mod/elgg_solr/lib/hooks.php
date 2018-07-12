@@ -1,9 +1,5 @@
 <?php
 
-
-
-
-
 /**
  * Return default results for searches on objects.
  *
@@ -15,10 +11,12 @@
  */
 function elgg_solr_file_search($hook, $type, $value, $params) {
 
+	$set_language = get_language();
     $select = array(
         'start'  => $params['offset'],
         'rows'   => $params['limit'] ? $params['limit'] : 10,
-        'fields' => array('id','title','description', 'score'),
+		'querydefaultfield' => "text_{$set_language}",
+		'query' => $params['query'],
     );
 	
 	if ($params['select'] && is_array($params['select'])) {
@@ -32,35 +30,12 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
     $query = $client->createSelect($select);
 	
 	$default_sorts = array(
-		'score' => 'desc',
 		'date_created' => 'desc'
 	);
 	
 	$sorts = $params['sorts'] ? $params['sorts'] : $default_sorts;
 	$query->addSorts($sorts);
-	
-	$title_boost = elgg_solr_get_title_boost();
-	$description_boost = elgg_solr_get_description_boost();
-	
-	// get the dismax component and set a boost query
-	$dismax = $query->getEDisMax();
-	$qf = "title^{$title_boost} description^{$description_boost} attr_content^{$description_boost}";
-	if ($params['qf']) {
-		$qf = $params['qf'];
-	}
-	$dismax->setQueryFields($qf);
-	$dismax->setQueryAlternative('*:*');
-
-	
-	$boostQuery = elgg_solr_get_boost_query();
-	if ($boostQuery) {
-		$dismax->setBoostQuery($boostQuery);
-	}
-	
-	// this query is now a dismax query
-	$query->setQuery($params['query']);
-	
-	
+		
 	$params['fq']['type'] = 'type:object';
 	$params['fq']['subtype'] = 'subtype:file';
 
@@ -80,7 +55,7 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-	$hlfields = array('title', 'attr_content', 'description');
+	$hlfields = array("text_{$set_language}");
 	if ($params['hlfields']) {
 		$hlfields = $params['hlfields'];
 	}
@@ -122,11 +97,11 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 	$purifier = new HTMLPurifier($config);
 	
     foreach ($resultset as $document) {
-		$search_results[$document->id] = array();
+		$search_results[$document->guid] = array();
 		$snippet = '';
             
 		// highlighting results can be fetched by document id (the field defined as uniquekey in this schema)
-        $highlightedDoc = $highlighting->getResult($document->id);
+        $highlightedDoc = $highlighting->getResult($document->guid);
 
         if($highlightedDoc){
             foreach($highlightedDoc as $field => $highlight) {
@@ -143,13 +118,12 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 					$snippet = $purifier->purify($snippet);
 				}
 				
-				$search_results[$document->id][$field] = $snippet;
+				$search_results[$document->guid][$field] = $snippet;
             }
         }
-		$search_results[$document->id]['score'] = $document->score;
 
 		// normalize description with attr_content
-		$search_results[$document->id]['description'] = trim($search_results[$document->id]['description'] . ' ' . $search_results[$document->id]['attr_content']);
+		$search_results[$document->guid]["description_{$set_language}"] = trim($search_results[$document->guid]["description_{$set_language}"]);
     }
 	
 	// get the entities in a single query
@@ -163,38 +137,28 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 		));
 	}
 	
-	$show_score = elgg_get_plugin_setting('show_score', 'elgg_solr');
 	foreach ($search_results as $guid => $matches) {
 		foreach ($entities_unsorted as $e) {
 			if ($e->guid == $guid) {
 				
 				$desc_suffix = '';
-				if ($show_score == 'yes' && elgg_is_admin_logged_in()) {
-					$desc_suffix .= elgg_view('output/longtext', array(
-						'value' => elgg_echo('elgg_solr:relevancy', array($matches['score'])),
-						'class' => 'elgg-subtext'
-					));
-				}
-					
-					
-				if ($matches['title']) {
-					$e->setVolatileData('search_matched_title', $matches['title']);
+
+				if ($matches["title__{$set_language}"]) {
+					$e->setVolatileData('search_matched_title', $matches["title_{$set_language}"]);
 				}
 				else {
-					$e->setVolatileData('search_matched_title', $e->title);
+					$e->setVolatileData('search_matched_title', gc_explode_translation($e->title, $set_language));
 				}
 				
-				if ($matches['description']) {
-					$desc = $matches['description'];
+				if ($matches["description_{$set_language}"]) {
+					$desc = $matches["description_{$set_language}"];
 				}
 				else {
-					$desc = elgg_get_excerpt($e->description, 100);
+						$desc = elgg_get_excerpt(gc_explode_translation($e->description, $set_language), 100);
 				}
-				
-												
-				unset($matches['title']);
-				unset($matches['description']);
-				unset($matches['score']);
+											
+				unset($matches["title_{$set_language}"]);
+				unset($matches["description_{$set_language}"]);
 				$desc .= implode('...', $matches);
 				
 				$e->setVolatileData('search_matched_description', $desc . $desc_suffix);
@@ -211,14 +175,14 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 }
 
 
-
-
 function elgg_solr_object_search($hook, $type, $return, $params) {
+	$set_language = get_language();
 
     $select = array(
         'start'  => $params['offset'],
         'rows'   => $params['limit'] ? $params['limit'] : 10,
-        'fields' => array('id','title','description','score')
+		'query' => $params['query'],
+		'querydefaultfield' => "text_{$set_language}"
     );
 	
 	if ($params['select'] && is_array($params['select'])) {
@@ -230,29 +194,11 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 
     // get an update query instance
     $query = $client->createSelect($select);
-
-	$title_boost = elgg_solr_get_title_boost();
-	$description_boost = elgg_solr_get_description_boost();
-	
-	// get the dismax component and set a boost query
-	$dismax = $query->getEDisMax();
-	$qf = "title^{$title_boost} description^{$description_boost}";
-	if ($params['qf']) {
-		$qf = $params['qf'];
-	}
-	$dismax->setQueryFields($qf);
-	$dismax->setQueryAlternative('*:*');
-	
-	$boostQuery = elgg_solr_get_boost_query();
-	if ($boostQuery) {
-		$dismax->setBoostQuery($boostQuery);
-	}
 	
 	// this query is now a dismax query
 	$query->setQuery($params['query']);
 
 	$default_sorts = array(
-		'score' => 'desc',
 		'date_created' => 'desc'
 	);
 	
@@ -278,7 +224,7 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-	$hlfields = array('title', 'description');
+	$hlfields = array("text_{$set_language}");
 	if ($params['hlfields']) {
 		$hlfields = $params['hlfields'];
 	}
@@ -319,11 +265,11 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 
     $search_results = array();
     foreach ($resultset as $document) {
-		$search_results[$document->id] = array();
+		$search_results[$document->guid] = array();
 		$snippet = '';
             
 		// highlighting results can be fetched by document id (the field defined as uniquekey in this schema)
-        $highlightedDoc = $highlighting->getResult($document->id);
+        $highlightedDoc = $highlighting->getResult($document->guid);
 
         if($highlightedDoc){
             foreach($highlightedDoc as $field => $highlight) {
@@ -340,11 +286,9 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 					$snippet = $purifier->purify($snippet);
 				}
 				
-				$search_results[$document->id][$field] = $snippet;
+				$search_results[$document->guid][$field] = $snippet;
             }
         }
-		
-		$search_results[$document->id]['score'] = $document->score;
     }
 	
 	// get the entities
@@ -357,36 +301,28 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 		));
 	}
 	
-	$show_score = elgg_get_plugin_setting('show_score', 'elgg_solr');
 	foreach ($search_results as $guid => $matches) {
 		foreach ($entities_unsorted as $e) {
 			
 			$desc_suffix = '';
-			if ($show_score == 'yes' && elgg_is_admin_logged_in()) {
-				$desc_suffix .= elgg_view('output/longtext', array(
-					'value' => elgg_echo('elgg_solr:relevancy', array($matches['score'])),
-					'class' => 'elgg-subtext'
-				));
-			}
 			
 			if ($e->guid == $guid) {
-				if ($matches['title']) {
-					$e->setVolatileData('search_matched_title', $matches['title']);
+				if ($matches["title_{$set_language}"]) {
+					$e->setVolatileData('search_matched_title', $matches["title_{$set_language}"]);
 				}
 				else {
-					$e->setVolatileData('search_matched_title', $e->title);
+					$e->setVolatileData('search_matched_title', gc_explode_translation($e->title, $set_language));
 				}
 				
-				if ($matches['description']) {
-					$desc = $matches['description'];
+				if ($matches["description_{$set_language}"]) {
+					$desc = $matches["description_{$set_language}"];
 				}
 				else {
-					$desc = elgg_get_excerpt($e->description, 100);
+					$desc = elgg_get_excerpt(gc_explode_translation($e->description, $set_language), 100);
 				}
 				
-				unset($matches['title']);
-				unset($matches['description']);
-				unset($matches['score']);
+				unset($matches["title_{$set_language}"]);
+				unset($matches["description_{$set_language}"]);
 				$desc .= implode('...', $matches);
 				
 				$e->setVolatileData('search_matched_description', $desc . $desc_suffix);
@@ -405,8 +341,10 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 
 function elgg_solr_user_search($hook, $type, $return, $params) {
 
+	$set_language = get_language();
+
     $select = array(
-		'querydefaultfield' => 'text_en',
+		'querydefaultfield' => "text_{$set_language}",
         'start'  => $params['offset'],
 		'rows'   => $params['limit'] ? $params['limit'] : 10,
 		'query' => $params['query']
@@ -538,8 +476,8 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 			if ($e->guid == $guid) {
 				
 				$desc_suffix = '';
-				if ($matches['name_en']) {
-					$name = $matches['name_en'];
+				if ($matches["name_{$set_language}"]) {
+					$name = $matches["name_{$set_language}"];
 					if ($matches['username']) {
 						$name .= ' (@' . $matches['username'] . ')';
 					}
@@ -550,7 +488,7 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 					$e->setVolatileData('search_matched_title', $name);
 				}
 				else {
-					$name = $e->name;
+					$name = gc_explode_translation($e->name, $set_language);
 					if ($matches['username']) {
 						$name .= ' (@' . $matches['username'] . ')';
 					}
@@ -562,7 +500,7 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 				}
 				
 				// anything not already matched can be lumped in with the description
-				unset($matches['name_en']);
+				unset($matches["name_{$set_language}"]);
 				unset($matches['username']);
 				$desc_suffix .= implode('...', $matches);
 				$desc_hl = search_get_highlighted_relevant_substrings($e->description, $params['query']);
@@ -582,10 +520,13 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 
 function elgg_solr_group_search($hook, $type, $return, $params) {
 
+	$set_language = get_language();
+	 
     $select = array(
         'start'  => $params['offset'],
         'rows'   => $params['limit'] ? $params['limit'] : 10,
-        'fields' => array('id','name','description', 'score')
+		'query' => $params['query'],
+		'querydefaultfield' => "text_{$set_language}",
     );
 	
 	if ($params['select'] && is_array($params['select'])) {
@@ -599,29 +540,11 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
     $query = $client->createSelect($select);
 	
 	$default_sorts = array(
-		'score' => 'desc',
 		'date_created' => 'desc'
 	);
 	
 	$sorts = $params['sorts'] ? $params['sorts'] : $default_sorts;
 	$query->addSorts($sorts);
-	
-	$title_boost = elgg_solr_get_title_boost();
-	$description_boost = elgg_solr_get_description_boost();
-	
-	// get the dismax component and set a boost query
-	$dismax = $query->getEDisMax();
-	$qf = "name^{$title_boost} description^{$description_boost}";
-	if ($params['qf']) {
-		$qf = $params['qf'];
-	}
-	$dismax->setQueryFields($qf);
-	$dismax->setQueryAlternative('*:*');
-	
-	$boostQuery = elgg_solr_get_boost_query();
-	if ($boostQuery) {
-		$dismax->setBoostQuery($boostQuery);
-	}
 	
 	// this query is now a dismax query
 	$query->setQuery($params['query']);
@@ -630,6 +553,7 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
 	$params['fq']['type'] = 'type:group';
 
 	$default_fq = elgg_solr_get_default_fq($params);
+	unset($default_fq['subtype']);
 	if ($params['fq']) {
 		$filter_queries = array_merge($default_fq, $params['fq']);
 	}
@@ -645,7 +569,7 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
 
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-	$hlfields = array('name', 'description');
+	$hlfields = array("text_{$set_language}");
 	if ($params['hlfields']) {
 		$hlfields = $params['hlfields'];
 	}
@@ -687,11 +611,11 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
 	$purifier = new HTMLPurifier($config);
 	
     foreach ($resultset as $document) {
-		$search_results[$document->id] = array();
+		$search_results[$document->guid] = array();
 		$snippet = '';
             
 		// highlighting results can be fetched by document id (the field defined as uniquekey in this schema)
-        $highlightedDoc = $highlighting->getResult($document->id);
+        $highlightedDoc = $highlighting->getResult($document->guid);
 
         if($highlightedDoc){
             foreach($highlightedDoc as $field => $highlight) {
@@ -708,11 +632,9 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
 					$snippet = $purifier->purify($snippet);
 				}
 				
-				$search_results[$document->id][$field] = $snippet;
+				$search_results[$document->guid][$field] = $snippet;
             }
         }
-		
-		$search_results[$document->id]['score'] = $document->score;
     }
 
 	// get the entities
@@ -725,41 +647,33 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
 		));
 	}
 	
-	$show_score = elgg_get_plugin_setting('show_score', 'elgg_solr');
 	foreach ($search_results as $guid => $matches) {
 		foreach ($entities_unsorted as $e) {
 			
 			$desc_suffix = '';
-			if ($show_score == 'yes' && elgg_is_admin_logged_in()) {
-				$desc_suffix .= elgg_view('output/longtext', array(
-					'value' => elgg_echo('elgg_solr:relevancy', array($matches['score'])),
-					'class' => 'elgg-subtext'
-				));
-			}
 				
 			if ($e->guid == $guid) {
-				if ($matches['name']) {
-					$name = $matches['name'];
+				if ($matches["name_{$set_language}"]) {
+					$name = $matches["name_{$set_language}"];
 					$e->setVolatileData('search_matched_name', $name);
 					$e->setVolatileData('search_matched_title', $name);
 				}
 				else {
-					$name = $e->name;
+					$name = gc_explode_translation($e->name, $set_language);
 					$e->setVolatileData('search_matched_name', $name);
 					$e->setVolatileData('search_matched_title', $name);
 				}
 				
-				if ($matches['description']) {
-					$desc = $matches['description'];
+				if ($matches["description_{$set_language}"]) {
+					$desc = $matches["description_{$set_language}"];
 				}
 				else {
-					$desc = search_get_highlighted_relevant_substrings($e->description, $params['query']);
+					$desc = search_get_highlighted_relevant_substrings(gc_explode_translation($e->description, $set_language), $params['query']);
 				}
 				
 								
-				unset($matches['name']);
-				unset($matches['description']);
-				unset($matches['score']);
+				unset($matches["name_{$set_language}"]);
+				unset($matches["description_{$set_language}"]);
 				$desc .= implode('...', $matches);
 				
 				$e->setVolatileData('search_matched_description', $desc . $desc_suffix);
@@ -796,7 +710,9 @@ function elgg_solr_user_settings_save($hook, $type, $return, $params) {
 }
 
 
-
+/* Thursday, July 12 2018
+ * this won't be used for now, temporarily disabled
+ */
 function elgg_solr_tag_search($hook, $type, $return, $params) {
 	
 	$valid_tag_names = elgg_get_registered_tag_metadata_names();
