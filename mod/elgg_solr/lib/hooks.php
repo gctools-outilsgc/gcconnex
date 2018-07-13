@@ -11,11 +11,11 @@
  */
 function elgg_solr_file_search($hook, $type, $value, $params) {
 
-	$get_language = get_language();
+	$language = get_language();
     $select = array(
         'start'  => $params['offset'],
         'rows'   => $params['limit'] ? $params['limit'] : 10,
-		'querydefaultfield' => "text_{$get_language}",
+		'querydefaultfield' => "text_{$language}",
 		'query' => $params['query'],
     );
 	
@@ -55,7 +55,7 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-	$hlfields = array("text_{$get_language}");
+	$hlfields = array("text_{$language}");
 	if ($params['hlfields']) {
 		$hlfields = $params['hlfields'];
 	}
@@ -123,7 +123,7 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
         }
 
 		// normalize description with attr_content
-		$search_results[$document->guid]["description_{$get_language}"] = trim($search_results[$document->guid]["description_{$get_language}"]);
+		$search_results[$document->guid]["description_{$language}"] = trim($search_results[$document->guid]["description_{$language}"]);
     }
 	
 	// get the entities in a single query
@@ -143,22 +143,22 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 				
 				$desc_suffix = '';
 
-				if ($matches["title__{$get_language}"]) {
-					$e->setVolatileData('search_matched_title', $matches["title_{$get_language}"]);
+				if ($matches["title__{$language}"]) {
+					$e->setVolatileData('search_matched_title', $matches["title_{$language}"]);
 				}
 				else {
-					$e->setVolatileData('search_matched_title', gc_explode_translation($e->title, $get_language));
+					$e->setVolatileData('search_matched_title', gc_explode_translation($e->title, $language));
 				}
 				
-				if ($matches["description_{$get_language}"]) {
-					$desc = $matches["description_{$get_language}"];
+				if ($matches["description_{$language}"]) {
+					$desc = $matches["description_{$language}"];
 				}
 				else {
-						$desc = elgg_get_excerpt(gc_explode_translation($e->description, $get_language), 100);
+						$desc = elgg_get_excerpt(gc_explode_translation($e->description, $language), 100);
 				}
 											
-				unset($matches["title_{$get_language}"]);
-				unset($matches["description_{$get_language}"]);
+				unset($matches["title_{$language}"]);
+				unset($matches["description_{$language}"]);
 				$desc .= implode('...', $matches);
 				
 				$e->setVolatileData('search_matched_description', $desc . $desc_suffix);
@@ -176,13 +176,13 @@ function elgg_solr_file_search($hook, $type, $value, $params) {
 
 
 function elgg_solr_object_search($hook, $type, $return, $params) {
-	$get_language = get_language();
+	$language = get_language();
 
     $select = array(
         'start'  => $params['offset'],
         'rows'   => $params['limit'] ? $params['limit'] : 10,
 		'query' => $params['query'],
-		'querydefaultfield' => "text_{$get_language}"
+		'querydefaultfield' => "text_{$language}"
     );
 	
 	if ($params['select'] && is_array($params['select'])) {
@@ -224,7 +224,7 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-	$hlfields = array("text_{$get_language}");
+	$hlfields = array("text_{$language}");
 	if ($params['hlfields']) {
 		$hlfields = $params['hlfields'];
 	}
@@ -307,22 +307,22 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 			$desc_suffix = '';
 			
 			if ($e->guid == $guid) {
-				if ($matches["title_{$get_language}"]) {
-					$e->setVolatileData('search_matched_title', $matches["title_{$get_language}"]);
+				if ($matches["title_{$language}"]) {
+					$e->setVolatileData('search_matched_title', $matches["title_{$language}"]);
 				}
 				else {
-					$e->setVolatileData('search_matched_title', gc_explode_translation($e->title, $get_language));
+					$e->setVolatileData('search_matched_title', gc_explode_translation($e->title, $language));
 				}
 				
-				if ($matches["description_{$get_language}"]) {
-					$desc = $matches["description_{$get_language}"];
+				if ($matches["description_{$language}"]) {
+					$desc = $matches["description_{$language}"];
 				}
 				else {
-					$desc = elgg_get_excerpt(gc_explode_translation($e->description, $get_language), 100);
+					$desc = elgg_get_excerpt(gc_explode_translation($e->description, $language), 100);
 				}
 				
-				unset($matches["title_{$get_language}"]);
-				unset($matches["description_{$get_language}"]);
+				unset($matches["title_{$language}"]);
+				unset($matches["description_{$language}"]);
 				$desc .= implode('...', $matches);
 				
 				$e->setVolatileData('search_matched_description', $desc . $desc_suffix);
@@ -341,10 +341,10 @@ function elgg_solr_object_search($hook, $type, $return, $params) {
 
 function elgg_solr_user_search($hook, $type, $return, $params) {
 
-	$get_language = get_language();
+	$language = get_language();
 
     $select = array(
-		'querydefaultfield' => "text_{$get_language}",
+		'querydefaultfield' => "text_{$language}",
         'start'  => $params['offset'],
 		'rows'   => $params['limit'] ? $params['limit'] : 10,
 		'query' => $params['query']
@@ -392,7 +392,7 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 	
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-	$hlfields = array("text_{$get_language}");
+	$hlfields = array("text_{$language}");
 	
 	if ($params['hlfields']) {
 		$hlfields = $params['hlfields'];
@@ -476,8 +476,8 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 			if ($e->guid == $guid) {
 				
 				$desc_suffix = '';
-				if ($matches["name_{$get_language}"]) {
-					$name = $matches["name_{$get_language}"];
+				if ($matches["name_{$language}"]) {
+					$name = $matches["name_{$language}"];
 					if ($matches['username']) {
 						$name .= ' (@' . $matches['username'] . ')';
 					}
@@ -488,7 +488,7 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 					$e->setVolatileData('search_matched_title', $name);
 				}
 				else {
-					$name = gc_explode_translation($e->name, $get_language);
+					$name = gc_explode_translation($e->name, $language);
 					if ($matches['username']) {
 						$name .= ' (@' . $matches['username'] . ')';
 					}
@@ -500,7 +500,7 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 				}
 				
 				// anything not already matched can be lumped in with the description
-				unset($matches["name_{$get_language}"]);
+				unset($matches["name_{$language}"]);
 				unset($matches['username']);
 				$desc_suffix .= implode('...', $matches);
 				$desc_hl = search_get_highlighted_relevant_substrings($e->description, $params['query']);
@@ -520,13 +520,13 @@ function elgg_solr_user_search($hook, $type, $return, $params) {
 
 function elgg_solr_group_search($hook, $type, $return, $params) {
 
-	$get_language = get_language();
+	$language = get_language();
 	 
     $select = array(
         'start'  => $params['offset'],
         'rows'   => $params['limit'] ? $params['limit'] : 10,
 		'query' => $params['query'],
-		'querydefaultfield' => "text_{$get_language}",
+		'querydefaultfield' => "text_{$language}",
     );
 	
 	if ($params['select'] && is_array($params['select'])) {
@@ -569,7 +569,7 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
 
     // get highlighting component and apply settings
     $hl = $query->getHighlighting();
-	$hlfields = array("text_{$get_language}");
+	$hlfields = array("text_{$language}");
 	if ($params['hlfields']) {
 		$hlfields = $params['hlfields'];
 	}
@@ -653,27 +653,27 @@ function elgg_solr_group_search($hook, $type, $return, $params) {
 			$desc_suffix = '';
 				
 			if ($e->guid == $guid) {
-				if ($matches["name_{$get_language}"]) {
-					$name = $matches["name_{$get_language}"];
+				if ($matches["name_{$language}"]) {
+					$name = $matches["name_{$language}"];
 					$e->setVolatileData('search_matched_name', $name);
 					$e->setVolatileData('search_matched_title', $name);
 				}
 				else {
-					$name = gc_explode_translation($e->name, $get_language);
+					$name = gc_explode_translation($e->name, $language);
 					$e->setVolatileData('search_matched_name', $name);
 					$e->setVolatileData('search_matched_title', $name);
 				}
 				
-				if ($matches["description_{$get_language}"]) {
-					$desc = $matches["description_{$get_language}"];
+				if ($matches["description_{$language}"]) {
+					$desc = $matches["description_{$language}"];
 				}
 				else {
-					$desc = search_get_highlighted_relevant_substrings(gc_explode_translation($e->description, $get_language), $params['query']);
+					$desc = search_get_highlighted_relevant_substrings(gc_explode_translation($e->description, $language), $params['query']);
 				}
 				
 								
-				unset($matches["name_{$get_language}"]);
-				unset($matches["description_{$get_language}"]);
+				unset($matches["name_{$language}"]);
+				unset($matches["description_{$language}"]);
 				$desc .= implode('...', $matches);
 				
 				$e->setVolatileData('search_matched_description', $desc . $desc_suffix);
