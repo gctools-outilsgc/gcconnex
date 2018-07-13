@@ -338,11 +338,11 @@ function get_blogposts_by_colleague($user, $limit, $offset, $filters, $lang, $ta
 
  	if ($filter_data->name) {
  		$db_prefix = elgg_get_config('dbprefix');
- 		$params['joins'] = array("JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
+ 		$params['joins'] = array("INNER JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
  		$params['wheres'] = array("(oe.title LIKE '%" . $filter_data->name . "%' OR oe.description LIKE '%" . $filter_data->name . "%')");
  	}
 
- 	$all_blog_posts = elgg_list_entities_from_metadata($params);
+ 	$all_blog_posts = elgg_list_entities_from_relationship($params);
  } else {
 	 $all_blog_posts = elgg_list_entities_from_relationship(array(
 		 'type' => 'object',
