@@ -134,7 +134,11 @@ function foreach_blogs($blogs, $user_entity, $lang)
 		));
 		$blog_post->liked = count($liked) > 0;
 
-		$blog_post->comments = get_entity_comments($blog_post->guid);
+		$blog_post->comment_count = elgg_get_entities(array(
+			'container_guid' => $guid,
+			'count' => true,
+			'distinct' => false,
+		));
 
 		$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
 
@@ -190,7 +194,11 @@ function get_blogpost($user, $guid, $lang)
 	));
 	$blog_post->liked = count($liked) > 0;
 
-	$blog_post->comments = get_entity_comments($blog_post->guid);
+	$blog_post->comment_count = elgg_get_entities(array(
+		'container_guid' => $guid,
+		'count' => true,
+		'distinct' => false,
+	));
 
 	$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
 

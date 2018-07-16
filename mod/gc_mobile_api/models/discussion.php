@@ -116,24 +116,15 @@ function get_discussion($user, $guid, $thread, $lang)
 	$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
 	$discussion->description = gc_explode_translation($discussion->description, $lang);
 
-	$discussionsArray = array();
-	$discussionsArray[] = $discussion;
-
 	if ($thread) {
-		$all_replies = elgg_list_entities_from_metadata(array(
-			'type' => 'object',
-			'subtype' => 'discussion_reply',
-			'container_guid' => $guid
+		$discussion->comment_count = elgg_get_entities(array(
+			'container_guid' => $guid,
+			'count' => true,
+			'distinct' => false,
 		));
-		$replies = json_decode($all_replies);
-		$replies = array_reverse($replies);
-
-		foreach ($replies as $reply) {
-			$discussionsArray[] = $reply;
-		}
 	}
 
-	return $discussionsArray;
+	return $discussion;
 }
 
 function get_discussions($user, $limit, $offset, $filters, $lang)
