@@ -866,7 +866,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 
 	//Nick -Remove empty comment and reply links from river menu
 	foreach ($return as $key => $item) {
-		if ($item->getName() == 'access') {
+		if ($item && $item->getName() == 'access') {
 			unset($return[$key]);
 		}
 	}
