@@ -150,6 +150,12 @@ function get_docs($user, $limit, $offset, $filters, $lang)
 
 		$doc->userDetails = get_user_block($doc->owner_guid, $lang);
 		$doc->description = clean_text(gc_explode_translation($doc->description, $lang));
+
+		if ($doc->container_guid != $doc->owner_guid){
+			$doc->group_guid = $doc->container_guid;
+			$docGroup = get_entity($doc->group_guid);
+			$doc->group = gc_explode_translation($docGroup->name, $lang);
+		  }
 	}
 
 	return $docs;
