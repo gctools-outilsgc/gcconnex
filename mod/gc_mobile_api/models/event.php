@@ -202,27 +202,8 @@ function get_event($user, $guid, $lang)
 	return $event;
 }
 
-function get_events($user, $from, $to, $limit, $offset, $lang)
+function foreach_events($params, $from, $to, $user_entity, $lang)
 {
-	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
-	if (!$user_entity) {
-		return "User was not found. Please try a different GUID, username, or email address";
-	}
-	if (!$user_entity instanceof ElggUser) {
-		return "Invalid user. Please try a different GUID, username, or email address";
-	}
-
-	if (!elgg_is_logged_in()) {
-		login($user_entity);
-	}
-
-	$params = array(
-		'type' => 'object',
-		'subtype' => 'event_calendar',
-		'limit' => $limit,
-		'offset' => $offset,
-		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer'))
-	);
 	$now = time();
 	if ($from && ($now<strtotime($from))) {
 		$params['metadata_name_value_pairs'][] = array(
@@ -298,6 +279,33 @@ function get_events($user, $from, $to, $limit, $offset, $lang)
 			}
 		}
 	}
+	return $events
+}
+
+function get_events($user, $from, $to, $limit, $offset, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$params = array(
+		'type' => 'object',
+		'subtype' => 'event_calendar',
+		'limit' => $limit,
+		'offset' => $offset,
+		'order_by_metadata' => array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer'))
+	);
+
+	$events = foreach_events($params, $from, $to, $user_entity, $lang);
+
 	return $events;
 }
 
@@ -330,67 +338,8 @@ function get_events_by_owner($user, $target, $from, $to, $limit, $offset, $lang)
 		'container_guid' => $target_entity->guid,
 	);
 
-	$now = time();
-	if ($from && ($now<strtotime($from))) {
-		$params['metadata_name_value_pairs'][] = array(
-			'name' => 'end_date',
-			'value' => strtotime($from),
-			'operand' => '>='
-		);
-	} else {
-		$params['metadata_name_value_pairs'][] = array(
-			'name' => 'end_date',
-			'value' => $now,
-			'operand' => '>='
-		);
-	}
-	if ($to) {
-		$params['metadata_name_value_pairs'][] = array(
-			'name' => 'end_date',
-			'value' => strtotime($to),
-			'operand' => '<='
-		);
-	}
+	$events = foreach_events($params, $from, $to, $user_entity, $lang);
 
-	$all_events = elgg_list_entities_from_relationship($params);
-
-	$events = json_decode($all_events);
-	$one_day = 60*60*24;
-	foreach ($events as $event) {
-
-		$eventObj = get_entity($event->guid);
-		if (($eventObj->start_date > $now-$one_day) || ($eventObj->end_date && ($eventObj->end_date > $now-$one_day))) {
-
-			$likes = elgg_get_annotations(array(
-				'guid' => $event->guid,
-				'annotation_name' => 'likes'
-			));
-			$event->likes = count($likes);
-
-			$liked = elgg_get_annotations(array(
-				'guid' => $event->guid,
-				'annotation_owner_guid' => $user_entity->guid,
-				'annotation_name' => 'likes'
-			));
-			$event->liked = count($liked) > 0;
-
-			$event->title = gc_explode_translation($event->title, $lang);
-			$event->description = gc_explode_translation($event->description, $lang);
-
-			$event->userDetails = get_user_block($event->owner_guid, $lang);
-
-			$eventObj = get_entity($event->guid);
-			$event->startDate = date("Y-m-d H:i:s", $eventObj->start_date);
-			$event->endDate = date("Y-m-d H:i:s", $eventObj->end_date);
-			$event->location = $eventObj->venue;
-
-			if ($eventObj->group_guid){
-				$group = get_entity($eventObj->group_guid);
-				$event->group = gc_explode_translation($group->name, $lang);
-				$event->groupGUID = $eventObj->group_guid;
-			}
-		}
-	}
 	return $events;
 }
 
@@ -430,66 +379,7 @@ function get_events_by_colleagues($user, $from, $to, $limit, $offset, $lang)
 			'wheres' => array("r.relationship = 'personal_event'","r.guid_one IN ($friend_list)"),
 		);
 
-		$now = time();
-		if ($from && ($now<strtotime($from))) {
-			$params['metadata_name_value_pairs'][] = array(
-				'name' => 'end_date',
-				'value' => strtotime($from),
-				'operand' => '>='
-			);
-		} else {
-			$params['metadata_name_value_pairs'][] = array(
-				'name' => 'end_date',
-				'value' => $now,
-				'operand' => '>='
-			);
-		}
-		if ($to) {
-			$params['metadata_name_value_pairs'][] = array(
-				'name' => 'end_date',
-				'value' => strtotime($to),
-				'operand' => '<='
-			);
-		}
-
-		$all_events = elgg_list_entities_from_metadata($params);
-		$events = json_decode($all_events);
-		$one_day = 60*60*24;
-		foreach ($events as $event) {
-
-			$eventObj = get_entity($event->guid);
-			if (($eventObj->start_date > $now-$one_day) || ($eventObj->end_date && ($eventObj->end_date > $now-$one_day))) {
-
-				$likes = elgg_get_annotations(array(
-					'guid' => $event->guid,
-					'annotation_name' => 'likes'
-				));
-				$event->likes = count($likes);
-
-				$liked = elgg_get_annotations(array(
-					'guid' => $event->guid,
-					'annotation_owner_guid' => $user_entity->guid,
-					'annotation_name' => 'likes'
-				));
-				$event->liked = count($liked) > 0;
-
-				$event->title = gc_explode_translation($event->title, $lang);
-				$event->description = gc_explode_translation($event->description, $lang);
-
-				$event->userDetails = get_user_block($event->owner_guid, $lang);
-
-				$eventObj = get_entity($event->guid);
-				$event->startDate = date("Y-m-d H:i:s", $eventObj->start_date);
-				$event->endDate = date("Y-m-d H:i:s", $eventObj->end_date);
-				$event->location = $eventObj->venue;
-
-				if ($eventObj->group_guid){
-					$group = get_entity($eventObj->group_guid);
-					$event->group = gc_explode_translation($group->name, $lang);
-					$event->groupGUID = $eventObj->group_guid;
-				}
-			}
-		}
+		$events = foreach_events($params, $from, $to, $user_entity, $lang);
 	}
 	return $events;
 }
