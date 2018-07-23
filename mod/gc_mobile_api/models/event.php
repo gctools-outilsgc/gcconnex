@@ -279,7 +279,7 @@ function foreach_events($params, $from, $to, $user_entity, $lang)
 			}
 		}
 	}
-	return $events
+	return $events;
 }
 
 function get_events($user, $from, $to, $limit, $offset, $lang)
