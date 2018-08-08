@@ -35,7 +35,7 @@ if (isset($vars['body_attrs'])) {
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->
 <script>
-var userid = ''<?php echo elgg_get_logged_in_user_guid() ?>;
+var userid = '<?php echo elgg_get_logged_in_user_guid(); ?>';
 document.cookie = "cc_data="+userid;
 </script>
 <head>
