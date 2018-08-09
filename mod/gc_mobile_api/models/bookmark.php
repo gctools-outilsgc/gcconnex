@@ -81,7 +81,7 @@ function get_bookmark($user, $guid, $lang)
 
   $entity = get_entity($guid);
   if (!$entity) {
-    return "Event was not found. Please try a different GUID";
+    return "Bookmark was not found. Please try a different GUID";
   }
   //check if entity is bookmark? subtype bookmarks
 
