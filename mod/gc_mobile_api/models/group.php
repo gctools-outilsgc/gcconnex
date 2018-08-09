@@ -604,7 +604,18 @@ function get_group_discussions($user, $guid, $limit, $offset, $lang)
 
 	$discussions = json_decode($discussions);
 	foreach ($discussions as $discussion) {
+		$likes = elgg_get_annotations(array(
+			'guid' => $discussion->guid,
+			'annotation_name' => 'likes'
+		));
+		$discussion->likes = count($likes);
 
+		$liked = elgg_get_annotations(array(
+			'guid' => $discussion->guid,
+			'annotation_owner_guid' => $user_entity->guid,
+			'annotation_name' => 'likes'
+		));
+		$discussion->liked = count($liked) > 0;
 		$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
 		$discussion->title = gc_explode_translation($discussion->title, $lang);
 		$discussion->description = gc_explode_translation($discussion->description, $lang);
