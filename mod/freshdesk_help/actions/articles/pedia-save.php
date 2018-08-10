@@ -1,5 +1,5 @@
 <?php
-$myFile = "pedia-articles.json";
+$myFile = elgg_get_config("dataroot") . "freshdesk_help/pedia-articles.json";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $stringData = $_POST["html"];
 fwrite($fh, $stringData);
