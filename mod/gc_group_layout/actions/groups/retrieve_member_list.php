@@ -34,14 +34,14 @@ if ($total_items == 0) {
 
     $tbody[] = "
         <tr class='testing' role='row'>
-            <td class='data-table-list-item sorting_1' colspan='2'> 
+            <td class='data-table-list-item sorting_1' colspan='2'>
                 <article class='col-xs-12 mrgn-tp-sm  mrgn-bttm-sm'>
                     {$txtNoResults}
                 </article>
             </td>
         </tr>";
 
-} else { 
+} else {
 
     foreach ($members as $member) {
 
@@ -51,30 +51,32 @@ if ($total_items == 0) {
         $user_title = ($user->job) ? "<div class='mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix'>{$user->job}</div>" : "";
         $user_location = ($user->location) ? "<li class='elgg-menu-item-location'><span>{$user->location}</span></li>" : "";
 
-        // remove add pending friend request
-        if ($user->isFriendOf($current_user->getGUID())) {
-            $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/remove?friend={$member[guid]}");
-            $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend:remove")."</a>";
-        } else {
-            // pending request
-            if (check_entity_relationship($current_user->getGUID(), "friendrequest", $user->getGUID())) {
-                $addRemoveFriendURL = elgg_add_action_tokens_to_url("friend_request/{$current_user->username}#friend_request_sent_listing");
-                $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend_request:friend:add:pending")."</a>";
-            } else {
-                $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$member[guid]}");
-                $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend:add")."</a>";
-            }
-        }
-        
-        
+				if($current_user){
+	        // remove add pending friend request
+	        if ($user->isFriendOf($current_user->getGUID())) {
+	            $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/remove?friend={$member[guid]}");
+	            $user_addRemoveFriend = "<li><a href='{$addRemoveFriendURL}'>".elgg_echo("friend:remove")."</a></li>";
+	        } else {
+	            // pending request
+	            if (check_entity_relationship($current_user->getGUID(), "friendrequest", $user->getGUID())) {
+	                $addRemoveFriendURL = elgg_add_action_tokens_to_url("friend_request/{$current_user->username}#friend_request_sent_listing");
+	                $user_addRemoveFriend = "<li><a href='{$addRemoveFriendURL}'>".elgg_echo("friend_request:friend:add:pending")."</a></li>";
+	            } else {
+	                $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$member[guid]}");
+	                $user_addRemoveFriend = "<li><a href='{$addRemoveFriendURL}'>".elgg_echo("friend:add")."</a></li>";
+	            }
+	        }
+				}
+
+
         if ($group->canEdit()) {
             $removeMemberURL = elgg_add_action_tokens_to_url("action/groups/remove?user_guid={$member[guid]}");
-            $user_RemoveMember = "<a href='{$removeMemberURL}'>Remove from group</a>";
+            $user_RemoveMember = "<li><a href='{$removeMemberURL}'>".elgg_echo('group:member_remove_group')."</a></li>";
         }
 
         $tbody[] = "
         <tr class='testing' role='row'>
-            <td class='data-table-list-item sorting_1'> 
+            <td class='data-table-list-item sorting_1'>
                 <article class='col-xs-12 mrgn-tp-sm  mrgn-bttm-sm'>
                     <div aria-hidden='true' class='mrgn-tp-sm col-xs-2'>
                         {$user_icon}
@@ -83,10 +85,10 @@ if ($total_items == 0) {
                         <h3 class='mrgn-bttm-0 summary-title'><a href='{$member['url']}' rel='me'>{$member['name']}</a></h3>
                         $user_title
                         <div>
-                            <ul class='elgg-menu elgg-menu-entity list-inline mrgn-tp-sm elgg-menu-hz elgg-menu-entity-default'>
-                                <p>$user_location</p>
-                                <p>$user_addRemoveFriend</p>
-                                <p>$user_RemoveMember</p>
+                            <ul class='elgg-menu elgg-menu-entity mrgn-tp-sm elgg-menu-entity-default list-unstyled'>
+                                $user_location
+                                $user_addRemoveFriend
+                                $user_RemoveMember
                             </ul>
                         </div>
                     </div>
@@ -104,6 +106,3 @@ echo json_encode([
     'member_count' => $total_items,
 	'member_list' => $tbody,
 ]);
-
-
-

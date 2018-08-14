@@ -26,36 +26,38 @@ foreach ($items as $item) {
     $user = get_entity($item['guid']);
     $user_icon = elgg_view_entity_icon($user, 'medium');
 
-    
+
     $user_title = ($user->job) ? "<div class='mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix'>{$user->job}</div>" : "";
     $user_location = ($user->location) ? "<li class='elgg-menu-item-location'><span>{$user->location}</span></li>" : "";
 
     // friend options
-    // @TODO Ajaxify this
-    if ($user->isFriendOf($current_user->getGUID())) {
-        $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/remove?friend={$item[guid]}");
-        $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend:remove")."</a>";
-    } else {
-        // pending request
-        if (check_entity_relationship($current_user->getGUID(), "friendrequest", $user->getGUID())) {
-            $addRemoveFriendURL = elgg_add_action_tokens_to_url("friend_request/{$current_user->username}#friend_request_sent_listing");
-            $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend_request:friend:add:pending")."</a>";
-        } else {
-            $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$item[guid]}");
-            $user_addRemoveFriend = "<a href='{$addRemoveFriendURL}'>".elgg_echo("friend:add")."</a>";
-        }
+    if($current_user){
+      // @TODO Ajaxify this
+      if ($user->isFriendOf($current_user->getGUID())) {
+          $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/remove?friend={$item[guid]}");
+          $user_addRemoveFriend = "<li><a href='{$addRemoveFriendURL}'>".elgg_echo("friend:remove")."</a></li>";
+      } else {
+          // pending request
+          if (check_entity_relationship($current_user->getGUID(), "friendrequest", $user->getGUID())) {
+              $addRemoveFriendURL = elgg_add_action_tokens_to_url("friend_request/{$current_user->username}#friend_request_sent_listing");
+              $user_addRemoveFriend = "<li><a href='{$addRemoveFriendURL}'>".elgg_echo("friend_request:friend:add:pending")."</a></li>";
+          } else {
+              $addRemoveFriendURL = elgg_add_action_tokens_to_url("action/friends/add?friend={$item[guid]}");
+              $user_addRemoveFriend = "<li><a href='{$addRemoveFriendURL}'>".elgg_echo("friend:add")."</a></li>";
+          }
+      }
     }
 
     if ($group->canEdit()) {
         $removeMemberURL = elgg_add_action_tokens_to_url("action/groups/remove?user_guid={$item[guid]}");
-        $user_RemoveMember = "<a href='{$removeMemberURL}'>Remove from group</a>";
+        $user_RemoveMember = "<li><a href='{$removeMemberURL}'>".elgg_echo('group:member_remove_group')."</a></li>";
     }
 
     // @TODO condition for no members
     // @TODO the links should be listed
     $tbody .= "
     <tr class='testing' role='row'>
-        <td class='data-table-list-item sorting_1'> 
+        <td class='data-table-list-item sorting_1'>
             <article class='col-xs-12 mrgn-tp-sm  mrgn-bttm-sm'>
                 <div aria-hidden='true' class='mrgn-tp-sm col-xs-2'>
                     {$user_icon}
@@ -64,10 +66,10 @@ foreach ($items as $item) {
                     <h3 class='mrgn-bttm-0 summary-title'><a href='{$item['url']}' rel='me'>{$item['name']}</a></h3>
                     $user_title
                     <div>
-                        <ul class='elgg-menu elgg-menu-entity list-inline mrgn-tp-sm elgg-menu-hz elgg-menu-entity-default'>
-                            <p>$user_location</p>
-                            <p>$user_addRemoveFriend</p>
-                            <p>$user_RemoveMember</p>
+                        <ul class='elgg-menu elgg-menu-entity mrgn-tp-sm elgg-menu-entity-default list-unstyled'>
+                            $user_location
+                            $user_addRemoveFriend
+                            $user_RemoveMember
                         </ul>
                     </div>
                 </div>
@@ -89,9 +91,10 @@ $paginate = "";
 $paginate .= "<ul id='custom-pagination' class='elgg-pagination pagination'>";
 $paginate .= "<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>{$previous}</span></li>";
 
-for ( $k=1; $k<=$pages; $k++ ) {
+for ( $k=0; $k<$pages; $k++ ) {
     $pagination_offset = $k * $limit;
-    $paginate .= "<li id='pagination-page-{$k}'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$k</a></li>";
+    $pagination_label = $k + 1;
+    $paginate .= "<li id='pagination-page-{$pagination_label}' class='pagination-page-number'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$pagination_label</a></li>";
 }
 $paginate .= "<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>{$next}</a></li>";
 $paginate .= "</ul>";
@@ -105,13 +108,18 @@ $dropdown = "
     <option value='25'>25</option>
     <option value='50'>50</option>
     <option value='100'>100</option>
-</select>"; 
+</select>";
 
 $txtDropDown = '<label>' . elgg_echo('group:show_entries_dropdown', array($dropdown)) . '</label>';
 
 
 $display_offset = $offset + 1;
 $display_limit = $offset + $limit;
+
+//make entries text more readable
+if($display_limit > $total_items){
+  $display_limit = $total_items;
+}
 
 // text with translations
 $txtGroupMembers = elgg_echo('group:member_list');
@@ -130,7 +138,7 @@ echo <<<___HTML
 
 <div style='width:100%; overflow:hidden; padding: 5px 5px 25px 5px;'>
     <div style='float:right; padding-top:5px; padding-bottom:5px;'>{$searchbox}</div>
-    <div style='padding-top:10px; padding-bottom:5px;'>{$txtShowEntries}</div>    
+    <div style='padding-top:10px; padding-bottom:5px;'>{$txtShowEntries}</div>
 </div>
 <input type='hidden' id='txtHiddenOffset'></input>
 <div id='customTable'>
@@ -139,7 +147,7 @@ echo <<<___HTML
             <tr style='border-bottom:1pt solid gray;'>
                 <th style="width:665px; font-weight:700; font-size:1.2em;">{$txtGroupMembers}</th>
                 <th style="width:665px; font-weight:700; font-size:1.2em;">{$txtDateJoined}</th>
-            </tr> 
+            </tr>
         </thead>
         <tbody id='body-member-list'>
             $tbody
@@ -183,12 +191,12 @@ $('#dpLimit').change(function(event) {
         success: function (content_array) {
             for (var item in content_array.output.member_list)
                 $('#body-member-list').append(content_array.output.member_list[item]);
-            
+
             var member_count = parseInt(content_array.output.member_count);
             if (member_count <= limit) {
                 $('#custom-pagination').children().remove();
             } else {
-                
+
                 $('#custom-pagination').children().remove();
 
                 // pagination
@@ -196,13 +204,14 @@ $('#dpLimit').change(function(event) {
                 var pagination_children = '';
                 var pagination_offset;
                 var k;
-                $('#custom-pagination').append("<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>"+elgg.echo('group:next_set')+"</span></li>");
-                for ( k=1; k<=pages; k++ ) {
+                $('#custom-pagination').append("<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>"+elgg.echo('group:previous_set')+"</span></li>");
+                for ( k=0; k<pages; k++ ) {
                     console.log("k: " + k + " // limit: " + limit );
                     pagination_offset = k * limit;
-                    $('#custom-pagination').append("<li id='pagination-page-"+k+"'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+k+"</a></li>");
+                    pagination_label = k + 1;
+                    $('#custom-pagination').append("<li id='pagination-page-"+pagination_label+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+pagination_label+"</a></li>");
                 }
-                $('#custom-pagination').append("<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>"+elgg.echo('group:previous_set')+"</a></li>");
+                $('#custom-pagination').append("<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>"+elgg.echo('group:next_set')+"</a></li>");
                 $('#pagination-page-1').addClass('elgg-state-selected active');
             }
             console.log(content_array.output.member_count);
@@ -218,7 +227,7 @@ $('#txtSearchMember').keyup(function(event) {
         var offset = 0;
         var name = $('#txtSearchMember').val();
         var guid = elgg.get_page_owner_guid();
-        
+
         $('#body-member-list').children().remove();
         elgg.action('groups/retrieve_member_list',{
             data: {
@@ -257,7 +266,7 @@ function navigate_group_member(direction) {
 
     $('#txtHiddenOffset').val(current_offset);
     get_user_list(current_offset);
-} 
+}
 
 function get_user_list(offset) {
 
@@ -268,7 +277,7 @@ function get_user_list(offset) {
     <?php // save the offset in a text field since HTML is stateless ?>
     $('#txtHiddenOffset').val(offset);
     offset = $('#txtHiddenOffset').val();
-    
+
     var page = (offset / limit) + 1;
     $('#custom-pagination li').removeClass('elgg-state-selected active');
     $('#pagination-page-' + page).addClass('elgg-state-selected active');

@@ -7,7 +7,7 @@ return array(
     'group:member_remove_group' => "Remove from group",
     'group:member_add_friend' => "Add friend",
     'group:member_remove_friend' => "Remove friend",
-    'group:show_entries' => "Show %s to %s out of %s entries | ",
+    'group:show_entries' => "Show <span class='entries-offset'>%s</span> to <span class='entries-limit'>%s</span> out of %s entries | ",
     'group:show_entries_dropdown' => "Show %s entries",
     'group:search_entries' => "Search entries",
     'group:no_results' => 'No result',

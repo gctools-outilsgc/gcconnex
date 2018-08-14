@@ -15,7 +15,7 @@ elgg_register_event_handler('init','system','gc_group_layout_init');
 
 function gc_group_layout_init(){
 
-    elgg_register_action("groups/retrieve_member_list", dirname(__FILE__) . "/actions/groups/retrieve_member_list.php");
+    elgg_register_action("groups/retrieve_member_list", dirname(__FILE__) . "/actions/groups/retrieve_member_list.php", "public");
 
     elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'gc_group_layout/lib/groups.php');
 // Extend the sidebar to have the full length group anchor header
