@@ -168,6 +168,12 @@ function get_blogpost($user, $guid, $lang)
 	if (!isset($entity)) {
 		return "Blog was not found. Please try a different GUID";
 	}
+	if (!$entity) {
+    return "Blog was not found.";
+  }
+	if (!elgg_instanceof($entity, 'object', 'blog')) {
+		return "Invalid blog.";
+	}
 
 	if (!elgg_is_logged_in()) {
 		login($user_entity);
