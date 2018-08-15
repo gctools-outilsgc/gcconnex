@@ -245,7 +245,7 @@ function file_tools_get_child($folders, $depth = 0, $folder_guid, $removed) {
  */
 function file_tools_build_widget_options($folder, $internalname = "", $selected = array()) {
 	$result = "";
-	
+	$lang = get_current_language();
 	if (is_array($folder) && !array_key_exists("children", $folder)) {
 		foreach ($folder as $folder_item) {
 			$result .= "<ul>";
@@ -257,9 +257,9 @@ function file_tools_build_widget_options($folder, $internalname = "", $selected 
 		
 		$result .= "<li>";
 		if (in_array($folder_item->getGUID(), $selected)) {
-			$result .= "<input type='checkbox' name='" . $internalname . "' value='" . $folder_item->getGUID() . "' checked='checked'> " .  $folder_item->title;
+			$result .= "<input type='checkbox' name='" . $internalname . "' value='" . $folder_item->getGUID() . "' checked='checked'> " .  gc_explode_translation($folder_item->title, $lang);
 		} else {
-			$result .= "<input type='checkbox' name='" . $internalname . "' value='" . $folder_item->getGUID() . "'> " .  $folder_item->title;
+			$result .= "<input type='checkbox' name='" . $internalname . "' value='" . $folder_item->getGUID() . "'> " .  gc_explode_translation($folder_item->title,$lang);
 		}
 		
 		if (!empty($folder["children"])) {
