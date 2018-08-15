@@ -96,6 +96,7 @@ for ( $k=0; $k<$pages; $k++ ) {
     $pagination_label = $k + 1;
     $paginate .= "<li id='pagination-page-{$pagination_label}' class='pagination-page-number'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$pagination_label</a></li>";
 }
+
 $paginate .= "<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>{$next}</a></li>";
 $paginate .= "</ul>";
 
@@ -110,7 +111,7 @@ $dropdown = "
     <option value='100'>100</option>
 </select>";
 
-$txtDropDown = '<label>' . elgg_echo('group:show_entries_dropdown', array($dropdown)) . '</label>';
+$txtDropDown = '<label style="display:inline-block;">' . elgg_echo('group:show_entries_dropdown', array($dropdown)) . '</label>';
 
 
 $display_offset = $offset + 1;
@@ -130,15 +131,15 @@ $txtRemoveFriend = elgg_echo('group:member_remove_friend');
 $txtShowEntries = elgg_echo('group:show_entries', array($display_offset, $display_limit, $total_items)) . $txtDropDown;
 $txtSearchEntries = elgg_echo('group:search_entries');
 
-$searchbox = "<label>{$txtSearchEntries}</label> <input type='textbox' id='txtSearchMember' value=''></input>";
+$searchbox = "<label style='display:inline-block;'>{$txtSearchEntries}</label> <input type='textbox' id='txtSearchMember' value=''></input>";
 
 
 // assemble the view with components displayed
 echo <<<___HTML
 
 <div style='width:100%; overflow:hidden; padding: 5px 5px 25px 5px;'>
+    <div style='padding-top:10px; padding-bottom:5px; display:inline-block'>{$txtShowEntries}</div>
     <div style='float:right; padding-top:5px; padding-bottom:5px;'>{$searchbox}</div>
-    <div style='padding-top:10px; padding-bottom:5px;'>{$txtShowEntries}</div>
 </div>
 <input type='hidden' id='txtHiddenOffset'></input>
 <div id='customTable'>
@@ -214,9 +215,12 @@ $('#dpLimit').change(function(event) {
                 $('#custom-pagination').append("<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>"+elgg.echo('group:next_set')+"</a></li>");
                 $('#pagination-page-1').addClass('elgg-state-selected active');
             }
+
             console.log(content_array.output.member_count);
         }
     });
+    //update entries status
+    update_entires_label(offset, limit, 1)
 });
 
 
@@ -229,6 +233,8 @@ $('#txtSearchMember').keyup(function(event) {
         var guid = elgg.get_page_owner_guid();
 
         $('#body-member-list').children().remove();
+
+        if(name != ""){
         elgg.action('groups/retrieve_member_list',{
             data: {
                 group_guid: guid,
@@ -242,7 +248,9 @@ $('#txtSearchMember').keyup(function(event) {
                     $('#body-member-list').append(content_array.output.member_list[item]);
             }
         });
-
+      } else {
+        get_user_list(0);
+      }
     }
 });
 
@@ -292,8 +300,28 @@ function get_user_list(offset) {
         success: function (content_array) {
             for (var item in content_array.output.member_list)
                 $('#body-member-list').append(content_array.output.member_list[item]);
+
+            //update entries status
+            update_entires_label(offset, limit, page)
         }
     });
+
+}
+
+function update_entires_label(offset, limit, page) {
+
+    var current_number = $('.entries-offset').text();
+    var current_limit = $('.entries-limit').text();
+    var current_total = $('.entries-total').text();
+
+    $('.entries-offset').html(parseInt(offset) + 1);
+
+    var check  = parseInt(page) * parseInt(limit);
+    if (parseInt(current_total) > check){
+        $('.entries-limit').html(parseInt(page) * parseInt(limit));
+    } else {
+        $('.entries-limit').html(parseInt(current_total));
+    }
 
 }
 
