@@ -257,9 +257,9 @@ function file_tools_build_widget_options($folder, $internalname = "", $selected 
 		
 		$result .= "<li>";
 		if (in_array($folder_item->getGUID(), $selected)) {
-			$result .= "<input type='checkbox' name='" . $internalname . "' value='" . $folder_item->getGUID() . "' checked='checked'> " .  gc_explode_translation($folder_item->title, $lang);
+			$result .= "<input type='checkbox' id='" . $folder_item->getGUID() . "' name='" . $internalname . "' value='" . $folder_item->getGUID() . "' checked='checked'> <label style='display:inline-block' for='" . $folder_item->getGUID() . "'>" .  gc_explode_translation($folder_item->title, $lang).'</label>';
 		} else {
-			$result .= "<input type='checkbox' name='" . $internalname . "' value='" . $folder_item->getGUID() . "'> " .  gc_explode_translation($folder_item->title,$lang);
+			$result .= "<input type='checkbox' id='" . $folder_item->getGUID() . "' name='" . $internalname . "' value='" . $folder_item->getGUID() . "'>  <label style='display:inline-block' for='" . $folder_item->getGUID() . "'>" .  gc_explode_translation($folder_item->title,$lang).'</label>';
 		}
 		
 		if (!empty($folder["children"])) {
