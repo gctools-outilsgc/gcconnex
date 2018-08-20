@@ -9,7 +9,7 @@
  <?php
  echo '<div id="article-search-tab" class="tab-pane active">';
  //retrieve articles
-  $str = file_get_contents(get_site_by_url().'mod/freshdesk_help/actions/articles/articles.json');
+  $str = file_get_contents(elgg_get_config("dataroot").'freshdesk_help/articles.json');
   if($str){
     $articles = json_decode($str, true);
 

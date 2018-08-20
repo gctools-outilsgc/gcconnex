@@ -42,6 +42,8 @@ RUN \
     php5-json \
     php5-mysql \
     php5-xml \
+	php5-zip \
+	php5-openssl \
     php5-curl \
     curl \
     php5-opcache \
