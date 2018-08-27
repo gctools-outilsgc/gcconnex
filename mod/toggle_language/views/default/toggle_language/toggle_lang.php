@@ -14,6 +14,11 @@
 		}
 
 		$cookie_name = "lang";
+
+		if (isset($SESSION['language']) ){
+			$SESSION['language'] = 'en';
+		}
+
 	?>
 
 	<script type="text/javascript">
