@@ -107,82 +107,14 @@ function solr_api_init() {
 		false
 	);
 
-
-	elgg_ws_expose_function(
-		'get.group_member_list',
-		'get_group_member_list',
-		[
-			'group_guid' => [
-				'type' => 'int',
-				'required' => true,
-				'description' => 'group guid'
-			],
-			'offset' => [
-				'type' => 'int',
-				'required' => true,
-				'description' => 'offset for pagination'
-			],
-			'limit' => [
-				'type' => 'int',
-				'required' => true,
-				'description' => 'limit number of results'
-			],
-			'name' => [
-				'type' => 'string',
-				'required' => false,
-				'description' => 'search member'
-			]
-		],
-		'retrieves a list of group members',
-		'GET',
-		false,
-		false
-	);
-
 }
 
-// retrieves a list of group members with defined limit and offset
-function get_group_member_list($group_guid, $offset, $limit, $name) {
-	$users = array();
-	error_log('name: ' . $name);
-	$name_param = ($name != '') ? "AND ue.name LIKE '{$name}%' " : '';
-	 
-	$query = "SELECT ue.guid, r.time_created AS date_joined, ue.name, ue.username, ue.email
-	FROM elggentity_relationships r 
-		LEFT JOIN elggusers_entity ue ON r.guid_one = ue.guid
-	WHERE r.guid_two = {$group_guid} AND r.relationship = 'member' {$name_param}
-	ORDER BY ue.name ASC LIMIT {$limit} OFFSET {$offset}";
-
-	$users = get_data($query);
-	
-	$site_url = elgg_get_site_url();
-
-	$query = "SELECT COUNT(*) AS member_count
-	FROM elggentity_relationships r 
-		LEFT JOIN elggusers_entity ue ON r.guid_one = ue.guid
-WHERE r.guid_two = {$group_guid} AND r.relationship = 'member' {$name_param}";
-
-	$member_count = get_data($query);
-
-	$arr['count'] = $member_count[0]->member_count;
-	foreach ($users as $user) {
-			$arr['members'][] = array (
-				'guid' => $user->guid,
-				'name' => $user->name,
-				'username' => $user->username,
-				'email' => $user->email,
-				'date_joined' => date("Y-m-d H:m:s", $user->date_joined),
-				'url' => "{$site_url}profile/{$user->username}",
-			);
-	}
-	return $arr;
-}
 
 function delete_updated_index_list($guids) {
 	$ids = array();
 	foreach ($guids as $guid) {
 		// guid must be an integer
-		if (is_numeric($guid)) 
+		if (is_numeric($guid))
 			$ids[] = $guid;
 		else
 			return "there is an issue deleting a record in the database, please see function delete_updated_index_list()";
@@ -240,8 +172,8 @@ function get_user_list($offset) {
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$query = "	SELECT e.guid, ue.name, ue.username, ue.email, e.type, e.time_created, e.enabled
-				FROM {$db_prefix}users_entity ue 
-					LEFT JOIN {$db_prefix}entities e ON ue.guid = e.guid 
+				FROM {$db_prefix}users_entity ue
+					LEFT JOIN {$db_prefix}entities e ON ue.guid = e.guid
 				WHERE e.enabled = 'yes'
 				LIMIT 10 OFFSET {$offset}";
 
@@ -347,7 +279,7 @@ function get_entity_list($type, $subtype, $offset) {
 		}
 
 		$arr[] = array(
-			'guid' => $entity->getGUID(), 
+			'guid' => $entity->getGUID(),
 			'title' => $title_array,
 			'description' => $description_array,
 			'type' => $entity->getType(),
@@ -368,4 +300,3 @@ function is_Json($string) {
 	json_decode($string);
 	return (json_last_error() == JSON_ERROR_NONE);
 }
-
