@@ -4,7 +4,7 @@
 $offset = $_GET['offset'];
 $limit = $_GET['limit'];
 if (!$offset) $offset = 0;
-if (!$limit) $limit = 5;
+if (!$limit) $limit = 1;
 
 $guid = $vars['group_guid'];
 $site_url = elgg_get_site_url();
@@ -94,7 +94,21 @@ $paginate .= "<li><a href='#customTable' onclick='return navigate_group_member(0
 for ( $k=0; $k<$pages; $k++ ) {
     $pagination_offset = $k * $limit;
     $pagination_label = $k + 1;
-    $paginate .= "<li id='pagination-page-{$pagination_label}' class='pagination-page-number'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$pagination_label</a></li>";
+
+    if($pagination_label <=5){
+      //load first 5 normally
+      $paginate .= "<li id='pagination-page-{$pagination_label}' class='pagination-page-number'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$pagination_label</a></li>";
+    } else if($pages == 6){
+      //for certain case, create final page without ...
+      $pagination_offset = ($pages - 1) * $limit;
+      $paginate .= "<li id='pagination-page-{$pages}' class='pagination-page-number'><a onclick='return get_user_list({$pagination_offset})' href='#customTable'>$pages</a></li>";
+    } else {
+      //for anything that has more than 6 pages, create ... then final page
+      $paginate .= "<li id='pagination-page' class='pagination-page-number'><span>...</span></li>";
+      $final_offset = ($pages - 1) * $limit;
+      $paginate .= "<li id='pagination-page-{$pages}' class='pagination-page-number'><a onclick='return get_user_list({$final_offset})' href='#customTable'>$pages</a></li>";
+      $k = $pages;
+    }
 }
 
 $paginate .= "<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>{$next}</a></li>";
@@ -104,6 +118,9 @@ $paginate .= "</ul>";
 // dropdown form to show number of entries per page
 $dropdown = "
 <select id='dpLimit' aria-controls='wb-tables-id-0'>
+    <option value='1'>1</option>
+    <option value='2'>2</option>
+    <option value='3'>3</option>
     <option value='5'>5</option>
     <option value='10'>10</option>
     <option value='25'>25</option>
@@ -131,7 +148,7 @@ $txtRemoveFriend = elgg_echo('group:member_remove_friend');
 $txtShowEntries = elgg_echo('group:show_entries', array($display_offset, $display_limit, $total_items)) . $txtDropDown;
 $txtSearchEntries = elgg_echo('group:search_entries');
 
-$searchbox = "<label style='display:inline-block;'>{$txtSearchEntries}</label> <input type='textbox' id='txtSearchMember' value=''></input>";
+$searchbox = "<label for='txtSearchMember'  aria-live='passive' style='display:inline-block;'>{$txtSearchEntries}</label> <input type='textbox' id='txtSearchMember' value=''></input>";
 
 
 // assemble the view with components displayed
@@ -207,10 +224,19 @@ $('#dpLimit').change(function(event) {
                 var k;
                 $('#custom-pagination').append("<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>"+elgg.echo('group:previous_set')+"</span></li>");
                 for ( k=0; k<pages; k++ ) {
-                    console.log("k: " + k + " // limit: " + limit );
                     pagination_offset = k * limit;
                     pagination_label = k + 1;
-                    $('#custom-pagination').append("<li id='pagination-page-"+pagination_label+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+pagination_label+"</a></li>");
+                    if(pagination_label <=5){
+                      $('#custom-pagination').append("<li id='pagination-page-"+pagination_label+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+pagination_label+"</a></li>");
+                    } else if(pages == 6){
+                      pagination_offset = (pages - 1) * limit;
+                      $('#custom-pagination').append("<li id='pagination-page-"+pages+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+pages+"</a></li>");
+                    } else {
+                      $('#custom-pagination').append("<li id='pagination-page' class='pagination-page-number'><span>...</span></li>");
+                      pagination_offset = (pages - 1) * limit;
+                      $('#custom-pagination').append("<li id='pagination-page-"+pages+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+pages+"</a></li>");
+                      k = pages;
+                    }
                 }
                 $('#custom-pagination').append("<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>"+elgg.echo('group:next_set')+"</a></li>");
                 $('#pagination-page-1').addClass('elgg-state-selected active');
@@ -287,6 +313,8 @@ function get_user_list(offset) {
     offset = $('#txtHiddenOffset').val();
 
     var page = (offset / limit) + 1;
+    var total = $('.entries-total').html();
+
     $('#custom-pagination li').removeClass('elgg-state-selected active');
     $('#pagination-page-' + page).addClass('elgg-state-selected active');
     $('#body-member-list').children().remove();
@@ -302,13 +330,13 @@ function get_user_list(offset) {
                 $('#body-member-list').append(content_array.output.member_list[item]);
 
             //update entries status
-            update_entires_label(offset, limit, page)
+            update_entires_label(offset, limit, page, total);
         }
     });
 
 }
 
-function update_entires_label(offset, limit, page) {
+function update_entires_label(offset, limit, page, total) {
 
     var current_number = $('.entries-offset').text();
     var current_limit = $('.entries-limit').text();
@@ -322,6 +350,68 @@ function update_entires_label(offset, limit, page) {
     } else {
         $('.entries-limit').html(parseInt(current_total));
     }
+
+    $('#custom-pagination').children().remove();
+
+    // pagination
+    var pages = Math.ceil(total / limit);
+    var pagination_children = '';
+    var pagination_offset;
+    var k;
+    //remake the pager easily
+    if(page < 5){
+      $('#custom-pagination').append("<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>"+elgg.echo('group:previous_set')+"</span></li>");
+      for ( k=0; k<pages; k++ ) {
+          pagination_offset = k * limit;
+          pagination_label = k + 1;
+          if(pagination_label <=5){
+            $('#custom-pagination').append("<li id='pagination-page-"+pagination_label+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+pagination_label+"</a></li>");
+          } else if(pages == 6){
+            pagination_offset = (pages - 1) * limit;
+            $('#custom-pagination').append("<li id='pagination-page-"+pages+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+pages+"</a></li>");
+          } else {
+            $('#custom-pagination').append("<li id='pagination-page' class='pagination-page'><span>...</span></li>");
+            pagination_offset = (pages - 1) * limit;
+            $('#custom-pagination').append("<li id='pagination-page-"+pages+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+pages+"</a></li>");
+            k = pages;
+          }
+      }
+      $('#custom-pagination').append("<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>"+elgg.echo('group:next_set')+"</a></li>");
+    } else {
+      //to replicate the full pager we have to do some funky things here
+      var low_page = page - 2;
+      var high_page = page + 2;
+      var final_page_offset = (pages * limit) - 1;
+      var p;
+
+      //start by making the buttons that will always be there
+      $('#custom-pagination').append("<li><a href='#customTable' onclick='return navigate_group_member(0)' id='custom-pagination-previous'>"+elgg.echo('group:previous_set')+"</span></li>");
+      $('#custom-pagination').append("<li id='pagination-page-1' class='pagination-page-number'><a onclick='return get_user_list(0)' href='#customTable'>1</a></li>");
+      //add the ... item if big enough gap from start
+      if(low_page >= 3){
+        $('#custom-pagination').append("<li id='pagination-page' class='pagination-page'><span>...</span></li>");
+      }
+      //run through possible pages
+      for(p = low_page; p <= high_page; p++){
+        //make sure we don't go over page limit
+        if(p <= pages){
+          pagination_offset = (p - 1) * limit;
+          $('#custom-pagination').append("<li id='pagination-page-"+p+"' class='pagination-page-number'><a onclick='return get_user_list("+pagination_offset+")' href='#customTable'>"+p+"</a></li>");
+        }
+      }
+      //check to see if we are not on the final pages
+      if(page < (pages - 2)){
+        //add ... item if needed
+        if((pages - page) > 3){
+          $('#custom-pagination').append("<li id='pagination-page' class='pagination-page'><span>...</span></li>");
+        }
+        $('#custom-pagination').append("<li id='pagination-page-"+pages+"' class='pagination-page-number'><a onclick='return get_user_list("+final_page_offset+")' href='#customTable'>"+pages+"</a></li>");
+      }
+      $('#custom-pagination').append("<li><a id='custom-pagination-next' onclick='return navigate_group_member(1)' href='#customTable'>"+elgg.echo('group:next_set')+"</a></li>");
+    }
+
+    //set active page
+    $('#pagination-page-'+page).addClass('elgg-state-selected active');
 
 }
 
