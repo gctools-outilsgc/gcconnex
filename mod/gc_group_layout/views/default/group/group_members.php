@@ -4,7 +4,7 @@
 $offset = $_GET['offset'];
 $limit = $_GET['limit'];
 if (!$offset) $offset = 0;
-if (!$limit) $limit = 1;
+if (!$limit) $limit = 25;
 
 $guid = $vars['group_guid'];
 $site_url = elgg_get_site_url();
@@ -118,13 +118,9 @@ $paginate .= "</ul>";
 // dropdown form to show number of entries per page
 $dropdown = "
 <select id='dpLimit' aria-controls='wb-tables-id-0'>
-    <option value='1'>1</option>
-    <option value='2'>2</option>
-    <option value='3'>3</option>
-    <option value='5'>5</option>
-    <option value='10'>10</option>
     <option value='25'>25</option>
     <option value='50'>50</option>
+    <option value='75'>75</option>
     <option value='100'>100</option>
 </select>";
 
