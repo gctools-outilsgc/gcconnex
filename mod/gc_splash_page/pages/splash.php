@@ -53,21 +53,16 @@ $body .= <<<__BODY
 			var language_param = getParams("language");
 
 			if (language_param != null) cookie_value = language_param;
-
-			if (cookie_value == "")
-			{
+			if (cookie_value == "") {
 				var cookie_language = (language_selected == "French") ? "fr" : "en";
 				set_cookie(cookie_name, cookie_language);
 				parent.location.href= "$frenchLink";
-
 			} else {
-
-				var cookie_language = (cookie_value == "en") ? "fr" : "en";
+				var cookie_language = (language_selected == "French") ? "fr" : "en";
 				set_cookie(cookie_name, cookie_language);
 
 				if (language_param == null)
 					parent.location.href= "$frenchLink";
-				
 				else 
 					window.location.href = url_string.replace("language=" + cookie_value, "language=" + cookie_language);
 			}
@@ -75,11 +70,11 @@ $body .= <<<__BODY
 		
 		function set_cookie(name,value) {
 			var today = new Date();
-			today.setTime( today.getTime() );
+			today.setTime(today.getTime());
 			expires = 1000 * 60 * 60 * 24;
-			var expires_date = new Date( today.getTime() + (expires) );
+			var expires_date = new Date(today.getTime() + (expires));
 			var domain = "$domain";
-			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString() + ";domain=" + domain + ";";
+			document.cookie = name + "=" +escape(value) + ";path=/" + ";expires=" + expires_date.toGMTString() + ";domain=" + domain + ";";
 		}
 
 		function getCookie(cname) {
@@ -102,10 +97,9 @@ $body .= <<<__BODY
 		// url.searchParams() is not compatible with Internet Explorer
 		function getParams(name) {
 		    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-		    if (results==null){
+		    if (results == null) {
 		       return null;
-		    }
-		    else{
+		    } else {
 		       return decodeURI(results[1]) || 0;
 		    }
 		}
