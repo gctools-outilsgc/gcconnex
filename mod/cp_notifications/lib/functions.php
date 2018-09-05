@@ -942,3 +942,21 @@ function has_group_subscriptions($group_guid, $user_guid) {
 }
 
 
+
+/**
+ * Helper functions for digest processing queue
+ */
+function enqueue( $user_guid ) {
+	// add to queue
+	$query = "INSERT INTO notification_digest_queue (user_guid) VALUES ({$user_guid})";
+	$result = insert_data($query);
+
+	// return 1 if there's an error
+	return $result === false;
+}
+
+function dequeue() {
+	// remove an id from queue 
+	return $user_guid;
+}
+
