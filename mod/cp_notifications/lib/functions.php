@@ -955,8 +955,15 @@ function enqueue( $user_guid ) {
 	return $result === false;
 }
 
+/* go for something more along the lines of 'at most once' in here to ensure we don't get duplicate digests going out
+ * to get closer to 'exactly once', the digest function can enqueue failed attempts
+ * NOTE: this won't work so well with a split read-write db setup, will need to be done more manually or as separate delete/select statements
+ */
 function dequeue() {
-	// remove an id from queue 
+	$query_delete = "DELETE FROM notification_digest_queue WHERE user_guid = @uid := user_guid LIMIT 1";			// remove a row from queue and prepare the guid to be returned
+	$query_select = "SELECT @uid";
+	$user_guid = get_data($query_delete . ';' . $query_select)->@uid;
+	
 	return $user_guid;
 }
 
