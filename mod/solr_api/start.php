@@ -106,6 +106,7 @@ function solr_api_init() {
 		true,
 		false
 	);
+
 }
 
 
@@ -113,7 +114,7 @@ function delete_updated_index_list($guids) {
 	$ids = array();
 	foreach ($guids as $guid) {
 		// guid must be an integer
-		if (is_numeric($guid)) 
+		if (is_numeric($guid))
 			$ids[] = $guid;
 		else
 			return "there is an issue deleting a record in the database, please see function delete_updated_index_list()";
@@ -171,8 +172,8 @@ function get_user_list($offset) {
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$query = "	SELECT e.guid, ue.name, ue.username, ue.email, e.type, e.time_created, e.enabled
-				FROM {$db_prefix}users_entity ue 
-					LEFT JOIN {$db_prefix}entities e ON ue.guid = e.guid 
+				FROM {$db_prefix}users_entity ue
+					LEFT JOIN {$db_prefix}entities e ON ue.guid = e.guid
 				WHERE e.enabled = 'yes'
 				LIMIT 10 OFFSET {$offset}";
 
@@ -278,7 +279,7 @@ function get_entity_list($type, $subtype, $offset) {
 		}
 
 		$arr[] = array(
-			'guid' => $entity->getGUID(), 
+			'guid' => $entity->getGUID(),
 			'title' => $title_array,
 			'description' => $description_array,
 			'type' => $entity->getType(),
@@ -299,4 +300,3 @@ function is_Json($string) {
 	json_decode($string);
 	return (json_last_error() == JSON_ERROR_NONE);
 }
-

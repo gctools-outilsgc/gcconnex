@@ -15,6 +15,8 @@ elgg_register_event_handler('init','system','gc_group_layout_init');
 
 function gc_group_layout_init(){
 
+    elgg_register_action("groups/retrieve_member_list", dirname(__FILE__) . "/actions/groups/retrieve_member_list.php", "public");
+
     elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'gc_group_layout/lib/groups.php');
 // Extend the sidebar to have the full length group anchor header
     elgg_extend_view('page/layouts/one_sidebar', 'groups/profile/summary', 420);
@@ -30,9 +32,78 @@ function gc_group_layout_init(){
     //group edit
     elgg_register_action("groups/edit", dirname(__FILE__) . "/actions/groups/edit.php");
 
+    elgg_ws_expose_function(
+      'get.group_member_list',
+      'get_group_member_list',
+      [
+        'group_guid' => [
+          'type' => 'int',
+          'required' => true,
+          'description' => 'group guid'
+        ],
+        'offset' => [
+          'type' => 'int',
+          'required' => true,
+          'description' => 'offset for pagination'
+        ],
+        'limit' => [
+          'type' => 'int',
+          'required' => true,
+          'description' => 'limit number of results'
+        ],
+        'name' => [
+          'type' => 'string',
+          'required' => false,
+          'description' => 'search member'
+        ]
+      ],
+      'retrieves a list of group members',
+      'GET',
+      false,
+      false
+    );
+
 }
 
   elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
+
+
+  // retrieves a list of group members with defined limit and offset
+function get_group_member_list($group_guid, $offset, $limit, $name) {
+  	$users = array();
+  	error_log('name: ' . $name);
+  	$name_param = ($name != '') ? "AND ue.name LIKE '{$name}%' " : '';
+
+  	$query = "SELECT ue.guid, r.time_created AS date_joined, ue.name, ue.username, ue.email
+  	FROM elggentity_relationships r
+  		LEFT JOIN elggusers_entity ue ON r.guid_one = ue.guid
+  	WHERE r.guid_two = {$group_guid} AND r.relationship = 'member' {$name_param}
+  	ORDER BY ue.name ASC LIMIT {$limit} OFFSET {$offset}";
+
+  	$users = get_data($query);
+
+  	$site_url = elgg_get_site_url();
+
+  	$query = "SELECT COUNT(*) AS member_count
+  	FROM elggentity_relationships r
+  		LEFT JOIN elggusers_entity ue ON r.guid_one = ue.guid
+  WHERE r.guid_two = {$group_guid} AND r.relationship = 'member' {$name_param}";
+
+  	$member_count = get_data($query);
+
+  	$arr['count'] = $member_count[0]->member_count;
+  	foreach ($users as $user) {
+  			$arr['members'][] = array (
+  				'guid' => $user->guid,
+  				'name' => $user->name,
+  				'username' => $user->username,
+  				'email' => $user->email,
+  				'date_joined' => date("Y-m-d H:m:s", $user->date_joined),
+  				'url' => "{$site_url}profile/{$user->username}",
+  			);
+  	}
+  	return $arr;
+  }
 
 function group_owners_block_handler($hook, $type, $menu, $params){
 /***TEMP ***/

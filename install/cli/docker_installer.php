@@ -28,6 +28,22 @@ if (getenv('DBHOST') != '')
 else
 	$dbhost = 'gcconnex-db';
 
+if (getenv('DBUSER') != '')
+	$dbuser = getenv('DBUSER');
+else
+	$dbuser = 'elgg';
+
+if (getenv('DBPASS') != '')
+	$dbpass = getenv('DBPASS');
+else
+	$dbpass = 'gcconnex';
+
+if (getenv('DBNAME') != '')
+	$dbname = getenv('DBNAME');
+else
+	$dbname = 'elgg';
+
+
 if (getenv('WWWROOT') != '')
 	$wwwroot = getenv('WWWROOT');
 else
@@ -36,9 +52,9 @@ else
 // none of the following may be empty
 $params = array(
 	// database parameters
-	'dbuser' => 'elgg',
-	'dbpassword' => 'gcconnex',
-	'dbname' => 'elgg',
+	'dbuser' => $dbuser,
+	'dbpassword' => $dbpass,
+	'dbname' => $dbname,
 	
 	// We use a wonky dbprefix to catch any cases where folks hardcode "elgg_"
 	// instead of using config->dbprefix

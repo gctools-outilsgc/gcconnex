@@ -4,6 +4,7 @@ $site_url = elgg_get_site_url();
 return array(
 
     'thewire:head:title' => 'Wire post',
+    'group_operator:find:user:error' => "Could not find user",
 
     /*
     More context links - entity/river menus

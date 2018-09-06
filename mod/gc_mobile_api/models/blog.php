@@ -40,6 +40,7 @@ elgg_ws_expose_function(
 		"user" => array('type' => 'string', 'required' => true),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
 		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
+		"filters" => array('type' => 'string', 'required' => false, 'default' => ""),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en"),
 		"target" => array('type' => 'string', 'required'=> false, 'default' => '')
 	),
@@ -56,6 +57,7 @@ elgg_ws_expose_function(
 	"user" => array('type' => 'string', 'required' => true),
 	"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
 	"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
+	"filters" => array('type' => 'string', 'required' => false, 'default' => ""),
 	"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
  ),
  'Retrieves a container\'s blogs based on user id and container guid. Used for groups, as a group\'s blogs have container_id of the group.',
@@ -134,7 +136,11 @@ function foreach_blogs($blogs, $user_entity, $lang)
 		));
 		$blog_post->liked = count($liked) > 0;
 
-		$blog_post->comments = get_entity_comments($blog_post->guid);
+		$blog_post->comment_count = elgg_get_entities(array(
+			'container_guid' => $guid,
+			'count' => true,
+			'distinct' => false,
+		));
 
 		$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
 
@@ -161,6 +167,12 @@ function get_blogpost($user, $guid, $lang)
 	$entity = get_entity($guid);
 	if (!isset($entity)) {
 		return "Blog was not found. Please try a different GUID";
+	}
+	if (!$entity) {
+    return "Blog was not found.";
+  }
+	if (!elgg_instanceof($entity, 'object', 'blog')) {
+		return "Invalid blog.";
 	}
 
 	if (!elgg_is_logged_in()) {
@@ -190,7 +202,11 @@ function get_blogpost($user, $guid, $lang)
 	));
 	$blog_post->liked = count($liked) > 0;
 
-	$blog_post->comments = get_entity_comments($blog_post->guid);
+	$blog_post->comment_count = elgg_get_entities(array(
+		'container_guid' => $guid,
+		'count' => true,
+		'distinct' => false,
+	));
 
 	$blog_post->userDetails = get_user_block($blog_post->owner_guid, $lang);
 
@@ -250,7 +266,7 @@ function get_blogposts($user, $limit, $offset, $filters, $lang)
 	return $blogs;
 }
 
-function get_blogposts_by_owner($user, $limit, $offset, $lang, $target)
+function get_blogposts_by_owner($user, $limit, $offset, $filters, $lang, $target)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -274,14 +290,32 @@ function get_blogposts_by_owner($user, $limit, $offset, $lang, $target)
 	if (!elgg_is_logged_in()) {
 		login($user_entity);
 	}
+	$filter_data = json_decode($filters);
+	if (!empty($filter_data)) {
+		$params = array(
+			'type' => 'object',
+			'subtype' => 'blog',
+			'owner_guid' => $target_entity->guid,
+			'limit' => $limit,
+			'offset' => $offset
+		);
 
-	$all_blog_posts = elgg_list_entities(array(
-		'type' => 'object',
-		'subtype' => 'blog',
-		'owner_guid' => $target_entity->guid,
-		'limit' => $limit,
-		'offset' => $offset
-	));
+		if ($filter_data->name) {
+			$db_prefix = elgg_get_config('dbprefix');
+			$params['joins'] = array("JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
+			$params['wheres'] = array("(oe.title LIKE '%" . $filter_data->name . "%' OR oe.description LIKE '%" . $filter_data->name . "%')");
+		}
+
+		$all_blog_posts = elgg_list_entities_from_metadata($params);
+	} else {
+		$all_blog_posts = elgg_list_entities(array(
+			'type' => 'object',
+			'subtype' => 'blog',
+			'owner_guid' => $target_entity->guid,
+			'limit' => $limit,
+			'offset' => $offset
+		));
+	}
 
 	$blog_posts = json_decode($all_blog_posts);
 
@@ -290,7 +324,7 @@ function get_blogposts_by_owner($user, $limit, $offset, $lang, $target)
 	return $blogs;
 }
 
-function get_blogposts_by_colleague($user, $limit, $offset, $lang, $target)
+function get_blogposts_by_colleague($user, $limit, $offset, $filters, $lang, $target)
 {
  $user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
  if (!$user_entity) {
@@ -304,16 +338,36 @@ function get_blogposts_by_colleague($user, $limit, $offset, $lang, $target)
 	 login($user_entity);
  }
 
- $all_blog_posts = elgg_list_entities_from_relationship(array(
-	 'type' => 'object',
-	 'subtype' => 'blog',
-	 'relationship' => 'friend',
-	 'relationship_guid' => $user_entity->guid,
-	 'relationship_join_on' => 'container_guid',
-	 'limit' => $limit,
-	 'offset' => $offset
- ));
+ $filter_data = json_decode($filters);
+ if (!empty($filter_data)) {
+ 	$params = array(
+		'type' => 'object',
+		'subtype' => 'blog',
+		'relationship' => 'friend',
+		'relationship_guid' => $user_entity->guid,
+		'relationship_join_on' => 'container_guid',
+		'limit' => $limit,
+		'offset' => $offset
+ 	);
 
+ 	if ($filter_data->name) {
+ 		$db_prefix = elgg_get_config('dbprefix');
+ 		$params['joins'] = array("INNER JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
+ 		$params['wheres'] = array("(oe.title LIKE '%" . $filter_data->name . "%' OR oe.description LIKE '%" . $filter_data->name . "%')");
+ 	}
+
+ 	$all_blog_posts = elgg_list_entities_from_relationship($params);
+ } else {
+	 $all_blog_posts = elgg_list_entities_from_relationship(array(
+		 'type' => 'object',
+		 'subtype' => 'blog',
+		 'relationship' => 'friend',
+		 'relationship_guid' => $user_entity->guid,
+		 'relationship_join_on' => 'container_guid',
+		 'limit' => $limit,
+		 'offset' => $offset
+	 ));
+	}
  $blog_posts = json_decode($all_blog_posts);
 
  $blogs = foreach_blogs($blog_posts, $user_entity, $lang);

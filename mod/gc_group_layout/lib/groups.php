@@ -356,10 +356,10 @@ function groups_handle_profile_page($guid) {
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
 	$sidebar_value = $group->getPrivateSetting('group_tools:cleanup:menu');
 
-	if($sidebar_value == 'no'){
+	if(!$sidebar_value || $sidebar_value == 'no'){
 		$sidebar = elgg_view('groups/sidebar/sidebar', array('entity' => $group));
 	}
-	
+
 	$params = array(
 		'content' => $content,
 		'sidebar' => $sidebar,
@@ -429,7 +429,7 @@ function groups_handle_members_page($guid) {
 
 	elgg_push_breadcrumb(gc_explode_translation($group->title,$lang), $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('groups:members'));
-
+/*
 	$db_prefix = elgg_get_config('dbprefix');
 	$content = elgg_list_entities_from_relationship(array(
 		'relationship' => 'member',
@@ -440,6 +440,10 @@ function groups_handle_members_page($guid) {
 		'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid"),
 		'order_by' => 'u.name ASC',
 	));
+
+	$content .= " <br/>-----<br/>";
+*/
+	$content .= elgg_view('group/group_members', array('group_guid' => $guid));
 
 	$params = array(
 		'content' => $content,
@@ -559,7 +563,7 @@ function groups_register_profile_buttons($group) {
 			$url = elgg_add_action_tokens_to_url($url);
 			$actions[$url] = 'groups:leave';
 		}
-		
+
 		if( strpos(elgg_get_site_entity()->name, 'collab') !== false ){
 			$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
 			$actions[$url] = 'groups:stats';
@@ -768,8 +772,8 @@ function groups_handle_stats_page($guid) {
     <style>
     .chart {
         width: 100%;
-        min-width: 100%; 
-        max-width: 100%; 
+        min-width: 100%;
+        max-width: 100%;
         margin: 0 auto;
     }
     .chart .loading {
@@ -778,7 +782,7 @@ function groups_handle_stats_page($guid) {
         font-size: 2em;
         text-align: center;
     }
-    @media (max-width: 480px) { 
+    @media (max-width: 480px) {
         .nav-tabs > li {
             float:none;
         }

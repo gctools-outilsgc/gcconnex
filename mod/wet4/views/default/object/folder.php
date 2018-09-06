@@ -94,7 +94,7 @@ $params_fr = array(
 $title_en = elgg_view('output/url', $params_en);
 $title_fr = elgg_view('output/url', $params_fr);
 
-if( $description_json->en && $description_json->fr ){
+if( $description_json->en && $description_json->fr && get_context() != 'widgets' ){
 	echo'<div id="change_language" class="change_language">';
 	if (get_current_language() == 'fr'){
 

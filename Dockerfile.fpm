@@ -27,29 +27,17 @@ WORKDIR /app/pleio
 RUN composer install
 
 # Second stage, build usable container
-FROM alpine:3.7
-LABEL maintainer="Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>, Ilia Salem"
+FROM php:5.6-fpm-alpine3.7
+LABEL maintainer="Ilia Salem"
 RUN \
-  apk --no-cache add \
+  apk update \
+  && apk --no-cache add \
     apache2 \
-    php5 \
-    php5-apache2 \
-    php5-ctype \
-    php5-curl \
-    php5-dom \
-    php5-gd \
-    php5-iconv \
-    php5-json \
-    php5-mysql \
-    php5-xml \
-	php5-zip \
-	php5-openssl \
-    php5-curl \
-    curl \
-    php5-opcache \
-    libmemcached-libs \
-  && apk update \
-  && apk --no-cache add php5-mysqli \
+    libpng \
+    libmemcached-dev zlib-dev autoconf gcc libc-dev make \
+# memcached php5 extension
+  && pecl install memcached-2.2.0 \
+  && docker-php-ext-enable memcached \
   && mkdir -p /var/www/html/vendor \
   && mkdir -p /data \
   && mkdir -p /run/apache2 \
@@ -71,23 +59,7 @@ RUN { \
 		echo 'opcache.fast_shutdown=1'; \
 		echo 'opcache.enable_cli=1'; \
 		echo 'opcache.enable_file_override=1'; \
-} > /etc/php5/conf.d/opcache-recommended.ini
-
-# install memcached
-ENV PHPIZE_DEPS autoconf file g++ gcc libc-dev make pkgconf re2c php5-dev php5-pear \
- zlib-dev libmemcached-dev cyrus-sasl-dev libevent-dev openssl-dev
-ENV PHP_PEAR_PHP_BIN /usr/bin/php5
-RUN set -xe \
-    && apk add --no-cache \
-    --virtual .phpize-deps \
-    $PHPIZE_DEPS \
-    && sed -i 's/^exec $PHP -C -n/exec $PHP -C/g' $(which pecl) \
-    && pecl install memcache-2.2.7 \
-    && mv $(INSTALL_ROOT)/usr/lib/php5/modules/memcache.so /usr/lib/php5/modules/memcache.so \
-    && echo "extension=memcache.so" > /etc/php5/conf.d/memcache.ini \
-    && rm -rf /usr/share/php \
-    && rm -rf /tmp/* \
-    && apk del .phpize-deps
+} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/

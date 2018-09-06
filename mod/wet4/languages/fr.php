@@ -4,6 +4,7 @@
 return array(
 
 	'thewire:head:title' => 'Message sur le fil',
+	'group_operator:find:user:error' => "Impossible de trouver l'utilisateur",
 
 	'entity:like:link:page_top' => 'Aimer la page "%s"',
 	'entity:unlike:link:page_top' => 'Enlever la mention j\'aime de la page "%s"',
