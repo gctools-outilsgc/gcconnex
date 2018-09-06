@@ -961,9 +961,30 @@ function enqueue( $user_guid ) {
  */
 function dequeue() {
 	$query_delete = "DELETE FROM notification_digest_queue WHERE user_guid = @uid := user_guid LIMIT 1";			// remove a row from queue and prepare the guid to be returned
-	$query_select = "SELECT @uid";
-	$user_guid = get_data($query_delete . ';' . $query_select)->@uid;
+	$query_select = "SELECT @uid as uid";
+	$user_guid = get_data($query_delete . ';' . $query_select)->uid;
 	
 	return $user_guid;
 }
 
+function leader_election(){
+	return enqueue(0) == 0;		// there is no user with guid = 0, but only one instance will successfuly insert this with user_guid being the primary key
+}
+
+function initialize_queue( $frequency ){
+	$dbprefix = elgg_get_config('dbprefix');
+
+	# get user guid list and insert them all into the queue  ... maybe get it to filter by $frequency too
+	$query = "INSERT INTO notification_digest_queue (user_guid) VALUES ( SELECT entity_guid as user_guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_set_digest' AND value = 'set_digest_yes' )";
+	$result = insert_data($query);
+
+	$query_delete = "DELETE FROM notification_digest_queue WHERE user_guid = 0";
+	dalete_data($query_delete);
+
+	return 0;
+}
+
+function await_init(){
+	#check / wait for the user_guid = 0 to be deleted, a maximum total wait time wouldn't be a bad idea either
+	return 0;
+}
