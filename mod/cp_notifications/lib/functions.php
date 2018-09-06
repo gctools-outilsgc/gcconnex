@@ -986,5 +986,9 @@ function initialize_queue( $frequency ){
 
 function await_init(){
 	#check / wait for the user_guid = 0 to be deleted, a maximum total wait time wouldn't be a bad idea either
+	$query_select = "SELECT * FROM notification_digest_queue WHERE user_guid = 0";
+	while ( get_data($query_select) ) {
+		usleep(100);
+	}
 	return 0;
 }

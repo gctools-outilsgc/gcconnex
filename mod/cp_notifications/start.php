@@ -1541,6 +1541,9 @@ function get_site_subscribers($dbprefix, $user_guid, $entity_guid = '') {
  * @param mixed  $params  Data passed from the trigger
  */
 function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $params) {
+	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
+	elgg_load_library('elgg:gc_notification:functions');
+	
 	if ( leader_election() )
 		initialize_queue('weekly');
 	else
@@ -1563,6 +1566,9 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
  * @param mixed  $params  Data passed from the trigger
  */
 function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $params) {
+	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
+	elgg_load_library('elgg:gc_notification:functions');
+
 	if ( leader_election() )
 		initialize_queue('daily');
 	else
@@ -1582,16 +1588,9 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
  * @param mixed  $params  Data passed from the trigger
  */
 function cp_digest_email_handler($hook, $entity_type, $return_value, $params, $frequency) {
-	elgg_load_library('elgg:gc_notification:functions');
 	$dbprefix = elgg_get_config('dbprefix');
 
-	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
-
-	// extract all the users who have the digest
-	$query = "SELECT id, entity_guid as guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_set_digest' AND value = 'set_digest_yes'";
-	$users = get_data($query);
-
-	foreach ($users as $user) {
+	while( $user = dequeue() ) {
 
 		$user = get_entity($user->guid);
 		if($user->gcdeactivate)
