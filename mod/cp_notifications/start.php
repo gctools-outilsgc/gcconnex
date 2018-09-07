@@ -1544,10 +1544,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
 	elgg_load_library('elgg:gc_notification:functions');
 	
-	if ( leader_election() )
-		initialize_queue('weekly');
-	else
-		await_init();
+	initialize_queue('weekly');
 
 	// TODO: write the functions above and rewrite the email handler below
 	cp_digest_email_handler($hook, $entity_type, $return_value, $params, 'weekly');
@@ -1569,10 +1566,7 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
 	elgg_load_library('elgg:gc_notification:functions');
 
-	if ( leader_election() )
-		initialize_queue('daily');
-	else
-		await_init();
+	initialize_queue('daily');
 
 	cp_digest_email_handler($hook, $entity_type, $return_value, $params, 'daily');
 }
@@ -1590,9 +1584,8 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 function cp_digest_email_handler($hook, $entity_type, $return_value, $params, $frequency) {
 	$dbprefix = elgg_get_config('dbprefix');
 
-	while( $user = dequeue() ) {
-
-		$user = get_entity($user->guid);
+	while( $user_guid = dequeue() ) {
+		$user = get_entity($user_guid);
 		if($user->gcdeactivate)
 			continue;
 		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
