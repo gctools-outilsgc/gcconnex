@@ -948,8 +948,13 @@ function has_group_subscriptions($group_guid, $user_guid) {
  */
 function enqueue( $user_guid ) {
 	// add to queue
-	$query = "INSERT INTO notification_digest_queue (user_guid) VALUES ({$user_guid})";
-	$result = insert_data($query);
+	try{
+		$query = "INSERT INTO notification_digest_queue (user_guid) VALUES ({$user_guid})";
+		$result = insert_data($query);
+	} catch(Exception $e){
+		// return 1 if there's an error
+		return 1;
+	}
 
 	// return 1 if there's an error
 	return $result === false;

@@ -8,8 +8,7 @@ CREATE TABLE IF NOT EXISTS `notification_digest` (
   `action_type` text,
   `notification_entry` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8; 
-
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `notification_digest_queue` (
   `user_guid` bigint(20) NOT NULL,
   PRIMARY KEY (`user_guid`)
