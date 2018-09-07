@@ -1581,7 +1581,7 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
  * @param mixed  $return_value   The current value of the plugin hook
  * @param mixed  $params  Data passed from the trigger
  */
-function cp_digest_email_handler($hook, $entity_type, $return_value, $params, $frequency) {
+function cp_digest_email_handler($hook, $entity_type, $return_value, $params, $cron_freq) {
 	$dbprefix = elgg_get_config('dbprefix');
 
 	while( $user_guid = dequeue() ) {
@@ -1590,7 +1590,7 @@ function cp_digest_email_handler($hook, $entity_type, $return_value, $params, $f
 			continue;
 		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
 
-		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_' . $frequency) == 0 ) {
+		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_' . $cron_freq) == 0 ) {
 			$digest_array = array();
 
 			$query = "SELECT * FROM notification_digest WHERE user_guid = {$user->guid}";
@@ -1614,7 +1614,7 @@ function cp_digest_email_handler($hook, $entity_type, $return_value, $params, $f
 
 			}
 
-			$subject = elgg_echo('cp_newsletter:subject:' . $frequency,$language_preference);
+			$subject = elgg_echo('cp_newsletter:subject:' . $cron_freq,$language_preference);
 
 			// if the array is empty, send the empty template
 			if (sizeof($digest_array) > 0 || !empty($digest_array))
