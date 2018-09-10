@@ -74,6 +74,9 @@ function loginrequired_init() {
 	$allow[] = 'mod/contactform/';
 	$allow[] = 'thewire_image/download/.*';
 
+	if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER'))
+		$allow[] = '.*';
+
 
 	// Allow other plugin developers to edit the array values
 	$add_allow = elgg_trigger_plugin_hook('login_required','login_required');
