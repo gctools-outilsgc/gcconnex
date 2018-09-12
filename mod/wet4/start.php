@@ -1022,10 +1022,8 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 						//remove delete icon on groups
 						if($entity instanceof ElggGroup){
 							foreach ($return as $key => $item) {
-								switch ($item->getName()) {
-									case 'delete':
+								if($item->getName() == 'delete') {
 										unset($return[$key]);
-										break;
 								}
 							}
 						}
