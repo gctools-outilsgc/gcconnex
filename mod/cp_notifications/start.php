@@ -1541,67 +1541,13 @@ function get_site_subscribers($dbprefix, $user_guid, $entity_guid = '') {
  * @param mixed  $params  Data passed from the trigger
  */
 function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $params) {
-	elgg_load_library('elgg:gc_notification:functions');
-	$dbprefix = elgg_get_config('dbprefix');
-
 	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
+	elgg_load_library('elgg:gc_notification:functions');
+	
+	initialize_queue('weekly');
 
-	// extract all the users who have the digest
-	$query = "SELECT id, entity_guid as guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_set_digest' AND value = 'set_digest_yes'";
-	$users = get_data($query);
-
-	foreach ($users as $user) {
-
-		$user = get_entity($user->guid);
-		if($user->gcdeactivate)
-			continue;
-		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
-
-		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_weekly') == 0 ) {
-			$digest_array = array();
-
-			$query = "SELECT * FROM notification_digest WHERE user_guid = {$user->guid}";
-			$digest_items = get_data($query);
-
-			$language_preference = (strcmp(elgg_get_plugin_user_setting('cpn_set_digest_language', $user->guid, 'cp_notifications'),'set_digest_en') == 0) ? 'en' : 'fr';
-
-			foreach ($digest_items as $digest_item) {
-
-				// check to make sure that the string is encoded with base 64 or not (legacy)
-				if (isJson($digest_item->notification_entry))
-					$notification_entry = $digest_item->notification_entry;
-				else
-					$notification_entry = base64_decode($digest_item->notification_entry);
-
-
-				if ($digest_item->entry_type === 'group')
-					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $notification_entry;
-				else
-					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $notification_entry;
-
-			}
-
-			$subject = elgg_echo('cp_newsletter:subject:weekly', $language_preference);
-
-			// if the array is empty, send the empty template
-			if (sizeof($digest_array) > 0 || !empty($digest_array))
-				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $user, 'newsletter_content' => $digest_array));
-			else
-				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $user));
-
-			$template = str_replace("<", "\r\n<", $template);
-			
-			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send($user->email, $user->name, $subject, $template, NULL, true );
-			else
-				mail($user->email, $subject, $template, cp_get_headers());
-
-			// delete and clean up the notification, already sent so we don't need to keep it anymore
-			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
-			$result = delete_data($query);
-
-		}
-	}
+	// TODO: write the functions above and rewrite the email handler below
+	cp_digest_email_handler($hook, $entity_type, $return_value, $params, 'weekly');
 }
 
 
@@ -1617,23 +1563,34 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
  * @param mixed  $params  Data passed from the trigger
  */
 function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $params) {
+	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
 	elgg_load_library('elgg:gc_notification:functions');
+
+	initialize_queue('daily');
+
+	cp_digest_email_handler($hook, $entity_type, $return_value, $params, 'daily');
+}
+
+/**
+ * setup crontab either on a daily or weekly basis
+ * get users who are subscribed to digest
+ * run crontab, retrieve users, send digest, reset timer (update timestamp)
+ *
+ * @param string $hook    The name of the plugin hook
+ * @param string $entity_type    The type of the plugin hook
+ * @param mixed  $return_value   The current value of the plugin hook
+ * @param mixed  $params  Data passed from the trigger
+ */
+function cp_digest_email_handler($hook, $entity_type, $return_value, $params, $cron_freq) {
 	$dbprefix = elgg_get_config('dbprefix');
 
-	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
-
-	// extract all the users who have the digest
-	$query = "SELECT id, entity_guid as guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_set_digest' AND value = 'set_digest_yes'";
-	$users = get_data($query);
-
-	foreach ($users as $user) {
-
-		$user = get_entity($user->guid);
+	while( $user_guid = dequeue() ) {
+		$user = get_entity($user_guid);
 		if($user->gcdeactivate)
 			continue;
 		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
 
-		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_daily') == 0 ) {
+		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_' . $cron_freq) == 0 ) {
 			$digest_array = array();
 
 			$query = "SELECT * FROM notification_digest WHERE user_guid = {$user->guid}";
@@ -1657,7 +1614,7 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 
 			}
 
-			$subject = elgg_echo('cp_newsletter:subject:daily',$language_preference);
+			$subject = elgg_echo('cp_newsletter:subject:' . $cron_freq,$language_preference);
 
 			// if the array is empty, send the empty template
 			if (sizeof($digest_array) > 0 || !empty($digest_array))
