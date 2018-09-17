@@ -49,7 +49,7 @@ foreach ($items as $item) {
     }
 
     if ($group->canEdit()) {
-        $removeMemberURL = elgg_add_action_tokens_to_url("action/groups/remove?user_guid={$item[guid]}");
+        $removeMemberURL = elgg_add_action_tokens_to_url("action/groups/remove?user_guid={$item[guid]}&group_guid={$group->getGUID()}");
         $user_RemoveMember = "<li><a href='{$removeMemberURL}'>".elgg_echo('group:member_remove_group')."</a></li>";
     }
 
