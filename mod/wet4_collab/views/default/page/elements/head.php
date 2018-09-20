@@ -187,8 +187,6 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
           switch($page_entity_type) {
             case 'page_top':
-              $page_entity_type = 'pages';
-              break;
             case 'page':
               $page_entity_type = 'pages';
               break;
