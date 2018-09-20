@@ -164,7 +164,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
           $page_entity_type = "";
           if ($my_page_entity instanceof ElggEntity)
-          $page_entity_type = $my_page_entity->getSubtype();
+            $page_entity_type = $my_page_entity->getSubtype();
 
           if(elgg_instanceof($my_page_entity, 'group')){
               $desc = elgg_strip_tags(elgg_get_excerpt(gc_explode_translation($my_page_entity->description,get_current_language())));
@@ -185,23 +185,22 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
           $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="' . $pubDate . '"/>';
           $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
 
-          // condition for pages
-          if ($page_entity_type == 'page_top' || $page_entity_type == 'page') {
-            $page_entity_type = 'pages';
-          }
-
-          // condition for forums
-          if ($page_entity_type == 'hjforumtopic') {
-            $page_entity_type = 'forums';
-          }
-
-          // condition for forums
-          if ($page_entity_type == 'thewire') {
-            $page_entity_type = 'wire';
-          }
-
-          if ($page_entity_type == 'groupforumtopic') {
-            $page_entity_type = 'discussions';
+          switch($page_entity_type) {
+            case 'page_top':
+              $page_entity_type = 'pages';
+              break;
+            case 'page':
+              $page_entity_type = 'pages';
+              break;
+            case 'hjforumtopic':
+              $page_entity_type = 'forums';
+              break;
+            case 'thewire':
+              $page_entity_type = 'wire';
+              break;
+            case 'groupforumtopic':
+              $page_entity_type = 'discussions';
+              break;
           }
       } else {
           $desc = $vars['title'];
