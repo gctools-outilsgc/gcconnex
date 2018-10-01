@@ -16,5 +16,6 @@
     	<name>web_services</name>
 		<type>plugin</type>
 		<name>gcRegistration_invitation</name>
+		<name>invitefriends</name>
   	</requires>
 </plugin_manifest>
