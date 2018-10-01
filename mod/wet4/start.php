@@ -49,7 +49,7 @@ function wet4_theme_init()
 	elgg_register_plugin_hook_handler('format', 'friendly:time', 'enhanced_friendly_time_hook');
 	elgg_register_event_handler('pagesetup', 'system', 'wet4_theme_pagesetup', 1000);
 	elgg_register_event_handler('pagesetup', 'system', 'wet4_riverItem_remove');
-	elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
+	elgg_unregister_event_handler('pagesetup', 'system', 'messages_notifier');
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', 'wet4_widget_menu_setup');
