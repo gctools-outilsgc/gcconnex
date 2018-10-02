@@ -13,7 +13,7 @@
 
         ob_start(); ?>
 
-        <script src="//code.highcharts.com/highcharts.js"></script>
+        <script src="//code.highcharts.com/6.1.0/highcharts.js"></script>
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="//code.highcharts.com/modules/data.js"></script>
         <script src="//code.highcharts.com/modules/drilldown.js"></script>
