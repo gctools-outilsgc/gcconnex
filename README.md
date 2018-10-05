@@ -1,5 +1,5 @@
 
-# GCconnex
+# GCconnex and GCcollab
 
 [![Build Status](https://secure.travis-ci.org/gctools-outilsgc/gcconnex.svg?branch=master)](https://travis-ci.org/gctools-outilsgc/gcconnex)
 [![Join the chat at https://gitter.im/gctools-outilsgc/gcconnex](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gctools-outilsgc/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -7,11 +7,11 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/?branch=gcconnex)
 [![Code Coverage](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/?branch=gcconnex)
 
-GCconnex is a professional networking and collaborative workspace for all Canadian public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
+GCconnex (GC only) and [GCcollab](https://gccollab.ca/) are a professional networking and collaborative workspaces for all Canadian public servants, academics and post-secondary students, as well as partners by invitation. They allow people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
 
 It features dynamic online communities where public servants can collaborate on projects, blog, chat via instant messaging, carry on discussions, ask and answer each other's questions about anything from learning to technology. It acts as a professional platform to create your professional C.V., share ideas and connect you with people and information that you need.
 
-GCconnex is based on Elgg. https://github.com/Elgg/Elgg
+GCconnex and GCcollab are based on [Elgg](https://github.com/Elgg/Elgg).
 
 ## Installation
 
@@ -70,11 +70,11 @@ Elgg Copyright (c) 2008-2016, see COPYRIGHT.txt
 
 # GCconnex
 
-GCconnex est un espace de travail collaboratif pour le réseautage professionnel à l'ensemble de la fonction publique Canadienne. Celle-ci vous permet de vous brancher, de partager de l'information et tirer profit du pouvoir de réseautage pour accroître l'efficacité et la productivité de la fonction publique.
+GCconnex (GC seulement) and [GCcollab](https://gccollab.ca/) sont des espaces de travail collaboratif pour tous les fonctionnaires, universitaires et étudiants de niveau postsecondaire canadiens, ainsi que des partenaires sur invitation. Ils permettent aux personnes de se connecter et de partager des informations et tirer profit du pouvoir de réseautage pour accroître l'efficacité et la productivité de la fonction publique.
 
 On y retrouve plusieurs communautés en ligne où les employés peuvent collaborer à des projets, tenir des blogues, clavarder au moyen de la messagerie instantanée, tenir des discussions, poser des questions et obtenir des réponses sur des sujets aussi variés que l’apprentissage et la technologie. C'est une plateforme professionnel ou vous pouvez créer votre C.V, échanger des idées et vous connecter avec des gens et les information dont vous avez besoin.
 
-GCconnex est basé sur Elgg. https://github.com/Elgg/Elgg
+GCconnex et GCcollab sont basés sur [Elgg](https://github.com/Elgg/Elgg).
 
 ## Installation
 
