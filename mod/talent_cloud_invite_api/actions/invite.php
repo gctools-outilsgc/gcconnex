@@ -6,7 +6,9 @@ if ( elgg_is_active_plugin('web_services') && elgg_is_active_plugin('gcRegistrat
 		"gc.invite",
 		"talent_cloud_invite",
 		array(
-			"email" => array('type' => 'string', 'required' => true)
+			"email" => array('type' => 'string', 'required' => true, 'description' => 'Email address of user to invite'),
+			"en_message" => array('type' => 'string', 'required' => false, 'description' => 'English personalized message to incude in invite'),
+			"fr_message" => array('type' => 'string', 'required' => false, 'description' => 'French personalized message to incude in invite'),
 		),
 		'Invites Talent Cloud user to register for GCcollab Account',
 		'POST',
@@ -14,15 +16,20 @@ if ( elgg_is_active_plugin('web_services') && elgg_is_active_plugin('gcRegistrat
 		false
 	);
 
-	function talent_cloud_invite($email) {
+	function talent_cloud_invite($email, $en_message = NULL, $fr_message = NULL) {
 		
-		// validation on email address
+		// Security validation on input parameters from API
 
+		$email = test_input($email);
+		$en_message = test_input($en_message);
+		$fr_message = test_input($fr_message);
+
+		// Secondary validation for valid email
+
+		$validation_errors = array();
 		if(!is_email_address($email)){
-			return json_encode(array('success'=>false,'error'=>'The email submitted is not a valid email'));
+			return json_encode(array('success'=>'false', 'errors'=>'The email submitted is not a valid email'));
 		};
-
-		$email = trim($email);
 
 	    // Create TalentCloud user if they don't exist
 
@@ -44,20 +51,43 @@ if ( elgg_is_active_plugin('web_services') && elgg_is_active_plugin('gcRegistrat
 		$site = elgg_get_site_entity();
 
 		// Set custom personalized message
+		// Check priority order - API first / Settings second / Hardcode default third
+	
+		if ($en_message){
+			$emailmessage_en = $en_message;
+		} else {
+			$emailmessage_en = elgg_get_plugin_setting('en_message','talent_cloud_invite_api');
+			if (!$emailmessage_en){
+				$emailmessage_en = 'Personalized message from GC Talent Cloud';
+			};	
+		};
+		
+		if ($fr_message){
+			$emailmessage_fr = $fr_message;
+		} else {
+			$emailmessage_fr = elgg_get_plugin_setting('fr_message','talent_cloud_invite_api');
+			if (!$emailmessage_fr){
+				$emailmessage_fr = 'Message personalisé de Nuage de talents du GC';
+			};
+		};
 
-		$emailmessage_en = 'Personalized message from GC Talent Cloud';
-		$emailmessage_fr = 'Message personalisé de Nuage de talents du GC';
+		$link_en = elgg_get_plugin_setting('en_link', 'talent_cloud_invite_api');
+		$link_fr = elgg_get_plugin_setting('fr_link', 'talent_cloud_invite_api');
 
-		$link_en = "<a href='https://account.gccollab.ca/register/'>GCcollab Account Registration</a>";
-		$link_fr = "<a href='https://account.gccollab.ca/register/'>Compte GCcollab pour créer un compte</a>";
+		if (!$link_en){
+			$link_en = "<a href='https://account.gccollab.ca/register/'>GCcollab Account Registration</a>";
+		};
+		if (!$link_fr){
+			$link_fr = "<a href='https://account.gccollab.ca/register/'>Compte GCcollab pour créer un compte</a>";
+		}
 
 		$subject = elgg_echo('cp_notify:subject:invite_new_user',array(),'en') . ' | ' . elgg_echo('cp_notify:subject:invite_new_user',array(),'fr');
 
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_invite_new_user:title', array('GC Talent Cloud'),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_invite_new_user:title', array('Nuage de talents du GC'),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_invite_new_user:title', array(elgg_get_plugin_setting('en_name', 'talent_cloud_invite_api')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_invite_new_user:title', array(elgg_get_plugin_setting('fr_name', 'talent_cloud_invite_api')),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_invite_new_user:description',array('GC Talent Cloud', $emailmessage_en, $link_en),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_invite_new_user:description',array('Nuage de talents du GC', $emailmessage_fr, $link_fr),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_invite_new_user:description',array(elgg_get_plugin_setting('en_name', 'talent_cloud_invite_api'), $emailmessage_en, $link_en),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_invite_new_user:description',array(elgg_get_plugin_setting('fr_name', 'talent_cloud_invite_api'), $emailmessage_fr, $link_fr),'fr');
 
 		$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
 
@@ -148,8 +178,12 @@ if ( elgg_is_active_plugin('web_services') && elgg_is_active_plugin('gcRegistrat
 		};
 
 	};
+
+	function test_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	};
 		
 };
-
-	
-
