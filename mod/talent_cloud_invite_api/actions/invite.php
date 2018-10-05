@@ -58,7 +58,7 @@ if ( elgg_is_active_plugin('web_services') && elgg_is_active_plugin('gcRegistrat
 		} else {
 			$emailmessage_en = elgg_get_plugin_setting('en_message','talent_cloud_invite_api');
 			if (!$emailmessage_en){
-				$emailmessage_en = 'Personalized message from GC Talent Cloud';
+				$emailmessage_en = ' ';
 			};	
 		};
 		
@@ -67,7 +67,7 @@ if ( elgg_is_active_plugin('web_services') && elgg_is_active_plugin('gcRegistrat
 		} else {
 			$emailmessage_fr = elgg_get_plugin_setting('fr_message','talent_cloud_invite_api');
 			if (!$emailmessage_fr){
-				$emailmessage_fr = 'Message personalisé de Nuage de talents du GC';
+				$emailmessage_fr = ' ';
 			};
 		};
 
