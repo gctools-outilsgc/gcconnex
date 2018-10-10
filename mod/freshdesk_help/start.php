@@ -11,7 +11,7 @@ function freshdesk_help_init() {
     elgg_register_action('save-articles', elgg_get_plugins_path() . "/freshdesk_help/actions/articles/save.php");
     elgg_register_action('save-articles-pedia', elgg_get_plugins_path() . "/freshdesk_help/actions/articles/pedia-save.php");
 
-    elgg_register_action('ticket/feedback', elgg_get_plugins_path() . "/freshdesk_help/actions/ticket/feedback.php");
+    elgg_register_action('ticket/feedback', elgg_get_plugins_path() . "/freshdesk_help/actions/ticket/feedback.php", "public");
 
     elgg_extend_view("js/elgg", "js/freshdesk_help/functions");
     elgg_extend_view('css/elgg', 'freshdesk/css');
