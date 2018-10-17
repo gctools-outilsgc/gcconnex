@@ -12,9 +12,11 @@ $user = elgg_get_logged_in_user_entity();
 if( _elgg_services()->session->get('language') == 'fr'){
     $graphic_lang = 'fr';
     $account_text = 'Compte';
+    $pilot = 'Pilote';
 } else {
     $graphic_lang = 'en';
     $account_text = 'Account';
+    $pilot = 'Pilot';
 }
 
 // cyu - strip off the "GCconnex" branding bar for the gsa
@@ -44,7 +46,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                         </li>
                         <li class="pull-left tool-link">
                         <a href="https://message.gccollab.ca" style="color:#6b5088;">
-                            <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/message_icon.png" alt="GCcollab"></span>Message
+                            <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/message_icon_pilot.png" alt="GCcollab"></span>Message (<?php echo $pilot; ?>)
                         </a>
                         </li>
                     </ul>
