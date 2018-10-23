@@ -239,7 +239,7 @@ function redirect_content_url($hook, $type, $url, $params) {
 		if ($subtype === 'page_top') $subtype = 'pages';
 		if ($subtype === 'idea') $subtype = 'ideas';
 
-		if (sizeof(get_sanitized_url()) > 3)
+		if ( strlen($_SERVER['REQUEST_URI']) > strrpos( $_SERVER['REQUEST_URI'], ''.$params['entity']->guid) + strlen($params['entity']->guid) )
 			forward("{$subtype}/view/{$params['entity']->guid}");
 	}
 }
