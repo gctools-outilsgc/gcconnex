@@ -205,7 +205,7 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 function redirect_group_url($hook, $type, $url, $params) {
 	// from: 192.168.xx.xx/gcconnex/groups/profile/1111/group-name
 	// to: 192.168.xx.xx/gcconnex/groups/profile/1111/
-	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false && sizeof(get_sanitized_url()) > 3)
+	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false && strlen($_SERVER['REQUEST_URI']) > strrpos( $_SERVER['REQUEST_URI'], ''.$params['entity']->guid) + strlen($params['entity']->guid) )
 		forward("groups/profile/{$params['entity']->guid}");
 }
 
