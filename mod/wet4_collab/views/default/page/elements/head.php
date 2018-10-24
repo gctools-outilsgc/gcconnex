@@ -193,9 +193,6 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
             case 'hjforumtopic':
               $page_entity_type = 'forums';
               break;
-            case 'thewire':
-              $page_entity_type = 'wire';
-              break;
             case 'groupforumtopic':
               $page_entity_type = 'discussions';
               break;
@@ -220,7 +217,46 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 		if ($my_page_entity instanceof ElggObject) {
 			if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
 				echo '<meta name="robots" content="noindex">';
-		}
+    }
+
+    $base_site_url = str_replace('/', ' ', elgg_get_site_entity()->getURL());
+    $current_url = str_replace('/', ' ', ((isset($_SERVER['HTTPS']) ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"));
+    $current_url = str_replace($base_site_url, '', $current_url);
+    $current_url = str_replace(' ', '/', $current_url);
+    $current_url = explode("?", $current_url);
+    $current_url = $current_url[0];
+    $current_url = explode("/", $current_url);
+
+    // extract the comment guid
+    $comment_entity_guid = $current_url[sizeof($current_url) - 2];
+
+    $comment_entity = get_entity($comment_entity_guid);
+    if ($comment_entity instanceof ElggComment) {
+      $page_entity_type = "comments";
+      $my_page_entity = $comment_entity;
+    
+    } elseif (!$my_page_entity instanceof ElggEntity) {
+      $segments = (strpos($_SERVER['REQUEST_URI'], '?') !== false) 
+      ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
+      : $_SERVER['REQUEST_URI'];
+    
+      $segments = explode('/', $segments);
+      $some_post = get_entity($segments[sizeof($segments) - 1]);
+    
+      if ($some_post instanceof ElggEntity) {
+        $my_page_entity = $some_post;
+        $page_entity_type = $my_page_entity->getSubtype();
+        if($page_entity_type == 'thewire'){
+          $page_entity_type = 'wire';
+        }
+      } else {
+        $some_post = get_entity($segments[sizeof($segments) - 2]);
+        if ($some_post instanceof ElggEntity) {
+          $my_page_entity = $some_post;
+          $page_entity_type = $my_page_entity->getSubtype();
+        }
+      }
+    }
 
           $no_index_array = array(
             'activity','activity/all','/activity/owner','/activity/friends/','/activity_tabs/mydept','/activity_tabs/otherdept',
