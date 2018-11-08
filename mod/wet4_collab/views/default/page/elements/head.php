@@ -271,6 +271,8 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
             'photos/siteimagesowner/',
             'thewire/all','/thewire/owner/','/thewire/friends/','/thewire/?offset',
             'file_tools/list', '/newsfeed/',
+			'missions/main', 'missions/main/?offset', 'missions/members', 'missions/members/?offset',
+			'missions/archive', 'missions/archive/?offset', 'missions/analytics',
           );
 
           $can_index = true;
