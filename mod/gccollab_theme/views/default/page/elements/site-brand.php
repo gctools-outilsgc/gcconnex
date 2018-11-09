@@ -36,7 +36,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                     <ul id="" class="pull-left list-unstyled mrgn-bttm-0" style="font-weight:bold;">
                         <li class="pull-left tool-link">
                         <a href="https://account.gccollab.ca" style="color:#6b5088;">
-                            <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt=""></span><?php echo $account_text; ?>
+                            <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt=""></span>GCaccount
                         </a>
                         </li>
                         <li class="pull-left tool-link">
