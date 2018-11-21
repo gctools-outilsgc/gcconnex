@@ -44,7 +44,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'mission_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-mission-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
@@ -56,7 +56,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'missioncreate_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-mentoringcreater-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
@@ -75,7 +75,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'assignseek_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
@@ -87,7 +87,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'assigncreate_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
@@ -106,7 +106,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'deploymentseek_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
@@ -118,7 +118,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'deploymentcreate_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
@@ -133,7 +133,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'swap_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:job_swap' ),
@@ -146,7 +146,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'rotation_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'missions:job_rotation' ),
@@ -172,7 +172,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'mentored_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-mentoring-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:mentored' ),
@@ -185,7 +185,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
                         'name' => 'mentoring_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-mentored-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:mentoring' ),
@@ -204,7 +204,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'shadowing_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
@@ -217,7 +217,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'shadowed_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-shadowed-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
@@ -237,7 +237,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'skillseeker_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
@@ -250,7 +250,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'skillcreator_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
@@ -270,7 +270,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'coachseek_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-seekCoach-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
@@ -282,7 +282,7 @@ if (elgg_is_xhr) {
                         <?php
                 	       echo elgg_view ( "input/checkbox", array (
 			             'name' => 'coachcreate_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-becomeCoach-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
@@ -297,7 +297,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'jobshare_check',
-			         'checked' => true,
+			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'missions:job_share' ),
