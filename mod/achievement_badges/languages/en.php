@@ -3,7 +3,7 @@ return array(
 
     //General
     'badge:knowmore' => 'What are badges?',
-    'badge:knowmorelink' => 'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Content_Management_and_Collaboration/What_Are_Badges_and_How_Do_I_Get_Them%3F',
+    'badge:knowmorelink' => 'https://support.gctools-outilsgc.ca/en/support/solutions/articles/2100027172-what-are-badges-and-how-do-i-get-them-',
     'badge:badges' => 'Badges',
     'badge:progress' => 'Badge Progress',
     'badge:start' => 'Start',
