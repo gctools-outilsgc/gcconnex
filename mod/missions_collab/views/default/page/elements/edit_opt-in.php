@@ -44,7 +44,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'casualseek_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-casualseek-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:seeking') 
                             ));
@@ -54,7 +54,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'casualcreate_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-casualcreate-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:offering')
                             ));
@@ -69,7 +69,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'studentseek_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-studentseek-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:seeking') 
                             ));
@@ -79,7 +79,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'studentcreate_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-studentcreate-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:offering')
                             ));
@@ -94,7 +94,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'interchangeseek_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-interchangeseek-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:seeking') 
                             ));
@@ -104,7 +104,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'interchangecreate_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-interchangecreate-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:offering')
                             ));
@@ -250,7 +250,7 @@ if (elgg_is_xhr) {
                         <?php
                         	echo elgg_view ( "input/checkbox", array (
                                 'name' => 'mentored_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-mentored-check',
                                 'label' => elgg_echo ( 'gcconnex_profile:opt:mentored' ),
                             ));
@@ -261,7 +261,7 @@ if (elgg_is_xhr) {
                         <?php
                         	echo elgg_view ( "input/checkbox", array (
                                 'name' => 'mentoring_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-mentoring-check',
                                 'label' => elgg_echo ( 'gcconnex_profile:opt:mentoring' ),
                             ));
@@ -276,7 +276,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'collaborationseek_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-collaborationseek-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:seeking') 
                             ));
@@ -286,7 +286,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'collaborationcreate_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-collaborationcreate-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:offering')
                             ));
@@ -301,7 +301,7 @@ if (elgg_is_xhr) {
                     <?php
                         echo elgg_view("input/checkbox", array(
                             'name' => 'skillseeker_check',
-                            'checked' => true,
+                            'checked' => false,
                             'id' => 'gcconnex-opt-in-skillseeker-check',
                             'label' => elgg_echo('gcconnex_profile:opt:participants')
                         ));
@@ -311,7 +311,7 @@ if (elgg_is_xhr) {
                         <?php
                             echo elgg_view("input/checkbox", array(
                                 'name' => 'skillcreator_check',
-                                'checked' => true,
+                                'checked' => false,
                                 'id' => 'gcconnex-opt-in-skillcreator-check',
                                 'label' => elgg_echo('gcconnex_profile:opt:host')
                             ));
