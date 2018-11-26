@@ -49,7 +49,7 @@ function wet4_theme_init()
 	elgg_register_plugin_hook_handler('format', 'friendly:time', 'enhanced_friendly_time_hook');
 	elgg_register_event_handler('pagesetup', 'system', 'wet4_theme_pagesetup', 1000);
 	elgg_register_event_handler('pagesetup', 'system', 'wet4_riverItem_remove');
-	elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
+	elgg_unregister_event_handler('pagesetup', 'system', 'messages_notifier');
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', 'wet4_widget_menu_setup');
@@ -247,13 +247,13 @@ function wet4_theme_init()
 
 	register_plugin_hook('format', 'friendly:title', 'wet_seo_friendly_urls');
 
-	
+
 	elgg_register_plugin_hook_handler('register', 'menu:site', 'remove_menu_item_handler');
 
 
 }
 function remove_menu_item_handler($hook, $type, $menu, $params){
-	
+
 	foreach ($menu as $key => $item){
 		if ($item->getName() == 'mission_main'){
 			unset($menu[$key]);
@@ -557,7 +557,7 @@ function wet4_theme_pagesetup()
 			'priority' => '100',
 			'context' => 'settings',
 		);
-		
+
 		elgg_register_menu_item("page", $params);
 	}
 
@@ -1017,35 +1017,44 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
             			'priority' => 300,
             		);
             		$return[] = \ElggMenuItem::factory($options);
-                    }
+            }
+
+						//remove delete icon on groups
+						if($entity instanceof ElggGroup){
+							foreach ($return as $key => $item) {
+								if($item->getName() == 'delete') {
+										unset($return[$key]);
+								}
+							}
+						}
 
             if (elgg_is_logged_in()){
                 $user = elgg_get_logged_in_user_entity();
                 $page_owner = elgg_get_page_owner_entity();
                 if($entity->getSubtype() == 'discussion_reply' ){
-					if($page_owner!=''||$page_owner!=null){
-					if($entity->owner_guid == $user['guid'] || elgg_is_admin_logged_in() || ($page_owner instanceof ElggGroup && $page_owner->getOwnerGUID() == $user['guid']) || $page_owner->canEdit()){
-                    $options = array(
-                    'name' => 'edit',
-                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></i>',
-                    'title' => elgg_echo('edit:this') . ' ' . $entContext,
-                    'href' => "$handler/edit/{$entity->getGUID()}",
-                    'priority' => 299,
-                );
-                $return[] = \ElggMenuItem::factory($options);
+									if($page_owner!=''||$page_owner!=null){
+										if($entity->owner_guid == $user['guid'] || elgg_is_admin_logged_in() || ($page_owner instanceof ElggGroup && $page_owner->getOwnerGUID() == $user['guid']) || $page_owner->canEdit()){
+				                    $options = array(
+				                    'name' => 'edit',
+				                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></i>',
+				                    'title' => elgg_echo('edit:this') . ' ' . $entContext,
+				                    'href' => "$handler/edit/{$entity->getGUID()}",
+				                    'priority' => 299,
+				                );
+				                $return[] = \ElggMenuItem::factory($options);
 
-                    $options = array(
-                        'name' => 'delete',
-                        'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
-                        'title' => elgg_echo('delete:this') . ' ' . $entContext,
-                        'href' => "action/$handler/delete?guid={$entity->getGUID()}",
-                        'confirm' => elgg_echo('deleteconfirm'),
-                        'priority' => 300,
-                    );
-                    $return[] = \ElggMenuItem::factory($options);
-                    }
-				}
-			}
+				                    $options = array(
+				                        'name' => 'delete',
+				                        'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
+				                        'title' => elgg_echo('delete:this') . ' ' . $entContext,
+				                        'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+				                        'confirm' => elgg_echo('deleteconfirm'),
+				                        'priority' => 300,
+				                    );
+				                    $return[] = \ElggMenuItem::factory($options);
+					            }
+										}
+							}
             }
         }
     }

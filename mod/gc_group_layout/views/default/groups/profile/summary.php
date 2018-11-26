@@ -250,6 +250,10 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 $url = elgg_get_site_url() . "action/groups/leave?group_guid={$group->getGUID()}";
 										 $url = elgg_add_action_tokens_to_url($url);
 										 $actions[$url] = 'groups:leave';
+										 if(group_tools_allow_members_invite($group)=='yes'){
+											$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
+											$actions[$url] = 'groups:invite';
+										 }
 								 }
 						 } elseif (elgg_is_logged_in()) {
 								 // join - admins can always join.

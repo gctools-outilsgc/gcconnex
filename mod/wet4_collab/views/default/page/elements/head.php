@@ -162,12 +162,18 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
           echo  date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
           */
 
+          $page_entity_type = "";
+          if ($my_page_entity instanceof ElggEntity)
+            $page_entity_type = $my_page_entity->getSubtype();
+
           if(elgg_instanceof($my_page_entity, 'group')){
               $desc = elgg_strip_tags(elgg_get_excerpt(gc_explode_translation($my_page_entity->description,get_current_language())));
               $briefdesc = gc_explode_translation($my_page_entity->briefdescription,get_current_language());
+              $page_entity_type = "group";
           } else if(elgg_instanceof($my_page_entity, 'user')) {
               $desc = elgg_echo('profile:title', array(gc_explode_translation($my_page_entity->name,get_current_language())));
               $briefdesc = elgg_echo('profile:title', array(gc_explode_translation($my_page_entity->name,get_current_language())));
+              $page_entity_type = "user";
           } else {
               $desc = gc_explode_translation($my_page_entity->title,get_current_language());
               $briefdesc = gc_explode_translation($my_page_entity->title,get_current_language());
@@ -178,37 +184,95 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
           $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="' . $pubDate . '"/>';
           $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
+
+          switch($page_entity_type) {
+            case 'page_top':
+            case 'page':
+              $page_entity_type = 'pages';
+              break;
+            case 'hjforumtopic':
+              $page_entity_type = 'forums';
+              break;
+            case 'groupforumtopic':
+              $page_entity_type = 'discussions';
+              break;
+          }
       } else {
           $desc = $vars['title'];
           $briefdesc = $vars['title'];
       }
 
       $creator = gc_explode_translation(elgg_get_page_owner_entity()->name,get_current_language());
-
+      
       if(!$creator){
           $creator = 'GCcollab';
       }
-
+      //Content creator avatar meta tag
+      $creator_profile = elgg_get_page_owner_entity();
+      if($creator_profile) {
+        $creator_profile_meta = '<meta name="profileImage" content= "'.$creator_profile->geticonURL('medium').'" />';
+      }
 
 		// cyu - prevent crawler to index unsaved draft
 		if ($my_page_entity instanceof ElggObject) {
 			if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
 				echo '<meta name="robots" content="noindex">';
-		}
+    }
+
+    $base_site_url = str_replace('/', ' ', elgg_get_site_entity()->getURL());
+    $current_url = str_replace('/', ' ', ((isset($_SERVER['HTTPS']) ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"));
+    $current_url = str_replace($base_site_url, '', $current_url);
+    $current_url = str_replace(' ', '/', $current_url);
+    $current_url = explode("?", $current_url);
+    $current_url = $current_url[0];
+    $current_url = explode("/", $current_url);
+
+    // extract the comment guid
+    $comment_entity_guid = $current_url[sizeof($current_url) - 2];
+
+    $comment_entity = get_entity($comment_entity_guid);
+    if ($comment_entity instanceof ElggComment) {
+      $page_entity_type = "comments";
+      $my_page_entity = $comment_entity;
+    
+    } elseif (!$my_page_entity instanceof ElggEntity) {
+      $segments = (strpos($_SERVER['REQUEST_URI'], '?') !== false) 
+      ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
+      : $_SERVER['REQUEST_URI'];
+    
+      $segments = explode('/', $segments);
+      $some_post = get_entity($segments[sizeof($segments) - 1]);
+    
+      if ($some_post instanceof ElggEntity) {
+        $my_page_entity = $some_post;
+        $page_entity_type = $my_page_entity->getSubtype();
+        if($page_entity_type == 'thewire'){
+          $page_entity_type = 'wire';
+        }
+      } else {
+        $some_post = get_entity($segments[sizeof($segments) - 2]);
+        if ($some_post instanceof ElggEntity) {
+          $my_page_entity = $some_post;
+          $page_entity_type = $my_page_entity->getSubtype();
+        }
+      }
+    }
 
           $no_index_array = array(
             'activity','activity/all','/activity/owner','/activity/friends/','/activity_tabs/mydept','/activity_tabs/otherdept',
-            'blog/all','blog/owner/','/blog/group/','/blog/friends/',
-            'bookmarks/all','bookmarks/owner/','/bookmarks/friends/','/bookmarks/group/',
+            'blog/all','blog/owner/','/blog/group/','/blog/friends/','/blog/?offset',
+            'bookmarks/all','bookmarks/owner/','/bookmarks/friends/','/bookmarks/group/','/bookmarks/?offset',
             'event_calendar/list',
-            'file/all','/file/owner/','/file/friends/',
-            'photos/all','photos/owner','photos/friends/',
-            'members','/members/popular/','/members/online','/members/department',
-            'polls/all','/polls/owner/','/polls/friends/',
-            'groups/all','/groups/owner/','/groups/invitation',
+            'file/all','/file/owner/','/file/friends/','/file/?offset',
+            'photos/all','photos/owner','photos/friends/','photos/?offset',
+            'members','/members/popular/','/members/online','/members/department','/members/?offset',
+            'polls/all','/polls/owner/','/polls/friends/','/polls/?offset',
+            'groups/all','/groups/owner/','/groups/invitation','groups/?offset',
             'photos/siteimagesowner/',
-            'thewire/all','/thewire/owner/','/thewire/friends/',
+            'thewire/all','/thewire/owner/','/thewire/friends/','/thewire/?offset',
             'file_tools/list', '/newsfeed/',
+			'missions/main', 'missions/main/?offset', 'missions/members', 'missions/members/?offset',
+			'missions/archive', 'missions/archive/?offset', 'missions/analytics',
           );
 
           $can_index = true;
@@ -224,15 +288,19 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 ?>
 
           <!-- cyu - included header meta tags for GSA (limiting pages to index) -->
-          <meta name="robots" content="noindex">
+          <meta name="robots" content="noindex, follow">
           <meta name="platform" content="gccollab" />
 
         <?php } ?>
 
         <meta name="description" content="<?php echo $desc; ?>" />
+        <meta name="dcterms.type" content= "<?php echo ucfirst($page_entity_type); ?>" />
         <meta name="dcterms.title" content="<?php echo $vars['title']; ?>" />
         <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
-        <?php echo $datemeta; ?>
+        <?php 
+          echo $datemeta; 
+          echo $creator_profile_meta;
+        ?>
         <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
         <meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
         <meta name="gcctitle" content="<?php echo $vars['title']; ?>" />

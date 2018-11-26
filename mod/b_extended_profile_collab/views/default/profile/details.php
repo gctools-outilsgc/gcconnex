@@ -526,6 +526,17 @@ if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
     $admin = elgg_extract('admin', $menu, array());
     $profile_actions = '';
 
+    $dbprefix = elgg_get_config("dbprefix");
+    $guid = (int) $user->guid;
+
+    $result = get_data_row("SELECT pleio_guid FROM {$dbprefix}users_entity WHERE guid = $guid");
+    if ($result->pleio_guid) {
+        $pleio_guid = $result->pleio_guid;
+    } else {
+        $pleio_guid = 'No ID';
+    }
+
+
     // cyu - GCCON-151 : Add colleague in FR not there (inconsistent FR and EN menu layout) & other issues
     if (elgg_is_logged_in() && $actions) {
         $btn_friend_request = '';
@@ -572,6 +583,7 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page
     foreach ($admin as $menu_item) {
         $admin_links .= '<li>' . elgg_view('navigation/menu/elements/item', array('item' => $menu_item)) . '</li>';
     }
+    $admin_links .= '<li style="padding: 3px 20px">Pleio_guid: '.$pleio_guid.'</li>';
 
     echo '<div class="pull-right btn-group"><button type="button" class="btn btn-custom pull-right dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' .
     $text .  '<span class="caret"></span>

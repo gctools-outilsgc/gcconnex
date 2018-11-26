@@ -942,3 +942,63 @@ function has_group_subscriptions($group_guid, $user_guid) {
 }
 
 
+
+/**
+ * Helper functions for digest processing queue
+ */
+function enqueue( $user_guid ) {
+	// add to queue
+	try{
+		$query = "INSERT INTO notification_digest_queue (user_guid) VALUES ({$user_guid})";
+		$result = insert_data($query);
+	} catch(Exception $e){
+		// return 1 if there's an error
+		return 1;
+	}
+
+	// return 1 if there's an error
+	return $result === false;
+}
+
+/* go for something more along the lines of 'at most once' in here to ensure we don't get duplicate digests going out
+ * to get closer to 'exactly once', the digest function can enqueue failed attempts
+ * NOTE: this won't work so well with a split read-write db setup, will likely need to be done without using elgg db functions
+ */
+function dequeue() {
+	$query_init = "SET @uid := NULL";	// mostly for termination
+	$query_delete = "DELETE FROM notification_digest_queue WHERE user_guid = @uid := user_guid LIMIT 1";			// remove a row from queue and prepare the guid to be returned
+	$query_select = "SELECT @uid as uid";
+
+	get_data($query_init);
+	delete_data($query_delete);
+	$user_guid = get_data_row($query_select)->uid;
+	
+	return $user_guid;
+}
+
+function leader_election(){
+	return enqueue(0) == 0;		// there is no user with guid = 0, but only one instance will successfuly insert this with user_guid being the primary key
+}
+
+function initialize_queue( $frequency ){
+	$dbprefix = elgg_get_config('dbprefix');
+
+	try{
+		# get user guid list and insert them all into the queue  ... maybe get it to filter by $frequency too
+		$query = "INSERT INTO notification_digest_queue (user_guid) SELECT entity_guid as user_guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_set_digest' AND value = 'set_digest_yes'";
+		$result = insert_data($query);
+	} catch (Exception $e) {/* let mysql take care of duplicate instert attempts */}
+	
+	sleep(60);		// can certainly be done in a better way, but this is simplest and is unlikely to cause duplicates or unsent digests.
+	
+	return 0;
+}
+
+function await_init(){
+	#check / wait for the user_guid = 0 to be deleted, a maximum total wait time wouldn't be a bad idea either
+	$query_select = "SELECT * FROM notification_digest_queue WHERE user_guid = 0";
+	while ( get_data($query_select) ) {
+		usleep(100);
+	}
+	return 0;
+}

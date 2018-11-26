@@ -2,7 +2,7 @@
 return array(
  //General
  'badge:knowmore' => 'Que sont les écussons?',
-'badge:knowmorelink' => 'http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/En_quoi_consiste_un_insigne%3F',
+'badge:knowmorelink' => 'https://support.gctools-outilsgc.ca/fr/support/solutions/articles/2100027172-que-sont-les-%C3%A9cussons-et-comment-puis-je-les-obtenir-',
 'badge:badges' => 'Écussons',
 'badge:progress' => 'Objectifs atteints',
 'badge:start' => 'Début',
