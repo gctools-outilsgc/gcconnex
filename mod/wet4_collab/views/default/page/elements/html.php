@@ -39,9 +39,7 @@ var userid = '<?php echo elgg_get_logged_in_user_guid(); ?>';
 document.cookie = "cc_data="+userid;
 </script>
 <head>
-    <link type="text/css" href="https://comet.gccollab.ca/cometchatcss.php" rel="stylesheet" charset="utf-8">
-    <script type="text/javascript" src="https://comet.gccollab.ca/cometchatjs.php" charset="utf-8"></script>
-    <?php
+   <?php
         echo str_replace("_graphics/favicon", "_graphics/favicon-collab", $vars["head"]);
     ?>
 </head>
