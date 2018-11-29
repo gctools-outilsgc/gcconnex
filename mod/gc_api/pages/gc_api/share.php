@@ -62,9 +62,4 @@ $params = array(
 );
 echo elgg_view("page/elements/html", $params);
 ?>
-<script>
-	//remove cometchat from window
-	$(document).ready(function () {
-		$('#cometchat').empty();
-	});
-</script>
+
