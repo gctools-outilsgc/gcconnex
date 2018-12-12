@@ -131,10 +131,10 @@ return array(
 	'groups:access:public' => 'Ouvert - Tous les utilisateurs peuvent joindre le groupe',
 	'groups:access:group' => 'Membres du groupe seulement',
 	'groups:closedgroup' => "Ceci est un groupe fermé '.",
-	'groups:closedgroup:request' => 'Pour y devenir membre, cliquez sur le lien "Demande d\'adhésion',
-	'groups:closedgroup:membersonly' => "Ceci est un groupe fermé. Le contenu de se groupe est  accessible uniquement à ses membres.",
+	'groups:closedgroup:request' => 'Pour y devenir membre, cliquez sur le lien "Demande d\'adhésion"',
+	'groups:closedgroup:membersonly' => "Ceci est un groupe fermé. Seuls les membres ont accès au contenu de ce groupe.",
 	'groups:opengroup:membersonly' => "Le contenu de ce groupe est accessible uniquement à ses membres.",
-	'groups:opengroup:membersonly:join' => 'Pour devenir membre, cliquez sur "Demander de devenir membre".',
+	'groups:opengroup:membersonly:join' => 'Pour devenir membre, cliquez sur "Devenir membre du groupe".',
 	'groups:visibility' => 	'Qui peut voir le groupe?',
 
 	/**
