@@ -1,0 +1,1 @@
+ALTER TABLE `prefix_entities` ADD COLUMN `duplicate_check` char(100) UNIQUE NULL;
