@@ -330,7 +330,6 @@ $plugins_connex = array(
 	'gc_tags',
 	'gc_elgg_sitemap',
 	'thewire_images',
-	'pleio',
 	);
 	$plugins_off_collab = array(
 	'developers',
@@ -358,6 +357,7 @@ $plugins_connex = array(
 	'apiadmin',
 	'gc_profile_nudge',
 	'enhanced_user_search',
+	'pleio',	// move to enabled to test with openid
 	);
 	
 
