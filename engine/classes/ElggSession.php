@@ -16,7 +16,7 @@ if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR
 				$func = $this->$method;
 				return call_user_func_array($func, $args);
 			}
-			else if ( in_array( $method, $mock_false) ) { return false; }
+			else if ( in_array( $method, $this->mock_false) ) { return false; }
 			else error_log("FUNCTION:   $method");
 		}
 	}
