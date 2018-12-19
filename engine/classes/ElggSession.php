@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
 	class crawler_user {
-		private $mock_false = array( '' );
+		private $mock_false = array( 'isAdmin', 'canWriteToContainer', 'isBanned', 'canEdit' );
 
 		public $user_type = 'bot';
 
@@ -234,10 +234,11 @@ class ElggSession implements \ArrayAccess {
 		if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
 			// create a mock user for the crawler
 			$solr_user = new crawler_user();
-			$solr_user->canEdit = function(){ return false;};
-			$solr_user->isBanned = function(){ return false;};
+			$solr_user->guid = getenv('SOLR_CRAWLER_USER');
+			$solr_user->getGUID = function(){ return getenv('SOLR_CRAWLER_USER');};
 
-			return $solr_user;
+			$this->set('guid', getenv('SOLR_CRAWLER_USER'));
+			$this->logged_in_user = $solr_user;
 		}
 		return $this->logged_in_user;
 	}
