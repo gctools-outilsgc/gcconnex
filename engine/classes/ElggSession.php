@@ -4,6 +4,24 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
+	class crawler_user {
+		private $mock_false = array( '' );
+
+		public $user_type = 'bot';
+
+		public function __call($method, $args)
+		{
+			if (isset($this->$method)) {
+				$func = $this->$method;
+				return call_user_func_array($func, $args);
+			}
+			else if ( in_array( $method, $mock_false) ) { return false; }
+			else error_log("FUNCTION:   $method");
+		}
+	}
+}
+
 /**
  * Elgg Session Management
  *
@@ -213,6 +231,14 @@ class ElggSession implements \ArrayAccess {
 	 * @since 1.9
 	 */
 	public function getLoggedInUser() {
+		if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
+			// create a mock user for the crawler
+			$solr_user = new crawler_user();
+			$solr_user->canEdit = function(){ return false;};
+			$solr_user->isBanned = function(){ return false;};
+
+			return $solr_user;
+		}
 		return $this->logged_in_user;
 	}
 
