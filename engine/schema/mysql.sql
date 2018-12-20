@@ -78,6 +78,7 @@ CREATE TABLE `prefix_entities` (
   `time_updated` int(11) NOT NULL,
   `last_action` int(11) NOT NULL DEFAULT '0',
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
+  `duplicate_check` char(100) UNIQUE NULL,
   PRIMARY KEY (`guid`),
   KEY `type` (`type`),
   KEY `subtype` (`subtype`),
