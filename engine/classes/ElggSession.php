@@ -231,7 +231,7 @@ class ElggSession implements \ArrayAccess {
 	 * @since 1.9
 	 */
 	public function getLoggedInUser() {
-		if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
+		if (getenv('SOLR_CRAWLER') != '' && getenv('SOLR_CRAWLER_USER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
 			// create a mock user for the crawler
 			$solr_user = new crawler_user();
 			$solr_user->guid = getenv('SOLR_CRAWLER_USER');
