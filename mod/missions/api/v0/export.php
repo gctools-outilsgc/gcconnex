@@ -1,6 +1,12 @@
 <?php
   namespace NRC;
 
+  if (isset($_GET['debug'])) {
+    opcache_reset();
+    error_reporting(E_ALL);
+    ini_set('display_errors', TRUE);
+    ini_set('display_startup_errors', TRUE);
+  }
   require_once(elgg_get_plugins_path() . 'missions/api/v0/api.php');
 
   class export {
@@ -120,6 +126,13 @@
           </td>
         </tr>
         <tr>
+          <td>count</td>
+          <td>
+            Include the total number of entities that match the search
+            criteria.  (Executes a separate query on the server to count)
+          </td>
+        </tr>
+        <tr>
           <td>version<strong>*<strong></td>
           <td>
             Returns the API version as a JSON object and exits.  No query is
@@ -171,7 +184,7 @@ EOD;
 
     function __construct($object_type, $subtype = false, $guid = null,
       $since = null, $before = null, $limit = null, $resume = null,
-      $sort = false, $omit = null) {
+      $sort = false, $omit = null, $count = false) {
 
       mm_api_secure();
 
@@ -184,6 +197,18 @@ EOD;
       $this->resume = $resume;
       $this->sort = $sort;
       $this->omit = $omit;
+      $this->count = $count;
+    }
+
+    public static function getQueryCount() {
+      $queries_result = mysql_query(
+        'show session status like "Queries";',
+        _elgg_services()->db->getLink('read')
+      );
+      $r = mysql_fetch_object($queries_result);
+      $queries = $r->Value;
+      mysql_free_result($queries_result);
+      return intval($queries) - 1;
     }
 
     /**
@@ -191,7 +216,9 @@ EOD;
      */
     function outputJSON() {
       while (@ob_end_flush());
-      $guids = mm_api_get_entity_guids(
+
+      $queryCount = self::getQueryCount();
+      $exporter = mm_api_export_entities(
         $this->object_type,
         $this->subtype,
         $this->guid,
@@ -200,9 +227,10 @@ EOD;
         $this->limit,
         $this->resume,
         $this->sort,
-        $this->omit
+        $this->omit,
+        $this->count
       );
-      echo '{"query":' .json_encode([
+      $queryData = [
         'object_type' => $this->object_type,
         'api_version' => self::$version,
         'subtype' => $this->subtype,
@@ -211,23 +239,26 @@ EOD;
         'before' => $this->before,
         'limit' => $this->limit,
         'request_time' => time(),
-        'count' => $guids->current()
-      ]). ',"export":[';
+      ];
+      if ($this->count) {
+        $queryData['count'] = $exporter->current();
+      }
+      echo '{"query":' .json_encode($queryData). ',"export":[';
       flush();
-      $guids->next();
-      $export = mm_api_entity_export($guids);
+      $exporter->next();
 
       // ignore the first comma
-      $export->next();
+      $exporter->next();
 
-      while ($export->valid()) {
-        $output = $export->current();
+      while ($exporter->valid()) {
+        $output = $exporter->current();
         echo $output;
         flush();
         ob_flush();
-        $export->next();
+        $exporter->next();
       }
-      echo "]}\r\n";
+      $queryCount = self::getQueryCount() - $queryCount - 2;
+      echo "], \"queryCount\": $queryCount}\r\n";
       exit;
     }
   }

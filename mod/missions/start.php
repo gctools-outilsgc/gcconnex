@@ -199,6 +199,7 @@ function missions_main_page_handler($segments)
               $resume = $_GET['resume'];
               $sort = isset($_GET['sort']);
               $omit = $_GET['omit'];
+              $count = isset($_GET['count']);
               $export = new NRC\export(
                 $object_type,
                 $subtype,
@@ -208,7 +209,8 @@ function missions_main_page_handler($segments)
                 $limit,
                 $resume,
                 $sort,
-                $omit
+                $omit,
+                $count
               );
               $export->outputJSON();
             }
