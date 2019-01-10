@@ -1,5 +1,4 @@
 <?php
-
 /**
 * NRC Recommendation Platform API Library
 * Copyright (c) 2017 National Research Council Canada
@@ -9,13 +8,45 @@
 */
 header('Content-Type: application/json');
 
-global $meta_fields;
-$meta_fields = [
-  'education',
-  'work',
-  'gc_skills',
-  'portfolio',
-];
+global $subtypes;
+
+class FakeGUIDEntity {
+  public $guid;
+  public function __construct($guid) {
+    $this->guid = $guid;
+  }
+}
+
+class FakeEntity extends \ElggEntity {
+  private $entity;
+  public function __construct($entity) {
+    $this->entity = $entity;
+  }
+  public function __get($name) {
+    return $this->entity->$name;
+  }
+  public function getType() {
+    return $this->entity->type;
+  }
+  public function getSubtype() {
+    global $subtypes;
+    return $subtypes["i_{$this->entity->subtype}"];
+  }
+  public function getOwnerEntity() {
+    if ($this->entity->owner_guid > 0) {
+      return new FakeGUIDEntity($this->entity->owner_guid);
+    } else return false;
+  }
+  public function getDisplayName() {
+    return $this->entity->name;
+  }
+  public function getContainerEntity() {
+    if ($this->entity->container_guid > 0) {
+      return new FakeGUIDEntity($this->entity->container_guid);
+    } else return false;
+  }
+  public function setDisplayName($displayName) {}
+}
 
 /**
 * Verify that the API request has the appropriate X-Custom-Authorization
@@ -42,30 +73,166 @@ function mm_api_secure() {
   # Increase the script timeout value
   set_time_limit(14400);
 }
+global $CONFIG;
+function getURL($entity) {
+  global $CONFIG;
+  global $subtypes;
+  $type = $entity->type;
+  $subtype = $subtypes["i_{$entity->subtype}"];
+
+  $url = '';
+
+  if (isset($CONFIG->entity_url_handler[$type][$subtype])) {
+    $function = $CONFIG->entity_url_handler[$type][$subtype];
+    if (is_callable($function)) {
+      $url = call_user_func($function, $entity);
+    }
+  } elseif (isset($CONFIG->entity_url_handler[$type]['all'])) {
+    $function = $CONFIG->entity_url_handler[$type]['all'];
+    if (is_callable($function)) {
+      $url = call_user_func($function, $entity);
+    }
+  } elseif (isset($CONFIG->entity_url_handler['all']['all'])) {
+    $function = $CONFIG->entity_url_handler['all']['all'];
+    if (is_callable($function)) {
+      $url = call_user_func($function, $entity);
+    }
+  }
+
+  if ($url) {
+    $url = elgg_normalize_url($url);
+  }
+
+  $params = array('entity' => new FakeEntity($entity));
+  $url = _elgg_services()->hooks->trigger('entity:url', $type, $params, $url);
+
+  return elgg_normalize_url($url);
+}
+
 
 /**
-* Generator that finds the GUIDs of the entities defined by the search critera.
+* Stream the requested entities as efficently as possible using JSON.
 *
-* @param str $type Desired entity type.  (object, user)
+* @param str $type Desired entity type.  (object, user, export)
 * @param str $subtype Desired subtype.  (mission)
 * @param int $guid GUID of single object, for single entity fetch.
-* @param int $since: Fetch objects that have been modified since the specified time
-* @param int $before: Fetch obhects that have been modified before the specified time
+* @param int $since: Fetch entities that have been modified since the specified time
+* @param int $before: Fetch entities that have been modified before the specified time
 * @param int $limit: Fetch at most X entities.
 * @param int $resume: Resume starting at the specified GUID.
+* @param bool $sort: If true sorts entities based on time created.
+* @param str $omit: Comma separated list of GUIDs to omit.
 *
-* @return Generator[] Guid iterable
+* @return Generator[] JSON formatted text stream
 */
-function mm_api_get_entity_guids($type, $subtype = false, $guid = null,
-$since = null, $before = null, $limit = null, $resume = null, $sort = false) {
+function mm_api_export_entities($type, $subtype = false, $guid = null,
+$since = null, $before = null, $limit = null, $resume = null, $sort = false,
+$omit = null, $countRows = false) {
+  _elgg_services()->db->establishLink('api_exporter');
+  $dbprefix = elgg_get_config('dbprefix');
+  $dblink = _elgg_services()->db->getLink('read');
+  function dismount($object) {
+    $reflectionClass = new ReflectionClass(get_class($object));
+    $array = array();
+    foreach ($reflectionClass->getProperties() as $property) {
+        $property->setAccessible(true);
+        $array[$property->getName()] = $property->getValue($object);
+        $property->setAccessible(false);
+    }
+    return $array;
+  }
+  global $in_array;
+  $in_array = false;
+  function outVal($val, $start_with_comma=true) {
+    global $in_array;
+    $value = ($val->meta_type === 'integer') ?
+      json_encode(intval($val->meta_value)) : json_encode($val->meta_value);
+    if (($in_array !== false) && ($in_array == $val->meta_name)) {
+      return (($start_with_comma) ? ',' : '').$value;
+    }
+    $ret = '';
+    if (($in_array !== false) && (($in_array != $val->meta_name) || ($val->arr == 0))) {
+      $ret .= ']';
+      $in_array = false;
+    }
+    if ($start_with_comma) $ret .= ',';
+    $ret .= '"' . $val->meta_name . '":';
+    if ($val->arr != 0) {
+      $ret .= '[';
+      $in_array = $val->meta_name;
+    }
+    $ret .= $value;
+    return $ret;
+  }
+  function finalizeEntity($uguid) {
+    global $in_array;
+    $dbprefix = elgg_get_config('dbprefix');
+    $dblink = _elgg_services()->db->getLink('read');
+
+    if ($uguid > 0) {
+      if ($in_array) {
+        yield ']';
+        $in_array = false;
+      }
+
+      $options = array('guid' => $uguid, 'limit' => 0);
+      $annotations = elgg_get_annotations($options);
+
+      if ($annotations) {
+        $data = [ 'annotations' => []];
+        foreach ($annotations as $v) {
+          if (!isset($data['annotations'][$v->name])) {
+            $data['annotations'][$v->name] = [];
+          };
+          $data['annotations'][$v->name][] = dismount($v);
+        }
+        yield ','.substr(json_encode($data), 1, -1);
+      }
+      yield ',"relationships":[';
+
+      $relstart = false;
+      $reltable = "{$dbprefix}entity_relationships";
+      $relationships = mysql_unbuffered_query(
+        "SELECT * from $reltable where guid_one = " .
+        mysql_escape_string($uguid) .
+        ' OR guid_two = ' . mysql_escape_string($uguid),
+        $dblink
+      );
+      while ($v = mysql_fetch_object($relationships)) {
+        yield (($relstart) ? ',' : '') . json_encode(array(
+          'direction' => ($v->guid_one == $uguid) ? 'OUT' : 'IN',
+          'time_created' => $v->time_created,
+          'id' => $v->id,
+          'relationship' => $v->relationship,
+          'entity' => ($v->guid_one == $uguid) ? $v->guid_two : $v->guid_one,
+        ));
+        $relstart = true;
+      }
+      mysql_free_result($relationships);
+      yield ']}';
+    }
+  }
+
+  // Get all subtypes
+  global $subtypes;
+  $subtypes = [];
+  $subtype_results = mysql_unbuffered_query(
+    "select id, subtype from {$dbprefix}entity_subtypes",
+    $dblink
+  );
+  while ($row = mysql_fetch_object($subtype_results)) {
+    $subtypes["i_{$row->id}"] = $row->subtype;
+    $subtypes["s_{$row->subtype}"] = $row->id;
+  }
+  mysql_free_result($subtype_results);
+
   $where = ['a.enabled = "yes"'];
   if ($type !== 'export') {
     $where[] = 'a.type = "' . mysql_escape_string($type) . '"';
   }
   if ($subtype !== false) {
-    $subtype_id = get_data("select id from ".elgg_get_config('dbprefix')."entity_subtypes where subtype = '$subtype'")[0]->id;
-    $where[] = 'a.subtype = ' . $subtype_id;
-  } else $subtype_id = 0;
+    $where[] = 'a.subtype = ' . (($subtypes["s_$subtype"]) ? $subtypes["s_$subtype"] : -1);
+  }
 
   if (!is_null($guid) && is_numeric($guid)) {
     $where[] = 'a.guid = ' . mysql_escape_string(intval($guid));
@@ -76,11 +243,17 @@ $since = null, $before = null, $limit = null, $resume = null, $sort = false) {
   if (is_numeric($before)) {
     $where[] = 'a.time_updated < ' . mysql_escape_string($before);
   }
-
-  $limit_sql = '';
-  if (is_numeric($limit)) {
-    $limit_sql = 'LIMIT ' . mysql_escape_string($limit);
+  if (!is_null($omit)) {
+    $omitGuids = explode(',', $omit);
+    if (count($omitGuids) > 0) {
+      $ogs = [];
+      foreach ($omitGuids as $og) {
+        $ogs[] = mysql_escape_string(intval($og));
+      }
+      $where[] = 'a.guid NOT IN ('.implode(',', $ogs).')';
+    }
   }
+
   $where_sql = '';
   if (count($where) > 0) {
     $where_sql = 'WHERE ' . implode(' AND ', $where);
@@ -89,21 +262,120 @@ $since = null, $before = null, $limit = null, $resume = null, $sort = false) {
     $sort_sql = 'ORDER BY a.time_updated ASC';
   }
   try {
-    $sql = '
+    $sql = "
     SELECT
-      a.guid
+      a.guid,
+      a.type,
+      a.subtype,
+      a.owner_guid,
+      a.site_guid,
+      a.container_guid,
+      a.time_created,
+      a.time_updated,
+      a.access_id,
+      a.enabled,
+      a.last_action,
+      o.title,
+      o.description,
+      u.name,
+      u.username,
+      u.admin,
+      u.banned,
+      u.language,
+      u.last_action AS user_last_action,
+      u.prev_last_action,
+      u.last_login,
+      u.prev_last_login,
+      g.name as group_name,
+      g.description as group_description,
+      (
+        SELECT
+          COUNT(name_id)
+        FROM
+          elggmetadata
+        WHERE
+          entity_guid = a.guid
+          AND name_id = b.name_id
+      ) > 1 as arr,
+      b.value_type as meta_type,
+      c.string as meta_name,
+      d.string as meta_value
     FROM
-      '.elgg_get_config('dbprefix').'entities a
-    ' . $where_sql . '
-    ' . $sort_sql . '
-    ' . $limit_sql;
+      {$dbprefix}entities a
+      LEFT JOIN {$dbprefix}objects_entity o on o.guid = a.guid
+      LEFT JOIN {$dbprefix}users_entity u ON u.guid = a.guid
+      LEFT JOIN {$dbprefix}groups_entity g ON g.guid = a.guid
+      LEFT JOIN {$dbprefix}metadata b ON b.entity_guid = a.guid
+      LEFT JOIN {$dbprefix}metastrings c ON c.id = b.name_id
+      LEFT JOIN {$dbprefix}metastrings d ON d.id = b.value_id
+    $where_sql
+    $sort_sql";
 
-    $result = mysql_query($sql, _elgg_services()->db->getLink('read'));
-    yield mysql_num_rows($result);
+    if ($countRows) {
+      yield get_data(
+        "select count(guid) c from {$dbprefix}entities a $where_sql"
+      )[0]->c;
+    } else yield 0;
+
+    $entity_data = mysql_unbuffered_query(
+      $sql,
+      _elgg_services()->db->getLink('api_exporter')
+    );
     $emit = !is_numeric($resume);
-    while ($row = mysql_fetch_object($result)) {
+    $max = (is_numeric($limit) && ($limit > 0)) ? $limit : false;
+    $count = 0;
+    $currentGuid = -1;
+    $uguid = -1;
+    $euguid = -1;
+    while ($row = mysql_fetch_object($entity_data)) {
       if ($emit) {
-        yield $row->guid;
+        if ($currentGuid != $row->guid) {
+          $fin = finalizeEntity($currentGuid);
+          foreach ($fin as $fs) yield $fs;
+          $currentGuid = -1;
+          $count += 1;
+          if (($max !== false) && ($count > $max)) break;
+          yield ',';
+          yield '{';
+          $currentGuid = $row->guid;
+          $euguid = mysql_escape_string(intval($row->guid));
+          $uguid = $row->guid;
+
+          yield '"guid":' . $row->guid . ',' .
+            '"type":"' . $row->type . '",' .
+            '"subtype":' . $row->subtype . ',' .
+            '"subtype_name":' . json_encode($subtypes["i_{$row->subtype}"]) . ',' .
+            '"time_created":' . $row->time_created . ',' .
+            '"url":' . json_encode(getURL($row)) . ',' .
+            '"access_id":' . $row->access_id . ',' .
+            '"time_updated":' . $row->time_updated . ',' .
+            '"owner_guid":' . $row->owner_guid . ',' .
+            '"container_guid":' . $row->container_guid . ',' .
+            '"enabled":"' . $row->enabled . '",' .
+            '"site_guid":' . $row->site_guid;
+          if (!is_null($row->title)) {
+            yield ',"title":' . json_encode($row->title) . ',' .
+              '"description":' . json_encode($row->description);
+          }
+          if (!is_null($row->group_name)) {
+            yield ',"name":' . json_encode($row->group_name) . ',' .
+              '"description":' . json_encode($row->group_description);
+          }
+          if (!is_null($row->name)) {
+            yield ',"name":' . json_encode($row->name) . ',' .
+              '"username":' . json_encode($row->username) . ',' .
+              '"language":"' . $row->language . '",' .
+              '"admin":"' . $row->admin . '",' .
+              '"banned":"' . $row->banned . '",' .
+              '"last_action":' . $row->user_last_action . ',' .
+              '"prev_last_action":' . $row->prev_last_action . ',' .
+              '"last_login":' . $row->last_login . ',' .
+              '"prev_last_login":' . $row->prev_last_login;
+          } else {
+            yield ',"last_action":' . $row->last_action;
+          }
+        }
+        if (!is_null($row->meta_name)) yield outVal($row);
       }
       if (!$emit) {
         if ($row->guid == $resume) {
@@ -111,100 +383,12 @@ $since = null, $before = null, $limit = null, $resume = null, $sort = false) {
         }
       }
     }
-  } catch (Exception $e) {
-    //
-  }
-}
-
-/**
-* Iterate over list of GUIDs and yields the complete object as a row.
-*
-* @param mixed $entity_guids Array of entity GUIDs
-*/
-function mm_api_entity_export($entity_guids) {
-  function exportEntity($entity_or_guid) {
-    // List of fields not to include in any export
-    $omit = array('password', 'password_hash', 'salt');
-    if (is_object($entity_or_guid)) {
-      $entity = $entity_or_guid;
-    } else {
-      $entity = get_entity($entity_or_guid);
-      if (!is_object($entity)) {
-        $ret = new \stdClass;
-        $ret->guid = $entity_or_guid;
-        $ret->__error__ = 'Not found';
-        return $ret;
-      }
+    if ($currentGuid > 0) {
+      $fin = finalizeEntity($currentGuid);
+      foreach ($fin as $fs) yield $fs;
     }
-    $ret = new \stdClass;
-    $exportable_values = $entity->getExportableValues();
-    foreach ($exportable_values as $v) {
-      $ret->$v = $entity->$v;
-    }
-    foreach ($entity as $field=>$value) {
-      if (!in_array($field, $exportable_values) && !in_array($field, $omit)) {
-        $ret->$field = $value;
-      }
-    }
-    $ret->url = $entity->getURL();
-    $ret->subtype_name = $entity->getSubtype();
-    return $ret;
-  }
-
-  $skipped_counter = false;
-  foreach ($entity_guids as $uguid) {
-    if (!$skipped_counter) {
-      $skipped_counter = true;
-      continue;
-    }
-    if ($object = get_entity($uguid)) {
-      $options = array(
-        'guid' => $object->guid,
-        'limit' => 0
-      );
-
-      $metadata = elgg_get_metadata($options);
-      $annotations = elgg_get_annotations($options);
-      $relationships = get_entity_relationships($object->guid);
-      $relationships2 = get_entity_relationships($object->guid, true);
-
-      $data = exportEntity($object);
-
-      if ($metadata) {
-        foreach ($metadata as $v) {
-          $prop = $v->name;
-          $data->$prop = $v->value;
-        }
-      }
-      if ($annotations) {
-        foreach ($annotations as $v) {
-          $data->annotations[$v->name] = $v->value;
-        }
-      }
-      if ($relationships) {
-        foreach ($relationships as $v) {
-          $data->relationships[] = array(
-            'direction' => 'OUT',
-            'time_created' => $v->time_created,
-            'id' => $v->id,
-            'entity' => exportEntity($v->guid_two),
-            'relationship' => $v->relationship,
-          );
-        }
-      }
-      if ($relationships2) {
-        foreach ($relationships2 as $v) {
-          $data->relationships[] = array(
-            'direction' => 'IN',
-            'time_created' => $v->time_created,
-            'id' => $v->id,
-            'entity' => exportEntity($v->guid_one),
-            'relationship' => $v->relationship,
-          );
-        }
-      }
-      yield [ 'object' => $object, 'export' => $data ];
-    }
+} catch (Exception $e) {
+    yield ',"error": ' . json_encode($e);
   }
 }
 

@@ -89,25 +89,25 @@ function missions_init()
 
     // Register an ajax view for the advanced search page.
     elgg_register_ajax_view('missions/element-select');
-    
+
     // Register an ajax view for adding a skill input field.
     elgg_register_ajax_view('missions/add-skill');
 
-    // 
+    //
     elgg_register_ajax_view('missions/analytics-inputs');
-    
+
     // Register an ajax view for generating an analytics graph.
     elgg_register_ajax_view('missions/analytics-generator');
-    
+
     // Register an ajax view for the opt in on splash
     elgg_register_ajax_view('missions/opt_in_splash');
-    
+
     //Hook which sets the url for object entities upon creation.
     elgg_register_plugin_hook_handler('entity:url', 'object', 'mission_set_url');
-    
+
     // Hook which changes how user entities are displayed.
     elgg_register_plugin_hook_handler('view', 'user/default', 'alter_mission_user_view');
-    
+
     // Changes the manager's owner block in the mission view.
     elgg_register_plugin_hook_handler('view', 'page/elements/owner_block', 'alter_mission_owner_block');
 
@@ -117,7 +117,7 @@ function missions_init()
     		'href' => elgg_get_site_url() . 'missions/main',
     		'text' => elgg_echo('missions:micromissions_menu')
     ));
-    
+
     // Adds a menu item to the admin page under the administer section in the right hand bar.
     elgg_register_menu_item('page', array(
     		'name' => 'mission_admin_tool',
@@ -172,9 +172,17 @@ function missions_main_page_handler($segments)
           if (count($segments) >= 3) {
             if ($segments[1] == 'v0') {
               include elgg_get_plugins_path() . 'missions/api/v0/export.php';
+              if (isset($_GET['version'])) {
+                die(json_encode(array("version" => NRC\export::$version)));
+              }
+              if (isset($_GET['help'])) {
+                header('Content-Type: text/html');
+                die(NRC\export::getHelp());
+              }
               $object_type = strtolower($segments[2]);
               $subtype = false;
               $guid = null;
+
               if (count($segments) === 4) {
                 if (is_numeric($segments[3])) {
                   $guid = $segments[3];
@@ -190,6 +198,8 @@ function missions_main_page_handler($segments)
               $limit = $_GET['limit'];
               $resume = $_GET['resume'];
               $sort = isset($_GET['sort']);
+              $omit = $_GET['omit'];
+              $count = isset($_GET['count']);
               $export = new NRC\export(
                 $object_type,
                 $subtype,
@@ -198,9 +208,11 @@ function missions_main_page_handler($segments)
                 $before,
                 $limit,
                 $resume,
-                $sort
+                $sort,
+                $omit,
+                $count
               );
-              $export->getJSON();
+              $export->outputJSON();
             }
           }
           break;
@@ -235,14 +247,14 @@ function mission_set_url($hook, $type, $returnvalue, $params) {
 // Changes the view of the user entity if the context is 'mission'.
 function alter_mission_user_view($hook, $type, $returnvalue, $params) {
     $current_uri = $_SERVER['REQUEST_URI'];
-    
+
     if(strpos($current_uri, 'missions') === false) {
         return $returnvalue;
     }
     else {
-    	if(strpos($current_uri, 'missions/view') === false && 
-    			strpos($current_uri, 'missions/mission-invitation') === false && 
-    			strpos($current_uri, 'missions/mission-edit') === false && 
+    	if(strpos($current_uri, 'missions/view') === false &&
+    			strpos($current_uri, 'missions/mission-invitation') === false &&
+    			strpos($current_uri, 'missions/mission-edit') === false &&
     			strpos($current_uri, 'missions/mission-offer') === false) {
         	return elgg_view('user/mission-candidate', array('user' => $params['vars']['entity']));
     	}
@@ -260,11 +272,11 @@ function alter_mission_owner_block($hook, $type, $returnvalue, $params) {
     }
     else {
         $owner = elgg_get_page_owner_entity();
-        
+
         if ($owner instanceof ElggGroup || ($owner instanceof ElggUser && $owner->getGUID() != elgg_get_logged_in_user_guid())) {
             $header = '<h3>' . elgg_echo('missions:managed_by') . ':</h3>';
             $header .= elgg_view_entity($owner, array('full_view' => false));
-            
+
             return elgg_view('page/components/module', array(
                 'header' => $header,
                 'body' => '',
