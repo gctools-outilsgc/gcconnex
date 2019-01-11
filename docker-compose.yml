@@ -42,6 +42,7 @@ services:
       - DBHOST=gcconnex-db
       - WWWROOT=http://gcconnex.local/
       - SOLR_CRAWLER=solr-crawler-thing
+#	  - SOLR_CRAWLER_USER=1
 
   # ###########################################################################
   # The GCConnex cron container.  This container is responsible for executing
