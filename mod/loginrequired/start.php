@@ -74,8 +74,11 @@ function loginrequired_init() {
 	$allow[] = 'mod/contactform/';
 	$allow[] = 'thewire_image/download/.*';
 
-	if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER'))
+	if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
 		$allow[] = '.*';
+		if ( getenv('SOLR_CRAWLER_USER') != '' && is_numeric(getenv('SOLR_CRAWLER_USER')) && strstr( getenv('SOLR_CRAWLER'), 'solr-crawler') !== false )
+			elgg_get_session()->setLoggedInUser(get_user( getenv('SOLR_CRAWLER_USER') ));
+	}
 
 
 	// Allow other plugin developers to edit the array values

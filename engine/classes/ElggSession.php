@@ -4,24 +4,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
-	class crawler_user {
-		private $mock_false = array( 'isAdmin', 'canWriteToContainer', 'isBanned', 'canEdit' );
-
-		public $user_type = 'bot';
-
-		public function __call($method, $args)
-		{
-			if (isset($this->$method)) {
-				$func = $this->$method;
-				return call_user_func_array($func, $args);
-			}
-			else if ( in_array( $method, $this->mock_false) ) { return false; }
-			else error_log("FUNCTION:   $method");
-		}
-	}
-}
-
 /**
  * Elgg Session Management
  *
@@ -231,15 +213,6 @@ class ElggSession implements \ArrayAccess {
 	 * @since 1.9
 	 */
 	public function getLoggedInUser() {
-		if (getenv('SOLR_CRAWLER') != '' && getenv('SOLR_CRAWLER_USER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
-			// create a mock user for the crawler
-			$solr_user = new crawler_user();
-			$solr_user->guid = getenv('SOLR_CRAWLER_USER');
-			$solr_user->getGUID = function(){ return getenv('SOLR_CRAWLER_USER');};
-
-			$this->set('guid', getenv('SOLR_CRAWLER_USER'));
-			$this->logged_in_user = $solr_user;
-		}
 		return $this->logged_in_user;
 	}
 
