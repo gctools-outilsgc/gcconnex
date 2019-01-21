@@ -1,9 +1,13 @@
 <?php
 /**
 * NRC Recommendation Platform API Library
-* Copyright (c) 2017 National Research Council Canada
 *
-* Author: Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>
+* @author National Research Council
+* @author Luc Belliveau
+* @link http://www.nrc-cnrc.gc.ca/eng/rd/dt/ NRC Digital Technologies
+*
+* @license MIT
+* @copyright Her Majesty the Queen in Right of Canada, as represented by the Minister of National Research Council, 2019
 *
 */
 require_once(elgg_get_plugins_path() . 'missions/api/v0/cache.php');
