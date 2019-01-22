@@ -15,6 +15,7 @@ require_once(elgg_get_plugins_path() . 'missions/api/v0/cache.php');
 header('Content-Type: application/json');
 
 global $subtypes;
+$subtypes = NULL;
 
 class FakeGUIDEntity {
   public $guid;
@@ -115,6 +116,81 @@ function getURL($entity) {
   return elgg_normalize_url($url);
 }
 
+function mm_build_subtypes_array() {
+  global $subtypes;
+  if (is_null($subtypes)) {
+    $dbprefix = elgg_get_config('dbprefix');
+    $dblink = _elgg_services()->db->getLink('read');
+
+    // Get all subtypes
+    $subtypes = [];
+    $subtype_results = mysql_unbuffered_query(
+      "select id, subtype from {$dbprefix}entity_subtypes",
+      $dblink
+    );
+    while ($row = mysql_fetch_object($subtype_results)) {
+      $subtypes["i_{$row->id}"] = $row->subtype;
+      $subtypes["s_{$row->subtype}"] = $row->id;
+    }
+    mysql_free_result($subtype_results);
+  }
+}
+
+function mm_api_generateWhereStatement($type, $subtype = false, $guid = null,
+  $since = null, $before = null, $limit = null, $resume = null, $sort = false,
+  $omit = null) {
+  mm_build_subtypes_array();
+
+  $dbprefix = elgg_get_config('dbprefix');
+  $dblink = _elgg_services()->db->getLink('read');
+
+  $where = ['a.enabled = "yes"'];
+  if ($type !== 'export') {
+    $where[] = 'a.type = "' . mysql_escape_string($type) . '"';
+  }
+  if ($subtype !== false) {
+    $where[] = 'a.subtype = ' .
+      (($subtypes["s_$subtype"]) ? $subtypes["s_$subtype"] : -1);
+  }
+
+  if (!is_null($guid) && is_numeric($guid)) {
+    $where[] = 'a.guid = ' . mysql_escape_string(intval($guid));
+  }
+  if (is_numeric($since)) {
+    $where[] = 'a.time_updated > ' . mysql_escape_string($since);
+  }
+  if (is_numeric($before)) {
+    $where[] = 'a.time_updated < ' . mysql_escape_string($before);
+  }
+  if (!is_null($omit)) {
+    $omitGuids = explode(',', $omit);
+    if (count($omitGuids) > 0) {
+      $ogs = [];
+      foreach ($omitGuids as $og) {
+        $ogs[] = mysql_escape_string(intval($og));
+      }
+      $where[] = 'a.guid NOT IN ('.implode(',', $ogs).')';
+    }
+  }
+
+  $where_sql = '';
+  if (count($where) > 0) {
+    $where_sql = 'WHERE ' . implode(' AND ', $where);
+  }
+  return $where_sql;
+}
+
+function mm_api_export_count($type, $subtype = false, $guid = null,
+$since = null, $before = null, $limit = null, $resume = null, $sort = false,
+$omit = null) {
+  $where_sql = mm_api_generateWhereStatement($type, $subtype, $guid,
+    $since, $before, $limit, $resume, $sort, $omit);
+  $dbprefix = elgg_get_config('dbprefix');
+  return (int)get_data(
+    "select count(guid) c from {$dbprefix}entities a $where_sql"
+    )[0]->c;
+}
+
 
 /**
 * Stream the requested entities as efficently as possible using JSON.
@@ -133,14 +209,14 @@ function getURL($entity) {
 */
 function mm_api_export_entities($type, $subtype = false, $guid = null,
 $since = null, $before = null, $limit = null, $resume = null, $sort = false,
-$omit = null, $countRows = false) {
+$omit = null) {
   $cache = new NRC\ApiCache([
     $type, $subtype, $guid, $since, $before,
-    $limit, $resume, $sort, $omit, $countRows
+    $limit, $resume, $sort, $omit
   ]);
   $data = $cache->get(
     function() use ($type, $subtype, $guid, $since, $before,
-    $limit, $resume, $sort, $omit, $countRows) {
+    $limit, $resume, $sort, $omit) {
       _elgg_services()->db->establishLink('api_exporter');
       $dbprefix = elgg_get_config('dbprefix');
       $dblink = _elgg_services()->db->getLink('read');
@@ -226,54 +302,13 @@ $omit = null, $countRows = false) {
         }
       }
 
-      // Get all subtypes
-      global $subtypes;
-      $subtypes = [];
-      $subtype_results = mysql_unbuffered_query(
-        "select id, subtype from {$dbprefix}entity_subtypes",
-        $dblink
-      );
-      while ($row = mysql_fetch_object($subtype_results)) {
-        $subtypes["i_{$row->id}"] = $row->subtype;
-        $subtypes["s_{$row->subtype}"] = $row->id;
-      }
-      mysql_free_result($subtype_results);
+      $where_sql = mm_api_generateWhereStatement($type, $subtype, $guid,
+        $since, $before, $limit, $resume, $sort, $omit);
 
-      $where = ['a.enabled = "yes"'];
-      if ($type !== 'export') {
-        $where[] = 'a.type = "' . mysql_escape_string($type) . '"';
-      }
-      if ($subtype !== false) {
-        $where[] = 'a.subtype = ' . (($subtypes["s_$subtype"]) ? $subtypes["s_$subtype"] : -1);
-      }
-
-      if (!is_null($guid) && is_numeric($guid)) {
-        $where[] = 'a.guid = ' . mysql_escape_string(intval($guid));
-      }
-      if (is_numeric($since)) {
-        $where[] = 'a.time_updated > ' . mysql_escape_string($since);
-      }
-      if (is_numeric($before)) {
-        $where[] = 'a.time_updated < ' . mysql_escape_string($before);
-      }
-      if (!is_null($omit)) {
-        $omitGuids = explode(',', $omit);
-        if (count($omitGuids) > 0) {
-          $ogs = [];
-          foreach ($omitGuids as $og) {
-            $ogs[] = mysql_escape_string(intval($og));
-          }
-          $where[] = 'a.guid NOT IN ('.implode(',', $ogs).')';
-        }
-      }
-
-      $where_sql = '';
-      if (count($where) > 0) {
-        $where_sql = 'WHERE ' . implode(' AND ', $where);
-      }
       if ($sort) {
         $sort_sql = 'ORDER BY a.time_updated ASC';
       }
+
       try {
         $sql = "
         SELECT
@@ -324,12 +359,6 @@ $omit = null, $countRows = false) {
         $where_sql
         $sort_sql";
 
-        if ($countRows) {
-          yield get_data(
-            "select count(guid) c from {$dbprefix}entities a $where_sql"
-          )[0]->c;
-        } else yield 0;
-
         $entity_data = mysql_unbuffered_query(
           $sql,
           _elgg_services()->db->getLink('api_exporter')
@@ -348,7 +377,7 @@ $omit = null, $countRows = false) {
               $currentGuid = -1;
               $count += 1;
               if (($max !== false) && ($count > $max)) break;
-              yield ',';
+              if ($count > 1) yield ',';
               yield '{';
               $currentGuid = $row->guid;
               $euguid = mysql_escape_string(intval($row->guid));

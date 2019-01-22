@@ -57,9 +57,10 @@ class ApiCache {
       $cacheTime = (int)fgets($fp);
       if ($cacheTime < (time() + $this->cacheExpires)) {
         $cached = true;
-        while (($buffer = fgets($fp)) !== false) {
-          yield $buffer;
-        }
+        fpassthru($fp);
+        // while (($buffer = fgets($fp, 4096)) !== false) {
+        //   yield $buffer;
+        // }
       }
       fclose($fp);
     }
@@ -69,7 +70,7 @@ class ApiCache {
       $data = $cb();
       while ($data->valid()) {
         $output = $data->current();
-        fwrite($fp, $output . "\n");
+        fwrite($fp, $output);
         yield $output;
         $data->next();
       }

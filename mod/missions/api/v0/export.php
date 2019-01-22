@@ -227,8 +227,7 @@ EOD;
         $this->limit,
         $this->resume,
         $this->sort,
-        $this->omit,
-        $this->count
+        $this->omit
       );
       $queryData = [
         'object_type' => $this->object_type,
@@ -241,14 +240,20 @@ EOD;
         'request_time' => time(),
       ];
       if ($this->count) {
-        $queryData['count'] = $exporter->current();
+        $queryData['count'] = mm_api_export_count(
+          $this->object_type,
+          $this->subtype,
+          $this->guid,
+          $this->since,
+          $this->before,
+          $this->limit,
+          $this->resume,
+          $this->sort,
+          $this->omit
+        );
       }
       echo '{"query":' .json_encode($queryData). ',"export":[';
       flush();
-      $exporter->next();
-
-      // ignore the first comma
-      $exporter->next();
 
       while ($exporter->valid()) {
         $output = $exporter->current();
