@@ -244,7 +244,6 @@ class ElggSession implements \ArrayAccess {
 	 * @return bool
 	 */
 	public function isLoggedIn() {
-		if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')) return true;
 		return (bool)$this->getLoggedInUser();
 	}
 
