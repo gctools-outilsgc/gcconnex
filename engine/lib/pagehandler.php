@@ -56,10 +56,7 @@ function elgg_unregister_page_handler($identifier) {
  * @since 1.9.0
  */
 function elgg_gatekeeper() {
-	if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
-		// allow through
-	}
-	else if (!elgg_is_logged_in()) {
+	if (!elgg_is_logged_in()) {
 		_elgg_services()->session->set('last_forward_from', current_page_url());
 		system_message(elgg_echo('loggedinrequired'));
 		forward('/login', 'login');
