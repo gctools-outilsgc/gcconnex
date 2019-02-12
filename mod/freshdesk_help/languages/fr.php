@@ -21,7 +21,7 @@ return array(
   'freshdesk:ticket:attachment' => "Pièce jointe",
   'freshdesk:ticket:description' => "Description",
   'freshdesk:ticket:submit:confirmed' => "Votre billet a été soumis.",
-  'freshdesk:ticket:submit:denied' => "Un problème est survenu; veuillez réessayer plus tard.",
+  'freshdesk:ticket:submit:denied' => "Un problème est survenu; veuillez réessayer plus tard. Code d'erreur: ",
 
   'freshdesk:ticket:basic:user_type' => "Occupation",
   'freshdesk:ticket:basic:federal' => 'Organisation',

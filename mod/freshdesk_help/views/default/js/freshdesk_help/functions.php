@@ -319,10 +319,10 @@ function submitTicket(form, lang, source, product){
       },
       data: formdata,
       success: function(data, textStatus, jqXHR) {
-        elgg.action('ticket/feedback', { data: { language: lang, type: 'success', direct: source }, success: function (wrapper) { location.reload(); } });
+        elgg.action('ticket/feedback', { data: { language: lang, type: 'success', direct: source }, success: function (wrapper) { setTimeout(function(){ location.reload(); },3000); } });
       },
       error: function(jqXHR, tranStatus) {
-        elgg.action('ticket/feedback', { data: { language: lang, type: 'fail', direct: source, code: jqXHR.status }, success: function (wrapper) { location.reload(); } });
+        elgg.action('ticket/feedback', { data: { language: lang, type: 'fail', direct: source, code: jqXHR.status }, success: function (wrapper) { $(form).find('button').prop('disabled', false); } });
       }
     }
   );

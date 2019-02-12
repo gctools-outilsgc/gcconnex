@@ -21,7 +21,7 @@ return array(
       'freshdesk:ticket:attachment' => "Attachment",
       'freshdesk:ticket:description' => "Description",
       'freshdesk:ticket:submit:confirmed' => "Your ticket has been submitted.",
-      'freshdesk:ticket:submit:denied' => "Something went wrong, please try again later.",
+      'freshdesk:ticket:submit:denied' => "Something went wrong, please try again later. Error Code: ",
 
       'freshdesk:ticket:basic:user_type' => "Occupation",
       'freshdesk:ticket:basic:federal' => 'Organization',
