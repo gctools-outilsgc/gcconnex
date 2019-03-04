@@ -168,7 +168,7 @@ $(document).ready(function() {
 function getFrGEDS() {
 	//request string to be passed to GEDS
 
-	var searchObj = "{\"requestID\" : \"S02\", \"authorizationID\" : \"" + authIDsetting + "\", \"requestSettings\" : {\"searchValue\" : \"" + searchVal + "\", \"searchField\":\"7\", \"searchCriterion\":\"2\"} }";
+	var searchObj = "{\"requestID\" : \"S02\", \"authorizationID\" : \"" + authIDsetting + "\", \"requestSettings\" : {\"searchValue\" : \"" + $.trim(searchVal) + "\", \"searchField\":\"7\", \"searchCriterion\":\"0\"} }";
 	//ajax call to GEDS API to search for user based on email
 	$.ajax({
 		beforeSend: function() {
@@ -213,7 +213,7 @@ function getFrGEDS() {
 
 function searchGEDS() {
 	//GEDS search string
-	var searchObj = "{\"requestID\" : \"S02\", \"authorizationID\" : \"" + authIDsetting + "\", \"requestSettings\" : {\"searchValue\" : \"" + searchVal + "\", \"searchField\":\"7\", \"searchCriterion\":\"2\"} }";
+	var searchObj = "{\"requestID\" : \"S02\", \"authorizationID\" : \"" + authIDsetting + "\", \"requestSettings\" : {\"searchValue\" : \"" + $.trim(searchVal) + "\", \"searchField\":\"7\", \"searchCriterion\":\"0\"} }";
 	//call to geds english to build remaining english informaiton about the suer
 	$.ajax({
 		beforeSend: function() {
