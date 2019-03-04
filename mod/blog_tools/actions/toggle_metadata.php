@@ -16,6 +16,7 @@ if (!empty($guid) && !empty($metadata)) {
 				unset($entity->$metadata);
 			}
 			
+			
 			if ($old != $entity->$metadata) {
 				system_message(elgg_echo("blog_tools:action:toggle_metadata:success"));
 			} else {
