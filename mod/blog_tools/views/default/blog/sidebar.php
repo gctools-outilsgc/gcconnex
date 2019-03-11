@@ -3,6 +3,7 @@
  * Blog sidebar
  *
  * @package Blog
+ * 
  */
 
 // fetch & display latest comments
