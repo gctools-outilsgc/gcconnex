@@ -1,0 +1,64 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "collab.fullname" . }}-memcached
+  labels:
+    app.kubernetes.io/name: {{ include "collab.name" . }}-memcached
+    helm.sh/chart: {{ include "collab.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.memcached.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "collab.name" . }}-memcached
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "collab.name" . }}-memcached
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-memcached
+          image: "{{ .Values.memcached.image.repository }}:{{ .Values.memcached.image.tag }}"
+          imagePullPolicy: {{ .Values.memcached.image.pullPolicy }}
+          ports:
+            - name: memcached
+              containerPort: 3000
+              protocol: TCP
+          env:
+          - name: "HOSTNAME"
+            value: ""
+          - name: "CONCURRENCY"
+            value: "1"
+          - name: "TIMEOUT"
+            value: "30"
+          - name: "WINDOW_WIDTH"
+            value: {{ .Values.memcached.window.width }}
+          - name: "WINDOW_HEIGHT"
+            value: {{ .Values.memcached.window.height }}
+          - name: "PORT"
+            value: "3000"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: memcached
+          readinessProbe:
+            httpGet:
+              path: /
+              port: memcached
+          resources:
+{{ toYaml .Values.memcached.resources | indent 12 }}
+    {{- with .Values.memcached.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.memcached.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.memcached.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

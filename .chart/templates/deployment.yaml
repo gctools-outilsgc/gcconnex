@@ -1,0 +1,68 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "collab.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "collab.name" . }}
+    helm.sh/chart: {{ include "collab.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "collab.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "collab.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+          - name: "DOCKER"
+            value: "1"
+          - name: "DBHOST"
+            value: "{{ .Values.env.dbhost }}"
+          - name: "HOST"
+            value: "{{ .Values.env.host }}"
+          - name: "PORT"
+            value: ""   # sticking to default port 80 only for now
+          - name: "OPENID"
+            value: "{{ .Values.env.openid }}"
+{{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /splash/
+              port: http
+{{ toYaml .Values.livenessProbe | indent 14 }}
+{{- end}}
+{{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /splash/
+              port: http
+{{ toYaml .Values.readinessProbe | indent 14 }}
+{{- end}}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
