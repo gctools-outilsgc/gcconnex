@@ -31,15 +31,12 @@ ingress:
   path: /
   hosts:
     - collab.local
-  tls: []
-  #  - secretName: collab-tls
-  #    hosts:
-  #      - collab.local
+  tls:
+    hosts:
+      - collab.local
 
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
   #  cpu: 100m
@@ -87,69 +84,6 @@ env:
   host: collab.local
   dbhost: collab-db
   openid: false
-
-
-parsoid:
-  enabled: true
-  resources: {}
-
-
-
-pdf:
-  replicaCount: 1
-
-  window:
-    width: 1024
-    height: 768
-
-  image:
-    repository: msokk/electron-render-service
-    tag: 1.0.0
-    pullPolicy: IfNotPresent
-
-  service:
-    type: ClusterIP
-    clusterIP: ""
-    port: 3000
-
-  ingress:
-    enabled: true
-    annotations: 
-      kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
-    path: /
-    hosts:
-      - pdf.local
-    tls: []
-    #  - secretName: collab-tls
-    #    hosts:
-    #      - collab.local
-
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #  cpu: 100m
-    #  memory: 128Mi
-    # requests:
-    #  cpu: 100m
-    #  memory: 128Mi
-
-  nodeSelector: {}
-
-  tolerations: []
-
-  affinity: {}
-
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 11
-    targetCPUUtilizationPercentage: 50
-    targetMemoryUtilizationPercentage: 50
-
 
 ## Configure extra options for liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
