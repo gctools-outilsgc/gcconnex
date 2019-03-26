@@ -31,19 +31,19 @@ spec:
           - name: "MYSQL_ROOT_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Chart.Name }}-db-env
+                name: {{ template "collab.fullname" . }}-env
                 key: db-root
           - name: "MYSQL_DATABASE"
             value: "collab"
           - name: "MYSQL_USER"
             valueFrom:
               secretKeyRef:
-                name: {{ .Chart.Name }}-db-env
+                name: {{ template "collab.fullname" . }}-env
                 key: db-user
           - name: "MYSQL_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Chart.Name }}-db-env
+                name: {{ template "collab.fullname" . }}-env
                 key: db-password
           resources:
 {{ toYaml .Values.mariadb.resources | indent 12 }}

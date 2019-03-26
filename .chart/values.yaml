@@ -169,9 +169,9 @@ mariadb:
 
 # define your own credentials or leave blank for auto-generated ones
   auth:
-    db-root:
-    db-user:
-    db-password:
+    root:
+    user:
+    password:
 
   nodeSelector: {}
 
