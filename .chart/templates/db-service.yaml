@@ -1,20 +1,21 @@
+{{- if .Values.mariadb.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "collab.fullname" . }}-memcached
+  name: {{ include "collab.fullname" . }}-db
   labels:
-    app.kubernetes.io/name: {{ include "collab.name" . }}-memcached
+    app.kubernetes.io/name: {{ include "collab.name" . }}-db
     helm.sh/chart: {{ include "collab.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: ClusterIP
-  clusterIP: 
   ports:
-    - port: 11211
-      targetPort: memcached
+    - port: 3306
+      targetPort: mysql
       protocol: TCP
-      name: memcached
+      name: mysql
   selector:
-    app.kubernetes.io/name: {{ include "collab.name" . }}-memcached
+    app.kubernetes.io/name: {{ include "collab.name" . }}-db
     app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

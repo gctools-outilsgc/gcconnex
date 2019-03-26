@@ -56,7 +56,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 11
   targetCPUUtilizationPercentage: 50
-  targetMemoryUtilizationPercentage: 50
+  targetMemoryUtilizationPercentage: 100
 
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
@@ -154,19 +154,30 @@ mariadb:
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
-  master:
-    persistence:
-      enabled: true
-      ## mariadb data Persistent Volume Storage Class
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      # storageClass: "-"
-      accessMode: ReadWriteOnce
-      size: 8Gi
+  persistence:
+    enabled: true
+    ## mariadb data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
+# define your own credentials or leave blank for auto-generated ones
+  auth:
+    db-root:
+    db-user:
+    db-password:
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
 
 ## Prometheus Exporter / Metrics
 ##
