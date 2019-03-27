@@ -1,4 +1,4 @@
-{{- if .Values.ingress.enabled -}}
+{{- if .Values.ingress.tls }}
 {{- $fullName := include "collab.fullname" . -}}
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
