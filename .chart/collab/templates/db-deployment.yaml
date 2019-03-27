@@ -24,7 +24,7 @@ spec:
           image: "{{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}"
           imagePullPolicy: {{ .Values.mariadb.image.pullPolicy }}
           ports:
-          - name: mariadb
+          - name: mysql
             containerPort: 3306
             protocol: TCP
           env:
