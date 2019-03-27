@@ -73,6 +73,7 @@ env:
   host: collab.local
   # which version to initialize: [gcconnex, gccollab]
   init: gccollab
+  dataroot: /data/root/
   openid: false
 
 ## Configure extra options for liveness and readiness probes
