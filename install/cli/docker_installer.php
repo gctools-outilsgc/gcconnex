@@ -79,7 +79,7 @@ $params = array(
 	'sitename' => 'Docker GC' . $type,
 	'siteemail' => 'no_reply@gcconnex.gc.ca',
 	'wwwroot' => $wwwroot,
-	'dataroot' => getenv('HOME') . '/data/',
+	'dataroot' => getenv('DATAROOT'),
 
 	// admin account
 	'displayname' => 'Administrator',

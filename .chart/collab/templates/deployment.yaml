@@ -1,0 +1,95 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "collab.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "collab.name" . }}
+    helm.sh/chart: {{ include "collab.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "collab.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "collab.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+        env:
+        - name: "DOCKER"
+          value: "1"
+        - name: "DBHOST"
+        {{- if .Values.externalDatabase.host -}}
+          value: "{{ .Values.externalDatabase.host }}"
+        {{ else }}
+          value: "{{ include "collab.fullname" . }}-db"
+        {{- end}}
+        - name: "DBNAME"
+          value: "collab"
+        - name: "DBUSER"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "collab.fullname" . }}-env
+              key: db-user
+        - name: "DBPASS"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "collab.fullname" . }}-env
+              key: db-password
+        - name: "HOST"
+          value: "{{ .Values.env.host }}"
+        - name: "DATAROOT"
+          value: "{{ .Values.env.dataroot }}"
+        - name: "PORT"
+          value: ""   # sticking to default port 80 only for now
+        - name: "INIT"
+          value: "{{ .Values.env.init }}"
+        - name: "OPENID"
+          value: "{{ .Values.env.openid }}"
+{{- if .Values.livenessProbe.enabled }}
+        livenessProbe:
+          httpGet:
+            path: /splash/
+            port: http
+{{ toYaml .Values.livenessProbe | indent 12 }}
+{{- end}}
+{{- if .Values.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+            path: /splash/
+            port: http
+{{ toYaml .Values.readinessProbe | indent 12 }}
+{{- end}}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - mountPath: {{ .Values.env.dataroot }}
+          name: collab-data-volume
+      volumes:
+      - name: collab-data-volume
+        persistentVolumeClaim:
+          claimName: {{ template "collab.fullname" . }}-data
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

@@ -40,6 +40,7 @@ services:
       - INIT=gcconnex     # gcconnex or gccollab: initial install to replicate one of those. 0 (or anything else really): no initial install
       - HOME=/var/www/html
       - DBHOST=gcconnex-db
+      - DATAROOT=/data/
       - WWWROOT=http://gcconnex.local/
       - SOLR_CRAWLER=solr-crawler-thing
 #	  - SOLR_CRAWLER_USER=1
