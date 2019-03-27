@@ -63,17 +63,17 @@ spec:
           httpGet:
             path: /splash/
             port: http
-{{ toYaml .Values.livenessProbe | indent 14 }}
+{{ toYaml .Values.livenessProbe | indent 12 }}
 {{- end}}
 {{- if .Values.readinessProbe.enabled }}
         readinessProbe:
           httpGet:
             path: /splash/
             port: http
-{{ toYaml .Values.readinessProbe | indent 14 }}
+{{ toYaml .Values.readinessProbe | indent 12 }}
 {{- end}}
         resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - mountPath: {{ .Values.env.dataroot }}
           name: collab-data-volume
