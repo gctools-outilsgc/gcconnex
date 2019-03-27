@@ -47,6 +47,13 @@ spec:
                 key: db-password
           resources:
 {{ toYaml .Values.mariadb.resources | indent 12 }}
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: collab-db-volume
+        volumes:
+        - name: collab-db-volume
+          persistentVolumeClaim:
+            claimName: {{ template "collab.fullname" . }}-mariadb-data
     {{- with .Values.mariadb.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

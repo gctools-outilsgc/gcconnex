@@ -1,0 +1,26 @@
+{{- if .Values.mariadb.enabled -}}
+{{- if .Values.mariadb.persistence.enabled -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "collab.fullname" . }}-mariadb-data
+  labels:
+    app: {{ template "collab.name" . }}-mariadb
+    chart: {{ template "collab.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.mariadb.persistence.size | quote }}
+{{- if .Values.mariadb.persistence.storageClass }}
+{{- if (eq "-" .Values.mariadb.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: {{ .Values.mariadb.persistence.storageClass | quote }}
+{{- end }}
+{{- end }}
+{{- end -}}
+{{- end -}}

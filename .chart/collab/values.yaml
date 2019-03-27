@@ -65,21 +65,9 @@ autoscaling:
 persistence:
   enabled: true
   ## Data Persistent Volume Storage Class
-  ## If defined, storageClassName: <storageClass>
-  ## If set to "-", storageClassName: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
   ##
-  # storageClass: "-"
-
-  ## A manually managed Persistent Volume and Claim
-  ## Requires persistence.enabled: true
-  ## If defined, PVC must be created manually before volume will be bound
-  # existingClaim:
-
-  accessMode: ReadWriteOnce
-  size: 8Gi
+  storageClass: "azurefile"
+  size: 10Gi
 
 env:
   host: collab.local
@@ -151,12 +139,6 @@ mariadb:
     tag: 10.3
     pullPolicy: IfNotPresent
 
-  ## MariaDB admin password
-  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#setting-the-root-password-on-first-run
-  ##
-  # rootUser:
-  #   password:
-
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
@@ -170,7 +152,6 @@ mariadb:
     ##   GKE, AWS & OpenStack)
     ##
     # storageClass: "-"
-    accessMode: ReadWriteOnce
     size: 8Gi
 
 # define your own credentials or leave blank for auto-generated ones

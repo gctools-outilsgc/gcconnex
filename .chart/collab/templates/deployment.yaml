@@ -72,6 +72,13 @@ spec:
 {{- end}}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+          - mountPath: /sites/gccollab_data
+            name: collab-data-volume
+        volumes:
+        - name: collab-data-volume
+          persistentVolumeClaim:
+            claimName: {{ template "collab.fullname" . }}-data
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
