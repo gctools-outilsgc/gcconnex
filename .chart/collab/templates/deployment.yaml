@@ -20,65 +20,65 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          env:
-          - name: "DOCKER"
-            value: "1"
-          - name: "DBHOST"
-          {{- if .Values.externalDatabase.host -}}
-            value: "{{ .Values.externalDatabase.host }}"
-          {{ else }}
-            value: "{{ include "collab.fullname" . }}-db"
-          {{- end}}
-          - name: "DBNAME"
-            value: "collab"
-          - name: "DBUSER"
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "collab.fullname" . }}-env
-                key: db-user
-          - name: "DBPASS"
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "collab.fullname" . }}-env
-                key: db-password
-          - name: "HOST"
-            value: "{{ .Values.env.host }}"
-          - name: "PORT"
-            value: ""   # sticking to default port 80 only for now
-          - name: "INIT"
-            value: "{{ .Values.env.init }}"
-          - name: "OPENID"
-            value: "{{ .Values.env.openid }}"
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+        env:
+        - name: "DOCKER"
+          value: "1"
+        - name: "DBHOST"
+        {{- if .Values.externalDatabase.host -}}
+          value: "{{ .Values.externalDatabase.host }}"
+        {{ else }}
+          value: "{{ include "collab.fullname" . }}-db"
+        {{- end}}
+        - name: "DBNAME"
+          value: "collab"
+        - name: "DBUSER"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "collab.fullname" . }}-env
+              key: db-user
+        - name: "DBPASS"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "collab.fullname" . }}-env
+              key: db-password
+        - name: "HOST"
+          value: "{{ .Values.env.host }}"
+        - name: "PORT"
+          value: ""   # sticking to default port 80 only for now
+        - name: "INIT"
+          value: "{{ .Values.env.init }}"
+        - name: "OPENID"
+          value: "{{ .Values.env.openid }}"
 {{- if .Values.livenessProbe.enabled }}
-          livenessProbe:
-            httpGet:
-              path: /splash/
-              port: http
+        livenessProbe:
+          httpGet:
+            path: /splash/
+            port: http
 {{ toYaml .Values.livenessProbe | indent 14 }}
 {{- end}}
 {{- if .Values.readinessProbe.enabled }}
-          readinessProbe:
-            httpGet:
-              path: /splash/
-              port: http
+        readinessProbe:
+          httpGet:
+            path: /splash/
+            port: http
 {{ toYaml .Values.readinessProbe | indent 14 }}
 {{- end}}
-          resources:
+        resources:
 {{ toYaml .Values.resources | indent 12 }}
-          volumeMounts:
-          - mountPath: /sites/gccollab_data
-            name: collab-data-volume
-        volumes:
-        - name: collab-data-volume
-          persistentVolumeClaim:
-            claimName: {{ template "collab.fullname" . }}-data
+        volumeMounts:
+        - mountPath: /sites/gccollab_data
+          name: collab-data-volume
+      volumes:
+      - name: collab-data-volume
+        persistentVolumeClaim:
+          claimName: {{ template "collab.fullname" . }}-data
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

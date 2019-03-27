@@ -20,40 +20,40 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}-mariadb
-          image: "{{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}"
-          imagePullPolicy: {{ .Values.mariadb.image.pullPolicy }}
-          ports:
-          - name: mysql
-            containerPort: 3306
-            protocol: TCP
-          env:
-          - name: "MYSQL_ROOT_PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "collab.fullname" . }}-env
-                key: db-root
-          - name: "MYSQL_DATABASE"
-            value: "collab"
-          - name: "MYSQL_USER"
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "collab.fullname" . }}-env
-                key: db-user
-          - name: "MYSQL_PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "collab.fullname" . }}-env
-                key: db-password
-          resources:
+      - name: {{ .Chart.Name }}-mariadb
+        image: "{{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}"
+        imagePullPolicy: {{ .Values.mariadb.image.pullPolicy }}
+        ports:
+        - name: mysql
+          containerPort: 3306
+          protocol: TCP
+        env:
+        - name: "MYSQL_ROOT_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "collab.fullname" . }}-env
+              key: db-root
+        - name: "MYSQL_DATABASE"
+          value: "collab"
+        - name: "MYSQL_USER"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "collab.fullname" . }}-env
+              key: db-user
+        - name: "MYSQL_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "collab.fullname" . }}-env
+              key: db-password
+        resources:
 {{ toYaml .Values.mariadb.resources | indent 12 }}
-          volumeMounts:
-          - mountPath: /var/lib/mysql
-            name: collab-db-volume
-        volumes:
-        - name: collab-db-volume
-          persistentVolumeClaim:
-            claimName: {{ template "collab.fullname" . }}-mariadb-data
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: collab-db-volume
+      volumes:
+      - name: collab-db-volume
+        persistentVolumeClaim:
+          claimName: {{ template "collab.fullname" . }}-mariadb-data
     {{- with .Values.mariadb.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
