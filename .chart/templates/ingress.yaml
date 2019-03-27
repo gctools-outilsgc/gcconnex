@@ -22,7 +22,7 @@ spec:
       {{- range .hosts }}
         - {{ . | quote }}
       {{- end }}
-      secretName: {{ .secretName }}
+      secretName: {{ $fullName }}-tls-secret
   {{- end }}
 {{- end }}
   rules:
