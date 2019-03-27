@@ -40,6 +40,8 @@ spec:
             value: "{{ .Values.env.host }}"
           - name: "PORT"
             value: ""   # sticking to default port 80 only for now
+          - name: "INIT"
+            value: "{{ .Values.env.init }}"
           - name: "OPENID"
             value: "{{ .Values.env.openid }}"
 {{- if .Values.livenessProbe.enabled }}

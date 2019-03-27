@@ -83,6 +83,8 @@ persistence:
 
 env:
   host: collab.local
+  # which version to initialize: [gcconnex, gccollab]
+  init: gccollab
   openid: false
 
 ## Configure extra options for liveness and readiness probes
