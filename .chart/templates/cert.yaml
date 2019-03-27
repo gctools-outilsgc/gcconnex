@@ -1,4 +1,5 @@
 {{- if .Values.ingress.enabled -}}
+{{- $fullName := include "collab.fullname" . -}}
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
@@ -7,9 +8,9 @@ spec:
   secretName: {{ $fullName }}-tls-secret
   {{- range .Values.ingress.tls }}
   dnsNames:
-  {{- range .hosts }}
-    - {{ . | quote }}
-  {{- end }}
+    {{- range .hosts }}
+      - {{ . | quote }}
+    {{- end }}
   acme:
     config:
     - http01:
@@ -21,4 +22,5 @@ spec:
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
+  {{- end }}
 {{- end }}
