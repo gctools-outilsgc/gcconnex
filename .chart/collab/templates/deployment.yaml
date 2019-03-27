@@ -31,7 +31,11 @@ spec:
           - name: "DOCKER"
             value: "1"
           - name: "DBHOST"
-            value: "{{ .Values.env.dbhost }}"
+          {{- if .Values.externalDatabase.host -}}
+            value: "{{ .Values.externalDatabase.host }}"
+          {{ else }}
+            value: "{{ include "collab.fullname" . }}-db"
+          {{- end}}
           - name: "HOST"
             value: "{{ .Values.env.host }}"
           - name: "PORT"

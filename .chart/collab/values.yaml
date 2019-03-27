@@ -82,7 +82,6 @@ persistence:
 
 env:
   host: collab.local
-  dbhost: collab-db
   openid: false
 
 ## Configure extra options for liveness and readiness probes

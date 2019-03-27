@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: {{ include "collab.fullname" . }}-db
   labels:
-    app.kubernetes.io/name: {{ include "collab.name" . }}-db
+    app.kubernetes.io/name: {{ include "collab.name" . }}-mariadb
     helm.sh/chart: {{ include "collab.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -16,6 +16,6 @@ spec:
       protocol: TCP
       name: mysql
   selector:
-    app.kubernetes.io/name: {{ include "collab.name" . }}-db
+    app.kubernetes.io/name: {{ include "collab.name" . }}-mariadb
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
