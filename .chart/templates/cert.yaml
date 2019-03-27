@@ -6,19 +6,15 @@ metadata:
   name: {{ $fullName }}-tls-secret
 spec:
   secretName: {{ $fullName }}-tls-secret
-  {{- range .Values.ingress.tls }}
+  {{- range .Values.ingress.tls.hosts }}
   dnsNames:
-    {{- range .hosts }}
       - {{ . | quote }}
-    {{- end }}
   acme:
     config:
     - http01:
         ingressClass: nginx
       domains:
-      {{- range .hosts }}
         - {{ . | quote }}
-      {{- end }}
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
