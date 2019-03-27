@@ -36,6 +36,18 @@ spec:
           {{ else }}
             value: "{{ include "collab.fullname" . }}-db"
           {{- end}}
+          - name: "DBNAME"
+            value: "collab"
+          - name: "DBUSER"
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "collab.fullname" . }}-env
+                key: db-user
+          - name: "DBPASS"
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "collab.fullname" . }}-env
+                key: db-password
           - name: "HOST"
             value: "{{ .Values.env.host }}"
           - name: "PORT"
