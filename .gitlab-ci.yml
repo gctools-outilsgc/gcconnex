@@ -83,7 +83,7 @@ test:
     POSTGRES_DB: test
   stage: test
   image: gliderlabs/herokuish:latest
-  #allow_failure: true     # tests mostly handled by travis for now
+  allow_failure: true     # tests mostly handled by travis for now
   script:
     - setup_test_db
     - cp -R . /tmp/app
@@ -660,71 +660,19 @@ rollout 100%:
       additional_hosts="{$ADDITIONAL_HOSTS}"
     fi
 
-    if [[ -n "$DB_INITIALIZE" && -z "$(helm ls -q "^$name$")" ]]; then
-      echo "Deploying first release with database initialization..."
-      helm upgrade --install \
-        --wait \
-        --set service.enabled="$service_enabled" \
-        --set releaseOverride="$CI_ENVIRONMENT_SLUG" \
-        --set image.repository="$CI_APPLICATION_REPOSITORY" \
-        --set image.tag="$CI_APPLICATION_TAG" \
-        --set image.pullPolicy=IfNotPresent \
-        --set image.secrets[0].name="$secret_name" \
-        --set application.track="$track" \
-        --set application.database_url="$DATABASE_URL" \
-        --set application.secretName="$APPLICATION_SECRET_NAME" \
-        --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
-        --set service.commonName="le.$KUBE_INGRESS_BASE_DOMAIN" \
-        --set service.url="$CI_ENVIRONMENT_URL" \
-        --set service.additionalHosts="$additional_hosts" \
-        --set replicaCount="$replicas" \
-        --set postgresql.enabled="$postgres_enabled" \
-        --set postgresql.nameOverride="postgres" \
-        --set postgresql.postgresUser="$POSTGRES_USER" \
-        --set postgresql.postgresPassword="$POSTGRES_PASSWORD" \
-        --set postgresql.postgresDatabase="$POSTGRES_DB" \
-        --set postgresql.imageTag="$POSTGRES_VERSION" \
-        --set application.initializeCommand="$DB_INITIALIZE" \
-        --namespace="$KUBE_NAMESPACE" \
-        "$name" \
-        chart/
-
-      echo "Deploying second release..."
-      helm upgrade --reuse-values \
-        --wait \
-        --set application.initializeCommand="" \
-        --set application.migrateCommand="$DB_MIGRATE" \
-        --namespace="$KUBE_NAMESPACE" \
-        "$name" \
-        chart/
-    else
-      echo "Deploying new release..."
-      helm upgrade --install \
-        --wait \
-        --set service.enabled="$service_enabled" \
-        --set releaseOverride="$CI_ENVIRONMENT_SLUG" \
-        --set image.repository="$CI_APPLICATION_REPOSITORY" \
-        --set image.tag="$CI_APPLICATION_TAG" \
-        --set image.pullPolicy=IfNotPresent \
-        --set image.secrets[0].name="$secret_name" \
-        --set application.track="$track" \
-        --set application.database_url="$DATABASE_URL" \
-        --set application.secretName="$APPLICATION_SECRET_NAME" \
-        --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
-        --set service.commonName="le.$KUBE_INGRESS_BASE_DOMAIN" \
-        --set service.url="$CI_ENVIRONMENT_URL" \
-        --set service.additionalHosts="$additional_hosts" \
-        --set replicaCount="$replicas" \
-        --set postgresql.enabled="$postgres_enabled" \
-        --set postgresql.nameOverride="postgres" \
-        --set postgresql.postgresUser="$POSTGRES_USER" \
-        --set postgresql.postgresPassword="$POSTGRES_PASSWORD" \
-        --set postgresql.postgresDatabase="$POSTGRES_DB" \
-        --set application.migrateCommand="$DB_MIGRATE" \
-        --namespace="$KUBE_NAMESPACE" \
-        "$name" \
-        chart/
-    fi
+    echo "Deploying new release..."
+    helm upgrade --install \
+      --wait \
+      --set image.repository="$CI_APPLICATION_REPOSITORY" \
+      --set image.tag="$CI_APPLICATION_TAG" \
+      --set image.pullPolicy=IfNotPresent \
+      --set application.secretName="$APPLICATION_SECRET_NAME" \
+      --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
+      --set host="$CI_ENVIRONMENT_URL" \
+      --set replicaCount="$replicas" \
+      --namespace="$KUBE_NAMESPACE" \
+      "$name" \
+      .chart/collab/
 
     kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name"
   }
@@ -742,7 +690,7 @@ rollout 100%:
         --set replicaCount="$replicas" \
         --namespace="$KUBE_NAMESPACE" \
         "$name" \
-        chart/
+        .chart/collab/
     fi
   }
 
