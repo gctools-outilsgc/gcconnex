@@ -677,7 +677,7 @@ rollout 100%:
     kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name-collab"
   }
 
-  fuinction update_prod() {
+  function update_prod() {
     kubectl version
   }
 
