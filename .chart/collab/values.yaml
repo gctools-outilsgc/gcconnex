@@ -34,6 +34,9 @@ ingress:
   tls:
     enabled: true
 
+# if cert-manager won't automatically create a certificate object, set this to true
+create_cert: false
+
 resources: {}
   # If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.

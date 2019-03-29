@@ -1,4 +1,5 @@
 {{- if .Values.ingress.enabled -}}
+{{- if .Values.create_cert }}
 {{- if .Values.ingress.tls }}
 {{- $fullName := include "collab.fullname" . -}}
 apiVersion: certmanager.k8s.io/v1alpha1
@@ -18,5 +19,6 @@ spec:
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
+{{- end }}
 {{- end }}
 {{- end }}
