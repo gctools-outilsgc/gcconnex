@@ -674,7 +674,7 @@ rollout 100%:
       "$name" \
       .chart/collab/
 
-    kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name"
+    kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name-collab"
   }
 
   function scale() {
@@ -851,6 +851,7 @@ rollout 100%:
 
     secret_name=$(application_secret_name "$track")
     kubectl delete secret --ignore-not-found -n "$KUBE_NAMESPACE" "$secret_name"
+    kubectl delete namespace $KUBE_NAMESPACE
   }
 
 before_script:
