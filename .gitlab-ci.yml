@@ -670,6 +670,8 @@ rollout 100%:
       --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
       --set url="$CI_ENVIRONMENT_URL" \
       --set replicaCount="$replicas" \
+      --set mariadb.auth.user=collab \
+      --set mariadb.auth.password=connex \
       --namespace="$KUBE_NAMESPACE" \
       "$name" \
       .chart/collab/
