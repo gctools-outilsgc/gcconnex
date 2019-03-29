@@ -30,3 +30,10 @@ Create chart name and version as used by the chart label.
 {{- define "collab.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{/*
+Get a hostname from URL
+*/}}
+{{- define "hostname" -}}
+{{- . | trimPrefix "http://" |  trimPrefix "https://" | trimSuffix "/" | quote -}}
+{{- end -}}
