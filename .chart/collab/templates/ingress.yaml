@@ -18,11 +18,11 @@ spec:
 {{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
-      - {{ .Values.host }}
+      - {{ template "hostname" .Values.url }}
       secretName: {{ $fullName }}-tls-secret
 {{- end }}
   rules:
-    - host: {{ .Values.host }}
+    - host: {{ template "hostname" .Values.url }}
       http:
         paths:
           - path: {{ $ingressPath }}

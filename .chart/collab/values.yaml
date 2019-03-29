@@ -23,7 +23,7 @@ service:
   clusterIP: ""
   port: 80
 
-host: collab.local
+url: http://collab.local/
 ingress:
   enabled: true
   annotations: 
