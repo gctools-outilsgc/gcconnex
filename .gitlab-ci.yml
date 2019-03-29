@@ -329,7 +329,7 @@ canary:
     - ensure_namespace
     - initialize_tiller
     - create_secret
-    - deploy
+    - update_prod
     - delete canary
     - delete rollout
     - persist_environment_url
@@ -675,6 +675,10 @@ rollout 100%:
       .chart/collab/
 
     kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name-collab"
+  }
+
+  fuinction update_prod() {
+    kubectl version
   }
 
   function scale() {
