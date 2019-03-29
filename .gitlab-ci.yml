@@ -668,7 +668,7 @@ rollout 100%:
       --set image.pullPolicy=IfNotPresent \
       --set application.secretName="$APPLICATION_SECRET_NAME" \
       --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
-      --set host="$CI_ENVIRONMENT_URL" \
+      --set url="$CI_ENVIRONMENT_URL" \
       --set replicaCount="$replicas" \
       --namespace="$KUBE_NAMESPACE" \
       "$name" \
