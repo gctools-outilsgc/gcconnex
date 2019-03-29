@@ -23,6 +23,7 @@ service:
   clusterIP: ""
   port: 80
 
+host: collab.local
 ingress:
   enabled: true
   annotations: 
@@ -30,11 +31,8 @@ ingress:
     certmanager.k8s.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/rewrite-target: /
   path: /
-  hosts:
-    - collab.local
   tls:
-    hosts:
-      - collab.local
+    enabled: true
 
 resources: {}
   # If you do want to specify resources, uncomment the following
@@ -70,7 +68,6 @@ persistence:
   size: 10Gi
 
 env:
-  host: collab.local
   # which version to initialize: [gcconnex, gccollab]
   init: gccollab
   dataroot: /data/root/
@@ -80,7 +77,7 @@ env:
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
 livenessProbe:
   enabled: true
-  initialDelaySeconds: 120
+  initialDelaySeconds: 300
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6

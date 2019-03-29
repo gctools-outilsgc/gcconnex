@@ -48,8 +48,8 @@ spec:
             secretKeyRef:
               name: {{ template "collab.fullname" . }}-env
               key: db-password
-        - name: "HOST"
-          value: "{{ .Values.env.host }}"
+        - name: "WWWROOT"
+          value: "https://{{ .Values.host }}/"
         - name: "DATAROOT"
           value: "{{ .Values.env.dataroot }}"
         - name: "PORT"

@@ -45,12 +45,6 @@ variables:
   # KUBE_INGRESS_BASE_DOMAIN is the application deployment domain and should be set as a variable at the group or project level.
   # KUBE_INGRESS_BASE_DOMAIN: domain.example.com
 
-  POSTGRES_USER: user
-  POSTGRES_PASSWORD: testing-password
-  POSTGRES_ENABLED: "true"
-  POSTGRES_DB: $CI_ENVIRONMENT_SLUG
-  POSTGRES_VERSION: 9.6.2
-
   KUBERNETES_VERSION: 1.11.7
   HELM_VERSION: 2.12.3
 
@@ -85,12 +79,11 @@ build:
     - tags
 
 test:
-  services:
-    - postgres:latest
   variables:
     POSTGRES_DB: test
   stage: test
   image: gliderlabs/herokuish:latest
+  #allow_failure: true     # tests mostly handled by travis for now
   script:
     - setup_test_db
     - cp -R . /tmp/app
@@ -301,32 +294,6 @@ stop_review:
       - master
     variables:
       - $REVIEW_DISABLED
-
-# Staging deploys are disabled by default since
-# continuous deployment to production is enabled by default
-# If you prefer to automatically deploy to staging and
-# only manually promote to production, enable this job by setting
-# STAGING_ENABLED.
-
-staging:
-  stage: staging
-  script:
-    - check_kube_domain
-    - install_dependencies
-    - download_chart
-    - ensure_namespace
-    - initialize_tiller
-    - create_secret
-    - deploy
-  environment:
-    name: staging
-    url: http://$CI_PROJECT_PATH_SLUG-staging.$KUBE_INGRESS_BASE_DOMAIN
-  only:
-    refs:
-      - master
-    kubernetes: active
-    variables:
-      - $STAGING_ENABLED
 
 # Canaries are also disabled by default, but if you want them,
 # and know what the downsides are, you can enable this by setting
