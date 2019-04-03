@@ -457,7 +457,7 @@ production:
       additional_hosts="{$ADDITIONAL_HOSTS}"
     fi
 
-# collab type init
+    # collab type init
     echo "Deploying new release..."
     helm upgrade --install \
       --wait \
@@ -475,10 +475,7 @@ production:
       "$name_collab" \
       .chart/collab/
 
-    echo "$ROLLOUT_RESOURCE_TYPE/$name_collab status-collab status:"
-    kubectl rollout status -n "$KUBE_NAMESPACE" -w "deploy/$name_collab-collab"
-
-# connex type init
+  # connex type init
     echo "Deploying new release..."
     helm upgrade --install \
       --wait \
@@ -495,6 +492,9 @@ production:
       --namespace="$KUBE_NAMESPACE" \
       "$name_connex" \
       .chart/collab/
+
+    echo "$ROLLOUT_RESOURCE_TYPE/$name_collab status-collab status:"
+    kubectl rollout status -n "$KUBE_NAMESPACE" -w "deploy/$name_collab-collab"
 
     echo "$ROLLOUT_RESOURCE_TYPE/$name_connex status-collab status:"
     kubectl rollout status -n "$KUBE_NAMESPACE" -w "deploy/$name_connex-collab"
