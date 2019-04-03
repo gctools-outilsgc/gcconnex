@@ -286,24 +286,15 @@ stop_review:
     variables:
       - $REVIEW_DISABLED
 
-.production: &production_template
+production:
   stage: production
   script:
-    - check_kube_domain
     - install_dependencies
-    - ensure_namespace
-    - initialize_tiller
-    - create_secret
     - update_prod
-    - persist_environment_url
   environment:
     name: production
-    url: http://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
   artifacts:
     paths: [environment_url.txt]
-
-production:
-  <<: *production_template
   only:
     refs:
       - master
@@ -481,7 +472,8 @@ production:
       "$name" \
       .chart/collab/
 
-    kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name-collab"
+    echo "check $ROLLOUT_RESOURCE_TYPE/$name status..."
+    kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name"
   }
 
   function update_prod() {
