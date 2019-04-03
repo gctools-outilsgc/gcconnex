@@ -436,8 +436,8 @@ production:
 
   function deploy() {
     track="${1-stable}"
-    name_collab=collab-$(deploy_name "$track")
-    name_connex=connex-$(deploy_name "$track")
+    name_collab=col-$(deploy_name "$track")
+    name_connex=con-$(deploy_name "$track")
 
     replicas="1"
 
@@ -458,7 +458,7 @@ production:
     fi
 
     # collab type init
-    echo "Deploying new release..."
+    echo "Deploying new collab-flavour release..."
     helm upgrade --install \
       --wait \
       --set image.repository="$CI_APPLICATION_REPOSITORY" \
@@ -466,7 +466,7 @@ production:
       --set image.pullPolicy=IfNotPresent \
       --set application.secretName="$APPLICATION_SECRET_NAME" \
       --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
-      --set url="$CI_ENVIRONMENT_URL" \
+      --set url="gccollab-$CI_ENVIRONMENT_URL" \
       --set replicaCount="$replicas" \
       --set mariadb.auth.user=collab \
       --set mariadb.auth.password=connex \
@@ -476,7 +476,7 @@ production:
       .chart/collab/
 
   # connex type init
-    echo "Deploying new release..."
+    echo "Deploying new connex-flavour release..."
     helm upgrade --install \
       --wait \
       --set image.repository="$CI_APPLICATION_REPOSITORY" \
@@ -484,7 +484,7 @@ production:
       --set image.pullPolicy=IfNotPresent \
       --set application.secretName="$APPLICATION_SECRET_NAME" \
       --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
-      --set url="$CI_ENVIRONMENT_URL" \
+      --set url="gcconnex-$CI_ENVIRONMENT_URL" \
       --set replicaCount="$replicas" \
       --set mariadb.auth.user=collab \
       --set mariadb.auth.password=connex \
@@ -625,13 +625,13 @@ production:
   }
 
   function persist_environment_url() {
-      echo $CI_ENVIRONMENT_URL > environment_url.txt
+      echo gcconnex-$CI_ENVIRONMENT_URL > environment_url.txt
   }
 
   function delete() {
     track="${1-stable}"
-    name_collab=collab-$(deploy_name "$track")
-    name_connex=connex-$(deploy_name "$track")
+    name_collab=col-$(deploy_name "$track")
+    name_connex=con-$(deploy_name "$track")
 
     if [[ -n "$(helm ls -q "^$name_collab$")" ]]; then
       helm delete --purge "$name_collab"
