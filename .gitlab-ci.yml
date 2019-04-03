@@ -466,7 +466,7 @@ production:
       --set image.pullPolicy=IfNotPresent \
       --set application.secretName="$APPLICATION_SECRET_NAME" \
       --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
-      --set url="gccollab-$CI_ENVIRONMENT_URL" \
+      --set url="https://gccollab-${CI_ENVIRONMENT_URL:8:100}" \
       --set replicaCount="$replicas" \
       --set mariadb.auth.user=collab \
       --set mariadb.auth.password=connex \
@@ -484,7 +484,7 @@ production:
       --set image.pullPolicy=IfNotPresent \
       --set application.secretName="$APPLICATION_SECRET_NAME" \
       --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
-      --set url="gcconnex-$CI_ENVIRONMENT_URL" \
+      --set url="https://gcconnex-${CI_ENVIRONMENT_URL:8:100}" \
       --set replicaCount="$replicas" \
       --set mariadb.auth.user=collab \
       --set mariadb.auth.password=connex \
@@ -625,7 +625,8 @@ production:
   }
 
   function persist_environment_url() {
-      echo gcconnex-$CI_ENVIRONMENT_URL > environment_url.txt
+      #use connex site for dast / perf since it doesn't require login for most pages
+      echo https://gcconnex-${CI_ENVIRONMENT_URL:8:100} > environment_url.txt
   }
 
   function delete() {
