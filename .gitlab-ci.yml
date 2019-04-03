@@ -436,7 +436,8 @@ production:
 
   function deploy() {
     track="${1-stable}"
-    name=$(deploy_name "$track")
+    name_collab=col-$(deploy_name "$track")
+    name_connex=con-$(deploy_name "$track")
 
     replicas="1"
 
@@ -456,7 +457,8 @@ production:
       additional_hosts="{$ADDITIONAL_HOSTS}"
     fi
 
-    echo "Deploying new release..."
+    # collab type init
+    echo "Deploying new collab-flavour release..."
     helm upgrade --install \
       --wait \
       --set image.repository="$CI_APPLICATION_REPOSITORY" \
@@ -464,16 +466,38 @@ production:
       --set image.pullPolicy=IfNotPresent \
       --set application.secretName="$APPLICATION_SECRET_NAME" \
       --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
-      --set url="$CI_ENVIRONMENT_URL" \
+      --set url="https://gccollab-${CI_ENVIRONMENT_URL:8:100}" \
       --set replicaCount="$replicas" \
       --set mariadb.auth.user=collab \
       --set mariadb.auth.password=connex \
+      --set env.init="gccollab" \
       --namespace="$KUBE_NAMESPACE" \
-      "$name" \
+      "$name_collab" \
       .chart/collab/
 
-    echo "$ROLLOUT_RESOURCE_TYPE/$name status-collab status:"
-    kubectl rollout status -n "$KUBE_NAMESPACE" -w "deploy/$name-collab"
+  # connex type init
+    echo "Deploying new connex-flavour release..."
+    helm upgrade --install \
+      --wait \
+      --set image.repository="$CI_APPLICATION_REPOSITORY" \
+      --set image.tag="$CI_APPLICATION_TAG" \
+      --set image.pullPolicy=IfNotPresent \
+      --set application.secretName="$APPLICATION_SECRET_NAME" \
+      --set application.secretChecksum="$APPLICATION_SECRET_CHECKSUM" \
+      --set url="https://gcconnex-${CI_ENVIRONMENT_URL:8:100}" \
+      --set replicaCount="$replicas" \
+      --set mariadb.auth.user=collab \
+      --set mariadb.auth.password=connex \
+      --set env.init="gcconnex" \
+      --namespace="$KUBE_NAMESPACE" \
+      "$name_connex" \
+      .chart/collab/
+
+    echo "$ROLLOUT_RESOURCE_TYPE/$name_collab status-collab status:"
+    kubectl rollout status -n "$KUBE_NAMESPACE" -w "deploy/$name_collab-collab"
+
+    echo "$ROLLOUT_RESOURCE_TYPE/$name_connex status-collab status:"
+    kubectl rollout status -n "$KUBE_NAMESPACE" -w "deploy/$name_connex-collab"
   }
 
   function update_prod() {
@@ -601,20 +625,25 @@ production:
   }
 
   function persist_environment_url() {
-      echo $CI_ENVIRONMENT_URL > environment_url.txt
+      #use connex site for dast / perf since it doesn't require login for most pages
+      echo https://gcconnex-${CI_ENVIRONMENT_URL:8:100} > environment_url.txt
   }
 
   function delete() {
     track="${1-stable}"
-    name=$(deploy_name "$track")
+    name_collab=col-$(deploy_name "$track")
+    name_connex=con-$(deploy_name "$track")
 
-    if [[ -n "$(helm ls -q "^$name$")" ]]; then
-      helm delete --purge "$name"
+    if [[ -n "$(helm ls -q "^$name_collab$")" ]]; then
+      helm delete --purge "$name_collab"
+    fi
+
+    if [[ -n "$(helm ls -q "^$name_connex$")" ]]; then
+      helm delete --purge "$name_connex"
     fi
 
     secret_name=$(application_secret_name "$track")
     kubectl delete secret --ignore-not-found -n "$KUBE_NAMESPACE" "$secret_name"
-    kubectl delete namespace $KUBE_NAMESPACE
   }
 
 before_script:
