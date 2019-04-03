@@ -50,20 +50,12 @@ variables:
 
   DOCKER_DRIVER: overlay2
 
-  ROLLOUT_RESOURCE_TYPE: deployment
-
 stages:
   - build
   - test
   - review
   - dast
-  - staging
-  - canary
   - production
-  - incremental rollout 10%
-  - incremental rollout 25%
-  - incremental rollout 50%
-  - incremental rollout 100%
   - performance
   - cleanup
 
@@ -85,7 +77,7 @@ test:
   image: gliderlabs/herokuish:latest
   allow_failure: true     # tests mostly handled by travis for now
   script:
-    - setup_test_db
+#    - setup_test_db
     - cp -R . /tmp/app
     - /bin/herokuish buildpack test
   only:
@@ -248,7 +240,6 @@ review:
   script:
     - check_kube_domain
     - install_dependencies
-    - download_chart
     - ensure_namespace
     - initialize_tiller
     - create_secret
@@ -295,170 +286,19 @@ stop_review:
     variables:
       - $REVIEW_DISABLED
 
-# Canaries are also disabled by default, but if you want them,
-# and know what the downsides are, you can enable this by setting
-# CANARY_ENABLED.
-
-canary:
-  stage: canary
-  script:
-    - check_kube_domain
-    - install_dependencies
-    - download_chart
-    - ensure_namespace
-    - initialize_tiller
-    - create_secret
-    - deploy canary
-  environment:
-    name: production
-    url: http://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
-  when: manual
-  only:
-    refs:
-      - master
-    kubernetes: active
-    variables:
-      - $CANARY_ENABLED
-
-.production: &production_template
-  stage: production
-  script:
-    - check_kube_domain
-    - install_dependencies
-    - download_chart
-    - ensure_namespace
-    - initialize_tiller
-    - create_secret
-    - update_prod
-    - delete canary
-    - delete rollout
-    - persist_environment_url
-  environment:
-    name: production
-    url: http://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
-  artifacts:
-    paths: [environment_url.txt]
-
 production:
-  <<: *production_template
-  only:
-    refs:
-      - master
-    kubernetes: active
-  except:
-    variables:
-      - $STAGING_ENABLED
-      - $CANARY_ENABLED
-      - $INCREMENTAL_ROLLOUT_ENABLED
-      - $INCREMENTAL_ROLLOUT_MODE
-
-production_manual:
-  <<: *production_template
-  when: manual
-  allow_failure: false
-  only:
-    refs:
-      - master
-    kubernetes: active
-    variables:
-      - $STAGING_ENABLED
-      - $CANARY_ENABLED
-  except:
-    variables:
-      - $INCREMENTAL_ROLLOUT_ENABLED
-      - $INCREMENTAL_ROLLOUT_MODE
-
-# This job implements incremental rollout on for every push to `master`.
-
-.rollout: &rollout_template
+  stage: production
   script:
-    - check_kube_domain
     - install_dependencies
-    - download_chart
-    - ensure_namespace
-    - initialize_tiller
-    - create_secret
-    - deploy rollout $ROLLOUT_PERCENTAGE
-    - scale stable $((100-ROLLOUT_PERCENTAGE))
-    - delete canary
-    - persist_environment_url
+    - update_prod
   environment:
     name: production
-    url: http://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
   artifacts:
     paths: [environment_url.txt]
-
-.manual_rollout_template: &manual_rollout_template
-  <<: *rollout_template
-  stage: production
-  when: manual
-  # This selectors are backward compatible mode with $INCREMENTAL_ROLLOUT_ENABLED (before 11.4)
   only:
     refs:
       - master
     kubernetes: active
-    variables:
-      - $INCREMENTAL_ROLLOUT_MODE == "manual"
-      - $INCREMENTAL_ROLLOUT_ENABLED
-  except:
-    variables:
-      - $INCREMENTAL_ROLLOUT_MODE == "timed"
-
-.timed_rollout_template: &timed_rollout_template
-  <<: *rollout_template
-  when: delayed
-  start_in: 5 minutes
-  only:
-    refs:
-      - master
-    kubernetes: active
-    variables:
-      - $INCREMENTAL_ROLLOUT_MODE == "timed"
-
-timed rollout 10%:
-  <<: *timed_rollout_template
-  stage: incremental rollout 10%
-  variables:
-    ROLLOUT_PERCENTAGE: 10
-
-timed rollout 25%:
-  <<: *timed_rollout_template
-  stage: incremental rollout 25%
-  variables:
-    ROLLOUT_PERCENTAGE: 25
-
-timed rollout 50%:
-  <<: *timed_rollout_template
-  stage: incremental rollout 50%
-  variables:
-    ROLLOUT_PERCENTAGE: 50
-
-timed rollout 100%:
-  <<: *timed_rollout_template
-  <<: *production_template
-  stage: incremental rollout 100%
-  variables:
-    ROLLOUT_PERCENTAGE: 100
-
-rollout 10%:
-  <<: *manual_rollout_template
-  variables:
-    ROLLOUT_PERCENTAGE: 10
-
-rollout 25%:
-  <<: *manual_rollout_template
-  variables:
-    ROLLOUT_PERCENTAGE: 25
-
-rollout 50%:
-  <<: *manual_rollout_template
-  variables:
-    ROLLOUT_PERCENTAGE: 50
-
-rollout 100%:
-  <<: *manual_rollout_template
-  <<: *production_template
-  allow_failure: false
 
 # ---------------------------------------------------------------------------
 
@@ -549,38 +389,6 @@ rollout 100%:
     esac
   }
 
-  function get_replicas() {
-    track="${1:-stable}"
-    percentage="${2:-100}"
-
-    env_track=$( echo $track | tr -s  '[:lower:]'  '[:upper:]' )
-    env_slug=$( echo ${CI_ENVIRONMENT_SLUG//-/_} | tr -s  '[:lower:]'  '[:upper:]' )
-
-    if [[ "$track" == "stable" ]] || [[ "$track" == "rollout" ]]; then
-      # for stable track get number of replicas from `PRODUCTION_REPLICAS`
-      eval new_replicas=\$${env_slug}_REPLICAS
-      if [[ -z "$new_replicas" ]]; then
-        new_replicas=$REPLICAS
-      fi
-    else
-      # for all tracks get number of replicas from `CANARY_PRODUCTION_REPLICAS`
-      eval new_replicas=\$${env_track}_${env_slug}_REPLICAS
-      if [[ -z "$new_replicas" ]]; then
-        eval new_replicas=\${env_track}_REPLICAS
-      fi
-    fi
-
-    replicas="${new_replicas:-1}"
-    replicas="$(($replicas * $percentage / 100))"
-
-    # always return at least one replicas
-    if [[ $replicas -gt 0 ]]; then
-      echo "$replicas"
-    else
-      echo 1
-    fi
-  }
-
   # Extracts variables prefixed with K8S_SECRET_
   # and creates a Kubernetes secret.
   #
@@ -628,21 +436,9 @@ rollout 100%:
 
   function deploy() {
     track="${1-stable}"
-    percentage="${2:-100}"
     name=$(deploy_name "$track")
 
     replicas="1"
-    service_enabled="true"
-    postgres_enabled="$POSTGRES_ENABLED"
-
-    # if track is different than stable,
-    # re-use all attached resources
-    if [[ "$track" != "stable" ]]; then
-      service_enabled="false"
-      postgres_enabled="false"
-    fi
-
-    replicas=$(get_replicas "$track" "$percentage")
 
     if [[ "$CI_PROJECT_VISIBILITY" != "public" ]]; then
       secret_name='gitlab-registry'
@@ -676,28 +472,12 @@ rollout 100%:
       "$name" \
       .chart/collab/
 
-    kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name-collab"
+    echo "$ROLLOUT_RESOURCE_TYPE/$name status-collab status:"
+    kubectl rollout status -n "$KUBE_NAMESPACE" -w "deploy/$name-collab"
   }
 
   function update_prod() {
     kubectl version
-  }
-
-  function scale() {
-    track="${1-stable}"
-    percentage="${2-100}"
-    name=$(deploy_name "$track")
-
-    replicas=$(get_replicas "$track" "$percentage")
-
-    if [[ -n "$(helm ls -q "^$name$")" ]]; then
-      helm upgrade --reuse-values \
-        --wait \
-        --set replicaCount="$replicas" \
-        --namespace="$KUBE_NAMESPACE" \
-        "$name" \
-        .chart/collab/
-    fi
   }
 
   function install_dependencies() {
@@ -735,29 +515,6 @@ rollout 100%:
     export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:5432/${POSTGRES_DB}"
   }
 
-  function download_chart() {
-    if [[ ! -d chart ]]; then
-      auto_chart=${AUTO_DEVOPS_CHART:-gitlab/auto-deploy-app}
-      auto_chart_name=$(basename $auto_chart)
-      auto_chart_name=${auto_chart_name%.tgz}
-      auto_chart_name=${auto_chart_name%.tar.gz}
-    else
-      auto_chart="chart"
-      auto_chart_name="chart"
-    fi
-
-    helm init --client-only
-    helm repo add gitlab ${AUTO_DEVOPS_CHART_REPOSITORY:-https://charts.gitlab.io}
-    if [[ ! -d "$auto_chart" ]]; then
-      helm fetch ${auto_chart} --untar
-    fi
-    if [ "$auto_chart_name" != "chart" ]; then
-      mv ${auto_chart_name} chart
-    fi
-
-    helm dependency update chart/
-    helm dependency build chart/
-  }
 
   function ensure_namespace() {
     kubectl describe namespace "$KUBE_NAMESPACE" || kubectl create namespace "$KUBE_NAMESPACE"
