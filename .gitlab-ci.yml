@@ -472,8 +472,8 @@ production:
       "$name" \
       .chart/collab/
 
-    echo "check $ROLLOUT_RESOURCE_TYPE/$name status..."
-    kubectl rollout status -n "$KUBE_NAMESPACE" -w "$ROLLOUT_RESOURCE_TYPE/$name"
+    echo "$ROLLOUT_RESOURCE_TYPE/$name status-collab status:"
+    kubectl rollout status -n "$KUBE_NAMESPACE" -w "deploy/$name-collab"
   }
 
   function update_prod() {
