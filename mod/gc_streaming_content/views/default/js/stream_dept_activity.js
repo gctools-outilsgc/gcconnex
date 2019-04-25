@@ -7,7 +7,7 @@ $(document).ready(function(){
 var interval = null;
 function deptactivity_stream_count(){
 
-   interval =  window.setInterval(check_for_deptactivity_items(),10000);
+   interval =  window.setInterval(check_for_deptactivity_items(),300000);
 }
 
 
@@ -42,7 +42,7 @@ function check_for_deptactivity_items(){
                 //Get the latest post and compare that post to the post that is on the page.
                 if(comparePosts(response[0].id, postID[0])){
                     //True - Keep looking for posts
-                    setTimeout(deptactivity_stream_count, 10000);
+                    setTimeout(deptactivity_stream_count, 300000);
 
                 }else{
                     //False - there is a new post. We can stop looking now.
