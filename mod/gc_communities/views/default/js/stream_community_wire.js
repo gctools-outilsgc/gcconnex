@@ -16,7 +16,7 @@ $(document).ready(function() {
 var interval = null;
 
 function community_wire_stream_count() {
-	interval = window.setInterval(check_for_community_wire_items(), 10000);
+	interval = window.setInterval(check_for_community_wire_items(), 300000);
 }
 
 // Stop the timer and add a call to action to the DOM
@@ -51,7 +51,7 @@ function check_for_community_wire_items() {
 				//Get the latest post and compare that post to the post that is on the page.
 				if (response == postID[0]) {
 					//True - Keep looking for posts
-					setTimeout(community_wire_stream_count, 10000);
+					setTimeout(community_wire_stream_count, 300000);
 				} else {
 					//False - there is a new post. We can stop looking now.
 					stop_stream_community_wire_count();

@@ -21,7 +21,7 @@ $(document).ready(function(){
 var interval = null;
 function newsfeed_stream_count(){
     
-   interval =  window.setInterval(check_for_newsfeed_items(),10000);
+   interval =  window.setInterval(check_for_newsfeed_items(),300000);
 }
 
 
@@ -58,7 +58,7 @@ function check_for_newsfeed_items(){
                
                 if(comparePosts(response[0].id, postID[0])){
                     //True - Keep looking for posts
-                    setTimeout(newsfeed_stream_count, 10000);
+                    setTimeout(newsfeed_stream_count, 300000);
                     
                 }else{
                     //False - there is a new post. We can stop looking now.

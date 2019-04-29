@@ -22,7 +22,7 @@ $(document).ready(function(){
 var interval = null;
 function stream_count(){
     
-   interval =  window.setInterval(check_for_posts(),10000);
+   interval =  window.setInterval(check_for_posts(),300000);
 }
 
 
@@ -61,7 +61,7 @@ function check_for_posts(){
                
                 if(comparePosts(test_array, postGUID)){
                     //True - Keep looking for posts
-                    setTimeout(stream_count, 10000);
+                    setTimeout(stream_count, 300000);
                     
                 }else{
                     //False - there is a new post. We can stop looking now.
