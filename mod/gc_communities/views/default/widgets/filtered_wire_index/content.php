@@ -32,6 +32,8 @@ if (is_array($widget_hashtag)) {
 	$query .= " AND wi.description LIKE '%{$widget_hashtag}%'";
 }
 
+$query .= " LIMIT $num_items";
+
 $wire_ids = array();
 $wires = get_data($query);
 foreach ($wires as $wire) {
