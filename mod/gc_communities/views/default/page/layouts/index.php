@@ -146,6 +146,8 @@ if (!get_input('offset')) {
 		} else {
 			$query .= " AND wi.description LIKE '%{$community_tags}%'";
 		}
+		
+		$query .= " LIMIT $wire_limit";
 
 		$wire_ids = array();
 		$wires = get_data($query);
@@ -159,7 +161,7 @@ if (!get_input('offset')) {
 			'limit' => $wire_limit,
 			'full_view' => false,
 			'list_type_toggle' => false,
-			'pagination' => true,
+			'pagination' => false,
 			'guids' => $wire_ids
 		);
 
