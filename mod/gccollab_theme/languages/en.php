@@ -41,7 +41,7 @@ return array(
   'wet:groupLoading'=>'Loading content',
   'wet:cover_photo_remove'=>'Remove current group cover image',
   'wet:cover_photo_input'=>'Add a Cover Image to your group',
-  'wet:cover_photo_dim'=> "Your group's cover image displays at 1500 pixels wide by 275 pixels tall on your page on computers. If the dimensions of the image is less or more, the image will be stretched or scaled to fit the area.",
+  'wet:cover_photo_dim'=> "Your group's cover image displays at 1140 pixels wide by 185 pixels tall on your page on computers. If the dimensions of the image is less or more, the image will be stretched or scaled to fit the area.",
   'wet:search_in_group'=>'Search in this Group',
   'wet:cover_photo_alt'=>'Graphic Element for the Group',
   'wet:login_engage_1'=>'Share your knowledge and ideas.',
