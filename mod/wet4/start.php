@@ -52,6 +52,7 @@ function wet4_theme_init()
 	elgg_unregister_event_handler('pagesetup', 'system', 'messages_notifier');
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_elgg_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_group_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', 'wet4_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'wet4_elgg_page_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
@@ -1124,6 +1125,36 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 	}
 
 	return $return;
+}
+
+function wet4_group_entity_menu_setup($hook, $type, $value, $params) {
+	$handler = elgg_extract('handler', $params, false);
+	if ($handler != 'groups') {
+		return $value;
+	}
+	$entity = $params['entity'];
+	foreach ($value as $index => $item) {
+			$name = $item->getName();
+			if ($name == 'likes' || $name == 'likes_count' || $name == 'members' || $name == 'unlike') {
+					unset($value[$index]);
+			}
+	}
+
+	if ($entity->isPublicMembership()) {
+		$mem = elgg_echo("groups:open");
+	} else {
+		$mem = elgg_echo("groups:closed");
+	}
+
+	$options = array(
+		'name' => 'membership',
+		'text' => $mem,
+		'href' => false,
+		'priority' => 100,
+	);
+	$value[] = ElggMenuItem::factory($options);
+
+	return $value;
 }
 
 /*

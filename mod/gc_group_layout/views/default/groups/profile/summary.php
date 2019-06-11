@@ -185,29 +185,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 													);
 												}
 												echo '<li class="mrgn-tp-sm">'.elgg_view('output/url', $options).'</li>';
-
-												//Nick - Added a link to like the group!
-												if (elgg_is_logged_in()) {
-													$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($group->guid);
-
-													//Has this user liked this already?
-													if ($hasLiked) {
-														$options = array(
-															'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$group->guid}"),
-															'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('entity:unlike:link:group', array($group->name)).'</span>',
-															'title' => elgg_echo('likes:remove') . ' ' .elgg_echo('group'),
-														);
-
-													} else {
-
-														$options = array(
-															'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$group->guid}"),
-															'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('entity:like:link:group', array($group->name)).'</span>',
-															'title' => elgg_echo('likes:likethis') . ' ' . elgg_echo('group'),
-														);
-													}
-												}
-												echo '<li class="mrgn-tp-sm mrgn-lft-sm">'.elgg_view('output/url', $options).'</li>';
 	
 												// This is the code to add the notification bell to the page to the left of the member button
 												if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
