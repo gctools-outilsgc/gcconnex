@@ -506,14 +506,6 @@ max-height: 500px;
 
  }
 
-.elgg-menu-user-menu-subMenu {
-    padding: 0;
-}
-
-.elgg-menu-user-menu-subMenu .elgg-menu-content {
-    display: none;
-}
-
 .visited-link li a:visited{
    color: #055959;
 }

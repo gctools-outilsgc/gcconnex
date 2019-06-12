@@ -23,15 +23,27 @@ $email = elgg_get_logged_in_user_entity()->email;
 
 
 elgg_register_menu_item('user_menu_subMenu', array(
-    'name' => 'profile_card',
-    'text' => elgg_view('page/elements/profile_card'),
+    'name' => 'profile_link',
+    'text' => elgg_echo('userMenu:profile'),
+    'href' => 'profile/' . $user,
+    'priority' => 100,
 ));
 
-$dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu user-menu pull-right subMenu'));
+elgg_register_menu_item('user_menu_subMenu', array(
+    'name' => 'settings_link',
+    'text' => elgg_echo('userMenu:account'),
+    'href' => 'settings/user/' . $user,
+    'priority' => 200,
+));
+elgg_register_menu_item('user_menu_subMenu', array(
+    'name' => 'logout_link',
+    'text' => elgg_echo('logout'),
+    'href' => 'action/logout',
+    'priority' => 300,
+));
 
-$ajax_dd_messages = '<div aria-hidden="true" id="msg_dd" class="dropdown-menu user-menu-message-dd message-dd-position subMenu">'. elgg_view('page/elements/messages_dd') . '</div>';
+$dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu'));
 
-$ajax_dd_notification = '<div aria-hidden="true" id="notif_dd"  class="dropdown-menu user-menu-message-dd notif-dd-position subMenu">'. elgg_view('page/elements/notifications_dd') . '</div>';
 
 $focus_dd = '<a href="#" class="focus_dd_link" style="display:none;"><i class="fa fa-caret-down" aria-hidden="true"></i><span class="wb-inv">'.elgg_echo('wet:dd:expand').'</span></a>';
 
@@ -104,66 +116,10 @@ elgg_register_menu_item('user_menu', array(
     'tabindex' => '-1',
 ));
 
-
-//display new message badge on messages
-if (elgg_is_active_plugin('messages')) {
-    $unread = messages_count_unread_inbox();
-
-    $title = ' - ' . $unread . ' ' . elgg_echo('messages:unreadmessages');
-
-    //display 9+ insted of huge numbers in notif badge
-    if ($unread >= 10) {
-        //$unread = '9+';
-    }
-
-    $msgbadge = "<span aria-hidden='true' class='notif-badge'>" . $unread . "</span>";
-
-    if ($unread == 0) {
-        $msgbadge = '';
-        $title = '';
-    }
-}
-
-// messages inbox menu item
-//Nick - Removed the href and created my own in the text to hold hidden messages dropdown
-elgg_register_menu_item('user_menu', array(
-    'name' => 'messages',
-    'text' => '<i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs" aria-hidden="true">' . elgg_echo('messages') . '</span>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:messages') . $title.' </span></a>'.$focus_dd .$ajax_dd_messages,
-    'title' => elgg_echo('userMenu:messages') . $title,
-    'item_class' => 'brdr-lft messagesLabel close-msg-dd',
-    'data-toggle' => '',
-    'id'=>'messagesLabel',
-    'class' => '',
-    'data-dd-type'=>'msg_dd',
-    'priority' => '2',
-    'href' => elgg_get_site_url().'messages/inbox/' . $user,
-
-    ));
-
-
-//display new message badge on messages
-if (elgg_is_active_plugin('messages')) {
-    $unread = messages_count_unread_notifications();
-
-    $title = ' - ' . $unread . ' ' . elgg_echo('messages:unreadmessages');
-
-    //display 9+ insted of huge numbers in notif badge
-    if ($unread >= 10) {
-        //$unread = '9+';
-    }
-
-    $msgbadge = "<span aria-hidden='true' class='notif-badge'>" . $unread . "</span>";
-
-    if ($unread == 0) {
-        $msgbadge = '';
-        $title = '';
-    }
-}
-
 // notifications inbox menu item
 elgg_register_menu_item('user_menu', array(
     'name' => 'notifications',
-    'text' =>'<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs" aria-hidden="true">' . elgg_echo('notifications:subscriptions:changesettings') . '</span>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:notifications') . $title.' </span></a>'.$focus_dd.'<div>'.$ajax_dd_notification.'</div>',
+    'text' =>'<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs" aria-hidden="true">' . elgg_echo('notifications:subscriptions:changesettings') . '</span>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:notifications') . $title.' </span></a>',
     'title' => elgg_echo('userMenu:notifications') . $title,
     'item_class' => 'brdr-lft messagesLabel close-notif-dd',
     'class' => '',
