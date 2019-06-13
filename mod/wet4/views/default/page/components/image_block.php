@@ -139,11 +139,11 @@ HTML;
 
 }else{
 
-    $body = "<div class=\"mrgn-tp-sm col-xs-10 noWrap\">$body</div>";
+    $body = "<div class=\"media-body\">$body</div>";
 
 if ($image) {
-	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
-     //$echo = elgg_get_context();
+	$image = "<div class=\"media-left\">$image</div>";
+    // $echo = elgg_get_context();
 }
 
 if ($alt_image) {
@@ -153,7 +153,7 @@ if ($alt_image) {
 
 echo <<<HTML
 
-<article class="$class mrgn-bttm-sm" $id>
+<article class="media" $id>
 
 	$image$alt_image$body$echo
     <div class="clearfix"></div>

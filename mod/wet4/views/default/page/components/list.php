@@ -413,7 +413,7 @@ if ($position == 'after' || $position == 'both') {
 
 		if ($subtype) {
 
-			$li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
+            $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
 		}
 	} else if (is_callable(array($item, 'getType'))) {
 		$li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
@@ -426,7 +426,7 @@ if ($position == 'before' || $position == 'both') {
 	echo $nav;
 }
 
-echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
+echo elgg_format_element('ul', ['class' => 'list-unstyled elgg-new-list elgg-list-'.$type], $list_items);
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;

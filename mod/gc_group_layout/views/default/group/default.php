@@ -37,18 +37,13 @@ if ($vars['full_view']) {
 		'metadata' => $metadata,
 	);
 
-	$params2 = array(
-		'subtitle' => gc_explode_translation($group->briefdescription,$lang),
-	);
-
-
 	// identify available content
 /*if(($group->description2) && ($group->description)){
 
 			echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';
 }*/
 
-	$params = $params + $params2;
+	$params = $params;
 	$params = $params + $vars;
 	$list_body = elgg_view('group/elements/summary', $params);
 
