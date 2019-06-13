@@ -161,6 +161,21 @@ textarea.error:focus{
     border-bottom:none !important;
 }
 
+.elgg-list-group {
+    background-color: white;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+}
+.elgg-list-group .au_subgroups_group_icon-medium-wet4 {
+    margin: 10px 5px 10px 10px !important;
+    display: inline-block !important;
+    width: 50px !important;
+    max-width: 100% !important;
+}
+.elgg-list-group .au_subgroups_group_icon-medium-wet4 img {
+    border-radius: 2px !important;
+}
+
   /******************** Split Inbox Styling ********************/
 
 .message-dd-block{
@@ -848,7 +863,6 @@ max-height: 500px;
     }
 
     /****************************************/
-
     .ideaPoints {
         font-size: 1.25em;
     }
