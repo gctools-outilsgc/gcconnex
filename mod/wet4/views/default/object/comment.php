@@ -55,6 +55,7 @@ if ($full_view) {
 			'value' => elgg_get_excerpt($comment->description),
 		));
 		$comment_text .= '</div>';
+		$commenter_icon = elgg_view_entity_icon($commenter, 'tiny');
 	} else {
 		$comment_text = elgg_view('output/longtext', array(
 			'value' => $comment->description,

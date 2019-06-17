@@ -19,7 +19,7 @@ $item = $vars['item'];
 $menu = elgg_view_menu('river', array(
 	'item' => $item,
 	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz river-margin',
+	'class' => 'elgg-menu-hz',
 ));
 
 // river item header
@@ -30,6 +30,13 @@ if ($summary === null) {
 	$summary = elgg_view('river/elements/summary', array(
 		'item' => $vars['item'],
 	));
+}
+
+$image = elgg_view('river/elements/image', $vars);
+if ($image) {
+	$image = elgg_format_element('div', [
+		'class' => 'elgg-river-image',
+	], $image);
 }
 
 if ($summary === false) {
@@ -45,7 +52,7 @@ if ($summary === false) {
 
 $message = elgg_extract('message', $vars);
 if ($message !== null) {
-	$message = "<div class=\"elgg-river-message mrgn-bttm-sm actPre\">$message</div>";
+	$message = "<div class=\"elgg-river-message actPre\">$message</div>";
 }
 
 
@@ -65,87 +72,52 @@ $container = $object->getContainerEntity();
 
 $subtype_test = $object->getSubtype();
 
-if($subtype_test == 'comment' || $subtype_test =='discussion_reply'){
-
-
-    //$test = $subtype_test->getContainerEntity();
-    //get the container of the container if it's a comment or reply
-    $container = $container->getContainerEntity();
-    $test = 'You need to find the group I am in.';
-    $commentordiscuss = true;
-
-    //$subtype_test2 = $subtype_test->getContainerEntity();
-}else{
-    $test = '';
-    $commentordiscuss = false;
-}
-
 
 	$name = gc_explode_translation($container->name,$lang);
 
 
-if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
-	$group_string = elgg_view('output/url', array(
-		'href' => $container->getURL(),
-		'text' => $name,
-		'is_trusted' => true,
-	));
-
-	$group_link = elgg_view('output/url', array(
-		'href' => $container->getURL(),
-		'text' => $name,
-		'is_trusted' => true,
-		'tabindex' => '-1'
-	));
-    //Nick - Changed "in the group" to just the group link in order to show this is group content. May need some looking at
-    $group_image = elgg_view_entity_icon($container, 'medium');
-    $in_the_group = elgg_echo('river:ingroup', array($group_link));
-   // $group_testing = elgg_view_image_block($group_image, $group_link);
-
-
-}
+	if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
+		$group_link = elgg_view('output/url', array(
+			'href' => $container->getURL(),
+			'text' => $name,
+			'is_trusted' => true,
+		));
+		$group_string = elgg_echo('river:ingroup', array($group_link));
+	}
 //so when the activity happens in a group then display the users icon and stuff
 $subject = $item->getSubjectEntity();
-$user_icon = elgg_view_entity_icon($subject, 'small');
+// $user_icon = elgg_view_entity_icon($subject, 'small');
 
-
-//removed $responses
-//Nick - commented out comment or discuss var for instances of comments on blogs not within a group.
-//Nick - checking for group activity context so it will use the other layout
-if($group_string /*|| $commentordiscuss*/ && !elgg_in_context('group_activity_tab')){
-    $identify_activity = elgg_echo('group');
-    echo <<<RIVER
-<div class="">
-
-
-<div aria-hidden="true" class="elgg-river-summary mrgn-bttm-sm river-group-link"> $group_string</div>
-<h3 class="elgg-river-summary"> $summary <span class="wb-invisible">$in_the_group</span></h3>
-<div class="elgg-river-timestamp mrgn-bttm-md timeStamp "><i>$timestamp</i><div class="pull-right">$menu</div></div>
-
-</div>
-<div class="  mrgn-bttm-sm mrgn-tp-sm">
-
-$message
-$attachments
-
-</div>
-
-
-
-RIVER;
-
-}else{
-    $identify_activity = elgg_echo('friend:river');
-    echo <<<RIVER
-
-<h3 class="elgg-river-summary  mrgn-bttm-sm river-user-heading"> $summary  </h3>
-
-<div class="elgg-river-timestamp mrgn-bttm-sm timeStamp"><i>$timestamp</i> <div class="pull-right">$menu</div></div>
-
-$message
-$attachments
-
-
-RIVER;
-
+$type = $object->getType();
+if($type == 'group') {
+	$message = elgg_view('river/object/group/attachment', array('item' => $vars['item']));
 }
+$count = elgg_view('river/object/likes/count', array('entity' => $object));
+
+// Have a different display for list view
+if(elgg_get_logged_in_user_entity()->newsfeedCard == 'list'){
+	$view_test = 'LIST VIEW';
+	$message = '';
+	$attachments = '';
+	$menu = '';
+	$responses = '';
+	$count = '';
+}
+
+echo <<<RIVER
+<div>
+<div class="elgg-river-summary clearfix mb-3">
+$image $summary $group_string 
+<div class="elgg-river-timestamp">$timestamp</div>
+</div>
+$message
+$attachments
+<div class="mt-3">
+$menu
+</div>
+<div>
+$count
+</div>
+$responses
+</div>
+RIVER;

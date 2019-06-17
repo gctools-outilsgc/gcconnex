@@ -506,20 +506,141 @@ max-height: 500px;
 
  }
 
+ .elgg-river-image-block .elgg-river-image {
+  float: left;
+  margin-right: 8px;
+}
+
+.river-group-object .river-group-avatar {
+  margin: -25px 12px 12px 12px !important;
+  background-color: white;
+}
+
+.river-group-avatar .au_subgroups_group_icon-medium-wet4 {
+    margin: 0 !important;
+    display: inline-block !important;
+    width: 65px !important;
+    max-width: 100% !important;
+}
+
+.river-group-avatar .au_subgroups_group_icon-medium-wet4 img {
+    border-radius: 0 !important;
+}
+
+.elgg-menu-river {
+  float: none !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  height: 25px;
+  margin-top: 10px;
+}
 
 
+.elgg-menu-river > li {
+  margin-left: 0 !important;
+  margin-right: 10px;
+}
+
+.elgg-menu-river > li > a .elgg-icon {
+  color: #aaa;
+  font-size: 22px;
+  margin: 0 auto;
+}
+
+.elgg-list-river {
+  border-top: none !important;
+}
+
+.elgg-list-river > li {
+  border: none !important;
+}
+
+.elgg-river-attachments, .elgg-river-message, .elgg-river-content { 
+  border-left: none !important;
+  padding-left: 0px !important;
+}
+
+.elgg-river-responses .elgg-item-object-comment {
+  position: relative;
+  margin: 35px 0 0 0;
+  border: none !important;
+  padding: 8px 10px !important;
+  margin-top: 14px;
+}
+
+.elgg-river-responses .elgg-output {
+  background-color: #f8f9fa !important;
+  border-radius: 8px;
+  padding: 8px;
+}
+/*
+.elgg-river-comments > li {
+  border: none !important;
+  padding: 8px 10px !important;
+  margin-top: 14px;
+}
+
+.elgg-comments .elgg-list:before, .elgg-river-comments:before {
+  border: none !important;
+  margin-left: -9px;
+}
+
+.elgg-river-responses .elgg-body {
+  margin-top: -30px !important;
+}
+*/
+.elgg-river-responses .elgg-body .elgg-output {
+  margin-top: 5px !important;
+}
  .noWrap {
      overflow-wrap: break-word;
   word-wrap: break-word;
   white-space:inherit;
  }
 
+ .elgg-river-timestamp {
+    color: #666;
+    font-size: 85%;
+    font-style: italic;
+    line-height: 1.2em;
+    display: inline-block;
+}
 
+.elgg-avatar-small-wet4 > a > img {
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 50% !important;
+    background-clip: border;
+    background-size: 45px;
+}
 
+.elgg-river-message {
+    margin: 12px 0;
+}
+
+.elgg-river-file-attachment{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+}
+.elgg-river-file-attachment .river-file-title{
+    font-weight: bold;
+    margin-bottom: 5px;
+
+}
  .department-test{
      width: 43%;
 
  }
+
+.d-flex{
+    display: flex!important;
+}
+.justify-content-center {
+    justify-content: center!important;
+}
 
 .visited-link li a:visited{
    color: #055959;

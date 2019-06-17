@@ -81,7 +81,7 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
     }
 }
 
-echo elgg_view('page/components/image_block', array(
+echo elgg_view('page/components/river_image_block', array(
 	'image' => elgg_view('river/elements/image', $vars),
 	'body' => elgg_view('river/elements/body', $vars),
 	'class' => 'col-xs-12  panel panel-river',
