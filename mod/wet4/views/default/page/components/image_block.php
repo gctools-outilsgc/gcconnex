@@ -139,10 +139,10 @@ HTML;
 
 }else{
 
-    $body = "<div class=\"media-body\">$body</div>";
+    $body = "<div class=\"wet-image-block-body\">$body</div>";
 
 if ($image) {
-	$image = "<div class=\"media-left\">$image</div>";
+	$image = "<div class=\"\">$image</div>";
     // $echo = elgg_get_context();
 }
 
@@ -153,13 +153,10 @@ if ($alt_image) {
 
 echo <<<HTML
 
-<article class="media" $id>
+<article class="d-flex" $id>
 
 	$image$alt_image$body$echo
     <div class="clearfix"></div>
-    <div class=" elgg-body edit-comment">
-
-    </div>
 </article>
 <div class="clearfix"></div>
 HTML;

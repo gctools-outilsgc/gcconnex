@@ -572,6 +572,7 @@ max-height: 500px;
   background-color: #f8f9fa !important;
   border-radius: 8px;
   padding: 8px;
+  margin-top: 5px;
 }
 /*
 .elgg-river-comments > li {
@@ -637,6 +638,11 @@ max-height: 500px;
 
 .d-flex{
     display: flex!important;
+}
+
+.wet-image-block-body{
+    margin-left: 8px;
+    width: 100%;
 }
 .justify-content-center {
     justify-content: center!important;
