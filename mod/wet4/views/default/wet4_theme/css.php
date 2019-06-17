@@ -4603,10 +4603,13 @@ a.list-group-item-danger {
 .panel {
   margin-bottom: 10px;
   background-color: #fff;
-  border: 1px solid transparent;
-  /*border-radius: 4px;*/
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 4px;
+  /*
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09); }
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+  */
+}
 
   .panel-river{
     padding:6px;
@@ -4616,20 +4619,8 @@ a.list-group-item-danger {
     font-size: 1.2em;
 }
 
-.elgg-river-summary{
-    font-weight:bold;
-    font-style: italic;
-    margin: 2px 0 2px 0;
-    font-size: 1em;
-}
-
-.elgg-river-summary a{
-    font-weight:normal;
-    font-style: normal;
-}
-
 .panel-body {
-      padding: 0px 15px 15px 15px; }
+      padding: 20px; }
   .panel-body:before,
   .panel-body:after {
     content: " ";
