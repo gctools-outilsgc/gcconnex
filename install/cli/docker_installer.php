@@ -117,7 +117,7 @@ echo "Elgg CLI plugin install successful. \n";
 function init_mods( $type ){
 	
 // GCcollab
-$plugins_connex = array(
+	$plugins_connex = array(
 	'garbagecollector',
 	'groups',
 	'logrotate',
@@ -360,7 +360,10 @@ $plugins_connex = array(
 	'pleio',	// move to enabled to test with openid
 	);
 	
-
+	if (getenv('LOADTEST')){
+		$plugins_collab[]='gcloadtest';
+		$plugins_connex[]='gcloadtest';
+	}
 	// deactivate plugins that are not active in prod, order doesn't matter.
 	// This happens first to ensure we don't run into conflicts when activating mods in the next step
 	$plugins_off = ${"plugins_off_$type"};
