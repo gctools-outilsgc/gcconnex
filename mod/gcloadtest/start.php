@@ -21,7 +21,10 @@ function generate_content_page_handler($params) {
         case 'wire':
             createWire($params[1]);
             break;
-        // the rest go here
+        case 'groups':
+        case 'group':
+            createGroups($params[1]);
+            break;
         default:
             # nothing
             echo "usage:  .../gen-content/[blogs, bookmarks, discussions, groups, members, wire, files, polls, events, missions]/N  to create N random instances of that content type ";
