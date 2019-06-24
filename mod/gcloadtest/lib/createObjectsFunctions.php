@@ -1,7 +1,5 @@
 <?php
 
-
-
 function createBlogs($N) {
     if ($N < 1){
         echo "usage: .../gen-content/blogs/N  where N > 0  ... your N wasn't > 0 was it";
@@ -147,4 +145,41 @@ function createGroups($N) {
     $river = "INSERT INTO {$dbprefix}river values {$rivervals}";
     //echo $river . "<br />\n<hr />";
     echo insert_data($river). "<br />\n<hr />";
+}
+
+
+function createUsers($N) {
+    if ($N < 1){
+        echo "usage: .../gen-content/users/N  where N > 0  ... your N wasn't > 0 was it";
+        return 1;
+    }
+    $dbprefix = elgg_get_config('dbprefix');
+    // create N filler users quickly
+
+    // entities
+    $vals = array();
+    $t_base = 150000000;
+
+    $start_guid = get_data("select max(guid)+1 as start from {$dbprefix}entities")[0]->start;  // get the max id to start from
+    for ($i=$start_guid; $i < $start_guid + $N; $i++) {
+        $timestamp = $t_base + $i;
+        $vals[] = "('{$i}','user',0,0,1,0,2,$timestamp,$timestamp,$timestamp,'yes',NULL)";
+    }
+    $entityvals = implode(',', $vals);
+    $entities = "INSERT INTO {$dbprefix}entities values {$entityvals}";
+    //echo $entities . "<br />\n<hr />";
+    echo insert_data($entities). "<br />\n<hr />";
+
+    // user
+    $vals = array();
+    for ($i=$start_guid; $i < $start_guid + $N; $i++) {
+        $timestamp = $t_base + $i;
+        $vals[] = "('{$i}','Super user ($i)','Superuser($i)','','','','Superuser($i)@test.gccollab.ca','en','no','no',$timestamp,$timestamp,$timestamp,$timestamp)";
+    }
+    $objectvals = implode(',', $vals);
+    $objects = "INSERT INTO {$dbprefix}users_entity values {$objectvals}";
+    //echo $objects . "<br />\n<hr />";
+    echo insert_data($objects). "<br />\n<hr />";
+
+    // other stuff
 }

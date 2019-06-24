@@ -25,6 +25,11 @@ function generate_content_page_handler($params) {
         case 'group':
             createGroups($params[1]);
             break;
+        case 'users':
+        case 'members':
+            createUsers($params[1]);
+            break;
+        // the rest go here
         default:
             # nothing
             echo "usage:  .../gen-content/[blogs, bookmarks, discussions, groups, members, wire, files, polls, events, missions]/N  to create N random instances of that content type ";
