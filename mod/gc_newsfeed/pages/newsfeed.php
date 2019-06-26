@@ -67,27 +67,4 @@ if (elgg_is_logged_in() && $ciw_showdashboard=="yes"){
     $content  .= elgg_view_layout($ciw_layout, array('area1' => $leftcolumn_widgets_view,'area2' => $middlecolumn_widgets_view,'area3' => $rightcolumn_widgets_view, 'layoutmode' => 'index_mode') );
 }
 
-//EW - Department verification
-if(elgg_is_logged_in() && (strpos(elgg_get_site_entity()->name, 'collab') == false)){
-
-    //load int value
-    $timestamp = is_array(elgg_get_logged_in_user_entity()->last_department_verify) ? elgg_get_logged_in_user_entity()->last_department_verify[0] : elgg_get_logged_in_user_entity()->last_department_verify;
-
-    if((time() - $timestamp) > 15552000)
-    {
-        //create hidden link
-        $content .= elgg_view('output/url', array(
-            'href' => 'ajax/view/verify_department/verify_department',
-            'text' => 'verify',
-            'id' => 'verify',
-            'aria-hidden' => 'true',
-            'class' => 'elgg-lightbox hidden',
-        ));
-
-        //after page is loaded click link
-        $content .= '<script> window.onload = function () { document.getElementById("verify").click() } </script>';
-    }
-}
-
-
 echo elgg_view_page( elgg_echo('newsfeed:menu'), $content . $onboard);
