@@ -26,7 +26,13 @@ if ($headers) {
 	echo '<h2>' . elgg_echo("menu:$name:header:$section") . '</h2>';
 }
 
-echo "<ul class=\"$class\" id=\"$id\" role=\"$get_role\" >";
+if($id) {
+	$ids = "id=\"$id\" ";
+}
+if($get_role){
+	$roles = "role=\"$get_role\" ";
+}
+echo "<ul class=\"$class\" $ids $roles >";
 
 if (is_array($items)) {
 	foreach ($items as $menu_item) {
