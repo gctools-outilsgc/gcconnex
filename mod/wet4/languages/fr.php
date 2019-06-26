@@ -3,6 +3,7 @@
 
 return array(
 
+	'a11y:river:ingroup' => '<span class="wb-invisible">Dans la groupe</span> %s',
 	'thewire:head:title' => 'Message sur le fil',
 	'group_operator:find:user:error' => "Impossible de trouver l'utilisateur",
 

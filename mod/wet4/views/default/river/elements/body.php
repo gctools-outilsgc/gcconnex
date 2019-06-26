@@ -94,12 +94,11 @@ if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_g
 	$group_link = elgg_view('output/url', array(
 		'href' => $container->getURL(),
 		'text' => $name,
-		'is_trusted' => true,
-		'tabindex' => '-1'
+		'is_trusted' => true
 	));
     //Nick - Changed "in the group" to just the group link in order to show this is group content. May need some looking at
     $group_image = elgg_view_entity_icon($container, 'medium');
-    $in_the_group = elgg_echo('river:ingroup', array($group_link));
+    $in_the_group = elgg_echo('a11y:river:ingroup', array($group_link));
    // $group_testing = elgg_view_image_block($group_image, $group_link);
 
 
@@ -117,9 +116,10 @@ if($group_string /*|| $commentordiscuss*/ && !elgg_in_context('group_activity_ta
     echo <<<RIVER
 <div class="">
 
-
-<div aria-hidden="true" class="elgg-river-summary mrgn-bttm-sm river-group-link"> $group_string</div>
-<h3 class="elgg-river-summary"> $summary <span class="wb-invisible">$in_the_group</span></h3>
+<h3 class="elgg-river-summary"> 
+	<div class="elgg-river-summary mrgn-bttm-sm river-group-link">$in_the_group</div>
+	$summary
+</h3>
 <div class="elgg-river-timestamp mrgn-bttm-md timeStamp "><i>$timestamp</i><div class="pull-right">$menu</div></div>
 
 </div>

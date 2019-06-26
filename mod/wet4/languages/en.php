@@ -3,6 +3,7 @@ $site_url = elgg_get_site_url();
 
 return array(
 
+		'a11y:river:ingroup' => '<span class="wb-invisible">In the group</span> %s',
     'thewire:head:title' => 'Wire post',
     'group_operator:find:user:error' => "Could not find user",
 
