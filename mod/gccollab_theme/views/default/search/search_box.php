@@ -14,8 +14,7 @@ $placeholder = elgg_echo('wet:searchgctools');
     <h2> <?php echo elgg_echo('wet:searchHead'); ?> </h2>
     <form action="<?php echo elgg_get_site_url(); ?>search" name="cse-search-box" class="form-inline">
         <div class='form-group'>
-            <label for="wb-srch-q" class="wb-inv"> <?php echo elgg_echo('wet:searchweb'); ?> </label>
-            <input type="text" class="wb-srch-q form-control" name="q" value="" size="21" maxlength="150" placeholder="<?php echo $placeholder ?>" id="wb-srch-q">
+            <input aria-label=" <?php echo elgg_echo('wet:searchweb'); ?>" type="text" class="wb-srch-q form-control" name="q" value="" size="21" maxlength="150" placeholder="<?php echo $placeholder ?>" id="wb-srch-q">
             
             <input type="hidden" id="a" name="a"  value="s">
             <input type="hidden" id="s" name="s"  value="3">

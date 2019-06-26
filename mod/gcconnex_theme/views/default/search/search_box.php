@@ -50,8 +50,7 @@ $selected_language = ($gc_language === '' || $gc_language === 'en' || !$gc_langu
 	<h2> <?php echo elgg_echo('wet:searchHead'); ?> </h2>
 	<div name="cse-search-box" class='form-inline'>
 		<div class='form-group'>
-			<label for="wb-srch-q" class="wb-inv"> <?php echo elgg_echo('wet:searchweb'); ?> </label>
-			<input class="wb-srch-q form-control" name="q" onkeypress="handleKeyPress(event)" value="" size="21" maxlength="150" placeholder="<?php echo $placeholder ?>" id="wb-srch-q">
+			<input aria-label="<?php echo elgg_echo('wet:searchweb'); ?>" class="wb-srch-q form-control" name="q" onkeypress="handleKeyPress(event)" value="" size="21" maxlength="150" placeholder="<?php echo $placeholder ?>" id="wb-srch-q">
 			<input type="hidden" id="a" name="a" value="s">
 			<input type="hidden" id="s" name="s" value="3">
 			<input type="hidden" id="chk4" name="chk4" value="on">

@@ -60,7 +60,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
 						</a>
 					</li>
 				</ul>
-				<div id="mb-pnl"></div>
+				<div id="mb-pnl" tabindex="-1"></div>
 			</section>
 			<?php echo elgg_view('search/search_box', $vars); ?>
 		</div>

@@ -29,8 +29,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
         <div class="container">
             <div class="row">
                 <div class="brand col-xs-8 col-sm-5 col-md-4 col-lg-4">
-                   <object type="image/svg+xml" tabindex="-1" data="<?php echo $site_url ?>/mod/wet4_collab/graphics/sig-blk-<?php echo $graphic_lang; ?>.svg"></object>
-                    <span class="wb-inv"><?php echo elgg_echo('wet:gc');?></span>
+                   <object type="image/svg+xml" tabindex="-1" aria-label="<?php echo elgg_echo('wet:gc');?>" data="<?php echo $site_url ?>/mod/wet4_collab/graphics/sig-blk-<?php echo $graphic_lang; ?>.svg"></object>
                 </div>
                 <section class="hidden-xs col-sm-7 col-md-6 col-lg-6">
                     <ul id="" class="pull-left list-unstyled mrgn-bttm-0" style="font-weight:bold;">
@@ -64,7 +63,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                             </a>
                         </div>
                     </div>
-                    <div id="mb-pnl"></div>
+                    <div id="mb-pnl" tabindex="-1"></div>
                 </section>
                 <div class="col-sm-3 col-md-2 col-lg-2">
                     <?php echo elgg_view('page/elements/chng-lang', $vars); ?>

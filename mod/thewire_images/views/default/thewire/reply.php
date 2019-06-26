@@ -16,11 +16,17 @@ echo "<strong>" . elgg_echo('thewire:replying', $poster_details) . "</strong>";
 
 $attachment = thewire_image_get_attachments($post->getGUID());
 if ($attachment) {
+	if($attachment->original_filename) {
+		$fileAlt = $attachment->original_filename;
+	} else {
+		$fileAlt = "";
+	}
 	echo "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
 	echo '<a class="elgg-lightbox" href="' . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . '">';
+	echo '<span class="wb-invisible">'.elgg_echo('thewire_image:view:attached').'</span>';
 	echo elgg_view('output/img', array(
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
-		'alt' => $attachment->original_filename,
+		'alt' => $fileAlt,
 		'class' => 'img-thumbnail',
 		'style' => "max-height: 120px; width: auto;"
 	));

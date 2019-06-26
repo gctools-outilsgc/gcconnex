@@ -98,8 +98,7 @@ if (_elgg_services()->session->get('language') == 'en') {
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
 				<a href="https://www.canada.ca/<?php echo $graphic_lang; ?>.html">
-					<object type="image/svg+xml" tabindex="-1" data="<?php echo $site_url; ?>/mod/gcconnex_theme/graphics/sig-blk-<?php echo $graphic_lang; ?>.svg"></object>
-					<span class="wb-inv"><?php echo elgg_echo('wet:gc');?></span>
+					<object type="image/svg+xml" aria-label="<?php echo elgg_echo('wet:gc');?>" tabindex="-1" data="<?php echo $site_url; ?>/mod/gcconnex_theme/graphics/sig-blk-<?php echo $graphic_lang; ?>.svg"></object>
 				</a>
 			</div>
 			<div class="col-xs-6 visible-sm visible-xs tofpg">

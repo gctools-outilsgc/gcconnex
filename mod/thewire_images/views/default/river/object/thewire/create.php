@@ -34,11 +34,17 @@ if (!empty($reshare)) {
 
 $attachment = thewire_image_get_attachments($object->getGUID());
 if ($attachment) {
+	if($attachment->original_filename) {
+		$fileAlt = $attachment->original_filename;
+	} else {
+		$fileAlt = "";
+	}
 	$excerpt .= "<div class='mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
 	$excerpt .= '<a class="elgg-lightbox" href="' . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . '">';
+	$excerpt .= '<span class="wb-invisible">'.elgg_echo('thewire_image:view:attached').'</span>';
 	$excerpt .= elgg_view('output/img', array(
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
-		'alt' => $attachment->original_filename,
+		'alt' => $fileAlt,
 		'class' => 'img-thumbnail',
 		'style' => "max-height: 120px; width: auto;"
 	));

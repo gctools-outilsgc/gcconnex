@@ -121,7 +121,7 @@ if ($show_menu) {
 						'aria-hidden' => 'true',
             'class' => 'img-responsive',
             'title' => elgg_echo('gcProfilePictureBadges:ambassador'),
-						'alt' => elgg_echo('gcProfilePictureBadges:ambassador'),
+						'alt' => "",
         ));
         $badge .= '</div>';
 
@@ -138,7 +138,7 @@ if ($show_menu) {
 						'aria-hidden' => 'true',
             'class' => 'img-responsive',
             'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$user->init_badge),
-						'alt' => elgg_echo('gcProfilePictureBadges:badge:title:'.$user->init_badge),
+						'alt' => "",
         ));
 
         $badge .= '</div>';
