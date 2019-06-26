@@ -8,6 +8,7 @@ $en = array(
 	'thewire_image:invalid_image' => 'Invalid image.',
 	'thewire_image:could_not_save_image' => 'Could not save image on the wire.',
 	'thewire_image:invalid_section' => 'Invalid section',
+	'thewire_image:view:attached' => 'View attached image',
 
 	'thewire_image:form:default' => 'Attach image',
 	'thewire_image:form:dragdrop' => 'Drag & drop an image here to upload.',

@@ -8,7 +8,7 @@ $fr = array(
 	'thewire_image:invalid_image' => 'Image invalide.',
 	'thewire_image:could_not_save_image' => 'Impossible d\'enregistrer l\'image sur le fil.',
 	'thewire_image:invalid_section' => 'Section invalide',
-
+	'thewire_image:view:attached' => "voir l'image ci-jointe",
 
 	'thewire_image:form:default' => "attacher l'image",
 
