@@ -110,8 +110,6 @@ function wet4_theme_init()
     elgg_register_ajax_view("ajax/photo");
 		//edit colleague circle
     elgg_register_ajax_view("friend_circle/edit");
-		//verfiy department pop up
-    elgg_register_ajax_view("verify_department/verify_department");
 
     //file tools
     elgg_register_ajax_view("file_tools/move");
@@ -125,8 +123,6 @@ function wet4_theme_init()
 	elgg_register_ajax_view("ajax/photo");
 	//edit colleague circle
 	elgg_register_ajax_view("friend_circle/edit");
-	//verfiy department pop up
-	elgg_register_ajax_view("verify_department/verify_department");
 
 	//file tools
 	elgg_register_ajax_view("file_tools/move");
@@ -664,7 +660,7 @@ function wet4_theme_setup_head($hook, $type, $data)
 {
 	$data['metas']['viewport'] = array(
 		'name' => 'viewport',
-		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
+		'content' => '',
 	);
 
     if( file_exists('mod/wet4_theme/graphics/homescreen.png') ){

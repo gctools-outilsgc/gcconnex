@@ -146,7 +146,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 <meta charset="utf-8" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
-
+<meta content="width=device-width, initial-scale=1, user-scalable=1" name="viewport" />
 <!-- Meta data -->
 <?php
 
