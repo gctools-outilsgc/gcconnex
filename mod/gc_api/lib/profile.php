@@ -10,6 +10,16 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+	"get.profile.by.gcid",
+	"get_api_profile_gcid",
+	array("gcid" => array('type' => 'string')),
+	'provide user GUID number and all profile information is returned',
+	'GET',
+	false,
+	false
+);
+
+elgg_ws_expose_function(
 	"profile.update",
 	"profileUpdate",
 	array("id" => array('type' => 'string'), "data" => array('type'=>'string')),
@@ -28,7 +38,19 @@ elgg_ws_expose_function(
 	true,
 	false
 );
+function get_api_profile_gcid($gcid){
+	if (!elgg_is_active_plugin('pleio')) {
+		return "pleio mod is not active and there is no openid function";
+	}
+	$dbprefix = elgg_get_config("dbprefix");
 
+    $result = get_data_row("SELECT * FROM {$dbprefix}users_entity WHERE pleio_guid = $gcid");
+	
+	if ($result)
+		return get_api_profile($result->guid);
+	else
+		return "no user found";
+}
 function get_api_profile($id)
 {
 	$user_entity = getUserFromID($id);
@@ -36,7 +58,13 @@ function get_api_profile($id)
 		return "User was not found. Please try a different GUID, username, or email address";
 	}
 
+	$dbprefix = elgg_get_config("dbprefix");
+
+    $result = get_data_row("SELECT * FROM {$dbprefix}users_entity WHERE guid = $user_entity->guid");
+
 	$user['id'] = $user_entity->guid;
+
+	$user['pleioID'] = $result->pleio_guid;
 
 	$user['username'] = $user_entity->username;
 
