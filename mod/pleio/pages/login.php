@@ -110,11 +110,6 @@ if ($auth == 'oidc') {
             }
         }
         
-        foreach($oidc->userInfo as $k => $v){
-            $test .= $k . ' - ' . $v . ' : ';
-        }
-
-        system_message($test . ' ====> ' . $oidc->userInfo->address);
         system_message(elgg_echo('wet:loginok', array($user->name)));
 
         /*
