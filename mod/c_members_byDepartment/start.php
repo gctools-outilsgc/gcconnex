@@ -23,7 +23,7 @@ function members_page_handler_2($page) {
 	$base2 = elgg_get_plugins_path() . 'c_members_byDepartment/pages/members';
 
 	if (!isset($page[0])) {
-		$page[0] = 'newest';
+		$page[0] = 'popular';
 	}
 
 	$vars = array();
