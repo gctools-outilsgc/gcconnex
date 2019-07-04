@@ -37,7 +37,7 @@ $site_url = elgg_get_site_url();
     <?php //Create an empty div for all of the group tools that we can append content to.?>
 
 
-    <div id="about" class="tab-pane fade-in active">
+    <div id="about" class="tab-pane fade-in">
 
         <?php
     echo elgg_view('groups/profile/fields', $vars);

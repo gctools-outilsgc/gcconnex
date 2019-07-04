@@ -19,6 +19,7 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 		 'reverse_order_by' => true,
 		 'distinct' => false,
 		 'url_fragment' => 'group-replies',
+		 'item_class' => 'panel',
 	 ));
 
 	 // check how many replies topic has
@@ -31,13 +32,12 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 	 ));
 
 
-	 echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
+	 echo '<div id="group-replies" class="elgg-comments clearfix">';
 
 	 // if topic has replies show replies header
 	 if($num_replies != 0)
-		 echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('group:replies') . '</h2>';
+		 echo '<h2 class="panel-title mrgn-bttm-md">' . elgg_echo('group:replies') . '</h2>';
 	 
-
 	 echo $replies;
 
 	 echo '</div>';

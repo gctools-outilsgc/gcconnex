@@ -39,7 +39,7 @@
 	if (isset($vars['area1'])) echo $vars['area1'];
 
 	if (isset($vars['content'])) {
-
+/* REMOVE ME
         if (elgg_is_logged_in() && $context !== 'group_profile') {
 
             $buttons = elgg_view_menu('title', array(
@@ -52,9 +52,10 @@
                'class' => 'list-inline',
             ));
 
-            echo "<div class='title-menu-container clearfix'>{$buttons} {$buttons2}</div>";
+            //echo "<div class='title-menu-container clearfix'>ONE_SIDEBAR {$buttons} {$buttons2}</div>";
 
         }
+        */
         echo $vars['content'];
 
 	}

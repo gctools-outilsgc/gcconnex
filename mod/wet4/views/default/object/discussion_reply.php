@@ -17,7 +17,7 @@ if (!$reply) {
 
 $poster = $reply->getOwnerEntity();
 
-$poster_icon = elgg_view_entity_icon($poster, 'medium');
+$poster_icon = elgg_view_entity_icon($poster, 'small');
 $poster_link = elgg_view('output/url', array(
 	'href' => $poster->getURL(),
 	'text' => $poster->name,
@@ -67,4 +67,4 @@ $params = array(
 $params = $params + $vars;
 $list_body = elgg_view('object/elements/discussionreply_summary', $params);
 
-echo elgg_view_image_block($poster_icon, $list_body);
+echo '<div class="panel-body">' . elgg_view_image_block($poster_icon, $list_body) . '</div>';

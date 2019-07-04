@@ -283,6 +283,10 @@ function groups_page_handler($page) {
 		case 'stats':
 			groups_handle_stats_page($page[1]);
 			break;
+		case 'about':
+			elgg_set_page_owner_guid($page[1]);
+			echo elgg_view('resources/group/about');
+			break;	
 		default:
 			return false;
 	}
