@@ -152,9 +152,7 @@ textarea.error:focus{
   /****************************************/
 
 .list-break{
-    margin-top: 5px !important;
-    padding-bottom: 5px !important;
-    border-bottom: 1px solid #ddd !important;
+
 }
 
 .list-break:last-child{
@@ -638,6 +636,26 @@ max-height: 500px;
 
 .d-flex{
     display: flex!important;
+}
+
+.title-button-combo {
+    align-items: center!important;
+    padding-bottom: 2px;
+    margin-bottom: 12px;
+}
+.title-button-combo h2 {
+    margin-top: 16px;
+}
+
+.title-action-button {
+    margin-left: auto!important;
+    margin-top: 12px;
+}
+.title-action-button ul {
+    padding-right: 0 !important;
+}
+.title-action-button ul li {
+    padding-right: 0 !important;
 }
 
 .wet-image-block-body{

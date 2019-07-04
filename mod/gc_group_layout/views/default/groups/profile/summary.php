@@ -33,11 +33,12 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
     $c_photo_top_margin = ' groups-profile';
 }
 ?>
-<div class="panel panel-custom clearfix elgg-image-block col-xs-12 <?php echo $c_photo_top_margin; ?>">
-   <div class="group-summary-holder clearfix">
-	   <div class="col-xs-9">
+<div class="row group-padding-helper">
+<div class="panel panel-custom clearfix elgg-image-block <?php echo $c_photo_top_margin; ?>">
+   <div class="group-summary-holder clearfix group-panel-body">
+	   <div class="col-xs-9 d-flex">
 
-		   <div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
+		   <div class="group-profile-image-size">
 			<?php
 				// we don't force icons to be square so don't set width/height
 				echo elgg_view_entity_icon($group, 'medium', array(
@@ -52,7 +53,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 
 
-		<div class="groups-info col-xs-10 col-md-10 ">
+		<div class="groups-info">
             <h1 class="group-title">
                 <?php
 
@@ -369,5 +370,5 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 
     </div>
-
+</div>
 <?php } ?>

@@ -59,7 +59,7 @@ if ($metadata) {
 if($entity->getType() == 'group'){
    echo '';
 }else{
-  echo "<div class=\" mrgn-bttm-md timeStamp clearfix\">$subtitle</div>";   
+  echo "<div class=\" mrgn-bttm-sm timeStamp clearfix\">$subtitle</div>";   
 }
 
 

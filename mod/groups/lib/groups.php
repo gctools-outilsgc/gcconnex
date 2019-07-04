@@ -495,6 +495,25 @@ function groups_handle_requests_page($guid) {
 }
 
 /**
+ * Add an about page for widgets and such
+ *
+ * @param int $guid Group entity GUID
+ */
+function groups_handle_about_page($guid) {
+
+	$content = 'Im AN ABOUT PAGE!';
+	$title = 'ABOOOT THIS GROUP';
+
+	$params = array(
+		'content' => $content,
+		'title' => $title,
+	);
+	$body = elgg_view_layout('content', $params);
+
+	echo elgg_view_page($title, $body);
+}
+
+/**
  * Registers the buttons for title area of the group profile page
  *
  * @param ElggGroup $group

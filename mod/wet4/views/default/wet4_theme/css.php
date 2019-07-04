@@ -3463,7 +3463,7 @@ tbody.collapse.in {
       .nav-tabs > li > a:hover {
           background-color:#f9f9f9;
           text-decoration: none;
-          padding-bottom: 0;
+          padding-bottom: 7px;
           margin-bottom: 0;
           border-bottom: 3px solid #055959;
          }
@@ -4601,9 +4601,9 @@ a.list-group-item-danger {
   line-height: 1.3; }
 
 .panel {
-  margin-bottom: 10px;
+  margin-bottom: 10px !important;
   background-color: #fff;
-  border: 1px solid rgba(0,0,0,.125);
+  border: 1px solid rgba(0,0,0,.125) !important;
   border-radius: 4px;
   /*
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);

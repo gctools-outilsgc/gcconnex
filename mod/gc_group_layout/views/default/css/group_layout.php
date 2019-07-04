@@ -8,8 +8,7 @@
  /* <style> /**/
 
  .group-summary-holder{
-
-     padding:6px 0;
+    padding-bottom: 10px;
  }
 
  .group-summary-holder h1{
@@ -19,21 +18,26 @@
 
  .group-profile-image-size img{
      width: 180% !important;
-
+     border-radius: 6px !important;
  }
 
- .au_subgroups_group_icon-medium-wet4{
-        max-width:65%;
-        margin: 0 auto;
-     display: block !important;
-
- }
+.group-profile-image-size {
+    margin: -55px 10px 0px 0px;
+}
 
  .group-title {
    border:none !important;
    font-size: 26px;
  }
 
+.group-panel-body{
+    padding: 0px 20px 20px 20px;
+}
+
+.group-padding-helper{
+    padding-left: 5px;
+    padding-right: 5px;
+}
  /*** Group Cover Photo ***/
 
  .groups-profile{
@@ -42,7 +46,7 @@
 
  .group-cover-photo{
      width:100%;
-     height: 185px;
+     height: 145px;
      position: relative;
      background-color:#047177;
      overflow:hidden;
@@ -52,7 +56,13 @@
      width:100%;
 
  }
+.wet-group-tabs{
+    margin-bottom: 15px;
+}
 
+.wet-group-tabs li {
+    margin-right: 5px;
+}
 
  @media (max-width: 767px) {
    .group-cover-photo{
@@ -76,41 +86,3 @@
       }
 
  /*** end of Group Cover Photo ***/
-
-     
-     
-/** Quick Discussion **/
-     
-     .quick-discuss panel-body, panel-footer{
-    padding:1px;
-
-}
-.start-discussion-form{
-    /*padding-right: 20px;*/
-
-}
-
-.quick-discuss-action-btn{
-  
-
-}
-.toggle-quick-discuss{
-    cursor:pointer;
-    background-color: #f5f5f5;
-    border-top: solid 1px #ddd;
-
-}
-#quick-discuss-panel .quick-start-collapse, #quick-discuss-panel  .quick-start-hide, #quick-discuss-panel  .alert-info{
-    display:none;
-
-}
-.quick-start-discussion{
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 5px;
-
-}
-
-     .quick-discuss-title{
-         font-weight: bold;
-         font-size: 1.3em;
-     }
