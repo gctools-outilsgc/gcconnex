@@ -140,7 +140,7 @@ function members_page_handler($page) {
 	$base = elgg_get_plugins_path() . 'members/pages/members';
 
 	if (empty($page[0])) {
-		$page[0] = 'newest';
+		$page[0] = 'popular';
 	}
 
 	$vars = array();
