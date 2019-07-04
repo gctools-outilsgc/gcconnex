@@ -27,7 +27,7 @@ if (!$auth || !$auth_client || !$auth_secret || !$auth_url) {
 
 if ($auth == 'oidc') {
     $oidc = new Jumbojett\OpenIDConnectClient($auth_url . 'openid', $auth_client, $auth_secret);
-    $oidc->addScope(array('openid', 'profile', 'email', 'address'));
+    $oidc->addScope(array('openid', 'profile', 'email', 'phone', 'address'));
 
     try {
         $oidc->authenticate();
@@ -41,6 +41,7 @@ if ($auth == 'oidc') {
     $email = $oidc->requestUserInfo('email');
     $username = $oidc->requestUserInfo('nickname');
     $address = $oidc->requestUserInfo('address');
+    $phone = $oidc->requestUserInfo('phone_number');
 
     $user = get_user_by_pleio_guid_or_email($userid, $email);
     $allow_registration = elgg_get_config("allow_registration");
@@ -108,6 +109,10 @@ if ($auth == 'oidc') {
             if($user->location !== $full_address) {
                 $user->location = $full_address;
             }
+        }
+
+        if ($user->mobile !== $phone) {
+            $user->mobile = $phone;
         }
         
         system_message(elgg_echo('wet:loginok', array($user->name)));
