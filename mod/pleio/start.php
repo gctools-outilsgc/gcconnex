@@ -44,7 +44,7 @@ function pleio_init() {
     elgg_register_plugin_hook_handler("public_pages", "walled_garden", "pleio_public_pages_handler");
     elgg_register_plugin_hook_handler("action", "admin/site/update_basic", "pleio_admin_update_basic_handler");
 
-    // elgg_register_plugin_hook_handler("entity:icon:url", "user", "pleio_user_icon_url_handler");
+    elgg_register_plugin_hook_handler("entity:icon:url", "user", "pleio_user_icon_url_handler");
     // elgg_register_admin_menu_item("administer", "access_requests", "users");
     // elgg_register_admin_menu_item("administer", "import", "users");
     
@@ -186,22 +186,23 @@ function pleio_user_icon_url_handler($hook, $type, $value, $params) {
         $size = "medium";
     }
 
-    $dbprefix = elgg_get_config("dbprefix");
-    $guid = (int) $entity->guid;
+    if($entity->avatar){
 
-    $result = get_data_row("SELECT pleio_guid FROM {$dbprefix}users_entity WHERE guid = $guid");
-    if ($result->pleio_guid) {
-        $pleio_guid = $result->pleio_guid;
+        $image_sizes = array(
+            "large" => "/200x200/forcesize/",
+            "medium" => "/100x100/forcesize/",
+            "small" => "/40x40/forcesize/",
+            "tiny" => "/25x25/forcesize/",
+            "master" => "/",
+            "topbar" => "/16x16/forcesize/"
+        );
+
+        $new_size = $image_sizes[$size];
+
+        $url = $entity->avatar.$new_size;
+
     } else {
         return $value;
-    }
-
-    $auth_url = elgg_get_plugin_setting('auth_url', 'pleio');
-
-    $url = $auth_url . "mod/profile/icondirect.php?guid={$pleio_guid}&size={$size}";
-
-    if ($entity->last_login) {
-        $url .= "&lastcache={$entity->last_login}";
     }
 
     return $url;

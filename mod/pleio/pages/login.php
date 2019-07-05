@@ -43,6 +43,8 @@ if ($auth == 'oidc') {
     $address = $oidc->requestUserInfo('address');
     $phone = $oidc->requestUserInfo('phone_number');
 
+    $picture = $oidc->requestUserInfo('picture');
+
     $user = get_user_by_pleio_guid_or_email($userid, $email);
     $allow_registration = elgg_get_config("allow_registration");
 
@@ -113,6 +115,10 @@ if ($auth == 'oidc') {
 
         if ($user->mobile !== $phone) {
             $user->mobile = $phone;
+        }
+
+        if($picture && $user->avatar !== $picture){
+            $user->avatar = $picture;
         }
         
         system_message(elgg_echo('wet:loginok', array($user->name)));
