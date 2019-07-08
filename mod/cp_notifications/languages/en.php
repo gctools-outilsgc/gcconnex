@@ -534,7 +534,7 @@ $english = array(
     
     'cp_notify:siteForGroup'=>'Select All',
     'cp_notify:unsubBell'=>'You are subscribed to this content. Click to unsubscribe.',
-    'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and recieve notifications about this content.',
+    'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and receive notifications about this content.',
     'cp_notify:comingSoon'=>'Coming soon!',
    
 

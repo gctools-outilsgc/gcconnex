@@ -21,7 +21,7 @@ return array(
 
     /**The Wire Popup**/
     'onboard:wire1'		=> "Le fil est le microblogue de GCcollab. Tout comme Twitter, vous pouvez l'utilisez pour échanger de l'information en publiant des messages de moins de 140 caractères. Identifiez des collègue à l’aide de @mentions, utilisez des <span style='color:#46246A; text-decoration:underline;'>#mots-clics</span> pour les mots-clés, et n'oubliez pas de partager, d'aimer et de répondre aux messages.",
-    'onboard:wire4' => "Ne soyez pas timide, essayez-le! Publiez un message sur le Fil au sujet de vos dernières nouvelles, faites pars des événements et des projets intéressants à venir, ou posez simplement cette question sur laquelle vous songez...",
+    'onboard:wire4' => "Ne soyez pas timide, essayez-le! Publiez un message sur le Fil au sujet de vos dernières nouvelles, faites part des événements et des projets intéressants à venir, ou posez simplement cette question sur laquelle vous songez...",
     'onboard:wire_success' => "Génial! Nous avons hâte de voir ce que vous partagerez la prochaine fois!",
 
     /*Group*/
