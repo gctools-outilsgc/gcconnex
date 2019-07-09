@@ -220,13 +220,12 @@ if( $description_json->en && $description_json->fr ){
 					"item_class" => "mrgn-rght-sm"
 				));
 
-    }
-
+		}
+	$download_url = '/file/download/' .$file->guid;
+	$download_link = elgg_format_element('a', ['href' => $download_url], 'Download');
 	$params = array(
 		"entity" => $file,
-		"metadata" => $entity_menu,
-		"subtitle" => $subtitle . $author_text . ' ' . $date,
-		"tags" => $tags,
+		"subtitle" => $subtitle . $author_text . ' - ' . $date . ' - ' . $download_link,
 		"content" => $excerpt
 	);
 	$params = $params + $vars;
@@ -240,6 +239,5 @@ if( $description_json->en && $description_json->fr ){
 			
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
 	}*/
-
 	echo elgg_view_image_block($file_icon, $list_body, array("class" => "file-tools-file", "image_alt" => $file_icon_alt, 'subtype' => $subtype, 'guid' => $guid));
 }

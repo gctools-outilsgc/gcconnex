@@ -5,19 +5,19 @@ define(function(require) {
 	return {
 		//toolbar: [['Bold', 'Italic', 'Underline', 'RemoveFormat'], ['Strike', 'NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
 		toolbarGroups: [
-		    //{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+		    { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
 		    //{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
 		    { name: 'links' },
 		    { name: 'insert' },
 		    //{ name: 'forms' },
 		    { name: 'tools' },
-		    { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
+		    // { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
 		    //{ name: 'others' },
 		    '/',
 		    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
 		    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		    { name: 'styles' },
-		    { name: 'colors' },
+		    // { name: 'styles' },
+		    // { name: 'colors' },
 		    //{ name: 'about' }
 		    ],
 		removeButtons: 'Subscript,Superscript,Font,Iframe', // To have Underline back
@@ -28,7 +28,8 @@ define(function(require) {
 		defaultLanguage: 'en',
 		language: elgg.get_language(),
 		skin: 'moono',
-		uiColor: '#EEEEEE',
+		uiColor: '#FFFFFF',
+		fontDefaultLabel: 'Arial',
 		contentsCss: elgg.get_simplecache_url('css', 'elgg/wysiwyg.css'),
 		disableNativeSpellChecker: false,
 		disableNativeTableHandles: false,

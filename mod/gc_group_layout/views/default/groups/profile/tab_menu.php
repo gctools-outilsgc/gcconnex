@@ -26,8 +26,8 @@ if(elgg_get_context() == 'groupSubPage'){
     elgg_register_menu_item('owner_block', array(
     'name' => 'about',
     'href' => $owner->getURL(),
-    'text' => elgg_echo('gprofile:about'),
-    'title' => elgg_echo('gprofile:about'),
+    'text' => elgg_echo('activity'),
+    'title' => elgg_echo('activity'),
     'class' => '',
     'priority' => '0',
     ));
@@ -36,11 +36,10 @@ if(elgg_get_context() == 'groupSubPage'){
 
     elgg_register_menu_item('owner_block', array(
     'name' => 'about',
-    'href' => '#about',
+    'href' => $owner->getURL(),
     'text' => elgg_echo('activity'),
     'title' => elgg_echo('activity'),
     'item_class' => 'active',
-    'data-toggle' => 'tab',
     'class' => '',
     'priority' => '0',
     ));

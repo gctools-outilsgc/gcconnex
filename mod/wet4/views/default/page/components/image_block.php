@@ -79,34 +79,28 @@ HTML;
 
 
 if ($image) {
-	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
+	$image = "<div class=\"mrgn-rght-md\">$image</div>";
 }
 
 if ($alt_image) {
-	$alt_image = '<div class="elgg-image-alt  col-xs-1 mrgn-tp-md">' . $alt_image . '</div>';
+	$alt_image = '<div class="mrgn-rght-md">' . $alt_image . '</div>';
 }
 
     //see if entity is file or folder
 $entity = elgg_extract('subtype', $vars, '');
 $guid = elgg_extract('guid', $vars, '');
 
-
-
-
 //only display move link on files
 if($entity == 'file' && elgg_is_logged_in() && elgg_get_logged_in_user_entity()->canEdit()){
-    $body = '<div class="mrgn-tp-sm col-xs-9">' . $body . '</div>';
+    $body = '<div class="">' . $body . '</div>';
 } else {
-    $body = "<div class=\"mrgn-tp-sm col-xs-9\">$body</div>";
+    $body = "<div class=\"\">$body</div>";
     $move_link = '';
 }
 
-
-
-
 echo <<<HTML
 
-<div class="$class clearfix mrgn-bttm-sm" $id>
+<div class="$class clearfix file-list-object d-flex" $id>
 	$alt_image$image$body
     <div class=" elgg-body clearfix edit-comment">
 
