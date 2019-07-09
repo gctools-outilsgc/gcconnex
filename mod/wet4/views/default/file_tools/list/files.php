@@ -75,12 +75,12 @@ if (empty($files_content)) {
 	}
 }
 // show the listing
-echo "<div id='file_tools_list_files'>";
+echo "<div id='file_tools_list_files' class='panel'>";
 echo "<div id='file_tools_list_files_overlay'></div>";
-echo $folder_content;
+echo '<div class="panel-body">'.$folder_content;
 echo $files_content;
 echo elgg_view("graphics/ajax_loader");
-echo "</div>";
+echo "</div></div>";
 $page_owner = elgg_get_page_owner_entity();
 if ($page_owner->canEdit() || (elgg_instanceof($page_owner, "group") && $page_owner->isMember())) { ?>
 

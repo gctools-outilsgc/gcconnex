@@ -110,14 +110,13 @@ if( $description_json->en && $description_json->fr && get_context() != 'widgets'
 	}
 	echo'</div>';
 }
-
+/*
 	echo elgg_view("object/elements/full", array(
 		"entity" => $folder,
 		"title" => false,
 		"icon" => $icon,
 		"summary" => $summary,
-		"body" => $body,
-	));
+	));*/
     elgg_unregister_menu_item('title2', 'new_folder');
 } else {
 

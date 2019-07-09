@@ -38,6 +38,16 @@
     padding-left: 5px;
     padding-right: 5px;
 }
+
+.group-info-list li {
+    padding: 5px 0;
+}
+
+.group-info-list li .info-title {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
  /*** Group Cover Photo ***/
 
  .groups-profile{
@@ -52,6 +62,13 @@
      overflow:hidden;
  }
 
+ .group-place-holder-cover {
+     width: 100%;
+     height: 100px;
+     position: relative;
+     background-color:#047177;
+     overflow: hidden;
+ }
  .group-cover-photo img{
      width:100%;
 
@@ -65,7 +82,7 @@
 }
 
  @media (max-width: 767px) {
-   .group-cover-photo{
+   .group-cover-photo, .group-place-holder-cover {
        display:none;
 
    }

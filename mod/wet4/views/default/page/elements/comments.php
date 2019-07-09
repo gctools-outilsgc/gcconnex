@@ -66,7 +66,8 @@ $content = elgg_list_entities(array(
 	'limit' => $limit,
 	'preload_owners' => true,
 	'distinct' => false,
-	'url_fragment' => $attr['id'],
+    'url_fragment' => $attr['id'],
+    'item_class' => 'panel',
 ));
 
 if ($show_add_form)

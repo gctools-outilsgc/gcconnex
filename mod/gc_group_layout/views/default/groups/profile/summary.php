@@ -28,7 +28,9 @@ if (!$owner) {
 	throw new InvalidParameterException($msg);
 }
 if($group->cover_photo =='nope' || $group->cover_photo ==''){
-    $c_photo_top_margin = '';
+		$c_photo_top_margin = 'group-no-cover';
+		// TODO Put a generic cover photo here and fix this layout
+		echo '<div class="row group-padding-helper group-place-holder-cover"></div>';
 }else{
     $c_photo_top_margin = ' groups-profile';
 }
@@ -78,7 +80,10 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 		                $group_name = gc_explode_translation($group->name, $lang);
 		            }
-		            echo $group_name;
+		            echo elgg_view('output/url', array(
+									'text' => $group_name,
+									'href' => $group->getURL(),
+								));
                 ?>
             </h1>
             <div class="clearfix">
@@ -86,7 +91,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 				<?php
 
 					if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
-						echo '<b>'.elgg_echo("groups:owner").'</b>';
+						echo '<b>'.elgg_echo("groups:owner").': </b>';
 						echo elgg_view('output/url', array(
 							'text' => $owner->name,
 							'value' => $owner->getURL(),

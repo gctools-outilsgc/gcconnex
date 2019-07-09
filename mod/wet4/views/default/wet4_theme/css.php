@@ -3455,7 +3455,7 @@ tbody.collapse.in {
     .nav-tabs > li > a {
       margin-right: 2px;
       line-height: 1.4375;
-     padding:13px 8px 0px 8px;
+     padding:13px 8px 7px 8px;
      margin: 0 4px;
       border: 1px solid transparent;
       border-bottom: 3px solid rgba(1,1,1,0);

@@ -107,6 +107,30 @@ if (elgg_in_context('widgets')) {
 	));
 }
 
+$title_link = elgg_extract('title', $vars, '');
+if ($title_link === '') {//add translation
+	if ( isset($topic->title) || isset($topic->name) ) {
+		if( $topic->title ){
+			$text = gc_explode_translation( $topic->title, $lang );
+		}elseif($topic->name){
+			$text = $topic->name;
+		}elseif($topic->name2){
+			$text = $topic->name2;
+		}
+
+	} else {
+		$text = gc_explode_translation($topic->title3, $lang);
+	}
+	if ($topic instanceof ElggEntity) {
+		$params = array(
+			'text' => elgg_get_excerpt($text, 100),
+			'href' => $topic->getURL(),
+			'is_trusted' => true,
+		);
+		$full_title = $text;
+	}
+	$title_link = elgg_view('output/url', $params);
+}
 if ($full) {
     // $replies_link - went here
 	$subtitle = "$poster_text $date ";
@@ -157,6 +181,7 @@ if( $description_json->en && $description_json->fr ){
 	echo <<<HTML
 	<div class="panel">
 	<div class="panel-body">
+		<h2 class="h3 mrgn-tp-0 mrgn-bttm-md">$full_title</h2>
 <div class="mrgn-bttm-md">$body</div>
 <div>$tags</div>
 <div class="mrgn-tp-sm">$format_full_image</div>
@@ -170,29 +195,7 @@ HTML;
 } else {
 	// brief view - made my own instead of relying on the image block
 	$subtitle = "<div class=\"mrgn-lft-sm\"><div>$poster_text $date</div></div>";
-  $title_link = elgg_extract('title', $vars, '');
-  if ($title_link === '') {//add translation
-    if ( isset($topic->title) || isset($topic->name) ) {
-      if( $topic->title ){
-        $text = gc_explode_translation( $topic->title, $lang );
-      }elseif($topic->name){
-        $text = $topic->name;
-      }elseif($topic->name2){
-        $text = $topic->name2;
-      }
-  
-    } else {
-      $text = gc_explode_translation($topic->title3, $lang);
-    }
-    if ($topic instanceof ElggEntity) {
-      $params = array(
-        'text' => elgg_get_excerpt($text, 100),
-        'href' => $topic->getURL(),
-        'is_trusted' => true,
-      );
-    }
-    $title_link = elgg_view('output/url', $params);
-  }
+
   $format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], $poster_icon . $subtitle);
   $format_title = elgg_format_element('h3', ['class' => 'mrgn-tp-0 mrgn-bttm-md'], $title_link);
   $format_metadata = elgg_format_element('div', ['class' => 'mrgn-tp-md'], $metadata);

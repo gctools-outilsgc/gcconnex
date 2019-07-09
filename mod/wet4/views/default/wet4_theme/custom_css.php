@@ -1425,6 +1425,17 @@ border:none;
 
 }
 
+.file-tools-file {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+.file-tools-file .summary-title {
+    margin-bottom: 0px !important;
+}
+.file-tools-file .summary-title a {
+    font-size: 18px !important;
+}
+
 /*Color box - Nick */
 
 /*
@@ -1866,7 +1877,6 @@ figcaption{
 
 .entity-menu-bubble{
     padding: 3px;
-    background-color: #efefef;
     border: 1px solid transparent;
 
 }
