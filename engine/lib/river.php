@@ -867,9 +867,6 @@ QUERY;
  * @access private
  */
 function _elgg_river_init() {
-	elgg_register_page_handler('activity', '_elgg_river_page_handler');
-	//$item = new \ElggMenuItem('activity', elgg_echo('activity'), 'activity');
-	//elgg_register_menu_item('site', $item);
 
 	elgg_register_widget_type('river_widget', elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
 

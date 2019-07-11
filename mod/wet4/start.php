@@ -82,7 +82,6 @@ function wet4_theme_init()
 	elgg_register_page_handler('dashboard', 'wet4_dashboard_page_handler');
 	elgg_register_page_handler('friends', '_wet4_friends_page_handler'); //register new page handler for data tables
 	elgg_register_page_handler('friendsof', '_wet4_friends_page_handler');
-	//elgg_register_page_handler('activity', 'activity_page_handler');
 	elgg_unregister_page_handler('messages');
 	elgg_register_page_handler('messages', 'wet4_messages_page_handler');
 
