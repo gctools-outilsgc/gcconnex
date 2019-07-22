@@ -2612,7 +2612,7 @@ Profile Completness
   padding: 6px 12px;
   font-size: 16px;
   line-height: 1.4375;
-  border-radius: 4px;
+  border-radius: 5px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2649,9 +2649,9 @@ Profile Completness
     box-shadow: none; }
 
 .btn-default {
-  color: #335075;
-  background-color: #eaebed;
-  border-color: #dcdee1; }
+  color: #137991;
+  background-color: white;
+  border-color: #137991; }
   .btn-default:hover,
 
   .btn-default:focus,
@@ -2690,20 +2690,20 @@ Profile Completness
     color: #eaebed;
     background-color: #055959; }
     .btn-default>a {
-        color: #335075;
+        color: #137991;
         text-decoration: none;
     }
 
 .btn-default>a:visited {
-        color: #335075;
+        color: #137991;
     }
 
 
 
 .btn-primary {
   color: #fff;
-  background-color: #055959;
-  border-color: #055959; }
+  background-color: #137991;
+  border-color: #137991; }
   .btn-primary:hover,
   .btn-primary:focus,
   .btn-primary.focus,
@@ -2712,7 +2712,7 @@ Profile Completness
   .open > .btn-primary.dropdown-toggle {
     color: #fff;
     background-color: #047177;
-    border-color: #091c2d; }
+    border-color: #047177; }
   .btn-primary:active,
   .btn-primary.active,
   .open > .btn-primary.dropdown-toggle {
@@ -3461,7 +3461,7 @@ tbody.collapse.in {
       border-bottom: 3px solid rgba(1,1,1,0);
       border-radius: 4px 4px 0 0; }
       .nav-tabs > li > a:hover {
-          background-color:#f9f9f9;
+          background-color: transparent;
           text-decoration: none;
           padding-bottom: 7px;
           margin-bottom: 0;
@@ -3473,7 +3473,7 @@ tbody.collapse.in {
       color: #055959;
         font-weight:bold;
         text-decoration:none;
-      background-color: #f9f9f9;
+      background-color: transparent;
       border-bottom: 3px solid;
       padding-bottom: 0px;
       margin-bottom:0;
@@ -4282,6 +4282,8 @@ a.thumbnail.active {
 .alert {
   padding: 15px;
   margin-bottom: 2px;
+  min-width: 350px;
+  box-shadow: 0 0 5px rgba(0,0,0,.15);
   border: 1px solid transparent;
   border-radius: 4px; }
   .alert h4 {
@@ -4629,9 +4631,9 @@ a.list-group-item-danger {
     clear: both; }
 
 .panel-heading {
-  padding: 5px 15px;
+  padding: 0px;
   border-bottom: 1px solid transparent;
-  margin-bottom: 3px;
+  margin-bottom: 8px;
    }
   .panel-heading > .dropdown .dropdown-toggle {
     color: inherit; }
@@ -5753,8 +5755,7 @@ button.close {
  *	Link colour and decoration
  */
 a {
-  text-decoration: underline;
-    color:#295376;
+    color: #137991;
 }
   a.btn {
     text-decoration: none; }
@@ -5762,7 +5763,7 @@ a {
     color: #7834bc; }
 
 .btn-default:visited {
-  color: #335075; }
+  color: #137991; }
 
 .btn-primary:visited {
   color: #fff; }
@@ -6136,20 +6137,6 @@ fieldset {
 .pager > li > span:focus {
   border-color: #bbbfc5;
   color: #335075; }
-
-/*
- *	Use button border style 'outset' to give buttons depth, except when disabled
- */
-.btn {
-  border-style: outset;
-  /*
-	 * These two property overrides should be recommended upstream to
-	 * Bootstrap as a fix for button wrapping (see wet-boew/wet-boew#4454)
-	 */
-  height: auto;
-  min-height: 36px;
-  min-width: 36px;
-  white-space: normal; }
 
 /*
  *  Right-to-left support
@@ -7927,7 +7914,7 @@ img.mfp-img {
     padding: 0; }
     .wb-menu .menu > li a {
       display: block;
-      padding: 1em;
+      padding: 0.75em 1em;
       text-align: center; }
       .wb-menu .menu > li a[aria-haspopup]:hover,
       .wb-menu .menu > li a[aria-haspopup]:focus {
@@ -9867,13 +9854,13 @@ details {
 	Global Default Body styling
 */
 body {
-  background: #f9f9f9 !important;
+  background: #f9fbfd !important;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 300; }
 
 a {
-  color: #055959; }
+  color: #137991; }
   a img.thumbnail:hover {
     -webkit-box-shadow: 1px 1px 5px #999;
             box-shadow: 1px 1px 5px #999; }
@@ -9895,15 +9882,12 @@ h1, .h1, h2,
   font-family: Helvetica, Arial, sans-serif; }
 
 h1 {
-  border-bottom: 1px solid #055959;
   font-size: 34px;
   margin-bottom: 0.2em;
-  margin-top: 0.25em;
-  padding-bottom: 0.2em; }
+  margin-top: 0.25em;}
 
 h2,
 .h2 {
-border-bottom: 1px solid #055959;
   font-size: 26px; }
 
 h3,
@@ -10192,9 +10176,6 @@ header {
 /*
  WET button overwrites
  */
-main .btn-primary {
-  background-color: #055959;
-  border-color: #055959; }
 
 /*
  * Equal Heights overrides
@@ -10482,13 +10463,11 @@ html[lang='fr'].mediumview .fdbckpromo .accnt-prmry {
   #wb-srch input,
   .srchbox input {
     background-color: #FFFFFF;
-    border-color: #FFFFFF;
     border-right: 0;
-    border-style: solid;
     -webkit-box-shadow: none;
             box-shadow: none;
     color: #555;
-    margin-right: -4px;
+    margin-right: -5px;
     min-width: 235px;
       height:33px;
     position: relative; }
@@ -10549,29 +10528,28 @@ a.shr-opn, a.shr-opn:hover {
  * Site menu
  */
 #wb-sm {
-  background: #606060; }
+  background: #F5F5F5;
+  border-bottom: 1px solid #D0D0D0; }
   #wb-sm .menu {
     display: table;
-    margin-bottom: 0;
-    text-shadow: 1px 1px 1px #222;
-    width: 100%; }
+    margin-bottom: 0;}
     #wb-sm .menu .active,
     #wb-sm .menu .selected,
     #wb-sm .menu .wb-navcurr {
       /*background: #047177 !important;*/
-      background: #484848 !important;
-      color: #fff !important; }
+      background: #EBEBEB !important;
+      color: #707070 !important; }
     #wb-sm .menu > li {
-      border-left: 1px solid #999;
+      border-left: 1px solid transparent;
       display: table-cell;
       float: none; }
       #wb-sm .menu > li:last-child {
-        border-right: 1px solid #999; }
+        border-right: 1px solid transparent; }
       #wb-sm .menu > li a {
-        color: #fff; }
+        color: #707070; }
         #wb-sm .menu > li a:hover,
         #wb-sm .menu > li a:focus {
-          background: #047177 !important;
+          background: #EBEBEB !important;
           text-shadow: none; }
   #wb-sm .sm.open {
     background: #ccc;

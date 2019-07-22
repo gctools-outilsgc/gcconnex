@@ -155,12 +155,12 @@ if( $type == 'GPmod'){
        // $header = elgg_format_element('div', ['class' => 'panel-heading'], $header);
         $header = elgg_format_element('header', ['class' => 'panel-heading'], $header);
     }
-    $body = elgg_format_element('div', ['class' => 'panel-body clearfix'], $body);
+    $body = elgg_format_element('div', ['class' => 'panel-body clearfix'], $header . $body);
     if ($footer) {
         $footer = elgg_format_element('div', ['class' => 'panel-footer text-right'], $footer);
     }
 
-    $contents = $header . $body . $footer;
+    $contents = $body . $footer;
     if ($show_inner) {
         $contents = elgg_format_element('div', ['class' => 'elgg-inner'], $contents);
     }

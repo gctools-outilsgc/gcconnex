@@ -162,7 +162,8 @@ textarea.error:focus{
 .elgg-list-group {
     background-color: white;
     margin-top: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 4px;
 }
 .elgg-list-group .au_subgroups_group_icon-medium-wet4 {
     margin: 10px 5px 10px 10px !important;
@@ -383,6 +384,11 @@ max-height: 500px;
        border-right: 12px solid transparent;
        border-bottom: 12px solid rgba(0, 0, 0, 0.15) ;
        clear: both;
+     }
+
+     .elgg-menu-user-menu-default {
+        margin-right: -35px;
+        margin-bottom: 15px;
      }
 
 /****************************************/
@@ -667,7 +673,7 @@ max-height: 500px;
 }
 
 .visited-link li a:visited{
-   color: #055959;
+   color: #137991;
 }
 
 .btn-primary:visited{
@@ -787,10 +793,10 @@ max-height: 500px;
     /******************** Custom Button Styles ********************/
 
     .btn-custom {
-          color: #335075;
-          background-color: #f3f3f3;
-          border-color: #dcdee1;
-        border-radius: 0;
+          color: #137991;
+          background-color: white;
+          border-color: #137991;
+        border-radius: 5px;
     }
 
     .btn-custom a {
@@ -875,8 +881,8 @@ max-height: 500px;
 
     /******************** Removing Ugly rounded Corners ********************/
 
-    .form-control {
-        border-radius: 0;
+    .elgg-form .form-control {
+        margin-bottom: 20px;
     }
 
 .dropdown a:focus {
@@ -940,24 +946,20 @@ max-height: 500px;
     }
 
     .elgg-tag {
-
-
-        padding: 2px;
-        border: 1px solid #055959;
-        border-radius: 8px;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
+        padding: 3px;
+        border: 1px solid #CAD7DC;
         color: white;
-        margin: 1px;
+        margin: 1px 8px 1px 1px;
+        background-color: #EBFAFF;
+        position: relative;
     }
-
     .elgg-tag:hover{
 
         background: #f5f5f5;
     }
 
     .elgg-tag a {
-
+        color: #707070;
         text-decoration: none;
     }
 
@@ -1047,7 +1049,7 @@ max-height: 500px;
 
 .col-md-8 .custom-index-panel:first-of-type{
     background:transparent;
-    border:none;
+    border:none !important;
     box-shadow:none;
 
 }
@@ -1293,6 +1295,11 @@ border:none;
 
 .thewire-characters-remaining {
     background: none;
+}
+
+.new-wire-list-object, .thewire-form {
+    padding: 15px;
+    border-bottom: 1px solid #DCDCDC;
 }
 
 .img-tn{
@@ -1570,6 +1577,8 @@ border:none;
 .elgg-message {
   padding: 15px;
   margin-bottom: 23px;
+  min-width: 350px;
+  box-shadow: 0 0 5px rgba(0,0,0,.15);
   border: 1px solid transparent;
   border-radius: 4px; }
   .elgg-message h4 {
@@ -1597,21 +1606,20 @@ border:none;
 
 .custom-message{
     position: fixed;
-    width: 95%;
-    max-width: 600px;
     z-index: 1039;
-    left:2% ;
+    right: 0;
+    top: 0;
+    padding-top: 20px;
+    padding-right: 20px;
 }
 
 .elgg-state-success, .alert-success {
   background-color: #dff0d8;
   border-color: #d6e9c6;
-    position:fixed;
     z-index: 100000;
-
    margin: 0 auto;
     width:100%;
-    max-width: 600px;
+    max-width: 350px;
     border-left: solid 5px #2b542c;
    }
   .elgg-state-success hr {
@@ -1635,11 +1643,11 @@ details.elgg-state-success:before {
 .elgg-state-error {
   background-color: #f2dede;
   border-color: #ebccd1;
-      position:fixed;
     z-index: 100000;
 
    margin: 0 auto;
-    width: 1140px;;
+   width:100%;
+    max-width: 350px;
     border-left: solid 5px #843534;
 }
   .elgg-state-error hr {
@@ -1675,7 +1683,9 @@ details.elgg-state-success:before {
 
 /****** New Header style stuff *******/
 #app-brand{
-    background-color: #047177;
+    background: #0d727a;
+    background: -webkit-linear-gradient(left,#0d727a,#0d84b9);
+    background: linear-gradient(90deg,#0d727a 0,#0d84b9);
     color: #fff;
     min-height: 45px;
     /*padding-top: 5px;*/
@@ -1732,26 +1742,6 @@ details.elgg-state-success:before {
 .app-name{
     font-size: 1.6em;
     padding-top:5px;
-    padding-left: 20px;
-    background-color: #055959;
-    min-height: 45px;
-    max-width: 165px;
-   margin-left:-5px;
-}
-
-.app-name:before{
-       content: '';
-    display: block;
-    position: absolute;
-    left: 165px;
-    top: 0;
-    width: 0;
-    height: 0;
-	border-top: 22.5px solid transparent;
-	border-bottom: 22.5px solid transparent;
-
-	border-left: 20px solid #055959;
-    clear: both;
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
