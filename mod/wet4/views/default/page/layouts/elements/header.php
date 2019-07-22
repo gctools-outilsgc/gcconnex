@@ -29,11 +29,11 @@ if (isset($vars['header'])) {
 
 $title = elgg_extract('title', $vars, '');
 
-/*$buttons = elgg_view_menu('title', array(
+$buttons = elgg_view_menu('title', array(
 	'sort_by' => 'priority',
 	'class' => 'list-inline pull-right',
-    'item_class' => 'mrgn-rght-sm mrgn-tp-sm btn btn-custom',
-));*/
+    'item_class' => '',
+));
 
 if ($title || $buttons) {
 
@@ -65,7 +65,7 @@ if ($title || $buttons) {
             }
         }
             $format_title = elgg_view_title($vars['title'], array('class' => 'elgg-heading-main mrgn-lft-sm'));
-            echo elgg_format_element('div', ['class' => 'd-flex title-button-combo'], $format_title .'<div class="title-action-button">' . $buttons . '</div>');
+            echo elgg_format_element('div', ['class' => 'd-flex title-button-combo'], $format_title .'<div class="title-action-button d-flex">' . $buttons2 . $buttons . '</div>');
     }
 
 }

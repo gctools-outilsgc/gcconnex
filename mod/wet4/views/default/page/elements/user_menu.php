@@ -36,13 +36,20 @@ elgg_register_menu_item('user_menu_subMenu', array(
     'priority' => 200,
 ));
 elgg_register_menu_item('user_menu_subMenu', array(
+    'name' => 'menu_separator',
+    'text'> '',
+    'class' => 'divider',
+    'role' => 'separator',
+    'priority' => 300,
+));
+elgg_register_menu_item('user_menu_subMenu', array(
     'name' => 'logout_link',
     'text' => elgg_echo('logout'),
     'href' => 'action/logout',
-    'priority' => 300,
+    'priority' => 400,
 ));
 
-$dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu'));
+$dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu dropdown-menu-right', 'sort_by' => 'priority'));
 
 
 $focus_dd = '<a href="#" class="focus_dd_link" style="display:none;"><i class="fa fa-caret-down" aria-hidden="true"></i><span class="wb-inv">'.elgg_echo('wet:dd:expand').'</span></a>';
@@ -55,7 +62,7 @@ if(elgg_is_admin_logged_in()) {
         'href' => $site_url . 'admin',
         'text' => '<i class="fa fa-wrench fa-lg mrgn-rght-sm"></i>' . '<span class="hidden-xs">Admin</span>',
         'title' => 'Admin',
-        'item_class' => 'brdr-rght',
+        'item_class' => '',
         'class' => '',
         'priority' => '0',
     ));
@@ -79,9 +86,9 @@ if ($user_avatar) { //show avatar if they have one
 //create user menu
 elgg_register_menu_item('user_menu', array(
     'name' => 'Profile',
-    'text' => $dropdown_avatar. '<span class="hidden-xs">' . $displayName . '</span><i class="fa fa-caret-down fa-lg mrgn-lft-sm"></i>' . $dropdown,
+    'text' => $dropdown_avatar . $dropdown,
     'title' => elgg_echo('userMenu:usermenuTitle'),
-    'item_class' => 'brdr-lft dropdown',
+    'item_class' => 'dropdown',
     'data-toggle' => 'dropdown',
     'class' => 'dropdown-toggle  dropdownToggle dd-close',
     'priority' => '3',
@@ -119,9 +126,9 @@ elgg_register_menu_item('user_menu', array(
 // notifications inbox menu item
 elgg_register_menu_item('user_menu', array(
     'name' => 'notifications',
-    'text' =>'<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs" aria-hidden="true">' . elgg_echo('notifications:subscriptions:changesettings') . '</span>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:notifications') . $title.' </span></a>',
+    'text' =>'<i class="fa fa-bell fa-lg"></i>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:notifications') . $title.' </span></a>',
     'title' => elgg_echo('userMenu:notifications') . $title,
-    'item_class' => 'brdr-lft messagesLabel close-notif-dd',
+    'item_class' => 'messagesLabel close-notif-dd',
     'class' => '',
     'priority' => '2',
     'data-dd-type'=>'notif_dd',

@@ -29,6 +29,12 @@
    border:none !important;
    font-size: 26px;
  }
+ .group-title a {
+    color: #4D4D4D !important;
+ }
+ .group-title a:visited {
+    color: #4D4D4D !important; 
+ }
 
 .group-panel-body{
     padding: 0px 20px 20px 20px;
@@ -46,6 +52,11 @@
 .group-info-list li .info-title {
     font-weight: bold;
     margin-right: 8px;
+}
+
+.elgg-list-group .elgg-item-group {
+    padding: 5px;
+    border-bottom: 1px solid #DCDCDC;
 }
 
  /*** Group Cover Photo ***/

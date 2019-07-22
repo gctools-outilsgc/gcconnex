@@ -529,7 +529,7 @@ function wet4_theme_pagesetup()
 		$params = array(
 			"name" => "Colleagues",
 			"href" => "friends/" . $user->username,
-			"text" => '<i class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo("userMenu:colleagues") . '</span>',
+			"text" => '<i class="fa fa-users fa-lg"></i><span class="hidden-xs wb-invisible">' . elgg_echo("userMenu:colleagues") . '</span>',
 			"title" => elgg_echo('userMenu:colleagues'),
 			"class" => '',
 			'item_class' => '',
