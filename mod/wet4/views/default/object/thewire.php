@@ -98,7 +98,7 @@ if (elgg_is_logged_in() && !elgg_in_context("thewire_tools_thread")) {
 }
 
 $author_text = elgg_echo($owner_link);
-$date = '<div class="timeStamp">' .elgg_view_friendly_time($post->time_created). '</div>';
+$date = '<span class="timeStamp">' .elgg_view_friendly_time($post->time_created). '</span>';
 
 $params = array(
 	"entity" => $post,
@@ -111,7 +111,7 @@ $params = $params + $vars;
 $list_body = elgg_view("object/elements/thewire_summary", $params);
 
 $format_header = elgg_format_element('div', ['class' => 'd-flex mrgn-bttm-md'], $owner_icon . '<div class="mrgn-lft-sm">'.$author_text .$date.'</div>');
-$format_wire = elgg_format_element('div', ['class' => 'new-wire-list-object'], $format_header . $list_body);
+$format_wire = elgg_format_element('div', ['class' => 'd-flex new-wire-list-object'], '<div>'.$owner_icon.'</div><div>' . $author_text . $date. $list_body.'</div>');
 
 echo $format_wire;
 if ($show_thread) {
