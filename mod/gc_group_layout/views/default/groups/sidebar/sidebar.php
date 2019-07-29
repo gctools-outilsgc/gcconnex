@@ -15,6 +15,7 @@ $display_members = $group->getPrivateSetting('group_tools:cleanup:members');
 if (elgg_group_gatekeeper(false)) {
     //group activity
     // echo elgg_view('groups/sidebar/activity', $vars);
+    echo elgg_view('groups/sidebar/search', ['entity' => $group]);
     echo elgg_view('groups/sidebar/group_sidebar');
 }
 

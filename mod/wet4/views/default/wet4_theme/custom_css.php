@@ -578,22 +578,7 @@ max-height: 500px;
   padding: 8px;
   margin-top: 5px;
 }
-/*
-.elgg-river-comments > li {
-  border: none !important;
-  padding: 8px 10px !important;
-  margin-top: 14px;
-}
 
-.elgg-comments .elgg-list:before, .elgg-river-comments:before {
-  border: none !important;
-  margin-left: -9px;
-}
-
-.elgg-river-responses .elgg-body {
-  margin-top: -30px !important;
-}
-*/
 .elgg-river-responses .elgg-body .elgg-output {
   margin-top: 5px !important;
 }
@@ -633,11 +618,9 @@ max-height: 500px;
 .elgg-river-file-attachment .river-file-title{
     font-weight: bold;
     margin-bottom: 5px;
-
 }
  .department-test{
      width: 43%;
-
  }
 
 .d-flex{
@@ -685,11 +668,7 @@ max-height: 500px;
     padding-top:5px;
 }
 
-
-
-
-
-    .elgg-gallery li {
+.elgg-gallery li {
         border: 0px;
     }
 
@@ -776,8 +755,6 @@ max-height: 500px;
     table.inboxTable .read:hover {
         background-color: #efefef;
     }
-
-
 
 /*This is where the elgg icons get loaded!*/
 <?php echo elgg_view('css/elements/icons - Copy', $vars); ?>
@@ -877,9 +854,6 @@ max-height: 500px;
         border-left: solid 1px #ddd;
 
     }
-    /****************************************/
-
-    /******************** Removing Ugly rounded Corners ********************/
 
     .elgg-form .form-control {
         margin-bottom: 20px;
@@ -1350,21 +1324,11 @@ border:none;
 }
 .tab-content {
     padding: 5px;
-    /*border: 1px solid #ddd;*/
-}
-
-.tab-pane {
-    /*margin-top: -25px;*/
-}
-
-.nav-tabs {
-    /*border-bottom: none;*/
 }
 
 .tags {
     font-size: 13px;
 }
-
 
     .gsa-radio-filter li{
         float: left !important;
@@ -1387,24 +1351,20 @@ border:none;
 .group-tab-menu-search-box{
     width:65% !important;
     margin-right: 3px;
-
 }
 
 .group-tab-menu-search-icon{
     color: #055959;
     padding-top: 2.5%;
-
 }
 
 .search-dropdown{
     padding:5px;
-
 }
 
 .gsa-filter-text{
     margin:8px;
     font-weight:bold;
-
 }
 
 .gsa-search-title{
@@ -1424,12 +1384,10 @@ border:none;
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom:20px;
-
 }
 
 .group-search-button{
     color: #055959;
-
 }
 
 .file-tools-file {
@@ -1504,7 +1462,6 @@ border:none;
      content: " ";
   display: block;
   list-style: none;
-
   clear: both;
 }
 
@@ -1514,7 +1471,6 @@ border:none;
 
 .ui-autocomplete .ui-menu-item a:hover{
     color: #047177 !important;
-
 }
 .elgg-menu-hover{
     z-index: 1000;
@@ -1674,7 +1630,6 @@ details.elgg-state-success:before {
     width:100%;
 }
 
-
 /** Photo Gallery Custom Classes**/
 
 .panel-body-gallery {
@@ -1688,7 +1643,6 @@ details.elgg-state-success:before {
     background: linear-gradient(90deg,#0d727a 0,#0d84b9);
     color: #fff;
     min-height: 45px;
-    /*padding-top: 5px;*/
 }
 
 #app-brand a{
@@ -1698,7 +1652,6 @@ details.elgg-state-success:before {
 
 .brand h1{
   border:none;
-
 }
 
 .brand h1 a{
@@ -1791,7 +1744,6 @@ details.elgg-state-success:before {
 .tools-navigator{
     font-size: 1.1em;
     margin-top:10px;
-
 }
 
 .tools-navigator-menu{
@@ -1808,7 +1760,6 @@ details.elgg-state-success:before {
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-
 	border-bottom: 12px solid #fff;
     clear: both;
 }
@@ -1861,8 +1812,6 @@ figcaption{
        font-weight: bold;
 }
 
-
-
 /******* Entity Menu Style ********/
 
 .entity-menu-bubble{
@@ -1871,22 +1820,6 @@ figcaption{
 
 }
 
-/* removing arrow on like and share bubble
-.entity-menu-bubble:before{
-       content: '';
-    display: block;
-    position: absolute;
-    left: -10px;
-    top: 5px;
-    width: 0;
-    height: 0;
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-
-	border-right:10px solid #efefef;
-    clear: both;
-}
-*/
 
 .data-table-list-item{
     padding:10px;
@@ -1901,7 +1834,6 @@ figcaption{
 /** Widget Stuff **/
 
 .elgg-widget-title{
-
         margin:5px 0;
 }
 
@@ -1911,7 +1843,6 @@ figcaption{
 
 .wet-hidden{
     display:none;
-
 }
 
 .pager-wet-hidden{
