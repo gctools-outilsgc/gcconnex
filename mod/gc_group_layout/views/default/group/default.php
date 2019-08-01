@@ -6,7 +6,7 @@
  */
 
 $group = $vars['entity'];
-$lang = get_current_language();
+// $lang = get_current_language();
 if(elgg_get_context() == 'widgets' || elgg_get_context() == 'custom_index_widgets'){
     $icon = elgg_view_entity_icon($group, 'small', $vars);
 } else {
@@ -20,14 +20,6 @@ $metadata = elgg_view_menu('entity', array(
 	'class' => 'list-inline',
 ));
 
-
-
-if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
-	//Give widget stuff entity menu
-    //$metadata = '';
-}
-
-
 if ($vars['full_view']) {
 	echo elgg_view('groups/profile/summary', $vars);
 } else if(!elgg_in_context('livesearch')){
@@ -36,12 +28,6 @@ if ($vars['full_view']) {
 		'entity' => $group,
 		'metadata' => $metadata,
 	);
-
-	// identify available content
-/*if(($group->description2) && ($group->description)){
-
-			echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';
-}*/
 
 	$params = $params;
 	$params = $params + $vars;

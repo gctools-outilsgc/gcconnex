@@ -127,7 +127,6 @@ if ($title_link === '') {//add translation
 			'href' => $topic->getURL(),
 			'is_trusted' => true,
 		);
-		$full_title = $text;
 	}
 	$title_link = elgg_view('output/url', $params);
 }
@@ -158,30 +157,15 @@ if( $description_json->en && $description_json->fr ){
 	echo'</div>';
 }
 
-	$params = array(
-		'entity' => $topic,
-        'title' => false,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
-		'tags' => $tags,
-	);
-	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
-
-	$info = elgg_view_image_block($poster_icon, $list_body);
-
 	$format_full_image = elgg_format_element('div', [], $poster_icon . $subtitle);
 	$body = elgg_view('output/longtext', array(
 		'value' => $description,
 		'class' => 'clearfix content_desc',
 	));
     
-  $repliesFoot = '<div class="col-xs-12 text-right">' . $replies_link . '</div>';
-
 	echo <<<HTML
 	<div class="panel">
 	<div class="panel-body">
-		<h2 class="h3 mrgn-tp-0 mrgn-bttm-md">$full_title</h2>
 <div class="mrgn-bttm-md">$body</div>
 <div>$tags</div>
 <div class="mrgn-tp-sm">$format_full_image</div>

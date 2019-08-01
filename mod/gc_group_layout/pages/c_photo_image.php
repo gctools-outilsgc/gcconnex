@@ -14,11 +14,9 @@ require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/engine/start.php")
 $file_guid = (int) get_input('file_guid');
 //get it's entity
 $file = get_entity($file_guid);
-$thumbfile = $file->large;
 $readfile = new ElggFile();
 $readfile->owner_guid = $file->owner_guid;
 $readfile->setFilename("groups_c_photo/" . $file_guid. '.jpg');
-//$mime = $file->getMimeType();
 $contents = $readfile->grabFile();
 
 //$contents = $file->grabFile();
