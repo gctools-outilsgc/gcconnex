@@ -1135,7 +1135,7 @@ function wet4_group_entity_menu_setup($hook, $type, $value, $params) {
 	$entity = $params['entity'];
 	foreach ($value as $index => $item) {
 			$name = $item->getName();
-			if ($name == 'likes' || $name == 'likes_count' || $name == 'members' || $name == 'unlike') {
+			if ($name == 'likes' || $name == 'likes_count' || $name == 'members' || $name == 'unlike' || $name == 'thewire_tools_reshare_count') {
 					unset($value[$index]);
 			}
 	}
