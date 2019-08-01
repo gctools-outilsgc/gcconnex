@@ -13,13 +13,6 @@ if (elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_enti
 //Wrap this view in the context of group profile
 $group = get_entity(elgg_get_page_owner_guid());
 $lang = get_current_language();
-/*
-if (!isset($vars['entity']) || !$vars['entity']) {
-	echo elgg_echo('groups:notfound');
-	return true;
-}
-*/
-//$group = $vars['entity'];
 $owner = $group->getOwnerEntity();
 $buttonTitle = 'Member';
 if (!$owner) {
@@ -52,22 +45,12 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             ?>
 		   </div>
 
-
-
-
 		<div class="groups-info">
             <h1 class="group-title">
                 <?php
 
                 	// cyu - check to see if the user is a gsa-crawler, then display in (both) languages
                 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false) {
-                		
-                		/*$json_name = json_decode($group->name,true);
-                		if (json_last_error() === JSON_ERROR_NONE)
-                			$group_name = "{$json_name['en']} / {$json_name['fr']}";
-                		else
-                			$group_name = $group->name;*/
-
                 		$group_name_en = gc_explode_translation($group->name, 'en');
                 		$group_name_fr = gc_explode_translation($group->name, 'fr');
 
@@ -137,8 +120,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             	}
             ?>
             </div>
-
-
         </div>
 
             <?php
@@ -161,8 +142,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
     
             }
             ?>
-
-
     </div>
       </div>
 
@@ -205,12 +184,8 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 													}
 												}
 											}
-
 										 ?>
-
 							 </ul>
-
-
 						<?php
 
 						// add group operators menu link to title menu
@@ -341,10 +316,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 														 $buttonTitle = elgg_echo('gprofile:settings');
 												 }
 								 ?>
-
-
-
-
 						 <button type="button" class="btn btn-custom dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								 <?php echo $buttonTitle ?>
 								 <span class="caret"></span>
@@ -369,11 +340,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 						 </div>
 				 </div>
 		</div>
-
-
-
-
-
     </div>
 </div>
 <?php } ?>
