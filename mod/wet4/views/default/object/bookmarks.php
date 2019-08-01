@@ -17,7 +17,7 @@ if (!$bookmark) {
 }
 
 $owner = $bookmark->getOwnerEntity();
-$owner_icon = elgg_view_entity_icon($owner, 'medium');
+$owner_icon = elgg_view_entity_icon($owner, 'small');
 $categories = elgg_view('output/categories', $vars);
 
 $link = elgg_view('output/url', array('href' => $bookmark->address));
@@ -141,6 +141,11 @@ HTML;
 		}
 	}
 
+	$title_link = elgg_view('output/url', array(
+		"text" => gc_explode_translation($bookmark->title, $lang),
+		"href" => $bookmark->getURL(),
+	));
+
 	$link = elgg_view('output/url', array(
 		'href' => $bookmark->address,
 		'text' => $display_text,
@@ -165,6 +170,9 @@ HTML;
 	);
 	$params = $params + $vars;
 	$body = elgg_view('object/elements/summary', $params);
-	
-	echo elgg_view_image_block($owner_icon, $body);
+	$format_title = elgg_format_element('h3', ['class' => 'mrgn-tp-0 mrgn-bttm-md'], $title_link);
+	$format_subtitle = elgg_format_element('div', ['class'=>'d-flex mrgn-tp-md'], $owner_icon . '<div class="mrgn-lft-sm">'. $subtitle .'</div>');
+	$format_panel_body = elgg_format_element('div', ['class'=>'panel-body'], $format_title . $link . $format_subtitle . $metadata);
+	// echo elgg_view_image_block($owner_icon, $body);
+	echo elgg_format_element('div', ['class'=>'panel'], $format_panel_body);
 }
