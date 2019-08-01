@@ -17,10 +17,6 @@ $actions = elgg_extract('action', $vars['menu'], null);
 $main = elgg_extract('default', $vars['menu'], null);
 $admin = elgg_extract('admin', $vars['menu'], null);
 
-$site_url = elgg_get_site_url();
-
-$displayName = $user->name;
-$user_avatar = $user->geticonURL('medium');
 $email = $user->email;
 
 $department = $user->get('department');
@@ -29,13 +25,10 @@ $department = $user->get('department');
 <div class="clearfix mrgn-bttm-sm">
     <div class="row mrgn-lft-0 mrgn-rght-0 mrgn-tp-sm">
         <div class="col-xs-3">
-
-
                 <?php
                     //EW - change image output so badge displays
                 echo elgg_view_entity_icon($user, 'medium', array('use_hover' => false, 'class' => 'pro-avatar', 'force_size' => true,));
                     ?>
-
         </div>
 
         <div class="col-xs-9">
@@ -48,7 +41,6 @@ $department = $user->get('department');
                     'style' => 'text-decoration:none;',
                     ));
                 echo "$name_link";
-
                 ?>
             </h4>
             <div>
@@ -57,7 +49,6 @@ $department = $user->get('department');
             <div style="max-width:300px;">
                 <?php echo $department; ?>
             </div>
-
         </div>
     </div>
 
@@ -65,7 +56,6 @@ $department = $user->get('department');
         <?php
         if($actions){
             foreach($actions as $menu_item){
-
                 $itemName = $menu_item->getName();
 
                 if($itemName == 'friend_request' || $itemName == 'add_friend' || $itemName == 'profile:edit'){
@@ -94,20 +84,14 @@ $department = $user->get('department');
             }
             echo $reportUser;
         }
-
         ?>
     </div>
-
-
 </div>
 <div>
     <?php
     // admin
     if (elgg_is_admin_logged_in() && $admin) {
-
         echo '<div class="panel-footer coll-' . $user->guid . '"><div class="text-center"><a  role="button" data-toggle="collapse" href="#adminoptions-' . $user->guid . '" aria-expanded="false" aria-controls="collapseExample">' . elgg_echo('gprofile:edit:admin') . ' <i class="fa fa-caret-down fa-lg"></i></a></div>';
-
-
         foreach($admin as $menu_item){
 
             $items .= elgg_view('navigation/menu/elements/item', array(
@@ -121,9 +105,7 @@ $department = $user->get('department');
         echo '</div></div>';
 
     }
-
-
-        ?>
+    ?>
 
     <script>
         $('.coll-<?php echo $user->guid ?>').mouseover(function () {
@@ -133,6 +115,5 @@ $department = $user->get('department');
 
             $('.collapse').collapse('hide');
         });
-
     </script>
     </div>

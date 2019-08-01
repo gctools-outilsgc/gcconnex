@@ -22,20 +22,13 @@ foreach ($default_items as $menu_item) {
 // Wet 4 more menu items - You can un-comment this code below to add the more menu back in
 
 if ($more_items) {
-
-	//echo '<li class="elgg-more ">';<a href="#jobs" class="item">Jobs</a>
-    echo '<li><a href="#moreCont" class="item">'.elgg_echo('wet:more').'<span class="expicon glyphicon glyphicon-chevron-down"></span></a>';
-
-	//echo '<a href="#moreCont" class="item" role="menuItem" aria-haspopup="true" >More<span class="expicon glyphicon glyphicon-chevron-down"></span></a>';
-	
+  echo '<li><a href="#moreCont" class="item">'.elgg_echo('wet:more').'<span class="expicon glyphicon glyphicon-chevron-down"></span></a>';	
 	echo elgg_view('navigation/menu/elements/section', array(
-		'class' => ' sm list-unstyled ', 
-        'id' => 'moreCont',
-        'role' => 'menu',
+		'class' => ' sm list-unstyled ',
+    'id' => 'moreCont',
+    'role' => 'menu',
 		'items' => $more_items,
-        
 	));
-	
 	echo '</li>';
 }
 echo '</ul>';
