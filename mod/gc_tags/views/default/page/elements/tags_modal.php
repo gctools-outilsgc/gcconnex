@@ -95,6 +95,9 @@ $(document).ready(function(){
     $('form .tag-wrapper:first').remove();
     $('label[for~="<?php echo $tag_name; ?>"]:first').remove();
     $('main button[type="submit"]:first').text('<?php echo $buttonText; ?>');
-    
+    //Create cookie when when preview button from blog is click
+    $('main button[name="preview"]').on('click', function(){
+        document.cookie = "preview=true";
+     });
 })
 </script>
