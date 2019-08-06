@@ -33,6 +33,8 @@ if (get_current_language()=='en'){
     $provinces['pov-que'] = 'Government of Quebec';
     $provinces['pov-sask'] = 'Government of Saskatchewan';
     $provinces['pov-yuk'] = 'Government of Yukon';
+    $provinces['CIRNAC-RCAANC'] = 'Crown-Indigenous Relations and Northern Affairs Canada';
+	$provinces['PPS-SPP'] = 'Parliamentary Protective Service';
     $departments = array_merge($departments,$provinces);
 }else{
     //$metaname = "deptsFr";
@@ -51,9 +53,12 @@ if (get_current_language()=='en'){
     $provinces['pov-que'] = 'Gouvernement du Qu�bec';
     $provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
     $provinces['pov-yuk'] = 'Gouvernement du Yukon';
+    $provinces['CIRNAC-RCAANC'] = 'Relations Couronne-Autochtones et Affaires du Nord Canada';
+	$provinces['PPS-SPP'] = 'Service de Protection Parlementaire';
     $departments = array_merge($departments,$provinces);
 }
-
+unset($departments['ou=INAC-AANC, o=GC, c=CA']);
+asort($departments);
 $value = explode(" / ", $value);
 //error_log("test".array_search($value[0], json_decode($departments, true)));
 $key = array_search($value[0], $departments);

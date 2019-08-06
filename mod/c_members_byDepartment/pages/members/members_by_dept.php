@@ -37,7 +37,8 @@ $provinces['pov-que'] = 'Government of Quebec';
 $provinces['pov-sask'] = 'Government of Saskatchewan';
 $provinces['pov-yuk'] = 'Government of Yukon';
 $departmentsEn = array_merge($departmentsEn,$provinces);
-
+unset($departmentsEn['ou=INAC-AANC, o=GC, c=CA']);
+					
 //$metaname = "deptsFr";
 
 $departmentsFr = json_decode($obj[0]->deptsFr, true);
@@ -46,16 +47,17 @@ $provinces['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
 $provinces['pov-man'] = 'Gouvernement du Manitoba';
 $provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
 $provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
-$provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+$provinces['pov-ns'] = 'Gouvernement de la Nouvelle-ï¿½cosse';
 $provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
 $provinces['pov-nun'] = 'Gouvernement du Nunavut';
 $provinces['pov-ont'] = "Gouvernement de l'Ontario";
-$provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
-$provinces['pov-que'] = 'Gouvernement du Québec';
+$provinces['pov-pei'] = "Gouvernement de l'ï¿½le-du-Prince-ï¿½douard";
+$provinces['pov-que'] = 'Gouvernement du Quï¿½bec';
 $provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
 $provinces['pov-yuk'] = 'Gouvernement du Yukon';
 $departmentsFr = array_merge($departmentsFr,$provinces);
-
+unset($departmentsFr['ou=INAC-AANC, o=GC, c=CA']);
+					
 //find correct department array based o language
 if (get_current_language()=='en'){
     $displayDept = $departmentsEn;

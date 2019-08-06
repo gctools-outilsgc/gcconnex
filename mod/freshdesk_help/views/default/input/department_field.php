@@ -23,9 +23,13 @@ $provincesEn['pov-pei'] = 'Government of Prince Edward Island';
 $provincesEn['pov-que'] = 'Government of Quebec';
 $provincesEn['pov-sask'] = 'Government of Saskatchewan';
 $provincesEn['pov-yuk'] = 'Government of Yukon';
+$provincesEn['CIRNAC-RCAANC'] = 'Crown-Indigenous Relations and Northern Affairs Canada';
+$provincesEn['PPS-SPP'] = 'Parliamentary Protective Service';
 
 $departmentsEn = json_decode($departmentsEn, true);
 array_merge($departmentsEn, $provincesEn);
+
+asort($departmentsEn);
 
 $provincesFr = array();
 
@@ -43,9 +47,12 @@ $provincesFr['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
 $provincesFr['pov-que'] = 'Gouvernement du Québec';
 $provincesFr['pov-sask'] = 'Gouvernement de Saskatchewan';
 $provincesFr['pov-yuk'] = 'Gouvernement du Yukon';
-
+$provincesFr['CIRNAC-RCAANC'] = 'Relations Couronne-Autochtones et Affaires du Nord Canada';
+$provincesFr['PPS-SPP'] = 'Service de Protection Parlementaire';
 $departmentsFr = json_decode($departmentsFr, true);
 array_merge($departmentsFr, $provincesFr);
+
+asort($departmentsFr);
 
 //create better options_values
 $options = array();

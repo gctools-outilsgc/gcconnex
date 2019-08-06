@@ -33,7 +33,11 @@ $provinces['pov-pei'] = 'Government of Prince Edward Island';
 $provinces['pov-que'] = 'Government of Quebec';
 $provinces['pov-sask'] = 'Government of Saskatchewan';
 $provinces['pov-yuk'] = 'Government of Yukon';
+$provinces['CIRNAC-RCAANC'] = 'Crown-Indigenous Relations and Northern Affairs Canada';
+$provinces['PPS-SPP'] = 'Parliamentary Protective Service';    
 $departmentsEn = array_merge($departmentsEn,$provinces);
+unset($departmentsEn['ou=INAC-AANC, o=GC, c=CA']);
+asort($departmentsEn);
 
 $departmentsFr = json_decode($obj[0]->deptsFr, true);
 $provincesFr['pov-alb'] = "Gouvernement de l'Alberta";
@@ -49,7 +53,11 @@ $provincesFr['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
 $provincesFr['pov-que'] = 'Gouvernement du Québec';
 $provincesFr['pov-sask'] = 'Gouvernement de Saskatchewan';
 $provincesFr['pov-yuk'] = 'Gouvernement du Yukon';
+$provincesFr['CIRNAC-RCAANC'] = 'Relations Couronne-Autochtones et Affaires du Nord Canada';
+$provincesFr['PPS-SPP'] = 'Parliamentary Protective Service';
 $departmentsFr = array_merge($departmentsFr,$provincesFr);
+unset($departmentsFr['ou=INAC-AANC, o=GC, c=CA']);
+asort($departmentsFr);
 
 if (get_current_language()=='en'){
     $deptString = $departmentsEn[$department]." / ".$departmentsFr[$department];
