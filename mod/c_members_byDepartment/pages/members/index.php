@@ -163,7 +163,9 @@ function render_department_tab($data_directory) {
         $provinces['pov-pei'] = 'Government of Prince Edward Island';
         $provinces['pov-que'] = 'Government of Quebec';
         $provinces['pov-sask'] = 'Government of Saskatchewan';
-        $provinces['pov-yuk'] = 'Government of Yukon';
+		$provinces['pov-yuk'] = 'Government of Yukon';
+		$provinces['CIRNAC-RCAANC'] = 'Crown-Indigenous Relations and Northern Affairs Canada';
+		$provinces['PPS-SPP'] = 'Parliamentary Protective Service';
         $departmentsEn = array_merge($departmentsEn,$provinces);
 		unset($departmentsEn['ou=INAC-AANC, o=GC, c=CA']);
 					
@@ -182,7 +184,9 @@ function render_department_tab($data_directory) {
         $provinces['pov-pei'] = "Gouvernement de l'�le-du-Prince-�douard";
         $provinces['pov-que'] = 'Gouvernement du Qu�bec';
         $provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
-        $provinces['pov-yuk'] = 'Gouvernement du Yukon';
+		$provinces['pov-yuk'] = 'Gouvernement du Yukon';
+		$provinces['CIRNAC-RCAANC'] = 'Relations Couronne-Autochtones et Affaires du Nord Canada';
+		$provinces['PPS-SPP'] = 'Service de Protection Parlementaire';
         $departmentsFr = array_merge($departmentsFr,$provinces);
 		unset($departmentsFr['ou=INAC-AANC, o=GC, c=CA']);
 					

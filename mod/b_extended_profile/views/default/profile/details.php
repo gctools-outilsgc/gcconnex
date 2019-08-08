@@ -102,7 +102,7 @@ if (elgg_is_active_plugin('member_selfdelete') && (elgg_is_admin_logged_in() || 
                     $provinces['PPS-SPP'] = 'Service de Protection Parlementaire';
                 
     				$departments = array_merge($departments,$provinces);
-    			}
+                }
                 unset($departments['ou=INAC-AANC, o=GC, c=CA']);
                 asort($departments);
                 
