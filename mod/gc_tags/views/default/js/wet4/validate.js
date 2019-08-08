@@ -62,12 +62,25 @@ requirejs( ["form-validate"], function() {
                   var name = 'preview'
                   // Filtre cookie to get: preview
                   var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-                  if(match[2] == 'true'){
-                    //switch to false before the draft is create
-                    document.cookie = "preview=false;";
+                 // if match is null it mean create was click 
+                 if(match != null){
+                    if (match[2] == 'true'){
+                      //switch to false before the draft is create
+                      document.cookie = "preview=false;";
 
-                    $(form).find('button').prop('disabled', true);
-                    form.submit();
+                      $(form).find('button').prop('disabled', true);
+                      form.submit();
+                    }else{
+                      var submitButton = $(form).find('button.form-submit');
+                      $('#tagsModal').modal({
+                        backdrop: 'static'
+                      });
+
+                      $(submitButton).on('click', function(){
+                        $(form).find('button').prop('disabled', true);
+                        form.submit();
+                      })
+                    }
                   }else{
                     var submitButton = $(form).find('button.form-submit');
                     $('#tagsModal').modal({
