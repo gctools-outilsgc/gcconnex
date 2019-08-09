@@ -177,12 +177,12 @@ function render_department_tab($data_directory) {
         $provinces['pov-man'] = 'Gouvernement du Manitoba';
         $provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
         $provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
-        $provinces['pov-ns'] = 'Gouvernement de la Nouvelle-�cosse';
+        $provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
         $provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
         $provinces['pov-nun'] = 'Gouvernement du Nunavut';
         $provinces['pov-ont'] = "Gouvernement de l'Ontario";
-        $provinces['pov-pei'] = "Gouvernement de l'�le-du-Prince-�douard";
-        $provinces['pov-que'] = 'Gouvernement du Qu�bec';
+        $provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
+        $provinces['pov-que'] = 'Gouvernement du Québec';
         $provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
 		$provinces['pov-yuk'] = 'Gouvernement du Yukon';
 		$provinces['CIRNAC-RCAANC'] = 'Relations Couronne-Autochtones et Affaires du Nord Canada';
