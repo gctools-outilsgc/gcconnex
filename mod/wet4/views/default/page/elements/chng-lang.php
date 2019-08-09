@@ -9,11 +9,7 @@
  */
 
 // Lang Select
-
-$site_url = elgg_get_site_url();
 ?>
-
-
     <section id="wb-lng" class="visible-md visible-lg text-right col-sm-1">
         <h2 class="wb-inv"><?php echo elgg_echo('wet:LangSel')?></h2>
             <div class="col-md-12">

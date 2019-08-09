@@ -23,12 +23,10 @@
  * @author GCTools Team
  */
 
-$checkPage = elgg_get_context();
-
 $body = elgg_extract('body', $vars, '');
 $image = elgg_extract('image', $vars, '');
 $alt_image = elgg_extract('image_alt', $vars, '');
-$test = $_SESSION[idpage];
+// $test = $_SESSION[idpage];
 $class = 'col-xs-12 mrgn-tp-sm ';
 $additional_class = elgg_extract('class', $vars, '');
 
@@ -42,8 +40,6 @@ $id = '';
 if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 }
-
-
 
 //elgg body appends the edit comment text box thing
 
@@ -75,8 +71,6 @@ HTML;
 
 
 }else if(elgg_in_context('file_tools_selector')){ //for files and folders
-
-
 
 if ($image) {
 	$image = "<div class=\"mrgn-rght-md\">$image</div>";
@@ -137,7 +131,6 @@ HTML;
 
 if ($image) {
 	$image = "<div class=\"\">$image</div>";
-    // $echo = elgg_get_context();
 }
 
 if ($alt_image) {

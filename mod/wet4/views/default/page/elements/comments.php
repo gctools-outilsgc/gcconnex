@@ -19,7 +19,7 @@
  */
 
 $show_add_form = elgg_extract('show_add_form', $vars, true);
-$full_view = elgg_extract('full_view', $vars, true);
+// $full_view = elgg_extract('full_view', $vars, true);
 $limit = elgg_extract('limit', $vars, get_input('limit', 0));
 $page_owner = elgg_get_page_owner_entity();
 if (!$limit) {

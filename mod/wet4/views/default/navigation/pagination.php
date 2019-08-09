@@ -130,12 +130,6 @@ if ($total_pages > ($start_page + 5)){
 	$pages[$total_pages - 1] = [];
 }
 
-// add last page to be listed
-/*
-if ($total_pages >= ($start_page + 5)) {
-	$pages[$total_pages] = [];
-}
-*/
 // add next
 $next_offset = $offset + $limit;
 if ($next_offset >= $count) {

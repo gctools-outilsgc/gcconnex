@@ -166,27 +166,9 @@ if( $description_json->en && $description_json->fr ){
 	// prepend icon
 	$excerpt = $blog_icon . $excerpt;
 
-	// brief view
-	$params = array(
-		'entity' => $blog,
-		'title' => $title,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
-		'tags' => $tags,
-		'content' => $excerpt,
-	);
-
-	$params = $params + $vars;
-
-	//$list_body = elgg_view('object/elements/summary', $params);
-    
-	$extras_test = elgg_view_menu('extras', array(
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	));
 	// echo elgg_view_image_block($owner_icon, $list_body);
 	$format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], $owner_icon . '<div class="mrgn-lft-sm">' . $subtitle . '</div>');
-	$format_panel_body = elgg_format_element('div', ['class' => 'panel-body'], $title_link . $excerpt . $format_subtitle . '<div class="mrgn-tp-md">' .$metadata. $extras_test .'</div>');
+	$format_panel_body = elgg_format_element('div', ['class' => 'panel-body'], $title_link . $excerpt . $format_subtitle . '<div class="mrgn-tp-md">' .$metadata.'</div>');
 	echo elgg_format_element('div', ['class' => 'panel'], $format_panel_body);
 	
 }
