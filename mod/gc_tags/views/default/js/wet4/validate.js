@@ -44,7 +44,7 @@ requirejs( ["form-validate"], function() {
               var formAction = $(form).attr('action').split('/');
               var formActionType = formAction[formAction.length-2] + '/' +formAction[formAction.length-1];
               //array of actions that will open a modal
-              var createActions = ['blog/save','bookmarks/save','pages/edit','groups/edit','file/upload','discussion/save'];
+              var createActions = ['bookmarks/save','pages/edit','groups/edit','file/upload','discussion/save'];
 
               //test to see if this is an action we want to open a tag modal
               if($.inArray(formActionType, createActions) > -1){
@@ -57,7 +57,42 @@ requirejs( ["form-validate"], function() {
                       form.submit();
                   })
 
-              }else{
+              }else if(formActionType == 'blog/save'){
+                  //Don't show modal when preview in blog et click
+                  var name = 'preview'
+                  // Filtre cookie to get: preview
+                  var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+                 // if match is null it mean create was click 
+                 if(match != null){
+                    if (match[2] == 'true'){
+                      //switch to false before the draft is create
+                      document.cookie = "preview=false;";
+
+                      $(form).find('button').prop('disabled', true);
+                      form.submit();
+                    }else{
+                      var submitButton = $(form).find('button.form-submit');
+                      $('#tagsModal').modal({
+                        backdrop: 'static'
+                      });
+
+                      $(submitButton).on('click', function(){
+                        $(form).find('button').prop('disabled', true);
+                        form.submit();
+                      })
+                    }
+                  }else{
+                    var submitButton = $(form).find('button.form-submit');
+                    $('#tagsModal').modal({
+                      backdrop: 'static'
+                    });
+
+                    $(submitButton).on('click', function(){
+                      $(form).find('button').prop('disabled', true);
+                      form.submit();
+                    })
+                  }
+                }else{
                 for(var i in CKEDITOR.instances){
                   CKEDITOR.instances[i].updateElement();
                 }
