@@ -31,7 +31,6 @@ if (elgg_get_context() == 'admin') {
 $site_url = elgg_get_site_url();
 $jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
 $bootstrap = $site_url . "mod/wet4/views/default/js/bootstrap.min.js";
-//$bootstrap_tour = $site_url . "mod/wet4/views/default/js/bootstrap-tour.min.js";
 
 $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
 
@@ -41,30 +40,15 @@ $navbar = elgg_view('page/elements/navbar', $vars);
 $content = elgg_view('page/elements/body', $vars);
 $footer = elgg_view('page/elements/footer', $vars);
 //$acion
-$topcanbar = elgg_view('page/elements/topcanbar', $vars);
-$wavyblue = elgg_view('page/elements/wavyblue', $vars);
 $site_brand = elgg_view('page/elements/site-brand', $vars);
 $tabskip = elgg_view('page/elements/tabskip', $vars);
 
 $breadcrumbs = elgg_view('navigation/breadcrumbs');
 
-//get version of wet4 theme
-$wet4plugin = elgg_get_plugin_from_id('wet4');
-$version = $wet4plugin->getManifest()->getVersion();
-//elgg_echo('admin:plugins:label:version') . ': '
-
 //WIP development banner
 if(elgg_is_active_plugin('GoC_dev_banner')){
     $alert = elgg_view('banner/dev_banner');
 }
-/*
-if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
-    if(!elgg_in_context('event_calendar') && !elgg_in_context('gcforums')){
-        $group_cover_image = elgg_view('page/elements/cover_photo', $vars);
-    }
-
-}*/
-
 
 $feedbackText = elgg_echo('wet:feedbackText');
 $body = <<<__BODY
@@ -77,8 +61,6 @@ $body = <<<__BODY
 
 __BODY;
 
-//$body .= elgg_view('page/elements/topbar_wrapper', $vars);
-
 $userMenu = elgg_view('page/elements/topbar_wrapper', $vars);
 
 if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
@@ -89,75 +71,37 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && 
 	}
 
 	$feedback_button = "<a href='{$feedback_link}' class='btn btn-primary'><span class='glyphicon glyphicon-comment mrgn-rght-sm'></span>{$feedbackText}</a>";
-	$footer_version = "	<div class='col-sm-6 col-xs-6 datemod'>
-						<dl id='wb-dtmd'>
-						<dt>Version</dt>
-						<dd>$version</dd>
-						</dl>
-					</div>";
 }
 
 $body .= <<<__BODY
 	<header role="banner">
     $alert
-   <!-- <div class="elgg-inner">-->
-
-		<!-- </div>-->
-    	<div id="wb-bnr" class="container">
-
-
+  <div id="wb-bnr" class="container">
 </div>
 $site_brand
 
 $navbar
-
 $breadcrumbs
-
 	</header>
-
        <div class="container">
        $userMenu
        </div>
 
-    $group_cover_image
 	<main role="main" property="mainContentOfPage" class="container">
-
-        <!--<div class="elgg-inner">-->
-
-        <!--<section>-->
 			$content
-<!--</section>
-		</div>-->
-        <div class="row pagedetails">
-
-        $footer_version
-
-<div class="col-xs-6 text-right">
-
-$feedback_button
-
-</div>
-</div>
-
-
+      <div class="row pagedetails">
+				<div class="col-xs-12 text-right">
+					$feedback_button
+				</div>
+			</div>
 	</main>
-
-
-
 	<footer role="contentinfo" id="wb-info" class="visible-sm visible-md visible-lg wb-navcurr">
-
 			$footer
-
 	</footer>
-
     <script src="$bootstrap"></script>
     <script src=" $jsLocation "></script>
-
-
 </div>
 __BODY;
-
-
 
 $body .= elgg_view('page/elements/foot');
 

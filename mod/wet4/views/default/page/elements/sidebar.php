@@ -9,27 +9,11 @@
  * GC_MODIFICATION
  * Description: Removed the owners block and extras menu that normally appears on elgg sites
  */
-/*
-echo elgg_view_menu('extras', array(
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-));*/
-
-//echo elgg_view('page/elements/owner_block', $vars);
-
-
-//dirty quick fix to remove sidebar content from the wire
-
-    
-    //This display page menus in the sidebar right now 
-    //It's commented out and moved to page/layout/one_sidebar.php
-    //echo elgg_view_menu('page', array('sort_by' => 'name'));
 
 // optional 'sidebar' parameter
     if (isset($vars['sidebar'])) {
 	   echo $vars['sidebar'];
     }
-
 
 // @todo deprecated so remove in Elgg 2.0
 // optional second parameter of elgg_view_layout
@@ -42,7 +26,3 @@ echo elgg_view_menu('extras', array(
     if (isset($vars['area3'])) {
 	   echo $vars['area3'];
     }   
-
-
-
-

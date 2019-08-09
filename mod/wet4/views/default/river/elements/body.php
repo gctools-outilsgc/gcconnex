@@ -47,7 +47,6 @@ if ($summary === false) {
 		'class' => 'elgg-river-subject',
 		'is_trusted' => true,
 	));
-
 }
 
 $message = elgg_extract('message', $vars);
@@ -69,12 +68,7 @@ if ($responses) {
 $group_string = '';
 $object = $item->getObjectEntity();
 $container = $object->getContainerEntity();
-
-$subtype_test = $object->getSubtype();
-
-
 	$name = gc_explode_translation($container->name,$lang);
-
 
 	if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
 		$group_link = elgg_view('output/url', array(
@@ -85,8 +79,6 @@ $subtype_test = $object->getSubtype();
 		$group_string = elgg_echo('river:ingroup', array($group_link));
 	}
 //so when the activity happens in a group then display the users icon and stuff
-$subject = $item->getSubjectEntity();
-// $user_icon = elgg_view_entity_icon($subject, 'small');
 
 $type = $object->getType();
 if($type == 'group') {

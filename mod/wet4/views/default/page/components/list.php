@@ -124,8 +124,6 @@ if(elgg_in_context('friends')){ //datatable for colleagues, my groups
             echo elgg_format_element('table', ['class' => ' wb-tables table table-striped', 'id' => ''], $tHead . $tBody);
         }
 
-
-
     if ($position == 'after' || $position == 'both') {
 	    echo $nav;
     }
@@ -194,9 +192,6 @@ if(elgg_in_context('friends')){ //datatable for colleagues, my groups
         //pull it all together and display table
         echo elgg_format_element('table', ['class' => ' wb-tables table table-striped', 'id' => ''], $tHead . $tBody);
 
-
-
-
         if ($position == 'after' || $position == 'both') {
             echo $nav;
         }
@@ -234,7 +229,6 @@ if(elgg_in_context('friends')){ //datatable for colleagues, my groups
 			'value' => $item->guid,
             'class' => 'mrgn-rght-sm'
 		));
-            /* $item->toId    $item->fromId  $item->title   elgg_view_friendly_time($item->time_created) elgg_extract('metadata_name', $vars) */
 
         $subject_info = elgg_view('output/url', array(
 	        'href' => $item->getURL(),
@@ -309,13 +303,6 @@ if(elgg_in_context('friends')){ //datatable for colleagues, my groups
 } else if(elgg_in_context('member_by_dept')) { //members by deptartment
 
     foreach ($items as $item) {
-	//$item_view = elgg_view_list_item($item, $vars);
-	/*if (!$item_view) {
-		continue;
-	}*/
-
-
-
 	$li_attrs = ['class' => $item_classes];
 
 	if ($item instanceof \ElggEntity) {
@@ -387,8 +374,6 @@ if ($position == 'after' || $position == 'both') {
 }
 
 
-
-
 } else { //normal list for everything else
 
     foreach ($items as $item) {
@@ -405,8 +390,6 @@ if ($position == 'after' || $position == 'both') {
 		$subtype = $item->getSubtype();
 
 		$li_attrs['id'] = "elgg-$type-$guid";
-
-
 
 		$li_attrs['class'][] = "elgg-item-$type list-break mrgn-tp-md clearfix noWrap";
 

@@ -39,27 +39,10 @@
 	if (isset($vars['area1'])) echo $vars['area1'];
 
 	if (isset($vars['content'])) {
-/* REMOVE ME
-        if (elgg_is_logged_in() && $context !== 'group_profile') {
 
-            $buttons = elgg_view_menu('title', array(
-               'sort_by' => 'priority',
-               'class' => 'list-inline',
-            ));
-
-            $buttons2 = elgg_view_menu('title2', array(
-               'sort_by' => 'priority',
-               'class' => 'list-inline',
-            ));
-
-            //echo "<div class='title-menu-container clearfix'>ONE_SIDEBAR {$buttons} {$buttons2}</div>";
-
-        }
-        */
         echo $vars['content'];
 
 	}
-
 
     echo elgg_view('page/layouts/elements/footer', $vars);
 ?>

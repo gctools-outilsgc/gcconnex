@@ -17,7 +17,6 @@ echo elgg_view_deprecated("navigation/topbar_tools", array(), "Extend the topbar
 
 $site_url = elgg_get_site_url();
 $user = elgg_get_logged_in_user_entity()->username;
-$displayName = elgg_get_logged_in_user_entity()->name;
 $user_avatar = elgg_get_logged_in_user_entity()->geticonURL('small');
 $email = elgg_get_logged_in_user_entity()->email;
 
@@ -51,9 +50,6 @@ elgg_register_menu_item('user_menu_subMenu', array(
 
 $dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu dropdown-menu-right', 'sort_by' => 'priority'));
 
-
-$focus_dd = '<a href="#" class="focus_dd_link" style="display:none;"><i class="fa fa-caret-down" aria-hidden="true"></i><span class="wb-inv">'.elgg_echo('wet:dd:expand').'</span></a>';
-
 //admin link
 //check to see if user is an admin
 if(elgg_is_admin_logged_in()) {
@@ -67,7 +63,6 @@ if(elgg_is_admin_logged_in()) {
         'priority' => '0',
     ));
 }
-
 
 //create initial badge
 
