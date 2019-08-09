@@ -172,6 +172,7 @@ $account_exist_message = elgg_echo('registration:userexists');
 						$provinces['pov-que'] = 'Government of Quebec';
 						$provinces['pov-sask'] = 'Government of Saskatchewan';
 						$provinces['pov-yuk'] = 'Government of Yukon';
+						$provinces['CIRNAC-RCAANC'] = 'Crown-Indigenous Relations and Northern Affairs Canada';
 					} else {
 						$departments = $obj[0]->deptsFr;
 						$provinces['pov-alb'] = "Gouvernement de l'Alberta";
@@ -187,9 +188,10 @@ $account_exist_message = elgg_echo('registration:userexists');
 						$provinces['pov-que'] = 'Gouvernement du Québec';
 						$provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
 						$provinces['pov-yuk'] = 'Gouvernement du Yukon';
+						$provinces['CIRNAC-RCAANC'] = 'Relations Couronne-Autochtones et Affaires du Nord Canada';
 					}
 					$departments = json_decode($departments, true);
-
+					unset($departments['ou=INAC-AANC, o=GC, c=CA']);
 					echo elgg_view('input/select', array(
 						'name' => 'department',
 						'id' => 'department',

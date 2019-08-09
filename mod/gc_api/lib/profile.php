@@ -398,8 +398,11 @@ function profileUpdate($id, $data)
 				$provinces['pov-que'] = 'Government of Quebec';
 				$provinces['pov-sask'] = 'Government of Saskatchewan';
 				$provinces['pov-yuk'] = 'Government of Yukon';
+				$provinces['CIRNAC-RCAANC'] = 'Crown-Indigenous Relations and Northern Affairs Canada';
+				$provinces['PPS-SPP'] = 'Parliamentary Protective Service';
 				$deptAndProvincesEn = array_merge($deptListEn, $provinces);
-
+				unset($deptAndProvincesEn['ou=INAC-AANC, o=GC, c=CA']);
+				
 
 				$deptListFr = json_decode($obj[0]->deptsFr, true);
 				$provinces = array();
@@ -416,7 +419,10 @@ function profileUpdate($id, $data)
 				$provinces['pov-que'] = 'Gouvernement du Québec';
 				$provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
 				$provinces['pov-yuk'] = 'Gouvernement du Yukon';
+				$provinces['CIRNAC-RCAANC'] = 'Relations Couronne-Autochtones et Affaires du Nord Canada';
+				$provinces['PPS-SPP'] = 'Service de Protection Parlementaire';
 				$deptAndProvincesFr = array_merge($deptListFr, $provinces);
+				unset($deptAndProvincesFr['ou=INAC-AANC, o=GC, c=CA']);
 
 				if (!in_array($deptData['en'], $deptAndProvincesEn)) {
 					$response['error'] = 5;
@@ -665,7 +671,7 @@ function profileCreate($data)
 				$provinces['pov-sask'] = 'Government of Saskatchewan';
 				$provinces['pov-yuk'] = 'Government of Yukon';
 				$deptAndProvincesEn = array_merge($deptListEn, $provinces);
-
+				unset($deptAndProvincesEn['ou=INAC-AANC, o=GC, c=CA']);
 
 				$deptListFr = json_decode($obj[0]->deptsFr, true);
 				$provinces = array();
@@ -683,6 +689,8 @@ function profileCreate($data)
 				$provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
 				$provinces['pov-yuk'] = 'Gouvernement du Yukon';
 				$deptAndProvincesFr = array_merge($deptListFr, $provinces);
+				unset($deptAndProvincesFr['ou=INAC-AANC, o=GC, c=CA']);
+
 
 				if (!in_array($deptData['en'], $deptAndProvincesEn)) {
 					$response['error'] = 5;
