@@ -16,12 +16,6 @@
  * @uses $vars['footer']  Optional footer
  */
 
-
-
-//$class = 'elgg-layout elgg-layout-one-column clearfix';
-//if (isset($vars['class'])) {
-//    $class = "$class {$vars['class']}";
-//}
 if(elgg_get_context() == 'groups'){
 	echo elgg_view('page/elements/cover_photo', array());
 	echo elgg_view('groups/profile/summary', $vars);
@@ -70,9 +64,6 @@ echo '</section>';
 <div class="<?php echo $class; ?>row">
 	<?php
 $context = elgg_extract('context', $vars, elgg_get_context());
-		//echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
-
-		//echo elgg_view('page/layouts/elements/header', $vars);
 if ($vars['context']){
 
 	if (isset($vars['filter_override'])) {
@@ -117,17 +108,12 @@ if ($vars['context']){
 	$filter = elgg_view('page/layouts/elements/filter', $vars);
 	$vars['content'] = $filter . $vars['content'];
 }
-
-
     echo '<section class="col-md-6">';
-
-		echo $vars['content'];
-        echo '</section>';
-        echo '<section class="col-md-6">';
-
-        echo $vars['sidebar'];
-        echo '</section>';
-
+			echo $vars['content'];
+		echo '</section>';
+		echo '<section class="col-md-6">';
+			echo $vars['sidebar'];
+		echo '</section>';
 
 		// @deprecated 1.8
 		if (isset($vars['area1'])) {

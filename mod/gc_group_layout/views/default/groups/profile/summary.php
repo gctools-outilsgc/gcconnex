@@ -14,7 +14,9 @@ if (elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_enti
 $group = get_entity(elgg_get_page_owner_guid());
 $lang = get_current_language();
 $owner = $group->getOwnerEntity();
-$buttonTitle = 'Member';
+// TODO: Make this a settings gear sort of like humhub
+// TODO: Language
+$buttonTitle = '<span class="fa fa-lg fa-cog"><span class="wb-invisible">Group Settings</span></span>';
 if (!$owner) {
 	// not having an owner is very bad so we throw an exception
 	$msg = "Sorry, '" . 'group owner' . "' does not exist for guid:" . $group->guid;
@@ -315,12 +317,17 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 												 if($owner == elgg_get_logged_in_user_entity() || elgg_is_admin_logged_in()){
 														 $buttonTitle = elgg_echo('gprofile:settings');
 												 }
+												 // If you are a member of the group, add a quick link to invite
+												 echo elgg_view('output/url', array(
+													 'text' => '+ Invite',
+													 'href' => '/groups/invite/' .$group->guid,
+													 'class' => 'btn btn-primary mrgn-rght-sm',
+												 ));
 								 ?>
 						 <button type="button" class="btn btn-custom dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								 <?php echo $buttonTitle ?>
 								 <span class="caret"></span>
 								 </button>
-
 												 <?php
 																 //action buttons
 																 echo $buttons;

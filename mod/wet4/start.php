@@ -1127,16 +1127,18 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 	// WIP bookmark objects prototype
 	// TODO: conditional rendering on only objects + pass a better title sometimes
 	if(elgg_is_logged_in()) {
-		$user_guid = elgg_get_logged_in_user_guid();
-		$address = urlencode(current_page_url());
-		$options = array(
-			'name' => 'bookmark',
-			'text' => '<span class="fa fa-lg fa-bookmark"></span>',
-			'href' => "bookmarks/add/$user_guid?address=$address",
-			'title' => elgg_echo('bookmarks:this'),
-			'rel' => 'nofollow',
-		);
-		$return[] = \ElggMenuItem::factory($options);
+		if (!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'group_profile', 'bookmarks'))) {
+			$user_guid = elgg_get_logged_in_user_guid();
+			$address = urlencode(current_page_url());
+			$options = array(
+				'name' => 'bookmark',
+				'text' => '<span class="fa fa-lg fa-bookmark icon-unsel"></span>',
+				'href' => "bookmarks/add/$user_guid?address=$address",
+				'title' => elgg_echo('bookmarks:this'),
+				'rel' => 'nofollow',
+			);
+			$return[] = \ElggMenuItem::factory($options);
+		}
 	}
 
 	return $return;
@@ -1150,7 +1152,7 @@ function wet4_group_entity_menu_setup($hook, $type, $value, $params) {
 	$entity = $params['entity'];
 	foreach ($value as $index => $item) {
 			$name = $item->getName();
-			if ($name == 'likes' || $name == 'likes_count' || $name == 'members' || $name == 'unlike' || $name == 'thewire_tools_reshare_count') {
+			if ($name == 'likes' || $name == 'likes_count' || $name == 'members' || $name == 'unlike' || $name == 'thewire_tools_reshare_count' || $name == 'bookmark') {
 					unset($value[$index]);
 			}
 	}

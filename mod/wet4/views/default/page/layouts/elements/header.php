@@ -18,8 +18,6 @@
 //check what page we are on
 $checkPage = elgg_get_context();
 
-//echo $checkPage;
-
 if (isset($vars['header'])) {
 	echo '<div class="elgg-head clearfix">';
 	echo $vars['header'];
@@ -36,8 +34,6 @@ $buttons = elgg_view_menu('title', array(
 ));
 
 if ($title || $buttons) {
-
-
 
     //do not display main heading on discussion page
     if($checkPage == 'group_profile'){
@@ -64,8 +60,7 @@ if ($title || $buttons) {
                 elgg_pop_context();
             }
         }
-            $format_title = elgg_view_title($vars['title'], array('class' => 'elgg-heading-main mrgn-lft-sm'));
-            echo elgg_format_element('div', ['class' => 'd-flex title-button-combo'], $format_title .'<div class="title-action-button d-flex">' . $buttons2 . $buttons . '</div>');
+        $format_title = elgg_view_title($vars['title'], array('class' => 'elgg-heading-main mrgn-lft-sm'));
+        echo elgg_format_element('div', ['class' => 'd-flex title-button-combo'], $format_title .'<div class="title-action-button d-flex">' . $buttons2 . $buttons . '</div>');
     }
-
 }

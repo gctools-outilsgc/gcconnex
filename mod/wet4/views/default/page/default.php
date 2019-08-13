@@ -33,13 +33,10 @@ $jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
 $bootstrap = $site_url . "mod/wet4/views/default/js/bootstrap.min.js";
 
 $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
-
-
 $lang = elgg_view('page/elements/chng-lang', $vars);
 $navbar = elgg_view('page/elements/navbar', $vars);
 $content = elgg_view('page/elements/body', $vars);
 $footer = elgg_view('page/elements/footer', $vars);
-//$acion
 $site_brand = elgg_view('page/elements/site-brand', $vars);
 $tabskip = elgg_view('page/elements/tabskip', $vars);
 
@@ -53,10 +50,9 @@ if(elgg_is_active_plugin('GoC_dev_banner')){
 $feedbackText = elgg_echo('wet:feedbackText');
 $body = <<<__BODY
 <div class="elgg-page-messages">
-    $messages
+  $messages
 </div>
-    $tabskip
-
+  $tabskip
 <div class="elgg-page elgg-page-default">
 
 __BODY;
@@ -77,23 +73,22 @@ $body .= <<<__BODY
 	<header role="banner">
     $alert
   <div id="wb-bnr" class="container">
-</div>
-$site_brand
+	</div>
+	$site_brand
 
-$navbar
-$breadcrumbs
+	$navbar
+	$breadcrumbs
 	</header>
-       <div class="container">
-       $userMenu
-       </div>
-
+  <div class="container">
+    $userMenu
+  </div>
 	<main role="main" property="mainContentOfPage" class="container">
-			$content
-      <div class="row pagedetails">
-				<div class="col-xs-12 text-right">
-					$feedback_button
-				</div>
+		$content
+		<div class="row pagedetails">
+			<div class="col-xs-12 text-right">
+				$feedback_button
 			</div>
+		</div>
 	</main>
 	<footer role="contentinfo" id="wb-info" class="visible-sm visible-md visible-lg wb-navcurr">
 			$footer

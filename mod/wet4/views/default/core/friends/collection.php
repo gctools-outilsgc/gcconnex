@@ -59,14 +59,6 @@ echo " </h2>";
 // individual collection panels
 $friends = $vars['collection']->entities;
 if ($friends) {
-    /*
-	$content = elgg_view('core/friends/collectiontabs', array(
-		'owner' => elgg_get_logged_in_user_entity(),
-		'collection' => $vars['collection'],
-		'friendspicker' => $vars['friendspicker'],
-	));
-    */
-
 	echo elgg_view('input/friendspicker', array(
 		'entities' => $friends,
 		'value' => $vars['collection']->members,
@@ -78,9 +70,7 @@ if ($friends) {
 <?php //@todo JS 1.8: no ?>
 	<script type="text/javascript">
 	$(function () {
-
-			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load(elgg.config.wwwroot + 'mod/wet4/pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
-
+		$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load(elgg.config.wwwroot + 'mod/wet4/pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 	});
 	</script>
 	<?php
