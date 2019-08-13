@@ -26,8 +26,6 @@ if (!$vars['title'] && $vars['title'] !== false) {
 	$vars['title'] = elgg_echo($context);
 }
 
-
-
 // 1.8 supported 'filter_override'
 if (isset($vars['filter_override'])) {
 	$vars['filter'] = $vars['filter_override'];

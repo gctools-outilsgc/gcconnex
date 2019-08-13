@@ -19,7 +19,6 @@
  */
 
 $show_add_form = elgg_extract('show_add_form', $vars, true);
-// $full_view = elgg_extract('full_view', $vars, true);
 $limit = elgg_extract('limit', $vars, get_input('limit', 0));
 $page_owner = elgg_get_page_owner_entity();
 if (!$limit) {
@@ -35,13 +34,14 @@ $attr['class'][] = 'elgg-comments testing';
 // work around for deprecation code in elgg_view()
 unset($vars['internalid']);
 
-//check how many comments topic has
+//check if there is at least 1 comment
     $num_replies = elgg_get_entities(array(
         'type' => 'object',
         'subtype' => 'comment',
         'container_guid' => $vars['entity']->guid,
         'count' => true,
         'distinct' => false,
+        'limit' => 1,
     ));
     
         //Nick - keep the heading so users know comments are supposed to be here!
@@ -52,7 +52,6 @@ unset($vars['internalid']);
             echo '<h2 class="panel-title mrgn-bttm-md mrgn-tp-md">' . elgg_echo('comments') . '</h2>';
         }
         
-    
         if($num_replies == 0){
             echo '<div>'.elgg_echo('generic_comment:none').'</div>';
         }
