@@ -85,9 +85,10 @@ HTML;
 	$posted = elgg_echo('generic_comment:on', array($commenter_link, $entity_link));
 
 	$body = <<<HTML
-<span class="elgg-subtext">
-	$posted ($friendlytime): $excerpt
-</span>
+<div class="elgg-subtext mrgn-bttm-md">
+	$posted ($friendlytime):
+	<div>$excerpt</div>
+</div>
 HTML;
 
 	echo elgg_view_image_block($commenter_icon, $body);

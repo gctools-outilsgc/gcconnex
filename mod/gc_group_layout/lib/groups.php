@@ -429,7 +429,7 @@ function groups_handle_members_page($guid) {
 
 	elgg_push_breadcrumb(gc_explode_translation($group->title,$lang), $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('groups:members'));
-/*
+
 	$db_prefix = elgg_get_config('dbprefix');
 	$content = elgg_list_entities_from_relationship(array(
 		'relationship' => 'member',
@@ -441,9 +441,9 @@ function groups_handle_members_page($guid) {
 		'order_by' => 'u.name ASC',
 	));
 
-	$content .= " <br/>-----<br/>";
-*/
-	$content .= elgg_view('group/group_members', array('group_guid' => $guid));
+	//$content .= " <br/>-----<br/>";
+
+	//$content .= elgg_view('group/group_members', array('group_guid' => $guid));
 
 	$params = array(
 		'content' => $content,

@@ -12,7 +12,7 @@
  * Author: GCTools Team
  */
 $entity = $vars['entity'];
-$size = elgg_extract('size', $vars, 'medium');
+$size = elgg_extract('size', $vars, 'small');
 
 $icon = elgg_view_entity_icon($entity, $size, $vars);
 
@@ -65,5 +65,5 @@ if (elgg_get_context() == 'gallery') {
 
 	$list_body = elgg_view('user/elements/summary', $params);
 
-	echo elgg_view_image_block($icon, $list_body, $vars);
+	echo '<div class="panel"><div class="panel-body">' .elgg_view_image_block($icon, $list_body, $vars) .'</div></div>';
 }

@@ -81,12 +81,6 @@ $metadata = elgg_view_menu('entity', array(
 
 $subtitle = "$author_text $date $categories";
 
-
-// do not show the metadata and controls in widget view
-if (elgg_in_context('widgets')) {
-    //$metadata = '';
-}
-
 // Show blog
 if ($full) {
 	// full view
@@ -113,7 +107,6 @@ if( $description_json->en && $description_json->fr ){
 	echo'</div>';
 }
 
-	
 	$blog_descr = gc_explode_translation($blog->description, $lang);
 
  	$body = elgg_view('output/longtext', array(
@@ -121,21 +114,13 @@ if( $description_json->en && $description_json->fr ){
 		'class' => 'blog-post',
 	));
 
-	$header = elgg_view_title($blog->title);
-
-
 	$format_full_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md mrgn-bttm-md'], $owner_icon . '<div class="mrgn-lft-sm">' .$subtitle. '</div>');
 	$format_full_blog = elgg_format_element('div', ['class' => 'panel-body'], $body . $tags . $format_full_subtitle . $metadata);
 	echo elgg_format_element('div', ['class' => 'panel'], $format_full_blog);
-    echo '<div id="group-replies" class="elgg-comments clearfix">';
+  echo '<div id="group-replies" class="elgg-comments clearfix">';
     
 } else {
 
-	// identify available content
-/*	if(($blog->description2) && ($blog->description)){
-			
-		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}*/
 	// how to show strapline
 	if (elgg_in_context("listing")) {
 		$excerpt = "";

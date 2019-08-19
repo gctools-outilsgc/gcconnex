@@ -3016,8 +3016,8 @@ tbody.collapse.in {
       line-height: 1.4375;
       text-decoration: none;
       color: #335075;
-      background-color: #eaebed;
-      border: 1px solid #dcdee1;
+      background-color: transparent;
+      border: 1px solid transparent;
       margin-left: -1px; }
     .pagination > li:first-child > a,
     .pagination > li:first-child > span {
@@ -3043,8 +3043,8 @@ tbody.collapse.in {
   .pagination > .active > span:focus {
     z-index: 2;
     color: #fff;
-    background-color: #055959;
-    border-color: #055959;
+    background-color: #047177;
+    border-color: #047177;
     cursor: default; }
   .pagination > .disabled > span,
   .pagination > .disabled > span:hover,

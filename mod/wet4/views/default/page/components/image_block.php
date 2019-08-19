@@ -27,7 +27,7 @@ $body = elgg_extract('body', $vars, '');
 $image = elgg_extract('image', $vars, '');
 $alt_image = elgg_extract('image_alt', $vars, '');
 // $test = $_SESSION[idpage];
-$class = 'col-xs-12 mrgn-tp-sm ';
+$class = '';
 $additional_class = elgg_extract('class', $vars, '');
 
 $reshared = elgg_extract('reshare', $vars, '');
@@ -140,7 +140,7 @@ if ($alt_image) {
 
 echo <<<HTML
 
-<article class="d-flex" $id>
+<article class="d-flex $class" $id>
 
 	$image$alt_image$body$echo
     <div class="clearfix"></div>

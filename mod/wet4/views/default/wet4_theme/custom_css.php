@@ -389,7 +389,13 @@ max-height: 500px;
      .elgg-menu-user-menu-default {
         margin-right: -35px;
         margin-bottom: 15px;
-     }
+    }
+
+    @media (max-width: 480px){
+        .elgg-menu-user-menu-default {
+            margin-right: -20px;
+        }
+    }
 
 /****************************************/
 
@@ -898,22 +904,14 @@ max-height: 500px;
     /******************** Pager ********************/
 
     .pagination {
-        margin: 0;
-        left: 10%;
-    }
-
-    .pagination li {
-        border-radius: 0;
-    }
-
-    .pagination li a {
-        border-radius: 0;
-        margin-bottom: 0;
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        border-radius: .35rem;
     }
 
     .elgg-pagination{
-        left:25% !important;
-
+        left: 0 !important;
     }
     .ui-autocomplete {
         padding-left: 0;
