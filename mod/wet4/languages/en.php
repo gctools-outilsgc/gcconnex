@@ -297,7 +297,7 @@ return array(
     'userMenu:account' => "Account Settings",
     'userMenu:messages' => "My Messages",
     'userMenu:colleagues' => "My Colleagues",
-    'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout',
+    'userMenu:usermenuTitle' =>'Click here for links to your profile, account settings and logout',
     'wet:usermenu:helpertext' => "User Menu. Contains Links to Notifications, Profile and Logout",
     /*NEW*/
 		'wet:dd:expand'=>"Open drop down of most recent messages",
