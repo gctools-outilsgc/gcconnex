@@ -313,7 +313,7 @@ return array(
 	'userMenu:account' => "Paramètres",
 	'userMenu:messages' => "Mes messages",
 	'userMenu:colleagues' => "Mes collègues",
-	'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout(translate me)', /*NEW*/
+	'userMenu:usermenuTitle' => 'Cliquez ici pour des liens vers votre profil, les paramètres de compte et la déconnexion',
 	'wet:usermenu:helpertext' => "Menu Utilisateur. Liens vers Notifications, Profil et Déconnexion",
 	'wet:dd:expand'=>"Open drop down of most recent messages(fr)",
 

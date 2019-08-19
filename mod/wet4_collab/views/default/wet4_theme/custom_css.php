@@ -109,9 +109,7 @@ textarea.error:focus{
   /****************************************/
 
 .list-break{
-    margin-top: 5px !important;
-    padding-bottom: 5px !important;
-    border-bottom: 1px solid #ddd !important;
+
 }
 
 .list-break:last-child{
@@ -615,10 +613,10 @@ max-height: 500px;
     /******************** Custom Button Styles ********************/
 
     .btn-custom {
-          color: #335075;
-          background-color: #f3f3f3;
-          border-color: #dcdee1;
-        border-radius: 0;
+          color: #137991;
+          background-color: white;
+          border-color: #137991;
+        border-radius: 5px;
     }
 
     .btn-custom a {
@@ -703,8 +701,8 @@ max-height: 500px;
 
     /******************** Removing Ugly rounded Corners ********************/
 
-    .form-control {
-        border-radius: 0;
+    .elgg-form .form-control {
+        margin-bottom: 20px;
     }
 
 .dropdown a:focus {
@@ -767,24 +765,19 @@ max-height: 500px;
     }
 
     .elgg-tag {
-
-
-        padding: 2px;
-        border: 1px solid #46246A;
-        border-radius: 8px;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
+        padding: 3px;
+        border: 1px solid #CAD7DC;
         color: white;
-        margin: 1px;
+        margin: 1px 8px 1px 1px;
+        background-color: #EBFAFF;
+        position: relative;
     }
-
     .elgg-tag:hover{
-
         background: #f5f5f5;
     }
 
     .elgg-tag a {
-
+        color: #707070;
         text-decoration: none;
     }
 
@@ -880,7 +873,7 @@ max-height: 500px;
 
 .col-md-8 .custom-index-panel:first-of-type{
     background:transparent;
-    border:none;
+    border:none !important;
     box-shadow:none;
 
 }
@@ -1402,12 +1395,10 @@ border:none;
     margin-bottom: 0; }
   .elgg-message > p + p {
     margin-top: 5px; }
-
 .elgg-message > :first-child{
      margin-left: 1.2em;
     margin-top: auto;
 }
-
 .elgg-message > :first-child:before{
     display: inline-block;
     font-family: "Glyphicons Halflings";
@@ -1859,7 +1850,224 @@ figcaption{
   width: 100%;
 }
 
+.elgg-list-group {
+    background-color: white;
+    margin-top: 10px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 4px;
+}
+.elgg-list-group .au_subgroups_group_icon-medium-wet4 {
+    margin: 10px 5px 10px 10px !important;
+    display: inline-block !important;
+    width: 50px !important;
+    max-width: 100% !important;
+}
+.elgg-list-group .au_subgroups_group_icon-medium-wet4 img {
+    border-radius: 2px !important;
+}
+
+.elgg-river-image-block .elgg-river-image {
+  float: left;
+  margin-right: 8px;
+}
+
+.river-group-object .river-group-avatar {
+  margin: -25px 12px 12px 12px !important;
+  background-color: white;
+}
+
+.river-group-avatar .au_subgroups_group_icon-medium-wet4 {
+    margin: 0 !important;
+    display: inline-block !important;
+    width: 65px !important;
+    max-width: 100% !important;
+}
+
+.river-group-avatar .au_subgroups_group_icon-medium-wet4 img {
+    border-radius: 0 !important;
+}
+
+.elgg-menu-river {
+  float: none !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  height: 25px;
+  margin-top: 10px;
+}
+
+
+.elgg-menu-river > li {
+  margin-left: 0 !important;
+  margin-right: 10px;
+}
+
+.elgg-menu-river > li > a .elgg-icon {
+  color: #aaa;
+  font-size: 22px;
+  margin: 0 auto;
+}
+
+.elgg-list-river {
+  border-top: none !important;
+}
+
+.elgg-list-river > li {
+  border: none !important;
+}
+
+.elgg-river-attachments, .elgg-river-message, .elgg-river-content { 
+  border-left: none !important;
+  padding-left: 0px !important;
+}
+
+.elgg-river-responses .elgg-item-object-comment {
+  position: relative;
+  margin: 35px 0 0 0;
+  border: none !important;
+  padding: 8px 10px !important;
+  margin-top: 14px;
+}
+
+.elgg-river-responses .elgg-output {
+  background-color: #f8f9fa !important;
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.elgg-river-responses .elgg-body .elgg-output {
+  margin-top: 5px !important;
+}
+
+.elgg-river-timestamp {
+    color: #666;
+    font-size: 85%;
+    font-style: italic;
+    line-height: 1.2em;
+    display: inline-block;
+}
+
+.elgg-avatar-small-wet4 > a > img {
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 50% !important;
+    background-clip: border;
+    background-size: 45px;
+}
+
+.elgg-river-message {
+    margin: 12px 0;
+}
+
+.elgg-river-file-attachment{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+}
+.elgg-river-file-attachment .river-file-title{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.d-flex{
+    display: flex!important;
+}
+.wet-image-block-body{
+    margin-left: 8px;
+    width: 100%;
+}
+.justify-content-center {
+    justify-content: center!important;
+}
+
+.title-button-combo {
+    align-items: center!important;
+    padding-bottom: 2px;
+    margin-bottom: 12px;
+}
+.title-button-combo h2 {
+    margin-top: 16px;
+}
+
+.title-action-button {
+    margin-left: auto!important;
+    margin-top: 12px;
+}
+.title-action-button ul {
+    padding-right: 0 !important;
+}
+.title-action-button ul li {
+    padding-right: 0 !important;
+}
+
+.file-tools-file {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+.file-tools-file .summary-title {
+    margin-bottom: 0px !important;
+}
+.file-tools-file .summary-title a {
+    font-size: 18px !important;
+}
+
+.elgg-menu-user-menu-default {
+        margin-right: -35px;
+        margin-bottom: 15px;
+}
+
+.new-wire-list-object, .thewire-form {
+    padding: 15px;
+    border-bottom: 1px solid #DCDCDC;
+}
+
 .userMenuAvatar img {
   width: 40px;
   height: auto;
+}
+
+/*****Custom index classes***/
+.index-main .panel-default:not(.newsfeed-filter){
+    background:transparent !important;
+    border:none !important;
+    box-shadow:none !important;
+}
+.index-main .panel-default:not(.newsfeed-filter) .panel-heading{
+    background:transparent !important;
+    border:none !important;
+    box-shadow:none !important;
+}
+
+.index-main .panel-default:first-child .panel-heading{
+    display:none;
+    visibility:none;
+}
+
+.mentions-user-link:hover {
+  background-color: #46246A;
+}
+
+ul.elgg-list-bulleted, ol.elgg-list-bulleted {
+  list-style: disc;
+  padding-left: 15px;
+  margin-bottom: 0;
+}
+
+ul.elgg-list-bulleted li, ol.elgg-list-bulleted li {
+  padding-bottom: 10px;
+}
+
+/*** Group Cover Photo ***/
+.groups-profile {
+  z-index: 99 !important;
+}
+
+table.bordered, table.bordered td {
+  border: 1px solid #000;
+}
+
+table.bordered td {
+  padding: 2px 4px 0;
 }

@@ -23,11 +23,11 @@ if (!$owner) {
 	throw new InvalidParameterException($msg);
 }
 if($group->cover_photo =='nope' || $group->cover_photo ==''){
-		$c_photo_top_margin = 'group-no-cover';
-		// TODO Put a generic cover photo here and fix this layout
-		echo '<div class="row group-padding-helper group-place-holder-cover"></div>';
+	$c_photo_top_margin = 'group-no-cover';
+	// TODO Put a generic cover photo here and fix this layout
+	echo '<div class="row group-padding-helper"> <div class="group-place-holder-cover"></div> </div>';
 }else{
-    $c_photo_top_margin = ' groups-profile';
+	$c_photo_top_margin = ' groups-profile';
 }
 ?>
 <div class="row group-padding-helper">
