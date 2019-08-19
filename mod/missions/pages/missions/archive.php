@@ -20,12 +20,8 @@ $options['type'] = 'object';
 $options['subtype'] = 'mission';
 $options['metadata_name_value_pairs'] = array(array(
 		'name' => 'state',
-		'value' => 'completed'
-), array(
-		'name' => 'state',
-		'value' => 'cancelled'
+		'value' => array('completed', 'cancelled')
 ));
-$options['metadata_name_value_pairs_operator'] = 'OR';
 $options['limit'] = 0;
 $entity_list = elgg_get_entities_from_metadata($options);
 
