@@ -115,13 +115,6 @@ if( $description_json->en && $description_json->fr ){
 	}
 
 } else {
-
-	// identify available content
-/*	if(($event->long_description2) && ($event->long_description)){
-			
-		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}*/
-
 	$time_bit = event_calendar_get_formatted_time($event);
 	$icon = '<img src="'.elgg_view("icon/object/event_calendar/small").'" />';
 	$extras = array($time_bit);

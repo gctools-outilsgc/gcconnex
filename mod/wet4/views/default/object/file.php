@@ -226,7 +226,8 @@ if( $description_json->en && $description_json->fr ){
 	$params = array(
 		"entity" => $file,
 		"subtitle" => $subtitle . $author_text . ' - ' . $date . ' - ' . $download_link,
-		"content" => $excerpt
+		"content" => $excerpt,
+		"tags" => false,
 	);
 	$params = $params + $vars;
 	$list_body = elgg_view("object/elements/summary", $params);

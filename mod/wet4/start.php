@@ -1127,7 +1127,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 	// WIP bookmark objects prototype
 	// TODO: conditional rendering on only objects + pass a better title sometimes
 	if(elgg_is_logged_in()) {
-		if (!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'group_profile', 'bookmarks'))) {
+		if (in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'group_profile', 'bookmarks')) || elgg_instanceof($entity, 'user')) {}else{
 			$user_guid = elgg_get_logged_in_user_guid();
 			$address = urlencode(current_page_url());
 			$options = array(

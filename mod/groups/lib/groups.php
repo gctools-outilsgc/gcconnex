@@ -404,7 +404,7 @@ function groups_handle_members_page($guid) {
 
 	$params = array(
 		'content' => $content,
-		'title' => $title,
+		'title' => $title . 'TESTING',
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);

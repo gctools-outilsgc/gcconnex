@@ -8,8 +8,7 @@
 
 $object = $vars['item']->getObjectEntity();
 
-echo elgg_view('page/components/image_block', array(
-	'image' => '<img src="' . elgg_get_site_url() . 'mod/event_calendar/images/event_icon.gif" />',
+echo elgg_view('page/components/river_image_block', array(
 	'body' => elgg_view('river/elements/body', $vars),
 	'class' => 'panel panel-river',
 ));
