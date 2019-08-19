@@ -28,16 +28,19 @@ if (!$owner) {
 	throw new InvalidParameterException($msg);
 }
 if($group->cover_photo =='nope' || $group->cover_photo ==''){
-    $c_photo_top_margin = '';
+	$c_photo_top_margin = 'group-no-cover';
+	// TODO Put a generic cover photo here and fix this layout
+	echo '<div class="row group-padding-helper"> <div class="group-place-holder-cover"></div> </div>';
 }else{
-    $c_photo_top_margin = ' groups-profile';
+	$c_photo_top_margin = ' groups-profile';
 }
 ?>
+<div class="row group-padding-helper">
 <div class="panel panel-custom clearfix elgg-image-block col-xs-12 <?php echo $c_photo_top_margin; ?>">
    <div class="group-summary-holder clearfix">
-	   <div class="col-xs-9">
+	   <div class="col-xs-9 d-flex">
 
-		   <div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
+		   <div class="group-profile-image-size">
 			<?php
 				// we don't force icons to be square so don't set width/height
 				echo elgg_view_entity_icon($group, 'medium', array(
@@ -52,7 +55,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 
 
-		<div class="groups-info col-xs-10 col-md-10 ">
+		<div class="groups-info">
             <h1 class="group-title">
                 <?php
                
@@ -153,27 +156,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 												}
 												echo '<li class="mrgn-tp-sm">'.elgg_view('output/url', $options).'</li>';
 
-												//Nick - Added a link to like the group!
-												if (elgg_is_logged_in()) {
-													$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($group->guid);
-
-													//Has this user liked this already?
-													if ($hasLiked) {
-														$options = array(
-															'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$group->guid}"),
-															'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('entity:unlike:link:group', array($group->name)).'</span>',
-															'title' => elgg_echo('likes:remove') . ' ' .elgg_echo('group'),
-														);
-
-													} else {
-
-														$options = array(
-															'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$group->guid}"),
-															'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('entity:like:link:group', array($group->name)).'</span>',
-															'title' => elgg_echo('likes:likethis') . ' ' . elgg_echo('group'),
-														);
-													}
-												}
 												echo '<li class="mrgn-tp-sm mrgn-lft-sm">'.elgg_view('output/url', $options).'</li>';
 	
 												// This is the code to add the notification bell to the page to the left of the member button
@@ -347,10 +329,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 				 </div>
 		</div>
 
-
-
-
-
     </div>
+</div>
 
 <?php } ?>

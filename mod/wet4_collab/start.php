@@ -16,7 +16,7 @@ function wet4_collab_theme_init() {
 	//message preview
     elgg_register_ajax_view("messages/message_preview");
 	
-	elgg_register_plugin_hook_handler('register', 'menu:user_menu', 'remove_custom_colleagues_menu_item', 1);
+	//elgg_register_plugin_hook_handler('register', 'menu:user_menu', 'remove_custom_colleagues_menu_item', 1);
 	elgg_register_event_handler('pagesetup', 'system', 'add_custom_colleagues_menu_item', 1000);
 
     elgg_unregister_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_email');
@@ -57,7 +57,7 @@ function remove_custom_colleagues_menu_item($hook, $type, $return, $params) {
     }
     return $return;
 }
-
+/*
 function add_custom_colleagues_menu_item() {
 	$user = elgg_get_logged_in_user_entity();
 
@@ -97,7 +97,7 @@ function add_custom_colleagues_menu_item() {
 
 		elgg_register_menu_item("user_menu", $params);
 	}
-}
+}*/
 
 function change_user_email() {
 	$email = get_input('email');
