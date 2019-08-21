@@ -1,5 +1,7 @@
 <?php
 
+elgg_require_js('mentions/autocomplete');
+
 $vars = array(
 	'class' => 'mentions-popup hidden',
 	'id' => 'mentions-popup',
