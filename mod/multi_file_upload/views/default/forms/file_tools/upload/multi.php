@@ -19,9 +19,7 @@ if (elgg_instanceof($page_owner, "group", null, "ElggGroup")) {
 	$return_url = $site_url . "file/owner/" . $page_owner->username;
 }
 
-// load JS
-//elgg_load_js("jquery.uploadify");
-//elgg_load_css("jquery.uploadify");
+elgg_require_js('multi_file_upload/fileinput');
 
 elgg_load_js("fileinput-fa");
 elgg_load_css("bootstrap-fileinput-css");

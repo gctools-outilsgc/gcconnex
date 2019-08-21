@@ -6,7 +6,7 @@
  * @package multi_file_input
  * @author GCTools Team
  */
-var dtpath = elgg.normalize_url() + 'mod/multi_file_upload/js/fileinput';
+var dtpath = elgg.normalize_url() + 'mod/multi_file_upload/js/fileinput.min';
 
 require.config({
     paths: {

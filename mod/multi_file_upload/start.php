@@ -16,7 +16,6 @@ function multi_file_init(){
 
   elgg_extend_view('file_tools/sidebar/info', 'file_tools/message');
 
-  elgg_require_js('multi_file_upload/fileinput');
   elgg_register_css('bootstrap-fileinput-css', "mod/multi_file_upload/css/fileinput.min.css");
 
   //custom css for bootstrap fileinput
