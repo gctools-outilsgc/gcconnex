@@ -9290,7 +9290,7 @@ html[lang='fr'].mediumview .fdbckpromo .accnt-prmry {
   #wb-srch button,
   .srchbox input,
   .srchbox button {
-    border-radius: 0; }
+    border-radius: 16px; }
   #wb-srch button,
   .srchbox button {
     background-color: #ededed;
@@ -9317,7 +9317,7 @@ html[lang='fr'].mediumview .fdbckpromo .accnt-prmry {
     -webkit-box-shadow: none;
             box-shadow: none;
     color: #555;
-    margin-right: -5px;
+    margin-right: -36px;
     min-width: 235px;
       height:33px;
     position: relative; }
@@ -9710,7 +9710,6 @@ Carousel
     border-bottom: 3px solid;
     border-bottom-color: #055959;
     text-decoration: none;
-    background-color: #f9f9f9;
         padding-bottom: 0;
     margin-bottom:10px;
      -webkit-border-radius: 5px 5px 0 0;
@@ -9724,7 +9723,6 @@ Carousel
     text-decoration: none;
     border-bottom: 3px solid;
     border-bottom-color: #055959;
-    background-color: #f9f9f9;
     padding-bottom: 0;
     margin-bottom:10px;
     -webkit-border-radius: 5px 5px 0 0;
