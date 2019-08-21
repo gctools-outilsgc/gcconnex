@@ -11,6 +11,7 @@
 
 
 //YOLO CODE V2
+elgg_require_js("stream_newsfeed");
 
 if(elgg_is_logged_in()){
     $loading = elgg_view('output/img', array(

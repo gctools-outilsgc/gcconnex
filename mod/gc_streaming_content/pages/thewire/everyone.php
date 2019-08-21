@@ -3,7 +3,7 @@
  * All wire posts
  * 
  */
-
+elgg_require_js("stream_wire");
 elgg_push_breadcrumb(elgg_echo('thewire'));
 
 $title = elgg_echo('thewire:everyone');
