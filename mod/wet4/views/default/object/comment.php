@@ -67,11 +67,11 @@ if ($full_view) {
 	$body = <<<HTML
 $anchor
 <div class="mbn">
-	$menu
 	$commenter_link
 	<span class="timeStamp">
 		$friendlytime
 	</span>
+	$menu
 	$comment_text
 </div>
 HTML;

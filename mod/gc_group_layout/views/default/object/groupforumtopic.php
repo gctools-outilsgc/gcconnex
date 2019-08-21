@@ -28,9 +28,6 @@ if (!$poster) {
 	$excerpt = elgg_get_excerpt(gc_explode_translation($topic->description, $lang));
 	$description = gc_explode_translation($topic->description, $lang);
 
-
-
-
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
 $poster_link = elgg_view('output/url', array(
 	'href' => $poster->getURL(),
@@ -39,7 +36,6 @@ $poster_link = elgg_view('output/url', array(
 ));
 
 $poster_text = elgg_echo('groups:started', array($poster_link));
-//$poster_text = elgg_echo('groups:started', array($poster->name));
 
 $tags = elgg_view('output/tags', array('tags' => $topic->tags));
 $date = elgg_view_friendly_time($topic->time_created);
@@ -131,7 +127,6 @@ if ($title_link === '') {//add translation
 	$title_link = elgg_view('output/url', $params);
 }
 if ($full) {
-    // $replies_link - went here
 	$subtitle = "$poster_text $date ";
 
 // identify available content
@@ -183,7 +178,7 @@ HTML;
   $format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], $poster_icon . $subtitle);
   $format_title = elgg_format_element('h3', ['class' => 'mrgn-tp-0 mrgn-bttm-md'], $title_link);
   $format_metadata = elgg_format_element('div', ['class' => 'mrgn-tp-md'], $metadata);
-	$image_block_body = elgg_format_element('div', ['class' => 'panel-body'], $format_title . $excerpt . $format_subtitle . $replies_link . $format_metadata);
+	$image_block_body = elgg_format_element('div', ['class' => 'panel-body'], $format_title . $excerpt . '<div class="mrgn-tp-sm">'.$replies_link .'</div>' . $format_subtitle . $format_metadata);
 	$format_image_block = elgg_format_element('div', ['class' => 'panel'], $image_block_body);
   echo $format_image_block;
 }

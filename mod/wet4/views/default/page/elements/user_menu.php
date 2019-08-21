@@ -64,7 +64,14 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
                 </a>
             </li>';
         } ?>
-
+        <li>
+            <?php 
+                echo elgg_view('output/url', array(
+                    'text' => '<i class="fa fa-bookmark fa-lg"><span class="wb-invisible">Bookmark</span></i>',
+                    'href' => '/bookmarks/owner/' .$username,
+                ));
+            ?>
+        </li>
         <li class="elgg-menu-item-colleagues">
             <?php
                 // colleagues
