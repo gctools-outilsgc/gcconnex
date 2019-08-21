@@ -1,7 +1,7 @@
 <?php
 
 $site_url = elgg_get_site_url();
-$jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
+$jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.min.js";
 $bootstrap = $site_url . "mod/wet4/views/default/js/bootstrap.min.js";
 
 $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
