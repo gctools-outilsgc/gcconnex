@@ -7,6 +7,8 @@
 * @author Nick github.com/piet0024
 */
 
+elgg_require_js("selectize_require");
+
 $entity = elgg_extract('entity', $vars, false);
 $audience = elgg_extract('audience', $vars, false);
 $guid = elgg_extract('guid', $vars, null);
