@@ -4,7 +4,7 @@
   */
 
 $site_url = elgg_get_site_url();
-$jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
+$jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.min.js";
 $termsLink = $site_url .'terms';
 $loginLink = $site_url .'login';
 $toggle_lang = $site_url .'mod/toggle_language/action/toggle_language/toggle';

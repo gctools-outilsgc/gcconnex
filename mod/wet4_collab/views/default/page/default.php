@@ -29,7 +29,7 @@ if (elgg_get_context() == 'admin') {
 // render content before head so that JavaScript and CSS can be loaded. See #4032
 
 $site_url = elgg_get_site_url();
-$jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
+$jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.min.js";
 $bootstrap = $site_url . "mod/wet4/views/default/js/bootstrap.min.js";
 //$bootstrap_tour = $site_url . "mod/wet4/views/default/js/bootstrap-tour.min.js";
 
