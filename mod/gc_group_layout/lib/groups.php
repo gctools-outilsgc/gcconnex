@@ -340,14 +340,15 @@ function groups_handle_profile_page($guid) {
 	// turn this into a core function
 	global $autofeed;
 	$autofeed = true;
-	$lang = get_current_language();
-	$title = gc_explode_translation($title,$lang);
 
 	elgg_push_context('group_profile');
 
 	elgg_entity_gatekeeper($guid, 'group');
 
 	$group = get_entity($guid);
+
+	$lang = get_current_language();
+	$title = gc_explode_translation($group->name,$lang);
 
 	elgg_push_breadcrumb($title);
 

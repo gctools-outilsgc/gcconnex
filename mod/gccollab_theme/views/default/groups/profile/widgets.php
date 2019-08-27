@@ -27,9 +27,8 @@ if($object->title){
 //Nick - removed the group search tab and created the search form directly into the tab menu
 echo '<div class="row clearfix">';
 echo '<div class="col-sm-12">'.elgg_view('groups/profile/tab_menu'). '</div>';
-//Nick - we can uncomment this when it works
-//echo '<div class="col-sm-4">'.elgg_view("groups/sidebar/search", $vars).'</div>';
 echo '</div>';
+
 $site_url = elgg_get_site_url();
 ?>
 

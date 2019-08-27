@@ -13,4 +13,5 @@ return array(
     'group:no_results' => 'No result',
     'group:next_set' => "Next",
     'group:previous_set' => "Previous",
+    'group:settings' => "Group settings",
 );
