@@ -75,7 +75,7 @@ function groups_handle_all_page() {
 					'type' => 'object',
 					'subtype' => 'groupforumtopic',
 					'order_by' => 'e.last_action desc',
-					'limit' => 40,
+					'limit' => 20,
 					'full_view' => false,
 					'no_results' => elgg_echo('discussion:none'),
 				);
@@ -182,7 +182,7 @@ function groups_handle_owned_page() {
 		'full_view' => false,
 		'no_results' => elgg_echo('groups:none'),
 		'distinct' => false,
-        'limit' => 0,
+        'limit' => 20,
 	));
 $filter = elgg_view("groups/group_sort_menu", array("selected" => $selected_tab));
 $sidebar = elgg_view("groups/sidebar/find");
@@ -231,7 +231,7 @@ function groups_handle_mine_page() {
 		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
 		'order_by' => 'ge.name ASC',
 		'no_results' => elgg_echo('groups:none'),
-        'limit' => false, //this should work but it doesn't
+        'limit' => 5, //this should work but it doesn't
 	));
 
     $sidebar = elgg_view('groups/sidebar/find');
@@ -436,14 +436,10 @@ function groups_handle_members_page($guid) {
 		'relationship_guid' => $group->guid,
 		'inverse_relationship' => true,
 		'type' => 'user',
-		'limit' => 0,
+		'limit' => 25,
 		'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid"),
 		'order_by' => 'u.name ASC',
 	));
-
-	//$content .= " <br/>-----<br/>";
-
-	//$content .= elgg_view('group/group_members', array('group_guid' => $guid));
 
 	$params = array(
 		'content' => $content,
@@ -520,7 +516,7 @@ function groups_handle_requests_page($guid) {
 		'relationship' => 'membership_request',
 		'relationship_guid' => $guid,
 		'inverse_relationship' => true,
-		'limit' => 0,
+		'limit' => 20,
 	));
 	$content = elgg_view('groups/membershiprequests', array(
 		'requests' => $requests,

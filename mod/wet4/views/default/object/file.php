@@ -181,7 +181,8 @@ if( $description_json->en && $description_json->fr ){
 			"title" => false,
 			"icon" => elgg_view_entity_icon($file, "small"),
 			"summary" => $summary,
-			"body" => $body
+			"body" => $body,
+			'class' => 'panel',
 	));
     elgg_unregister_menu_item('title', 'new_folder');
 
