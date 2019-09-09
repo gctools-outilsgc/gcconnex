@@ -52,7 +52,7 @@ $metadata = elgg_view_menu('entity', array(
 	'entity' => $vars['entity'],
 	'handler' => 'bookmarks',
 	'sort_by' => 'priority',
-	'class' => 'list-inline',
+	'class' => 'list-inline mrgn-tp-md',
 ));
 
 $subtitle = "$author_text $date $comments_link $categories";
@@ -100,13 +100,7 @@ if ($full && !elgg_in_context('gallery')) {
 	<div class="mrgn-tp-md">$description</div>
 </div>
 HTML;
-
-	echo elgg_view('object/elements/full', array(
-		'entity' => $bookmark,
-		'icon' => $owner_icon,
-		'summary' => $summary,
-		'body' => $body,
-	));
+	echo elgg_format_element('div', ['class' => 'panel'], '<div class="panel-body">'. $body. $summary .'</div>');
 
 } elseif (elgg_in_context('gallery')) {
 	echo <<<HTML
@@ -127,10 +121,6 @@ HTML;
 	}
 
 	// identify available content
-/*	if(($bookmark->description2) && ($bookmark->description)){
-			
-		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}*/
 
 	if (strlen($url) > 25) {
 		$bits = parse_url($url);
@@ -158,7 +148,7 @@ HTML;
 	'entity' => $vars['entity'],
 	'handler' => 'bookmarks',
 	'sort_by' => 'priority',
-	'class' => 'list-inline',
+	'class' => 'list-inline mrgn-tp-md',
 ));
     }
 
@@ -173,6 +163,5 @@ HTML;
 	$format_title = elgg_format_element('h3', ['class' => 'mrgn-tp-0 mrgn-bttm-md'], $title_link);
 	$format_subtitle = elgg_format_element('div', ['class'=>'d-flex mrgn-tp-md'], $owner_icon . '<div class="mrgn-lft-sm">'. $subtitle .'</div>');
 	$format_panel_body = elgg_format_element('div', ['class'=>'panel-body'], $format_title . $link . $format_subtitle . $metadata);
-	// echo elgg_view_image_block($owner_icon, $body);
 	echo elgg_format_element('div', ['class'=>'panel'], $format_panel_body);
 }

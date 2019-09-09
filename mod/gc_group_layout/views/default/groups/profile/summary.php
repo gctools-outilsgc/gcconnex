@@ -323,7 +323,7 @@ if (elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_enti
 
 							?>
 							<button type="button" class="btn btn-custom dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<?php echo $buttonTitle ?>
+								<?php echo $buttonTitle . $postfix ?>
 								<span class="caret"></span>
 							</button>
 
