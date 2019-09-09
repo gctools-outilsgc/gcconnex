@@ -44,15 +44,18 @@ if ($title || $buttons) {
         // @todo .elgg-heading-main supports action buttons - maybe rename class name?
         if(elgg_get_page_owner_entity()){
             if(elgg_get_page_owner_entity()->getType() == 'group'){
+                    
                     $buttons = elgg_view_menu('title', array(
-                       'sort_by' => 'priority',
-                       'class' => 'list-inline',
+                    'sort_by' => 'priority',
+                    'class' => 'list-inline',
                     ));
-        
-                    $buttons2 = elgg_view_menu('title2', array(
-                       'sort_by' => 'priority',
-                       'class' => 'list-inline',
-                    ));
+
+                    if($checkPage != 'view_file') {
+                        $buttons2 = elgg_view_menu('title2', array(
+                        'sort_by' => 'priority',
+                        'class' => 'list-inline mrgn-rght-sm',
+                        ));
+                    }
         
                 echo elgg_view('groups/profile/summaryBlock', $vars);
                 elgg_push_context('groupSubPage');

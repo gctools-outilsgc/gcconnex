@@ -303,6 +303,7 @@ max-height: 500px;
 
     .elgg-menu-user-menu-default {
       padding-right: 0;
+      margin-right: 0 !important;
     }
 
     @media (max-width: 480px) {
@@ -2070,4 +2071,86 @@ table.bordered, table.bordered td {
 
 table.bordered td {
   padding: 2px 4px 0;
+}
+
+.purple-bg {
+    background-color: #46246A;
+    width:100%;
+    min-height:45px;
+}
+
+.align-self-center {
+    -webkit-align-self: center!important;
+    align-self: center!important;
+}
+
+#wb-srch input {
+    border-radius: 16px;
+    box-shadow: 0 0 2px rgba(0,0,0,.2);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    border: 1px solid #CCC;
+    background-color: #fff;
+    background-clip: padding-box;
+    line-height: 1.5;
+    padding-left: 12px;
+    padding-right: 32px;
+}
+
+#wb-srch input:focus {
+    border-color: #269abc;
+    box-shadow: 0 0 2px rgba(0,0,0,.2), 0 0 2px rgba(38,154,188,.7);
+}
+
+#wb-srch button {
+    background-color: #fff;
+    border: none;
+    margin-left: -32px;
+    border-radius: 16px;
+    position: relative;
+    height: 31px;
+    color: black;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#wb-glb-mn .overlay-lnk {
+    color: #fff;
+    display: block;
+    font-size: 1.9em;
+    padding-top: 5px;
+}
+
+#wb-info .brand {
+    border-top-color: #6b5088;
+}
+
+.invite-btn {
+    color: #fff !important;
+}
+
+@media (max-width: 991px) {
+    .app-name {
+        padding-left: 0;
+        float: left;
+        margin-top: 4px;
+    }
+    .app-name:after {
+        width:0%;
+    }
+    .app-name:before {
+        border-left-color: transparent;
+    }
+    .overlay-lnk {
+        float:right;
+        width:150px;
+    }
+    .elgg-menu-user-menu-default {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .purple-bg > .container {
+        width:100%;
+    }
 }
