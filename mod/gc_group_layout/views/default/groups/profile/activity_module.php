@@ -38,9 +38,9 @@ if (!$content) {
 	$content = '<p>' . elgg_echo('groups:activity:none') . '</p>';
 }
 
-echo '<div class="row clearfix">';
-echo '<div class="col-sm-12">'.elgg_view('groups/profile/tab_menu'). '</div>';
-echo '</div>';
+
+echo '<div>'.elgg_view('groups/profile/tab_menu'). '</div>';
+
 echo elgg_view('groups/profile/module', array(
 	'title' => elgg_echo('groups:activity'),
 	'content' => $content,

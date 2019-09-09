@@ -13,4 +13,5 @@ return array(
     'group:no_results' => 'Aucun résultat',
     'group:next_set' => "Suivant",
     'group:previous_set' => "Précédent",
+    'group:settings' => "Paramètres du groupe",
 );
