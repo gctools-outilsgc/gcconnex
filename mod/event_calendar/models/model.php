@@ -44,7 +44,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 
 	if ($event_calendar_more_required == 'yes') {
 		$required_fields = array('title', 'venue', 'start_date',
-			'brief_description', 'fees', 'contact', 'organiser',
+			'organiser',
 			'tags');
 
 		if ($event_calendar_times != 'no') {
@@ -131,16 +131,10 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->title = get_input('title');
 	$e->title2 = get_input('title2');
 	$e->title = gc_implode_translation($e->title,$e->title2);
-	$e->brief_description = get_input('brief_description');
 	$e->venue = get_input('venue');
-	$e->fees = get_input('fees');
-	$e->language = get_input('language');
-	$e->teleconference_radio = get_input('teleconference_radio');
-	$e->teleconference = get_input('teleconference_text');
 	$e->calendar_additional = get_input('calendar_additional');
 	$e->calendar_additional2 = get_input('calendar_additional2');
 	$e->calendar_additional = gc_implode_translation($e->calendar_additional,$e->calendar_additional2);
-	$e->contact = get_input('contact');
 	$e->organiser = get_input('organiser');
 	$e->tags = string_to_tag_array(get_input('tags'));
 	$e->description = get_input('description');
@@ -149,24 +143,13 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->send_reminder = get_input('send_reminder');
 	$e->reminder_number = get_input('reminder_number');
 	$e->reminder_interval = get_input('reminder_interval');
-	$e->web_conference = get_input('web_conference');
 	$e->group_guid = get_input('group_guid');
 	$e->real_end_time = event_calendar_get_end_time($e);
-	$e->room = get_input('room');
-	$e->contact_phone = get_input('contact_phone');
-	$e->contact_email = get_input('contact_email');
-	$e->contact_checkbox = get_input('contact_checkbox');
 
 	// sanity check
 	if ($e->schedule_type == 'fixed' && $e->real_end_time <= $e->start_date) {
 		register_error(elgg_echo('event_calander:end_before_start:error'));
 		return false;
-	}
-
-	if ($e->teleconference_radio == 'no'){
-		$e->teleconference = '';
-		$e->calendar_additional = '';
-
 	}
 
 if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->venue)){
@@ -199,20 +182,14 @@ if ($event_calendar_repeating_events != 'no') {
 	$keys = array(
 		'title',
 		'title2',
-		'brief_description',
 		'access_id',
 		'start_date',
 		'start_time',
 		'end_date',
 		'end_time',
 		'venue',
-		'fees',
-		'language',
-		'teleconference_radio',
-		'teleconference',
 		'calendar_additional',
 		'calendar_additional2',
-		'contact',
 		'organiser',
 		'tags',
 		'description',
@@ -220,15 +197,10 @@ if ($event_calendar_repeating_events != 'no') {
 		'send_reminder',
 		'reminder_number',
 		'reminder_interval',
-		'web_conference',
 		'real_end_time',
 		'schedule_type',
 		'group_guid',
-		'room',
 		'email',
-		'contact_phone',
-		'contact_email',
-		'contact_checkbox',
 		);
 
 	foreach ($keys as $key) {
@@ -1142,11 +1114,6 @@ function event_calendar_get_formatted_full_items($event) {
 	$event_items[] = $item;
 
 	$item = new stdClass();
-	$item->title = elgg_echo('event_calendar:room_label');
-	$item->value = htmlspecialchars($event->room);
-	$event_items[] = $item;
-
-	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:meeting');
 	$item->value = htmlspecialchars($event->teleconference);
 	$event_items[] = $item;
@@ -1593,9 +1560,6 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 	$values = array(
 		'title' => null,
 		'title2' => null,
-		'brief_description' => null,
-		'teleconference' => null,
-		'teleconference_radio' => 'open',
 		'language' => 'open',
 		'calendar_additional' => null,
 		'calendar_additional2' => null,
@@ -1614,8 +1578,6 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 		'spots' => null,
 		'region' => '-',
 		'event_type' => '-',
-		'fees' => null,
-		'contact' => null,
 		'organiser' => null,
 		'tags' => null,
 		'send_reminder' => null,
@@ -1631,15 +1593,11 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 		'event-calendar-repeating-saturday-value' => 0,
 		'event-calendar-repeating-sunday-value' => 0,
 		'personal_manage' => 'open',
-		'web_conference' => null,
 		'schedule_type' => null,
 		'description' => null,
 		'description2' => null,
 		'access_id' => ACCESS_DEFAULT,
 		'group_guid' => null,
-		'room' => null,
-		'contact_email' => null,
-		'contact_phone' => null,
 	);
 
 	if ($page_type == 'schedule') {
