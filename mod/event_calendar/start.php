@@ -364,25 +364,6 @@ function event_calendar_entity_menu_setup($hook, $type, $return, $params) {
 				$return[] = ElggMenuItem::factory($options);
 			}
 		}
-
-		$count = event_calendar_get_users_for_event($entity->guid, 0, 0, true);
-		if ($count == 1) {
-			//$calendar_text = '<i class="fa fa-calendar fa-lg icon-unsel"><span class="wb-inv"></span></i> (1)';
-            $calendar_text = elgg_echo('event_calendar:personal_event_calendars_link_one');
-		} else {
-			$calendar_text = elgg_echo('event_calendar:personal_event_calendars_link', array($count));
-			//$number = $count;
-			//$calendar_text = '<i class="fa fa-calendar fa-lg icon-unsel"><span class="wb-inv"></span></i> ('. $number.')';
-		}
-
-		$options = array(
-			'name' => 'calendar_listing',
-			'text' => $calendar_text,
-			'title' => elgg_echo('event_calendar:users_for_event_menu_title'),
-			'href' => "event_calendar/display_users/{$entity->guid}",
-			'priority' => 150,
-		);
-		$return[] = ElggMenuItem::factory($options);
 	}
 
 	return $return;
