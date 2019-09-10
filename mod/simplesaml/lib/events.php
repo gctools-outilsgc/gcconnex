@@ -80,7 +80,7 @@ function simplesaml_login_event_handler($event, $type, $object) {
 				unset($_SESSION['login_as_logout_flag']);
 			}
 
-			forward("http://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".elgg_get_plugin_setting('gcpedia_url','saml_link')."simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=$forward_url");
+			forward("https://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".elgg_get_plugin_setting('gcpedia_url','saml_link')."simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=$forward_url");
 
 		}
 	//
