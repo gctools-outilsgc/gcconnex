@@ -115,8 +115,15 @@ if( $description_json->en && $description_json->fr ){
 	}
 
 } else {
+
+	$title_link = elgg_view('output/url', array(
+		"text" => gc_explode_translation($event->title, $lang),
+		"href" => $event->getURL(),
+	));
+
+	$subtitle = "$event->venue";
+
 	$time_bit = event_calendar_get_formatted_time($event);
-	$icon = '<img src="'.elgg_view("icon/object/event_calendar/small").'" />';
 	$extras = array($time_bit);
 	if ($event->brief_description) {
 		$extras[] = $event->brief_description;
@@ -141,7 +148,7 @@ if( $description_json->en && $description_json->fr ){
 			'class' => 'elgg-menu-hz list-inline',
 		));
 	}
-
+	
 	$params = array(
 		'entity' => $event,
 		'metadata' => $metadata,
@@ -150,5 +157,8 @@ if( $description_json->en && $description_json->fr ){
 	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 	
-	echo elgg_view_image_block($icon, $list_body);
+	$format_title = elgg_format_element('h3', ['class' => 'mrgn-tp-0 mrgn-bttm-md'], $title_link);
+	$format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], $owner_icon . '<div class="mrgn-lft-sm">' . $subtitle . '</div>');
+	$format_panel_body = elgg_format_element('div', ['class' => 'panel-body'], $format_title . $format_subtitle . '<div class="mrgn-tp-md">' .$metadata.'</div>');
+	echo elgg_format_element('div', ['class' => 'panel'], $format_panel_body);
 }
