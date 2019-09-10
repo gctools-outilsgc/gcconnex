@@ -23,7 +23,7 @@ if(elgg_get_context() == 'groups'){
 	echo '<div class="two-column-menu">'.elgg_view('groups/profile/tab_menu').'</div>';
 	elgg_pop_context();
 }
-echo $vars['title'];
+//echo $vars['title'];
 
 if(elgg_get_context() =='contactform'){
 	$message=elgg_get_plugin_setting('message','contactform');
@@ -108,12 +108,14 @@ if ($vars['context']){
 	$filter = elgg_view('page/layouts/elements/filter', $vars);
 	$vars['content'] = $filter . $vars['content'];
 }
-    echo '<section class="col-md-6">';
-			echo $vars['content'];
-		echo '</section>';
-		echo '<section class="col-md-6">';
-			echo $vars['sidebar'];
-		echo '</section>';
+echo '<section class="col-md-6">';
+
+	echo elgg_view('page/layouts/elements/header', $vars);
+	echo $vars['content'];
+echo '</section>';
+echo '<section class="col-md-6">';
+	echo $vars['sidebar'];
+echo '</section>';
 
 		// @deprecated 1.8
 		if (isset($vars['area1'])) {

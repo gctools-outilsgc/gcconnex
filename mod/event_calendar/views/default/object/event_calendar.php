@@ -97,7 +97,6 @@ if ($full) {
 } else {
 
 	$time_bit = event_calendar_get_formatted_time($event);
-	$icon = '<img src="'.elgg_view("icon/object/event_calendar/small").'" />';
 	$extras = array($time_bit);
 	if ($event->description) {
 		$extras[] = $event->description;
@@ -131,5 +130,5 @@ if ($full) {
 	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 	
-	echo elgg_view_image_block($icon, $list_body);
+	echo elgg_view_image_block($list_body);
 }

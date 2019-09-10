@@ -5,26 +5,11 @@ echo'<section class="panel panel-default mrgn-tp-xl">
 	<h3 class="panel-title">Additional info</h3>
 	</header>
 	<div class="panel-body"><p>';
-$count = event_calendar_get_users_for_event($vars['entity']->guid, 0, 0, true);
-		if ($count == 1) {
-			//$calendar_text = '<i class="fa fa-calendar fa-lg icon-unsel"><span class="wb-inv"></span></i> (1)';
-            $calendar_text = elgg_echo('event_calendar:personal_event_calendars_link_one');
-		} else {
-			$calendar_text = elgg_echo('event_calendar:personal_event_calendars_link', array($count));
-			//$number = $count;
-			//$calendar_text = '<i class="fa fa-calendar fa-lg icon-unsel"><span class="wb-inv"></span></i> ('. $number.')';
-		}
 
-		echo '<a href="../../../event_calendar/display_users/'.$vars["entity"]->guid.'"> '.$calendar_text.' </a><br><br>';
+		//Need to rework the text
+		echo '<a href="../../../event_calendar/display_users/'.$vars["entity"]->guid.'"> In who calendars this event is. </a><br><br>';
 
-echo '<b>Organizer:</b> '.$vars['entity']->contact.'<br>';
-echo '<b>Email:</b> '.'<a href="mailto:'. $vars['entity']->contact_email.'">'.$vars['entity']->contact_email.'</a><br>';
-echo '<b>Phone:</b> '.$vars['entity']->contact_phone.'<br>';
-echo '<b>Fees:</b> '.$vars['entity']->fees.'<br>';
-echo '<b>Language:</b> '.$vars['entity']->language.'<br>';
-
-	echo'</p></div>
-</section>';
+	echo'</p></div></section>';
 
 
 
