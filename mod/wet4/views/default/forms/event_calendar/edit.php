@@ -209,6 +209,10 @@ $body .= '</div>';
 		$body .= '<p class="event-calendar-description">'.$prefix['description2'].elgg_echo('event_calendar:long_description_description2').'</p></div>';
 }
 
+$body .= '<p><label for="calendar-tags">'.elgg_echo("event_calendar:event_tags_label").'</label>';
+$body .= elgg_view("input/tags", array('name' => 'tags', 'id' => 'calendar-tags', 'value' => $event_tags));
+$body .= '</p>';
+
 $body .= '<p class="wb-inv">'.$prefix['event_tags'].elgg_echo('event_calendar:event_tags_description').'</p>';
 if ($event_calendar_fewer_fields != 'yes') {
 
