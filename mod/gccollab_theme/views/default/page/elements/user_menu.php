@@ -55,12 +55,21 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
     ?>
 
     <ul class="elgg-menu elgg-menu-user-menu list-inline visited-link elgg-menu-user-menu-default">
+        
+        <li>
+            <?php 
+                echo elgg_view('output/url', array(
+                    'text' => elgg_echo('invite'),
+                    'href' => '/invite/' .$username,
+                    'class' => 'btn btn-primary invite-btn'
+                ));
+            ?>
+        </li>
         <?php if(elgg_is_admin_logged_in()) {
             // admin
             echo '<li class="elgg-menu-item-admin">
                 <a href="/admin" title="Admin" class="elgg-menu-content">
                     <i class="fa fa-wrench fa-lg mrgn-rght-sm"></i>
-                    <span class="hidden-xs">Admin</span>
                 </a>
             </li>';
         } ?>
