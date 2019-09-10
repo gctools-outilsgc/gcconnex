@@ -1113,15 +1113,6 @@ function event_calendar_get_formatted_full_items($event) {
 	$item->value = htmlspecialchars($event->venue);
 	$event_items[] = $item;
 
-	$item = new stdClass();
-	$item->title = elgg_echo('event_calendar:meeting');
-	$item->value = htmlspecialchars($event->teleconference);
-	$event_items[] = $item;
-
-	$item = new stdClass();
-	
-	$event_items[] = $item;
-
 	if ($event_calendar_region_display == 'yes') {
 		$item = new stdClass();
 		$item->title = elgg_echo('event_calendar:region_label');
@@ -1981,7 +1972,7 @@ function event_calendar_get_page_content_view($event_guid) {
 		'title' => $title,
 		'content' => $content,
 		'filter' => '',
-		'sidebar' => elgg_view('event_calendar/add_info',array('entity' => $event))
+		'sidebar' => ''
 	);
 
 	$body = elgg_view_layout("content", $params);

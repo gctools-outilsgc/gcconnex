@@ -84,8 +84,9 @@ if( $description_json->en && $description_json->fr ){
 		}
 	}
 
-	$body .= '<div class="mtm">' . gc_explode_translation($event->description, $lang) . '</div>';
+	$body .= '<a href="'.elgg_get_site_url().'event_calendar/display_users/'.$vars["entity"]->guid.'"> In who calendars this event is. </a><br><br>';
 
+	$body .= '<div class="mtm">' . gc_explode_translation($event->description, $lang) . '</div>';
 
 	$metadata = elgg_view_menu('entity', array(
 		'entity' => $event,
@@ -94,21 +95,10 @@ if( $description_json->en && $description_json->fr ){
 		'class' => 'elgg-menu-hz list-inline',
 	));
 
-	$params = array(
-		'entity' => $event,
-		'title' => false,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle
-	);
-	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
-
-	echo elgg_view('object/elements/full', array(
-        'entity' => $event,
-		'summary' => $summary,
-		'icon' => $owner_icon,
-		'body' => $body,
-	));
+	$format_full_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md mrgn-bttm-md'], $owner_icon . '<div class="mrgn-lft-sm">' .$subtitle. '</div>');
+	$format_full_event = elgg_format_element('div', ['class' => 'panel-body'], $body . $tags . $format_full_subtitle . $metadata);
+	echo elgg_format_element('div', ['class' => 'panel'], $format_full_event);
+  	echo '<div id="group-replies" class="elgg-comments clearfix">';
 
 	if (elgg_get_plugin_setting('add_to_group_calendar', 'event_calendar') == 'yes') {
 		echo elgg_view('event_calendar/forms/add_to_group', array('event' => $event));
@@ -148,14 +138,6 @@ if( $description_json->en && $description_json->fr ){
 			'class' => 'elgg-menu-hz list-inline',
 		));
 	}
-	
-	$params = array(
-		'entity' => $event,
-		'metadata' => $metadata,
-		'subtitle' => $info,
-	);
-	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
 	
 	$format_title = elgg_format_element('h3', ['class' => 'mrgn-tp-0 mrgn-bttm-md'], $title_link);
 	$format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], $owner_icon . '<div class="mrgn-lft-sm">' . $subtitle . '</div>');
