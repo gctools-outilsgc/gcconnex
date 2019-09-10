@@ -1119,10 +1119,7 @@ function event_calendar_get_formatted_full_items($event) {
 	$event_items[] = $item;
 
 	$item = new stdClass();
-	$item->title = elgg_echo('event_calendar:info');
-
-    $item->value = htmlspecialchars( gc_explode_translation($event->calendar_additional, $lang));
-
+	
 	$event_items[] = $item;
 
 	if ($event_calendar_region_display == 'yes') {
