@@ -6839,7 +6839,7 @@ img.mfp-img {
   white-space: nowrap; }
 
 #mb-pnl .lng-ofr {
-  padding: 7px 15px 0;
+  padding: 6px 15px !important;
   text-align: right; }
   #mb-pnl .lng-ofr ul {
     margin-bottom: 0; }
@@ -8951,8 +8951,7 @@ header {
  */
 #wb-glb-mn {
   margin-top: 0px; }
-  #wb-glb-mn ul {
-    min-width: 150px; }
+  #wb-glb-mn ul {}
     #wb-glb-mn ul.chvrn {
       display: inline-block;
       float: right;
@@ -9434,13 +9433,13 @@ a.shr-opn, a.shr-opn:hover {
     background:transparent;
   background-position: 15px 0;
   background-repeat: repeat-y;
+  border-left: 1px solid #d3d3d3;
   -webkit-box-shadow: none;
-          box-shadow: none;
-  padding-left: 15px; }
+          box-shadow: none; }
   #mb-pnl a[href$="#wb-cont"] {
     display: none !important; }
   #mb-pnl .modal-header {
-    background: #055959;
+    background: #0d7586;
     border-bottom: 1px solid #055959;
     -webkit-box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.3), 3px 3px 3px -2px rgba(0, 0, 0, 0.3), -3px 3px 3px -2px rgba(0, 0, 0, 0.3);
             box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.3), 3px 3px 3px -2px rgba(0, 0, 0, 0.3), -3px 3px 3px -2px rgba(0, 0, 0, 0.3);
@@ -9465,7 +9464,7 @@ a.shr-opn, a.shr-opn:hover {
       margin-top: 1px;
       padding: 9px; }
   #mb-pnl .modal-body {
-    background: #047177; /*0097A7*/
+    background: #fafafa; /*0097A7*/
     margin-left: 0;
     padding-bottom: 0;
     padding-left: 0;
@@ -9474,13 +9473,13 @@ a.shr-opn, a.shr-opn:hover {
     position: relative;
     top: -3em; }
     #mb-pnl .modal-body summary {
-      color: #fff; }
+      color: #0d7586; }
       #mb-pnl .modal-body summary:hover,
       #mb-pnl .modal-body summary:focus {
         background: transparent;
-        color: #fff; }
+        color: #0d7586; }
     #mb-pnl .modal-body a {
-      color: #fff;
+      color: #0d7586;
       text-decoration: none; }
     #mb-pnl .modal-body ul {
       list-style-type: none; }
@@ -9489,37 +9488,32 @@ a.shr-opn, a.shr-opn:hover {
       list-style-type: none; }
   #mb-pnl .mfp-close {
     top: 0.55em; }
-  #mb-pnl .srch-pnl form button {
-    background-color: #055959;
+  #mb-pnl .srch-pnl button {
+    background-color: #fff;
     border: 0;
+    padding: 4px 4px;
     border-color: #055959;
+    color: #055959;
     border-radius: 0;
     position: relative; }
     #mb-pnl .srch-pnl form button:hover,
     #mb-pnl .srch-pnl form button:focus,
     #mb-pnl .srch-pnl form button:active {
       background: #047177; }
-  #mb-pnl .srch-pnl form input {
-    background-color: #e0e0e0;
-    border-color: #e0e0e0;
-    border-radius: 0;
-    border-right: 0;
-    border-style: solid;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-    color: #555;
-    margin-right: -4px;
+  #mb-pnl .srch-pnl .form-group input {
+    min-width: 235px;
+    margin-right: -33px;
     position: relative; }
   #mb-pnl .srch-pnl .btn {
     line-height: 1.65;
     margin-top: -1px; }
   #mb-pnl .srch-pnl .form-group {
-    float: left;
-    margin-left: 15px;
-    width: 75%; }
+    display: inline-block;
+    position: relative;
+     }
     #mb-pnl .srch-pnl .form-group.submit {
-      margin-left: 0;
-      width: 15%; }
+      display: inline-block;
+      }
   #mb-pnl .lng-ofr {
     padding-right: 30px;
     text-align: right; }
@@ -9527,14 +9521,14 @@ a.shr-opn, a.shr-opn:hover {
     /*background: #055959;*/
     padding-left: 15px; }
   #mb-pnl .info-pnl {
-    background: #047177;
+    background: #fafafa;
     border-top: 2px solid #061e38;
     color: #325375 !important;
     padding-left: 15px; }
   #mb-pnl .active > a {
     font-weight: 800; }
   #mb-pnl .sec-pnl {
-    background: #cdd4da !important;
+    background: #fafafa !important;
     padding-left: 15px; }
     #mb-pnl .sec-pnl a,
     #mb-pnl .sec-pnl summary {
@@ -9703,7 +9697,7 @@ Carousel
     -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 4px 4px 0 0;
-    background-color: #f9f9f9; }
+    background-color: transparent; }
 
 .elgg-menu-filter>.elgg-state-selected >a:hover,
 .elgg-menu-filter>.elgg-state-selected >a:focus{
@@ -9934,7 +9928,7 @@ Carousel
  * Accessibility tweak for menu based overlapping at lowest desktop setting (text size 200%)
  */
   #wb-sm .menu {
-    border-right: 1px solid #999; }
+    border-right: transparent; }
     #wb-sm .menu > li:last-child {
       border-right: 0; } }
 
@@ -9976,8 +9970,7 @@ Carousel
   header .brand object,
   header .brand img {
     max-height: 25px; }
-  #wb-glb-mn ul {
-    width: 100%; }
+  #wb-glb-mn ul {}
     #wb-glb-mn ul.chvrn {
       margin-left: auto; }
       #wb-glb-mn ul.chvrn:before {
