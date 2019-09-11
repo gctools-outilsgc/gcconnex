@@ -1274,6 +1274,14 @@ border:none;
     border-bottom: 1px solid #DCDCDC;
 }
 
+.wire-share-container {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 .img-tn{
     width:60px;
     height: 60px;
