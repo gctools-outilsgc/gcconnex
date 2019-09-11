@@ -35,7 +35,7 @@ if (!empty($reshare)) {
 	));
 
     //display warning to user if resharing content that is not public on the wire
-	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
+	$reshare_input .= '<div class="wire-share-container mrgn-bttm-md">' .elgg_view("thewire_tools/reshare_source", array("entity" => $reshare)) . '</div>';
 
     //see if entity is within a group
     $owner = $reshare->getContainerEntity();

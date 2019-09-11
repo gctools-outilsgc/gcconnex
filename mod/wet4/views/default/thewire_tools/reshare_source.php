@@ -15,7 +15,21 @@ if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($e
 }
 
 $icon = "";
+$by_link = '';
 if ($entity->icontime) {
+	$icon = elgg_view_entity_icon($entity, "small");
+	if(elgg_instanceof($entity, 'group')) {
+		$by_link = '<div>'.get_readable_access_level($entity->access_id) . '</div>';
+	}
+} else if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'blog', 'bookmarks', 'mission', 'groupforumtopic'))){
+	$owner = $entity->getOwnerEntity();
+	$icon = elgg_view_entity_icon($owner, 'small');
+	$owner_link = elgg_view('output/url', array(
+		'href' => "profile/$owner->username",
+		'text' => $owner->name,
+	));
+	$by_link = '<div>'.elgg_echo($entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner_link)) .'</div>';
+}else {
 	$icon = elgg_view_entity_icon($entity, "small");
 }
 
@@ -36,21 +50,24 @@ if(!empty($entity->title)){
 	return true;
 }
 
-$content = "<div class='elgg-subtext'>";
+$content = "<div class='elgg-subtext mrgn-lft-md'>";
+/*
 if(!elgg_instanceof($entity, 'group')){
     $content .= elgg_echo("thewire_tools:reshare:source") . ": ";
 }
+*/
 if (!empty($url)) {
 	$content .= elgg_view("output/url", array(
 		"href" => $url,
-		"text" => htmlspecialchars_decode($text, ENT_QUOTES),
+		"text" => '<b>' .htmlspecialchars_decode($text, ENT_QUOTES) .'</b>',
 		"is_trusted" => true
 	));
 } else {
 	$content .= elgg_view("output/text", array(
-		"value" => $text
+		"value" => $text,
 	));
 }
+$content .= $by_link;
 $content .= "</div>";
 
-echo elgg_view_image_block($icon, $content, array("class" => "mbn", 'reshare' => true));
+echo elgg_format_element('div', ['class' => 'd-flex'], $icon . $content);
