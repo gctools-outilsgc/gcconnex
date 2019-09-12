@@ -295,6 +295,18 @@ return array(
 	'thewire:groupwarning' => 'Ce contenu peut être consulté par les membres de : ',
 	'thewire:userwarning' => 'Seuls les utilisateurs suivants peuvent consulter ce contenu : ',
 
+		'wet:reshare:mission' => 'Opportunity',
+		'wet:reshare:blog' => 'Blog Post',
+		'wet:reshare:groupforumtopic' => 'Group Discussion',
+		'wet:reshare:bookmarks' => 'Saved Bookmark',
+		'wet:reshare:answer' => 'Question',
+		'wet:reshare:thewire' => 'Reshared Wire Post',
+		'wet:reshare:poll' => 'Poll',
+		'wet:reshare:page_top' => 'Group Page',
+		'wet:reshare:image' => 'Image',
+		'wet:reshare:album' => 'Image Album',
+		'wet:reshare:file' => 'File',
+
 	/**
    * Files
    */

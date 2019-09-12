@@ -278,6 +278,17 @@ return array(
     'thewire:groupwarning' => 'This content is only viewable to members of: ',
     'thewire:userwarning' => 'This content is only viewable to: ',
 
+		'wet:reshare:mission' => 'Opportunity',
+		'wet:reshare:blog' => 'Blog Post',
+		'wet:reshare:groupforumtopic' => 'Group Discussion',
+		'wet:reshare:bookmarks' => 'Saved Bookmark',
+		'wet:reshare:answer' => 'Question',
+		'wet:reshare:thewire' => 'Reshared Wire Post',
+		'wet:reshare:poll' => 'Poll',
+		'wet:reshare:page_top' => 'Group Page',
+		'wet:reshare:image' => 'Image',
+		'wet:reshare:album' => 'Image Album',
+		'wet:reshare:file' => 'File',
 
     /**
   * Files
