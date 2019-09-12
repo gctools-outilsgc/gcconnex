@@ -19,18 +19,25 @@ $by_link = '';
 if ($entity->icontime) {
 	$icon = elgg_view_entity_icon($entity, "small");
 	if(elgg_instanceof($entity, 'group')) {
-		$by_link = '<div>'.get_readable_access_level($entity->access_id) . '</div>';
+		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
+		$by_link = '<div>'.elgg_echo('group') . ' - '. $mem . '</div>';
 	}
-} else if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'blog', 'bookmarks', 'mission', 'groupforumtopic'))){
+} else if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'blog', 'bookmarks', 'mission', 'groupforumtopic', 'poll'))){
 	$owner = $entity->getOwnerEntity();
 	$icon = elgg_view_entity_icon($owner, 'small');
 	$owner_link = elgg_view('output/url', array(
 		'href' => "profile/$owner->username",
 		'text' => $owner->name,
 	));
-	$by_link = '<div>'.elgg_echo($entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner_link)) .'</div>';
+	$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner_link)) .'</div>';
 }else {
 	$icon = elgg_view_entity_icon($entity, "small");
+	if(elgg_instanceof($entity, 'group')) {
+		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
+		$by_link = '<div>'.elgg_echo('group') . ' - '. $mem . '</div>';
+	} else {
+		$by_link = '<div>'.elgg_echo('wet:reshare:' .$entity->getSubtype()).'</div>';
+	}
 }
 
 $url = $entity->getURL();
