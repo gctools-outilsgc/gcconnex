@@ -33,17 +33,9 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             );
         $latest_wire = elgg_get_entities($params);
         if ($latest_wire && count($latest_wire) > 0) {
-            //echo '<img class="profile-icons double-quotes" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/double-quotes.png">';
-            //echo elgg_view("profile/status", array("entity" => $user));
         }
         ?>
     </div>
-
-   <?php //echo elgg_get_context();
-
-
-
-?>
 
     <div class="b_extended_profile">
         <?php
@@ -81,13 +73,11 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             finit_ajax_block('work-experience');
         }
 
-        //if(elgg_is_logged_in()){
-            if ( has_content($user, 'gc_skills') ) {
-                init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
-                echo elgg_view('b_extended_profile/skills');
-                finit_ajax_block('skills');
-            }
-        //}
+        if ( has_content($user, 'gc_skills') ) {
+            init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
+            echo elgg_view('b_extended_profile/skills');
+            finit_ajax_block('skills');
+        }
 
         /*
          * MODIFIED CODE
@@ -99,14 +89,6 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         /*
          * END MODIFIED CODE
          */
-
-        /*
-        if ( has_content($user, 'english') || has_content($user, 'french') ) {
-            init_ajax_block(elgg_echo('gcconnex_profile:sle'), 'languages', $user);
-            echo elgg_view('b_extended_profile/languages');
-            finit_ajax_block('languages');
-        }
-        */
 
         /*
          * MODIFIED CODE
