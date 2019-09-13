@@ -97,7 +97,7 @@ if( $type == 'GPmod'){
     if($checkPage =='custom_index_widgets'){
         $attrs['class'][] = 'panel panel-default custom-index-panel';
     }else{
-        $attrs['class'][] = 'panel panel-default TEST';
+        $attrs['class'][] = 'panel panel-default';
     }
 
 
@@ -130,7 +130,7 @@ if( $type == 'GPmod'){
     if($checkPage =='custom_index_widgets'){
         $attrs['class'][] = 'panel panel-default custom-index-panel';
     }else{
-        $attrs['class'][] = 'panel panel-default TEST';
+        $attrs['class'][] = 'panel panel-default';
     }
 
 
