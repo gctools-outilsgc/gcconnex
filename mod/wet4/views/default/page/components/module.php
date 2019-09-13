@@ -148,7 +148,7 @@ if( $type == 'GPmod'){
     }
     $body = elgg_format_element('div', ['class' => 'panel-body clearfix'], $header . $body);
     if ($footer) {
-        $footer = elgg_format_element('div', ['class' => 'panel-footer text-right'], $footer);
+        $footer = elgg_format_element('div', ['class' => 'text-right'], $footer);
     }
 
     $contents = $body . $footer;
