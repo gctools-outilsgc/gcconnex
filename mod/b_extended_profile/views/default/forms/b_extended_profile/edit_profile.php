@@ -68,20 +68,6 @@ echo '<div class="gcconnex-b-extended-profile-edit-profile">';
 echo '<div class="basic-profile">'; 
 echo '</div>';
 
-// THIS BLOCK COMMENTED OUT UNTIL MICRO-MISSIONS ARE ENABLED
-/*
-echo '<div class="basic-profile-micro-assignments">'; // container for css styling, used to group profile content and display them seperately from other fields
-
-echo elgg_echo('gcconnex_profile:basic:micro_confirmation');
-echo '<div class="gcconnex-micro-checkbox">';
-
-echo elgg_view('input/checkbox', array(
-    'name' => 'micro',
-    'checked' => ($user->micro == "on") ? "on" : FALSE)); // elgg has a hard time saving checkbox status natively, so check the string value instead
-echo elgg_echo('gcconnex_profile:basic:micro_checkbox') . '</div>'; // close div class="gcconnex-micro-checkbox"
-
-*/
-
 echo '<div class="submit-basic-profile">'; // container for css styling, used to group profile content and display them separately from other fields
 
 // create the save button for saving user profile
