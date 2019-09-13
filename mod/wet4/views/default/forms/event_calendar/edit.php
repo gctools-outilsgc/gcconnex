@@ -240,7 +240,7 @@ $body .= elgg_view('event_calendar/personal_manage_section', $vars);
 
 $body .= elgg_view('event_calendar/share_section', $vars);
 
-if ($event_calendar_region_display == 'yes' || $event_calendar_type_display == 'yes' || $event_calendar_fewer_fields != 'yes') {
+if ($event_calendar_region_display == 'yes' || $event_calendar_type_display == 'yes') {
 	$body .= '<div class="event-calendar-edit-form-block event-calendar-edit-form-other-block">';
 
 	if ($event_calendar_region_display == 'yes') {
