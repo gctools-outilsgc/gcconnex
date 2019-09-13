@@ -108,7 +108,7 @@ if (strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url()."saml/idp_login")=== fa
 			 	}
 			 	//error_log('here: -> '.explode('&', parse_url($_SERVER['HTTP_REFERER'],PHP_URL_QUERY)));
 			 	//$forward_url = "http://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".elgg_get_plugin_setting('gcpedia_url','saml_link')."simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=".urldecode($relayState[1]);
-		 		$forward_url = "http://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".$spentityid."/simplesaml/module.php/saml/sp/metadata.php/".$service."&RelayState=".urldecode($relayState[1]);
+		 		$forward_url = "https://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".$spentityid."/simplesaml/module.php/saml/sp/metadata.php/".$service."&RelayState=".urldecode($relayState[1]);
 		 	
 			 }
 	
