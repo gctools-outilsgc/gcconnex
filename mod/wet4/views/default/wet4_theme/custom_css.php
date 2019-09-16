@@ -1280,6 +1280,14 @@ border:none;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    display: block;
+}
+a.wire-share-container:visited {
+    color: #606060 !important;
+}
+.wire-share-container .wire-reshare-title {
+    font-weight: bold;
+    color: #137991;
 }
 
 .img-tn{
