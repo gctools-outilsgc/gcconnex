@@ -17,7 +17,12 @@ if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($e
 $icon = "";
 $by_link = '';
 if ($entity->icontime) {
-	$icon = elgg_view_entity_icon($entity, "small", array('use_link' => false,));
+	// $icon = elgg_view_entity_icon($entity, "small", array('use_link' => false,));
+	$icon = elgg_view('output/img', array(
+		'src' => $entity->getIconURL('small'),
+		'alt' => '',
+		'class' => 'img-responsive',
+	));
 	if(elgg_instanceof($entity, 'group')) {
 		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
 		$by_link = '<div>'.elgg_echo('group') . ' - '. $mem . '</div>';
@@ -32,7 +37,11 @@ if ($entity->icontime) {
 		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';
 	}
 }else {
-	$icon = elgg_view_entity_icon($entity, "small", array('use_link' => false,));
+	$icon = elgg_view('output/img', array(
+		'src' => $entity->getIconURL('small'),
+		'alt' => '',
+		'class' => 'img-responsive',
+	));
 	if(elgg_instanceof($entity, 'group')) {
 		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
 		$by_link = '<div>'.elgg_echo('group') . ' - '. $mem . '</div>';
