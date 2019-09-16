@@ -84,9 +84,9 @@ $content = thewire_tools_filter($text);
 // check for reshare entity
 $reshare = $post->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));
 if (!empty($reshare)) {
-	$content .= "<div class='wire-share-container timeStamp clearfix'>";
+	$content .= '<a class="wire-share-container timeStamp" href="'.$reshare[0]->getURL().'">';
 	$content .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare[0]));
-	$content .= "</div>";
+	$content .= "</a>";
 }
 
 if (elgg_is_logged_in() && !elgg_in_context("thewire_tools_thread")) {
