@@ -84,7 +84,7 @@ if( $description_json->en && $description_json->fr ){
 		}
 	}
 
-	$body .= '<a href="'.elgg_get_site_url().'event_calendar/display_users/'.$vars["entity"]->guid.'"> In who calendars this event is. </a><br><br>';
+	$body .= '<a href="'.elgg_get_site_url().'event_calendar/display_users/'.$vars["entity"]->guid.'"> '.elgg_echo('event_calendar:personal_event_calendars_link').'</a><br><br>';
 
 	$body .= '<div class="mtm">' . gc_explode_translation($event->description, $lang) . '</div>';
 
