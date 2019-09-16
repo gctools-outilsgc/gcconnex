@@ -26,9 +26,10 @@ if ($entity->icontime) {
 	$owner = $entity->getOwnerEntity();
 	$icon = elgg_view_entity_icon($owner, 'small', array('use_link' => false, 'use_hover' => false,));
 	if ($entity->getSubtype() === 'thewire'){
+		// Style this like the wire
 		$by_link = '<div class="mrgn-bttm-sm" style="color:#137991;">'.$owner->name.' - <span class="timeStamp">'.elgg_view_friendly_time($entity->time_created).'</span></div>';
 	} else {
-		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';	
+		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';
 	}
 }else {
 	$icon = elgg_view_entity_icon($entity, "small", array('use_link' => false,));
@@ -58,8 +59,8 @@ if(!empty($entity->title)){
 }
 
 $content = "<div class='elgg-subtext mrgn-lft-md'>";
-
 if($entity->getSubtype() === 'thewire') {
+	// Style this like a wire post
 	$content .= $by_link;
 	$content .= '<div>'.$text.'</div>';
 } else {
