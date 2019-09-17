@@ -251,6 +251,13 @@ function wet4_theme_init()
 
 	elgg_register_plugin_hook_handler('register', 'menu:site', 'remove_menu_item_handler');
 
+	// Removing the "All site pages" from the main menu
+	elgg_unregister_menu_item('site', 'file');
+	elgg_unregister_menu_item('site', 'polls');
+	elgg_unregister_menu_item('site', 'event_calendar');
+	elgg_unregister_menu_item('site', 'photos');
+	elgg_unregister_menu_item('site', 'bookmarks');
+	elgg_unregister_menu_item('site', 'activity');
 
 }
 function remove_menu_item_handler($hook, $type, $menu, $params){
@@ -1379,6 +1386,7 @@ function my_site_menu_handler($hook, $type, $menu, $params)
 			(elgg_is_logged_in()) ? $item->setHref(elgg_get_site_url().'groups/all?filter=yours') : $item->setHref(elgg_get_site_url().'groups/all?filter=popular');
 		}
 	}
+
 }
 
 /*
