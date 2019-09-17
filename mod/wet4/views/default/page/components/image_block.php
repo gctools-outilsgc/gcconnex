@@ -127,7 +127,7 @@ HTML;
 
 }else{
 
-    $body = "<div class=\"wet-image-block-body\">$body</div>";
+    $body = "<div class=\"wet-image-block-body\" style=\"flex-shrink:8;\">$body</div>";
 
 if ($image) {
 	$image = "<div class=\"\">$image</div>";
