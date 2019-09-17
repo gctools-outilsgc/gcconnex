@@ -1285,6 +1285,13 @@ border:none;
 a.wire-share-container:visited {
     color: #606060 !important;
 }
+.wire-share-container .elgg-avatar {
+    width: 40px !important;
+    height: 40px !important;
+}
+.wire-share-container .elgg-subtext {
+    flex-shrink: 8;
+}
 .wire-share-container .wire-reshare-title {
     font-weight: bold;
     color: #137991;
