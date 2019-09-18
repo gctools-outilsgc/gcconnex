@@ -53,12 +53,9 @@
                 echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:job_rotate');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_rotation) . '</span></li>';
         
-				
-                
         echo '</ul></div>';
         echo '<div class="col-sm-6 "><h3 class="h4 mrgn-tp-0">'. elgg_echo('gcconnex_profile:opt:development').'</h3>';
         echo '<ul class="list-unstyled">';
-                
 				
                 echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:mentored');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_mentored) . '</span></li>';
@@ -82,22 +79,7 @@
         
                 echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing_create');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_ssCreate) . '</span></li>';
-				
-                
-                
-        
-                
                 echo '</ul></div>';
-			/*echo '</tr><tr>';
-				echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:peer_coached') . '</div>';
-				echo '<div>' . elgg_echo($user->opt_in_peer_coached) . '</div>';
-				echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:peer_coaching') . '</div>';
-				echo '<div>' . elgg_echo($user->opt_in_peer_coaching) . '</div>';
-			echo '</tr><tr>';
-				echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing') . '</div>';
-				echo '<div>' . elgg_echo($user->opt_in_skill_sharing) . '</div>';
-				echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:job_sharing') . '</div>';
-				echo '<div>' . elgg_echo($user->opt_in_job_sharing) . '</div>';*/
 			echo '</div>';
 	}
 	echo '</div>';

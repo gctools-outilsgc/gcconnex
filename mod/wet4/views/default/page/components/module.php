@@ -97,7 +97,7 @@ if( $type == 'GPmod'){
     if($checkPage =='custom_index_widgets'){
         $attrs['class'][] = 'panel panel-default custom-index-panel';
     }else{
-        $attrs['class'][] = 'panel panel-default TEST';
+        $attrs['class'][] = 'panel panel-default';
     }
 
 
@@ -130,7 +130,7 @@ if( $type == 'GPmod'){
     if($checkPage =='custom_index_widgets'){
         $attrs['class'][] = 'panel panel-default custom-index-panel';
     }else{
-        $attrs['class'][] = 'panel panel-default TEST';
+        $attrs['class'][] = 'panel panel-default';
     }
 
 
@@ -148,7 +148,7 @@ if( $type == 'GPmod'){
     }
     $body = elgg_format_element('div', ['class' => 'panel-body clearfix'], $header . $body);
     if ($footer) {
-        $footer = elgg_format_element('div', ['class' => 'panel-footer text-right'], $footer);
+        $footer = elgg_format_element('div', ['class' => 'text-right'], $footer);
     }
 
     $contents = $body . $footer;

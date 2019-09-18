@@ -130,7 +130,7 @@ foreach($fields as $field){
             'class' => 'text-center btn btn-default center-block',
         ));
 
-        echo '<div class="panel-footer text-right">' . $more_link . '</div>';
+        echo '<div class="text-right">' . $more_link . '</div>';
     echo '</div>';
 }
 
@@ -159,7 +159,7 @@ echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
         'class' => 'text-center btn btn-default center-block',
 	));
     echo '</div>';
-	echo "<div class=\"elgg-widget-more  panel-footer text-right\">$viewall_link</div>";
+	echo "<div class=\"elgg-widget-more text-right\">$viewall_link</div>";
 echo '</div>';
 elgg_pop_context();
 ?>
