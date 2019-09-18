@@ -156,7 +156,7 @@ echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
         echo elgg_view("object/event_calendar", array('entity' => $event));
     }
 
-    $date = date('Y-m-d'/*, strtotime("-1 days")*/);
+    $date = date('Y-m-d');
     $event_url = "event_calendar/owner/". elgg_get_page_owner_entity()->username;
     $viewall_link = elgg_view('output/url', array(
         'href' => $event_url,
