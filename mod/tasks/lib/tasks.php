@@ -17,7 +17,7 @@ function tasks_prepare_form_vars($task = null, $parent_guid = 0) {
 		'description' => '',
 		
 		
-		// FXN - Ajout des champs sp�cifiques, serait mieux autre part en fait
+		// FXN - Ajout des champs spécifiques, serait mieux autre part en fait
 		'start_date' => '',
 		'end_date' => '',
 		'task_type' => '',
