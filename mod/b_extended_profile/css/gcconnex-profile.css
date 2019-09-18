@@ -848,3 +848,7 @@ input:-moz-placeholder { color:#ccc; }
 .b_extended_profile .tab-pane {
   outline: none !important;
 }
+
+.profile-title{
+	padding-bottom: 0px;
+}

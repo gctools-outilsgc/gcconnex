@@ -154,7 +154,7 @@ function init_ajax_block($title, $section, $user) {
     }
 
     echo '<div class="panel">';
-    echo'<div class="panel-body">';
+    echo'<div class="panel-body profile-title">';
         echo '<h2 class="pull-left">' . $title . '</h2>'; // create the profile section title
 
     if ($user->canEdit()) {
