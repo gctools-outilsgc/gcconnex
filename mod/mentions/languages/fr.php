@@ -16,7 +16,7 @@ Pour voir la publication entière, cliquez sur le lien ci-dessous:
 	'mentions:notification_types:object:discussion_reply' => 'une réponse dans un groupe de discussion',
 	'mentions:notification_types:object:thewire' => 'un message sur le fil',
 	'mentions:notification_types:object:comment' => 'un commentaire',
-	'mentions:settings:send_notification' => 'Envoyer une notification lorsqu�une personne vous @cite dans une publication?',
+	'mentions:settings:send_notification' => 'Envoyer une notification lorsqu\'une personne vous @cite dans une publication?',
 
 	// admin
 	'mentions:fancy_links' => 'Replce @mentions with a small picture of the user in addition to the user\'s name',
