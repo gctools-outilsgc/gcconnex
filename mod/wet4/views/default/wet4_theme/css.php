@@ -9402,7 +9402,7 @@ a.shr-opn, a.shr-opn:hover {
           text-shadow: none; }
   #wb-sm .sm.open {
     background: #ccc;
-    border-bottom: 5px solid #047177; }
+    border-bottom: 5px solid #137991; }
     #wb-sm .sm.open li a,
     #wb-sm .sm.open li summary {
       color: #444;
@@ -9414,8 +9414,7 @@ a.shr-opn, a.shr-opn:hover {
       #wb-sm .sm.open li summary:hover,
       #wb-sm .sm.open li summary:focus,
       #wb-sm .sm.open li summary:active {
-        background: #047177;
-        color: #fff; }
+        background: #047177;}
     #wb-sm .sm.open .slflnk a {
       background: #bbb; }
   #wb-sm .sm .row {
