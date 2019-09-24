@@ -3,10 +3,11 @@ Vroom for Elgg
 A simple way to speed up elgg. Vroom operates by flushing the output buffer before elgg shutdown begins. The browser is able to render results quickly to the user while additional shutdown functions continue on the server uninterrupted. Vroom can be used in conjunction with process intensive elgg internals such as *notifications* to create a more user-friendly atmosphere. 
 
 ## Features
- - Lighting fast elgg execution
+ - Lightning fast elgg execution
 
-## Server requirements
- - Elgg 1.8.3 or greater
+## Server
+ - Recommend PHP 5.3 or greater
+ - Vroom has only been tested with Elgg v1.8.3 and probably won't work with older versions due to the fact class auto-loading was recently introduced in elgg.
 
 ## Developers
 
