@@ -86,6 +86,7 @@ if($type == 'group') {
 }
 $count = elgg_view('river/object/likes/count', array('entity' => $object));
 
+$object_type_ribbon = $object->getSubtype() ? elgg_format_element('span', ['class' => 'river-ribbon'], elgg_echo($object->getSubtype())) : '';
 // Have a different display for list view
 if(elgg_get_logged_in_user_entity()->newsfeedCard == 'list'){
 	$view_test = 'LIST VIEW';
@@ -98,6 +99,7 @@ if(elgg_get_logged_in_user_entity()->newsfeedCard == 'list'){
 
 echo <<<RIVER
 <div>
+$object_type_ribbon
 <div class="elgg-river-summary clearfix mb-3">
 $image $summary $group_string 
 <div class="elgg-river-timestamp">$timestamp</div>

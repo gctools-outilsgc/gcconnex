@@ -1154,6 +1154,12 @@ These changes will only affect new users on the site.',
 	'friends:tiny' => "tiny",
 	'friends:small' => "small",
 
+	/**
+	 * River Ribbon object subtype lang
+	 */
+		'discussion_reply' => 'Reply',
+		'groupforumtopic' => 'Discussion',
+		'page_top' => 'Page',
 
 /**
  * Icons
