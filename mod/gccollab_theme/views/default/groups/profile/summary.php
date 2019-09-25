@@ -217,7 +217,7 @@ if (elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_enti
 
 							// Add invitation/request to title menu
 							// If you are a member of the group, add a quick link to invite
-							if($group->invite_members !== 'no' || $page_owner->canEdit()) {
+							if($group->invite_members !== 'no' && $page_owner->canEdit()) {
 								echo elgg_view('output/url', array(
 									'text' => '+ '.elgg_echo('invite'),
 									'href' => '/groups/invite/' .$group->guid,
@@ -289,7 +289,7 @@ if (elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_enti
 									?>
 
 									<button type="button" class="btn btn-custom dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<?php echo $buttonTitle ?>
+										<?php echo $buttonTitle . $postfix ?>
 										<span class="caret"></span>
 									</button>
 
