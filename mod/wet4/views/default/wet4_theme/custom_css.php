@@ -516,6 +516,10 @@ max-height: 500px;
 
  }
 
+.elgg-river-image-block {
+    position: relative;
+}
+
  .elgg-river-image-block .elgg-river-image {
   float: left;
   margin-right: 8px;
@@ -602,6 +606,31 @@ max-height: 500px;
     display: inline-block;
 }
 
+.river-ribbon {
+    position: absolute;
+    right: -8px;
+    background-color: #0d84b9;
+    color: white;
+    font-size: 13px;
+    padding: 2px 6px;
+    border-radius: 4px 0 0 4px;
+}
+
+.river-ribbon:after {
+    position: absolute;
+    content: '';
+    top: 100%;
+    background-color: transparent!important;
+    left: auto;
+    right: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 0;
+    border-color: transparent;
+    border-top-color: #116084;
+    width: 0;
+    height: 0;
+}
+
 .elgg-avatar-small-wet4 > a > img {
     width: 45px !important;
     height: 45px !important;
@@ -625,6 +654,11 @@ max-height: 500px;
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+.elgg-river-summary {
+    padding-right: 45px;
+}
+
  .department-test{
      width: 43%;
  }

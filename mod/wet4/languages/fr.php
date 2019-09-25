@@ -1083,6 +1083,13 @@ return array(
 	'friends:tiny' => "Minuscule",
 	'friends:small' => "Petit",
 
+	/**
+	 * River Ribbon object subtype lang
+	 */
+	'discussion_reply' => 'Résponse',
+	'groupforumtopic' => 'Discussion',
+	'page_top' => 'Page',
+
 /**
  * Icons
  */
