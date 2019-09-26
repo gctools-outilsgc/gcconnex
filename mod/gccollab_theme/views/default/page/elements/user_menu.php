@@ -78,6 +78,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
                 echo elgg_view('output/url', array(
                     'text' => '<i class="fa fa-bookmark fa-lg"><span class="wb-invisible">'.elgg_echo('bookmarks').'</span></i>',
                     'href' => '/bookmarks/owner/' .$username,
+                    'title' => elgg_echo('bookmarks')
                 ));
             ?>
         </li>
