@@ -25,6 +25,7 @@ function delete_old_notif_handler($hook, $entity_type, $return_value, $params, $
 	$dbprefix = elgg_get_config('dbprefix');
 
 	// delete and clean up the notification
+	$query = "";
 	$result = delete_data($query);
 
 }
