@@ -1136,11 +1136,13 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 	if(elgg_is_logged_in()) {
 		if (in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'group_profile', 'bookmarks')) || elgg_instanceof($entity, 'user')) {}else{
 			$user_guid = elgg_get_logged_in_user_guid();
-			$address = urlencode(current_page_url());
+			$address = urlencode($entity->getUrl());
+			$nameEn = json_decode($entity->title)->en;
+			$nameFr = json_decode($entity->title)->fr;
 			$options = array(
-				'name' => 'bookmark',
-				'text' => '<span class="fa fa-lg fa-bookmark icon-unsel"></span>',
-				'href' => "bookmarks/add/$user_guid?address=$address",
+				'name' => 'bookmarkpage',
+				'text' => '<span class="fa fa-lg fa-bookmark icon-unsel"><span class="wb-invisible">'.elgg_echo('bookmarks:this').'</span></span>',
+				'href' => "bookmarks/add/$user_guid?address=$address&title=$nameEn&title2=$nameFr",
 				'title' => elgg_echo('bookmarks:this'),
 				'rel' => 'nofollow',
 			);
