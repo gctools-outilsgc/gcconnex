@@ -78,4 +78,4 @@ if($entity->getSubtype() === 'thewire') {
 }
 $content .= "</div>";
 
-echo elgg_format_element('div', ['class' => 'd-flex'], $icon . $content);
+echo elgg_format_element('div', ['class' => 'd-flex new-wire-reshare'], $icon . $content);

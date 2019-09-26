@@ -1308,7 +1308,7 @@ border:none;
     border-bottom: 1px solid #DCDCDC;
 }
 
-.wire-share-container {
+.wire-share-container, .elgg-river-body .new-wire-reshare {
     width: 100%;
     margin-top: 10px;
     padding: 12px;
@@ -1319,17 +1319,18 @@ border:none;
 a.wire-share-container:visited {
     color: #606060 !important;
 }
-.wire-share-container .elgg-avatar {
+.wire-share-container .elgg-avatar, .elgg-river-body .new-wire-reshare .elgg-avatar {
     width: 40px !important;
     height: 40px !important;
 }
-.wire-share-container .elgg-subtext {
+.wire-share-container .elgg-subtext, .elgg-river-body .new-wire-reshare {
     flex-shrink: 8;
 }
-.wire-share-container .wire-reshare-title {
+.wire-share-container .wire-reshare-title, .elgg-river-body .new-wire-reshare .wire-reshare-title {
     font-weight: bold;
     color: #137991;
 }
+
 
 .img-tn{
     width:60px;
