@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-        <field key="author" value="Michael Jett" />
-        <field key="version" value="1.0" />
-        <field key="description" value="Vroom speeds up elgg by flushing output to the browser before shutdown functions begin.        " />
-<field key="website" value="http://www.mitre.org/" />
-<field key="licence" value="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2" />
-<field key="copyright" value="MITRE" />
-<field key="elgg_version" value="2011052801" />
-        </plugin_manifest>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+        <name>Vroom</name>
+        <id>vroom</id>
+        <author>Michael Jett</author>
+        <version>1.1</version>
+        <description>Vroom speeds up elgg by flushing output to the browser before shutdown functions begin.</description>
+        <website>http://www.mitre.org/</website>
+        <license>GPL-2.0</license>
+        <copyright>MITRE</copyright>
+        <requires>
+                <type>elgg_release</type>
+                <version>1.8</version>
+        </requires>
+</plugin_manifest>

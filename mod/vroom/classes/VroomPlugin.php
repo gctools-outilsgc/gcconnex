@@ -58,10 +58,12 @@ class VroomPlugin
         // Registering a shutdown flag allows other points in jettmail to determine if the state is in shutdown
         $GLOBALS['shutdown_flag'] = 1;
 
-        if (!headers_sent()) {
+        // Check to see if the headers have been sent or another plugin is sending a different connection header
+        if (!headers_sent() && !self::connectionSent()) {
 
             // Ignore user aborts and allow the script to run forever
             ignore_user_abort(true);
+			session_write_close();
             set_time_limit(0);
 
             // Tell the browser that we are done
@@ -69,13 +71,35 @@ class VroomPlugin
             $size = ob_get_length();
             header("Content-Length: $size");
             ob_end_flush();
+
+            // allow vroom for fastcgi instances
+            if (is_callable('fastcgi_finish_request')) {
+                 fastcgi_finish_request();
+            }
+
             flush();
         }
 
     }
 
+    /**
+     * Sifts through the headers to see if a connection has been sent
+     *
+     * This is useful if a plugin wants to keep a connection alive
+     * @return bool
+     */
+    public function connectionSent () {
+
+        $headers = headers_list();
+
+        foreach ($headers as $hdr) {
+            if (stripos($hdr, "Connection") === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 }
-
-
-
