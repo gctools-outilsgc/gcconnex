@@ -8,3 +8,11 @@ $setting_delete_button = elgg_view("input/button", array(
 ));
 
 echo elgg_view_module("inline", $setting_delete_title, $setting_delete_button);
+
+$setting_time_title =  elgg_echo('delete_old_notif:time_input:description');
+
+$setting_time_input = elgg_view('input/text', array(
+	'name' => 'time_input',
+));
+
+echo elgg_view_module("inline", $setting_time_title, $setting_time_input);
