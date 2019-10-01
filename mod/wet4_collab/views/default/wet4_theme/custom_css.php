@@ -274,6 +274,13 @@ max-height: 500px;
 
     }
 
+    .notif-badge.um-badge {
+        position:absolute;
+        min-height:14px;
+        min-width:14px;
+        right:5px;
+    }
+
     .init-badge {
         display: inline-block;
         width: 35px;
