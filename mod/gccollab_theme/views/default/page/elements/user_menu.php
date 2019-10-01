@@ -18,8 +18,6 @@ $dropdown = '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="drop
 <li><a href="/action/logout">'.elgg_echo('logout').'</a></li>
 </ul>';
 
-// TODO: Add badge to show user has actionable items
-/*
 $options = array(
     "type" => "user",
     "relationship" => "friendrequest",
@@ -30,9 +28,9 @@ $options = array(
 
 $friend_count = elgg_get_entities_from_relationship($options);
 
-echo count($friend_count);
-
-$user = elgg_get_logged_in_user_entity();
+if(count($friend_count) > 0){
+    $friend_badge = '<span class="notif-badge um-badge"><span class="wb-invisible">'.elgg_echo('friend_request:new').'</span></span>';
+}
 
 $list = elgg_get_entities_from_metadata(array(
         'type' => 'object',
@@ -43,9 +41,10 @@ $list = elgg_get_entities_from_metadata(array(
         'metadata_value' => false,
         'limit' => 1,
     ));
-    
-echo count($list);
-*/
+
+if(count($list) > 0){
+    $notification_badge = '<span class="notif-badge um-badge"><span class="wb-invisible">'.elgg_echo('messages:unreadmessages').'</span></span>';
+}
 
 // cyu - remove the user menu when the gsa hits the page
 if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false )
@@ -86,7 +85,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             <?php
                 // colleagues
                 echo '<a href="/friends/'.$username.'" title="'.elgg_echo("userMenu:colleagues").'" class="elgg-menu-content">
-                    <i class="fa fa-users fa-lg"><span class="wb-invisible">'.elgg_echo("userMenu:colleagues").'</span></i>
+                    <i class="fa fa-users fa-lg"><span class="wb-invisible">'.elgg_echo("userMenu:colleagues").'</span></i>'.$friend_badge.'
                 </a>';
             ?>
         </li>
@@ -94,7 +93,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             <?php
                 // notifications
                 echo '<a href="/messages/notifications/'.$username.'" title="'.elgg_echo('notifications:subscriptions:changesettings').'" data-dd-type="notif_dd" class="elgg-menu-content">
-                    <i class="fa fa-bell fa-lg"><span class="wb-inv">'.elgg_echo('notifications:subscriptions:changesettings').'</span></i>   
+                    <i class="fa fa-bell fa-lg"><span class="wb-inv">'.elgg_echo('notifications:subscriptions:changesettings').'</span></i>'.$notification_badge.'   
                 </a>';
             ?>
         </li>
