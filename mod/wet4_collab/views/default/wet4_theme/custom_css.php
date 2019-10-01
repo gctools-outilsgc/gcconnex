@@ -1127,6 +1127,34 @@ border:none;
     background: none;
 }
 
+.new-wire-list-object, .thewire-form {
+    padding: 15px;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.wire-share-container, .elgg-river-body .new-wire-reshare {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+}
+a.wire-share-container:visited {
+    color: #606060 !important;
+}
+.wire-share-container .elgg-avatar, .elgg-river-body .new-wire-reshare .elgg-avatar {
+    width: 40px !important;
+    height: 40px !important;
+}
+.wire-share-container .elgg-subtext, .elgg-river-body .new-wire-reshare {
+    flex-shrink: 8;
+}
+.wire-share-container .wire-reshare-title, .elgg-river-body .new-wire-reshare .wire-reshare-title {
+    font-weight: bold;
+    color: #137991;
+}
+
 .img-tn{
     width:60px;
     height: 60px;
@@ -1874,9 +1902,17 @@ figcaption{
     border-radius: 2px !important;
 }
 
+.elgg-river-image-block {
+    position: relative;
+}
+
 .elgg-river-image-block .elgg-river-image {
   float: left;
   margin-right: 8px;
+}
+
+.elgg-river-summary {
+    padding-right: 45px;
 }
 
 .river-group-object .river-group-avatar {
@@ -1953,6 +1989,31 @@ figcaption{
     font-style: italic;
     line-height: 1.2em;
     display: inline-block;
+}
+
+.river-ribbon {
+    position: absolute;
+    right: -8px;
+    background-color: #0d84b9;
+    color: white;
+    font-size: 13px;
+    padding: 2px 6px;
+    border-radius: 4px 0 0 4px;
+}
+
+.river-ribbon:after {
+    position: absolute;
+    content: '';
+    top: 100%;
+    background-color: transparent!important;
+    left: auto;
+    right: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 0;
+    border-color: transparent;
+    border-top-color: #116084;
+    width: 0;
+    height: 0;
 }
 
 .elgg-avatar-small-wet4 > a > img {
