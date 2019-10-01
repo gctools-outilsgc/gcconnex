@@ -151,20 +151,25 @@ textarea.error:focus{
 
   /****************************************/
 
-.list-break{
-
-}
-
-.list-break:last-child{
-    border-bottom:none !important;
-}
-
 .elgg-list-group {
     background-color: white;
     margin-top: 10px;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 4px;
 }
+
+.panel .elgg-list-group {
+    border: none;   
+}
+
+.elgg-module-aside .panel {
+    border: none !important;
+}
+
+.elgg-module-aside .panel .panel-body {
+    padding: 5px 0;
+}
+
 .elgg-list-group .au_subgroups_group_icon-medium-wet4 {
     margin: 10px 5px 10px 10px !important;
     display: inline-block !important;

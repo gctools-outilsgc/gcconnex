@@ -27,6 +27,10 @@
     padding: 8px;
 }
 
+.group-action-holder {
+    margin-top: 6.5px;
+}
+
  @media (max-width: 767px) {
    .group-cover-photo, .group-place-holder-cover {
        display:none;
