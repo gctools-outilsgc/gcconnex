@@ -16,16 +16,9 @@ function delete_weekly_cron_handler($hook, $entity_type, $return_value, $params)
 	echo "<p>Starting up the cron job for the delete old notification (delete_old_notif plugin)</p>";
 	elgg_load_library('elgg:old_notification:functions');
 
-	initialize_queue('weekly');
-
-	delete_old_notif_handler($hook, $entity_type, $return_value, $params, 'weekly');
-}
-
-function delete_old_notif_handler($hook, $entity_type, $return_value, $params, $cron_freq) {
-	$dbprefix = elgg_get_config('dbprefix');
-
-	// delete and clean up the notification
-	$query = "";
-	$result = delete_data($query);
-
+	$cutoff_timestamp = time() - ( elgg_get_plugin_setting('delete_old_notif_cutoff', 'delete_old_notif', 90) * 24 * 60 * 60 );
+	$err = initialize_list( $cutoff_timestamp );
+	
+	if (!$err)
+		delete_notifications();
 }
