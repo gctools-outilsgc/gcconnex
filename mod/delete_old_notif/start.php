@@ -17,8 +17,14 @@ function delete_weekly_cron_handler($hook, $entity_type, $return_value, $params)
 	elgg_load_library('elgg:old_notification:functions');
 
 	$cutoff_timestamp = time() - ( elgg_get_plugin_setting('delete_old_notif_cutoff', 'delete_old_notif', 90) * 24 * 60 * 60 );
+	echo "initializing guid list";
 	$err = initialize_list( $cutoff_timestamp );
-	
-	if (!$err)
+
+	if (!$err){
+		echo "Deleting notifications older than $cutoff_timestamp";
 		delete_notifications();
+		echo "done";
+	}
+	else
+		echo "Error, not leader: $err";
 }
