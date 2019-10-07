@@ -48,7 +48,8 @@ $form_vars = array(
 	"id" => "thewire_tools_search_form",
 	"action" => "thewire/search",
 	"disable_security" => true,
-	"method" => "GET"
+	"method" => "GET",
+	'class' => 'panel-body',
 );
 $body_vars = array(
 	"query" => $query
@@ -59,7 +60,7 @@ $form = elgg_view_form("thewire/search", $form_vars , $body_vars);
 $body = elgg_view_layout("content", array(
     'filter_context' => 'mentions',
 	"title" => $title_text,
-	"content" => $form . $result,
+	"content" => '<div class="elgg-list-group">'.$form . $result .'</div>',
     'sidebar' => elgg_view('thewire/sidebar'),
 ));
 
