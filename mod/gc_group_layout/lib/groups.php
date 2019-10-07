@@ -432,7 +432,8 @@ function groups_handle_members_page($guid) {
 	elgg_push_breadcrumb(elgg_echo('groups:members'));
 
 	$db_prefix = elgg_get_config('dbprefix');
-	$content = elgg_list_entities_from_relationship(array(
+	$content = elgg_view('input/find_group_member', array('guid' => $guid));
+	$content .= elgg_list_entities_from_relationship(array(
 		'relationship' => 'member',
 		'relationship_guid' => $group->guid,
 		'inverse_relationship' => true,
