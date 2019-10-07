@@ -24,9 +24,15 @@ var textarea;
     var handleResponse_groupmem = function (json) {
         var userOptions = '';
         var userSelectOptions = '';
+        var findMemberOptions = '';
+        var groupGUID = $('.YES-YOU-CAN').attr('data-group-guid');
         $(json).each(function(key, user) {
+          var actionLink = elgg.security.addToken("action/groups/remove?user_guid="+user.guid+"&group_guid="+groupGUID);
+          var createLink = elgg.normalize_url(actionLink);
+          var testLink = groupGUID ? '<a href="' + createLink +'" data-confirm="'+ elgg.echo('question:areyousure')+'">'+elgg.echo('groups:removeuser')+'</a>' : '';
             userOptions += '<li tabIndex="0" data-username="' + user.desc + '" data-guid="' + user.guid + '">' + user.icon + user.name + "</li>";
             userSelectOptions += '<option value="' + user.guid + '">' + user.desc + " (@" + user.name + ")" + "</option>";
+            findMemberOptions += '<li>'+ user.icon + user.name +' <div>'+testLink+'</div></li>';
         });
 
         $('#groups-owner-guid-select').html(userSelectOptions);        // update select options
@@ -44,8 +50,21 @@ var textarea;
         $('.mentions-autocomplete .elgg-avatar a').attr('tabindex', '-1');
         $('#groupmems-popup').removeClass('hidden');
 
+        if (!findMemberOptions) {
+          $('#find-groupmems-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+          $('#find-groupmems-popup').addClass('hidden');
+           $(textarea).parent().find('.self-groupmems-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+          $(textarea).parent().find('.self-groupmems-popup').addClass('hidden');
+          return;
+      }
 
-        $('.mentions-autocomplete > li').bind('click', function(e) {
+      $(textarea).parent().find('.self-groupmems-popup  > .panel-body').html('<ul class="mentions-autocomplete list-unstyled mrgn-bttm-0">' + findMemberOptions + "</ul>");
+      $('#find-groupmems-popup > .panel-body').html('<ul class="mentions-autocomplete list-unstyled mrgn-bttm-0">' + findMemberOptions + "</ul>");
+      $('.mentions-autocomplete .elgg-avatar a').attr('tabindex', '-1');
+      $('#find-groupmems-popup').removeClass('hidden');
+
+
+        $('#groupmems-popup .mentions-autocomplete > li').bind('click', function(e) {
             e.preventDefault();
 
             var username = $(this).data('username');
@@ -70,7 +89,7 @@ var textarea;
 
         //ability to tab and press enter on the list item
 
-        $('.mentions-autocomplete > li').bind('keypress', function (e) {
+        $('#groupmems-popup .mentions-autocomplete > li').bind('keypress', function (e) {
 
                 e.preventDefault();
                 if (e.keyCode == 13) {
