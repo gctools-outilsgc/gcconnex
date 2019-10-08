@@ -19,16 +19,15 @@ if (elgg_is_xhr()) {
 
 	echo elgg_format_element('div',array('class'=> 'mrgn-bttm-sm mrgn-tp-sm alert alert-info'),elgg_echo('gcconnex_profile:optin:access'));
 
-
 	$opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate, $user->opt_in_missionCreate);
     //Nick - Loop through array of selected things and change their value to match the meta data        
-foreach($opt_in_set as $k => $v){
-    if($v == 'gcconnex_profile:opt:yes'){
-        $opt_in_set[$k]  = true;
-    }else{
-        $opt_in_set[$k]  = false;   
+    foreach($opt_in_set as $k => $v){
+        if($v == 'gcconnex_profile:opt:yes'){
+            $opt_in_set[$k]  = true;
+        }else{
+            $opt_in_set[$k]  = false;   
+        }
     }
-}
 } else {
 	echo 'An error has occurred.';
 }
@@ -36,37 +35,37 @@ foreach($opt_in_set as $k => $v){
 //Nick - modifying the edit form to account for additional opportunity types
 ?>
 
-<div class="clearfix brdr-bttm mrgn-bttm-sm mm-optin-holder gcconnex-profile-opt-in-options-table">
+<div class="clearfix brdr-bttm mrgn-bttm-sm mm-optin-holder gcconnex-profile-opt-in-options-table mtm">
     <div class="col-sm-6">
         <h3 class="h4 mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:atlevel'); ?></h3>
         <ul class="list-unstyled">
-             <li class="clearfix">
+            <li class="clearfix">
                 <?php echo elgg_echo ( 'missions:micro_mission' );?>
                 <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
-                <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'mission_check',
-			         'checked' => $opt_in_set[0],
-			         'id' => 'gcconnex-opt-in-mission-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
-	               ));
-                    
-                ?>
-                </li>
                     <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'missioncreate_check',
-			         'checked' => $opt_in_set[16],
-			         'id' => 'gcconnex-opt-in-missioncreator-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
-	               ));
-                    
-                ?>
-                </li>
+                        <?php
+                            echo elgg_view ( "input/checkbox", array (
+                            'name' => 'mission_check',
+                            'checked' => $opt_in_set[0],
+                            'id' => 'gcconnex-opt-in-mission-check',
+                                'class'=>'pull-left',
+                                'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
+                            ));
+                            
+                        ?>
+                    </li>
+                    <li class="clearfix pull-left mrgn-lft-md">
+                        <?php
+                            echo elgg_view ( "input/checkbox", array (
+                            'name' => 'missioncreate_check',
+                            'checked' => $opt_in_set[16],
+                            'id' => 'gcconnex-opt-in-missioncreator-check',
+                                'class'=>'pull-left',
+                                'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
+                            ));
+                        
+                        ?>
+                    </li>
                 </ul>
             </li>
             
