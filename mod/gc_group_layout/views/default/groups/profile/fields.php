@@ -54,9 +54,9 @@ if( $description_json->en && $description_json->fr ){
 	echo'</div>';
 }
 
-            echo "<div class=\"{$even_odd} panel panel-custom\">";
-                echo '<div class="panel-heading clearfix">';
-                    echo '<h2 class="panel-title profile-info-head pull-left clearfix">Description</h2>';
+            echo "<div class=\"{$even_odd} panel\">";
+                echo '<div class="panel-body profile-title">';
+                    echo '<h2 class="pull-left">Description</h2>';
                 echo "</div>";
                 echo '<div class="panel-body group-desc">';
            		echo $description;
