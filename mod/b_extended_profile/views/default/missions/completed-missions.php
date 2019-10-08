@@ -118,8 +118,8 @@ if($access_truth) {
 ?>
 
 <div class="panel panel-custom">
-	<div class="panel-heading profile-heading clearfix">
-		<h3 class="profile-info-head pull-left clearfix"><?php echo elgg_echo('gcconnex_profile:completed_missions'); ?></h3>
+	<div class="panel-body profile-title">
+		<h2 class="pull-left"><?php echo elgg_echo('gcconnex_profile:completed_missions'); ?></h3>
 	</div>
 	<?php echo $access_form; ?>
 	<div class="gcconnex-profile-section-wrapper panel-body gcconnex-completed-missions">
