@@ -1130,13 +1130,15 @@ max-height: 500px;
 
 }
 #widget_manager_widgets_select .panel-heading{
-    position: absolute;
     z-index: 44444;
-    width: 91%;
+    background-color: #F5F5F5;
+    padding: 10px;
+    border-radius: 4px;
 }
 
-#widget_manager_widgets_select .panel-body{
-   margin-top:70px;
+#widget_manager_widgets_select{
+    overflow-y: scroll !important;
+    margin: 0 !important;
 }
 
 .multi-widget-count{
