@@ -2038,3 +2038,7 @@ figcaption{
 .full-width {
   width: 100%;
 }
+
+.community-content{
+    padding-top:0
+}
