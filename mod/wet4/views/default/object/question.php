@@ -16,7 +16,7 @@ $subtitle = [];
 
 $poster = $question->getOwnerEntity();
 
-$poster_icon = elgg_view_entity_icon($poster, 'medium');
+$poster_icon = elgg_view_entity_icon($poster, 'tiny');
 $poster_link = elgg_view('output/url', [
 	'text' => $poster->name,
 	'href' => $poster->getURL(),
@@ -113,12 +113,15 @@ if ($full) {
 		'subtitle' => implode(' ', $subtitle),
 		'tags' => $tags,
 	];
-	$list_body = elgg_view('object/elements/summary', $params);
+	//$list_body = elgg_view('object/elements/summary', $params);
 
 	//Add translation
 	//$question->description = gc_explode_translation($question->description, get_current_language());
 	
 	$body .= elgg_view('output/longtext', ['value' => gc_explode_translation($question->description, get_current_language()), 'class' => 'question_details']);
+	$body .= $tags;
+	$body .= '<div class="d-flex mrgn-tp-sm mrgn-bttm-md"><span class="align-self-center">'.$poster_icon.'</span>' . '<div class="mrgn-lft-sm">' . implode(' ', $subtitle) . '</div></div>';
+	$body .= $metadata;
 
 	// show comments?
 	if ($question->comments_enabled !== 'off') {
@@ -135,16 +138,7 @@ if ($full) {
 				"order_by" => "time_created"
 			];
 
-			if(elgg_instanceof(elgg_get_page_owner_entity(), "group")){
-				$header = 'h3';
-			} else {
-				$header = 'h2';
-			}
-			$comments_body = elgg_format_element($header, [
-					'class' => ['elgg-river-comments-tab', 'mtm']
-				], elgg_echo('comments')
-			);
-			$comments_body .= elgg_list_entities($comment_options);
+			$comments_body = elgg_list_entities($comment_options);
 		}
 
 		if ($question->canComment()) {
@@ -162,7 +156,7 @@ if ($full) {
 				], $form
 			);
 
-			$comments = elgg_format_element('div', ['class' => 'mrgn-lft-md'], $comments_body);
+			$comments = elgg_format_element('div', ['class' => 'mrgn-lft-md elgg-river-responses'], $comments_body);
 		}
 	}
 
@@ -175,35 +169,28 @@ if( $description_json->en && $description_json->fr ){
 	if (get_current_language() == 'fr'){
 
 		?>	
-		<span id="indicator_language_en" onclick="change_en('.question_details', '.title');"><span id="fr_title" class="testClass hidden" ><?php echo $title_json->fr;?></span><span id="en_title" class="testClass hidden" ><?php echo $title_json->en;?></span><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+		<span lang="en" id="indicator_language_en" onclick="change_en('.question_details', '.title');"><span id="fr_title" class="testClass hidden" ><?php echo $title_json->fr;?></span><span id="en_title" class="testClass hidden" ><?php echo $title_json->en;?></span><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 	
 		<?php
 	}else{
 		?>		
-		<span id="indicator_language_fr" onclick="change_fr('.question_details','.title');"><span id="fr_title" class="testClass hidden" ><?php echo $title_json->fr;?></span><span id="en_title" class="testClass hidden" ><?php echo $title_json->en;?></span><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<span lang="fr" id="indicator_language_fr" onclick="change_fr('.question_details','.title');"><span id="fr_title" class="testClass hidden" ><?php echo $title_json->fr;?></span><span id="en_title" class="testClass hidden" ><?php echo $title_json->en;?></span><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 	
 		<?php	
 	}
 	echo'</div>';
 }
-
-
-	echo elgg_view_image_block($poster_icon, $list_body);
-	echo elgg_format_element('div', ['class' => ['mrgn-tp-md']], $body.$comments);
+	
+	echo elgg_format_element('div', ['class' => ['mrgn-tp-md panel mrgn-bttm-md']], '<div class="panel-body">'.$body.$comments.'</div>');
 
 } else {
 
-		$question->title = gc_explode_translation($question->title, get_current_language());
+	$question->title = gc_explode_translation($question->title, get_current_language());
 
 
 	// brief view
 	$title_text = '';
 	$title_text .= elgg_get_excerpt($question->title, 100);
-	$title = elgg_view('output/url', [
-		'text' => $title_text,
-		'href' => $question->getURL(),
-		'is_trusted' => true,
-	]);
 
 	if ($question->getMarkedAnswer()) {
 
@@ -212,7 +199,7 @@ if( $description_json->en && $description_json->fr ){
 		$timestamp = htmlspecialchars(date(elgg_echo('friendlytime:date_format'), $answer->time_created));
 		$correcttitle = elgg_echo('questions:answer:checkmark:brief', [$question->getOwnerEntity()->name, $poster->name, $timestamp]);
 
-		$poster_icon .= elgg_format_element('div', ['class' => 'fa fa-check fa-3x questions-correct', 'title' => $correcttitle]);
+		$poster_icon = elgg_format_element('div', ['class' => 'fa fa-check fa-2x questions-correct', 'title' => $correcttitle], elgg_echo('question:answered')) . $poster_icon;
 
 		//add answered identifier to title of question
 		$title .= elgg_echo('question:answered');
@@ -221,24 +208,22 @@ if( $description_json->en && $description_json->fr ){
 
 	$excerpt = '';
 
-		$question->description = gc_explode_translation($question->description, get_current_language());
+	$question->description = gc_explode_translation($question->description, get_current_language());
 
-		$excerpt = elgg_format_element('div', ['class' => 'mbm'], elgg_get_excerpt($question->description));
+	$excerpt = elgg_format_element('div', ['class' => 'mbm'], elgg_get_excerpt($question->description));
 	
 
 	if (!empty($answer_text)) {
 		$answer_text = elgg_format_element('div', ['class' => 'elgg-subtext'], $answer_text);
 	}
 
-	$params = [
-		'entity' => $question,
-		'title' => $title,
-		'metadata' => $metadata,
-		'subtitle' => implode(' ', $subtitle) . $answer_text,
-		'tags' => $tags,
-		'content' => $excerpt,
-	];
-	$list_body = elgg_view('object/elements/summary', $params);
+	if (($container instanceof ElggGroup) && (elgg_get_page_owner_guid() !== $container->getGUID())) {
+		$title_link = "<h2 class='mrgn-tp-0 mrgn-bttm-md h3'>" . elgg_view("output/url", array("text" => $title_text, "href" => $question->getURL())) . "</h2>";
+	} else {
+		$title_link = "<h3 class='mrgn-tp-0 mrgn-bttm-md'>" . elgg_view("output/url", array("text" => $title_text, "href" => $question->getURL())) . "</h3>";
+	}
 
-	echo elgg_view_image_block($poster_icon, $list_body);
+	$format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], '<span class="align-self-center">'.$poster_icon.'</span>' . '<div class="mrgn-lft-sm">' . implode(' ', $subtitle) . $answer_text . '</div>');
+	$format_panel_body = elgg_format_element('div', ['class' => 'panel-body'], $title_link . $excerpt . $format_subtitle . '<div class="mrgn-tp-md">' .$metadata.'</div>');
+	echo elgg_format_element('div', ['class' => 'panel'], $format_panel_body);
 }

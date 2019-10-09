@@ -41,6 +41,7 @@ $answers = '';
 $marked_answer = $question->getMarkedAnswer();
 if ($marked_answer) {
 	$answers .= elgg_view_entity($marked_answer);
+
 }
 
 // add the rest of the answers
@@ -78,14 +79,15 @@ if ($marked_answer) {
 	$count++;
 }
 
-$content .= elgg_view_module('info', "{$count} " . elgg_echo('answers'), $answers, ['class' => 'mtm', 'id' => 'question-answers']);
+$content .= elgg_format_element('div', ['class' => 'mtm', 'id' => 'question-answers'], '<h2>'."{$count} " . elgg_echo('answers').'</h2>'.$answers);
 
 // add answer form
 if (($question->getStatus() === 'open') && $question->canWriteToContainer(0, 'object', 'answer')) {
 
 	$add_form = elgg_view_form('object/answer/add', [], ['container_guid' => $question->getGUID()]);
 
-	$content .= elgg_view_module('info', elgg_echo('answers:addyours'), $add_form);
+	$content .= elgg_format_element('div', [], $add_form);
+	
 } elseif ($question->getStatus() === 'closed') {
 	// add an icon to show this question is closed
 	$title_icon = elgg_view_icon('lock-closed');

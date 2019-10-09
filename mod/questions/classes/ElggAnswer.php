@@ -51,7 +51,7 @@ class ElggAnswer extends ElggObject {
 		if ($name === 'title') {
 			$question = $this->getContainerEntity();
 			
-			return elgg_echo('questions:object:answer:title', [$question->title]);
+			return elgg_echo('questions:object:answer:title', [gc_explode_translation($question->title, get_current_language())]);
 		}
 		
 		return parent::__get($name);
