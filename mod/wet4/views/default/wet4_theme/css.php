@@ -2914,7 +2914,6 @@ tbody.collapse.in {
         text-decoration:none;
       background-color: transparent;
       border-bottom: 3px solid;
-      padding-bottom: 0px;
       margin-bottom:0;
       border-bottom-color: #055959;
       cursor: default; }
@@ -9703,8 +9702,8 @@ Carousel
     border-bottom: 3px solid;
     border-bottom-color: #055959;
     text-decoration: none;
-        padding-bottom: 0;
-    margin-bottom:10px;
+        padding-bottom: 7px;
+    margin-bottom:0px;
      -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 4px 4px 0 0;
@@ -9716,8 +9715,8 @@ Carousel
     text-decoration: none;
     border-bottom: 3px solid;
     border-bottom-color: #055959;
-    padding-bottom: 0;
-    margin-bottom:10px;
+    padding-bottom: 7px;
+    margin-bottom:0px;
     -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 4px 4px 0 0;
@@ -9761,12 +9760,11 @@ Carousel
 .elgg-menu-filter > li>a:focus{
     text-decoration: none;
     border-bottom: 3px solid #055959;
-   padding-bottom: 0;
-   margin-bottom: 10px;
+   padding-bottom: 7px;
  }
 
 .elgg-menu-filter {
-  margin-bottom: 0;
+  margin-bottom: 7px;
   padding-left: 0;
   list-style: none;
 
