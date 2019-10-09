@@ -125,7 +125,11 @@ foreach($fields as $field){
         if(!$content){
             echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . $message . '</div>';
         } else {
-            echo $content;
+            if($field === 'File' || $field === 'Thewire'){
+                echo '<div class="elgg-list-group">'.$content. '</div>';
+            } else {
+                echo $content;
+            }
         }
 
         $url = strtolower($field) . "/owner/" . elgg_get_page_owner_entity()->username;

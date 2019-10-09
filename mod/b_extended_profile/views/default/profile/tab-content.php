@@ -119,7 +119,11 @@ foreach($fields as $field){
         if(!$content){
             echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . $message . '</div>';
         } else {
-            echo $content;
+            if($field === 'File' || $field === 'Thewire'){
+                echo '<div class="elgg-list-group">'.$content. '</div>';
+            } else {
+                echo $content;
+            }
         }
 
         $url = strtolower($field) . "/owner/" . elgg_get_page_owner_entity()->username;
@@ -136,7 +140,7 @@ foreach($fields as $field){
 
 //event calendar tab
 echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
-    echo '<div class="clearfix">';
+    echo '<div class="clearfix elgg-list-group">';
     echo '<h2 class="wb-invisible" tabindex="-1">'.elgg_echo('event_calendar:listing_title:mine', array($user_display_name)).'</h2>';
     if(elgg_is_active_plugin('event_calendar')){
         $events = event_calendar_get_personal_events_for_user(elgg_get_page_owner_guid(), 5);
