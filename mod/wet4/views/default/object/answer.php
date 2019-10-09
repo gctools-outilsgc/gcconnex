@@ -7,7 +7,7 @@ if (!($answer instanceof ElggAnswer)) {
 
 $question = $answer->getContainerEntity();
 
-$image = elgg_view_entity_icon($answer->getOwnerEntity(), 'medium');
+$image = elgg_view_entity_icon($answer->getOwnerEntity(), 'small');
 
 // mark this as the correct answer?
 $correct_answer = $answer->getCorrectAnswerMetadata();
@@ -20,10 +20,13 @@ if ($correct_answer) {
 
 	$title = elgg_echo('questions:answer:checkmark:title', [$owner_name, $timestamp]);
 
-	$image .= elgg_format_element('div', ['class' => 'fa fa-check fa-3x questions-correct', 'title' => $title]);
-
 	//make variable to store invisible span for screen readers
 	$correct = '<span class="wb-inv">'.$title.'</span>';
+
+	$image .= elgg_format_element('span', ['class' => 'fa fa-check fa-2x questions-correct', 'title' => $title], $correct);
+
+	$correct_style = ' style="flex-shrink:5;"';
+	
 }
 
 // create subtitle
@@ -45,7 +48,7 @@ $entity_menu = elgg_view_menu('entity', [
 	'class' => 'elgg-menu-hz list-inline',
 ]);
 
-$body = elgg_view('output/longtext', ['value' => $answer->description]);
+$body = elgg_view('output/longtext', ['value' => $answer->description, 'class' => 'mrgn-bttm-md']);
 $body .= $entity_menu;
 
 // show comments?
@@ -57,14 +60,13 @@ if ($question->comments_enabled !== 'off') {
 			'subtype' => 'comment',
 			'container_guid' => $answer->getGUID(),
 			'limit' => false,
-			'list_class' => 'elgg-river-comments',
+			'list_class' => 'elgg-river-comments elgg-river-responses',
 			'distinct' => false,
 			'full_view' => true,
 			"order_by" => "time_created"
 		];
 
-		$body .= elgg_format_element('h3', ['class' => 'elgg-river-comments-tab mtm'], elgg_echo('comments'));
-		$body .= elgg_list_entities($comment_options);
+		$body .= '<div class="mrgn-lft-md elgg-river-responses">'.elgg_list_entities($comment_options).'</div>';
 	}
 
 	if ($answer->canComment()) {
@@ -89,4 +91,5 @@ $params = [
 
 $summary = $correct . elgg_view('page/components/summary', $params);
 
-echo elgg_view_image_block($image, $summary);
+$format_panel_body = elgg_format_element('div', ['class' => ' d-flex panel-body'], '<div'.$correct_style.'>'.$image.'</div>' . '<div class="wet-image-block-body">' . '<div class="mrgn-bttm-sm">' . $subtitle . '</div>' . $body . '</div>');
+echo elgg_format_element('div', ['class' => 'panel'], $format_panel_body);
