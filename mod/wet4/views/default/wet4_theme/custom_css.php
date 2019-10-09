@@ -643,14 +643,6 @@ max-height: 500px;
     height: 0;
 }
 
-.elgg-avatar-small-wet4 > a > img {
-    width: 45px !important;
-    height: 45px !important;
-    border-radius: 50% !important;
-    background-clip: border;
-    background-size: 45px;
-}
-
 .elgg-river-message {
     margin: 12px 0;
 }
