@@ -36,21 +36,6 @@ $header = elgg_view('page/layouts/elements/header', $vars);
 //remove title menu and add new menu in right place
 elgg_unregister_menu_item('title', 'settings');
 
-$page_owner = elgg_get_page_owner_entity();
-
-if ($page_owner->canEdit() || elgg_is_admin_logged_in()) {
-    elgg_register_menu_item('idea-title', array(
-        'name' => 'settings',
-        'href' => "ideas/group/$page_owner->guid/settings",
-        'text' => elgg_echo('ideas:group_settings'),
-        'class' => 'list-inline',
-        'list_class' => 'clearfix',
-        'link_class' => 'btn btn-default gwfb group_admin_only pull-right',
-    ));
-
-    $header .= '<div class="clearfix mrgn-bttm-sm">' . elgg_view_menu('idea-title', array('class' => 'list-unstyled')) . '</div>';
-}
-
 // allow page handlers to override the default filter
 if (isset($vars['filter'])) {
 	$vars['filter_override'] = $vars['filter'];

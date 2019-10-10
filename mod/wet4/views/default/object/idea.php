@@ -19,13 +19,12 @@ if (!$idea) {
 }
 
 $owner = $idea->getOwnerEntity();
-$owner_icon = elgg_view_entity_icon($owner, 'medium');
 $container = $idea->getContainerEntity();
 $user_guid = elgg_get_logged_in_user_guid();
 $categories = elgg_view('output/categories', $vars);
 
 
-	$description = elgg_view('output/longtext', array('value' => gc_explode_translation($idea->description,$lang), 'class' => 'pbl'));
+	$description = elgg_view('output/longtext', array('value' => gc_explode_translation($idea->description,$lang), 'class' => 'ptl'));
 
 
 	$title = gc_explode_translation($idea->title, $lang);
@@ -173,7 +172,7 @@ if($container) { // ds - was a weird bug where the container presumably didn't e
     // $totals = count($likes) . "<span class='elgg-icon elgg-icon-thumbs-up-alt'></span><span class='elgg-icon elgg-icon-thumbs-down-alt'></span>" . count($dislikes);
 
 }
-$idea_info = elgg_view_image_block($owner_icon, $list_body, array('class' => 'mbs'));
+$idea_info = elgg_view_image_block('', $list_body, array('class' => ''));
 if ($full == 'full' && !elgg_in_context('gallery')) {
 
 	//Identify available content
@@ -199,13 +198,14 @@ if( $description_json->en && $description_json->fr ){
 
 
 	echo <<<HTML
-<div id="elgg-object-{$idea->guid}" class="elgg-item-idea">
+<div id="elgg-object-{$idea->guid}" class="elgg-item-idea panel">
+<div class="panel-body clearfix">
 <div class="col-xs-1">  $vote </div>
 	<div class="col-xs-11">
 		$idea_info
 	</div>
     <div class="col-xs-12"> $description </div>
-
+</div>
 </div>
 HTML;
     echo elgg_view('wet4_theme/track_page_entity', array('entity' => $idea));
@@ -280,14 +280,14 @@ HTML;
 	}
 
 	echo <<<HTML
+	<div class="panel clearfix">
+	<div class="panel-body">
         <div class="col-xs-1">$vote</div>
-<div class="col-xs-11">
-
-    $idea_info
-
-
-</div>
-
+		<div class="col-xs-11">
+    		$idea_info
+		</div>
+	</div>
+	</div>
 HTML;
 
 }
