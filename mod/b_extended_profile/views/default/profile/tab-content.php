@@ -92,7 +92,7 @@ foreach($fields as $field){
                     'href' => $action,
                     'text' => $add,
                     'is_trusted' => true,
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-primary mrgn-bttm-md',
                 ));
 
                 //for files we want an additional add folder button
@@ -103,7 +103,7 @@ foreach($fields as $field){
                       'text' => elgg_echo("file_tools:new:title"),
                       'href' => "#",
                       "id" => "file_tools_list_new_folder_toggle",
-                      'class' => 'btn btn-default mrgn-rght-sm',
+                      'class' => 'btn btn-default mrgn-rght-sm mrgn-bttm-md',
                     ));
 
                     //add new folder to add button
