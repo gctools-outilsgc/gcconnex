@@ -85,7 +85,8 @@ if(elgg_is_active_plugin('thewire')) {
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
 if($entity_guid != 0) {
-	elgg_push_breadcrumb(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL());
+	$entity_text = $entity->type == 'user' ? $entity->name : $entity->job_title;
+	elgg_push_breadcrumb(elgg_get_excerpt($entity_text, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL());
 }
 elgg_push_breadcrumb($title);
 
