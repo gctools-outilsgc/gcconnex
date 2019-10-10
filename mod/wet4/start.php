@@ -847,7 +847,7 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params)
 		));
 	}
 
-	if ($entity->canComment()) {
+	if ($entity->canComment() && elgg_is_logged_in()) {
 		$returnvalue[] = \ElggMenuItem::factory(array(
 			"name" => "comments",
 			"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
