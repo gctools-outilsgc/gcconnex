@@ -14,12 +14,12 @@ if(elgg_is_logged_in()){
 
   if(!isset(elgg_get_logged_in_user_entity()->newsfeedCard) || elgg_get_logged_in_user_entity()->newsfeedCard == '') {
     $view_link = elgg_view('output/url', array(
-      'text' => 'LIST VIEW',
+      'text' => elgg_echo('newsfeed:listview'),
       'href' => elgg_add_action_tokens_to_url(elgg_get_site_url() .'action/newsfeed/view_toggle'),
     ));
   } else {
     $view_link = elgg_view('output/url', array(
-      'text' => 'CARD VIEW',
+      'text' => elgg_echo('newsfeed:cardview'),
       'href' => elgg_add_action_tokens_to_url(elgg_get_site_url() .'action/newsfeed/view_toggle'),
     ));
   }
