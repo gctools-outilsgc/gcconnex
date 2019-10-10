@@ -37,7 +37,7 @@ else {
                 'text' => $entry->link
             ));
             echo '</div>';
-            if ( $entry->datestamped == true ) {
+            if ( $entry->pubdate != '' ) {
                 echo '<br><div class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:portfolio:publication_date') . '</div><div class="portfolio-publicationdate">' . $entry->pubdate . '</div>';
             }
             echo '<br><div class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:portfolio:description') . '</div><div class="portfolio-description">' . $entry->description . '</div>';

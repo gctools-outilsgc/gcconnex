@@ -17,28 +17,28 @@ echo '<label for="portfolioTitle-' . $portfolio->guid .'" class="">';
     echo elgg_view("input/text", array(
             'name' => 'portfolio',
             'id' => 'portfolioTitle-' . $portfolio->guid,
-            'class' => 'gcconnex-portfolio-title',
+            'class' => 'gcconnex-portfolio-title mrgn-bttm-md',
             'value' => $portfolio->title));
 
-    echo '<br><label for="portfolio-link-' . $portfolio->guid .'" class="">' . elgg_echo('gcconnex_profile:portfolio:link') . '</label><br>';
+    echo '<label for="portfolio-link-' . $portfolio->guid .'" class="">' . elgg_echo('gcconnex_profile:portfolio:link') . '</label><br>';
     echo elgg_view("input/url", array(
         'name' => 'portfolio-link',
         'id' => 'portfolio-link-' . $portfolio->guid,
-        'class' => 'gcconnex-portfolio-link  mrgn-bttm-md',
+        'class' => 'gcconnex-portfolio-link  mrgn-bttm-md form-control',
         'value' => $portfolio->link));
 
     // enter publication date
-    echo '<br><label for="pubdate-' . $portfolio->guid .'">' . elgg_echo('gcconnex_profile:portfolio:publication_date') . '</label>';
+    echo '<label for="pubdate-' . $portfolio->guid .'">' . elgg_echo('gcconnex_profile:portfolio:publication_date') . '</label><br>';
 
     echo elgg_view("input/datepicker_popup", array(
             'name' => 'pubdate-' . $portfolio->guid,
             'id' => 'pubdate-' . $portfolio->guid,
-            'class' => 'gcconnex-portfolio-pubdate mrgn-btmm-sm',
+            'class' => 'gcconnex-portfolio-pubdate mrgn-bttm-sm form-control',
             'value' => $portfolio->pubdate
     ));
 
     unset($params);
-
+    
     $params = array(
         'name' => 'datestamped',
         'id' => 'datestamped-' . $portfolio->guid,
@@ -50,15 +50,15 @@ echo '<label for="portfolioTitle-' . $portfolio->guid .'" class="">';
         $params['checked'] = $portfolio->datestamped;
     }
 
-    echo  '<br><label for="datestamped-' . $portfolio->guid .'" class="">' . elgg_view('input/checkbox', $params);
-    echo elgg_echo('gcconnex_profile:portfolio:datestamp') . '</label>';
+    //echo  '<br><label for="datestamped-' . $portfolio->guid .'" class=" mrgn-tp-sm">' . elgg_view('input/checkbox', $params);
+    //echo elgg_echo('gcconnex_profile:portfolio:datestamp') . '</label>';
 
     // enter a description
-    echo '<br><label for="description-' . $portfolio->guid .'" class="">' . elgg_echo('gcconnex_profile:portfolio:description') . '</label><br>';
+    echo '<br><label for="description-' . $portfolio->guid .'" class="mrgn-tp-md">' . elgg_echo('gcconnex_profile:portfolio:description') . '</label><br>';
     echo elgg_view("input/textarea", array(
             'name' => 'description',
             'id' => 'description-' . $portfolio->guid,
-            'class' => 'gcconnex-portfolio-description',
+            'class' => 'gcconnex-portfolio-description form-control',
             'value' => $portfolio->description));
 
     // create a delete button for each education entry
