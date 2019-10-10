@@ -21,6 +21,23 @@
 }
 
 /* DO NOT DELETE */
+.elgg-icon-delete-alt-hover,
+.elgg-icon-delete-alt:hover,
+:focus > .elgg-icon-delete-alt {
+	background-position: 0 -216px;
+}
+.elgg-icon-delete-alt {
+	background-position: 0 -234px;
+}
+.elgg-icon-delete-hover,
+.elgg-icon-delete:hover,
+:focus > .elgg-icon-delete {
+	background-position: 0 -252px;
+}
+.elgg-icon-delete {
+	background-position: 0 -270px;
+}
+
 .elgg-icon-hover-menu-hover,
 .elgg-icon-hover-menu:hover,
 :focus > .elgg-icon-hover-menu {
