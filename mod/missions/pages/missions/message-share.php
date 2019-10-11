@@ -73,8 +73,8 @@ $navigation_tabs = array(
 		)
 );
 
-// Only show The Wire sharing when The Wire plugin is active.
-if(elgg_is_active_plugin('thewire')) {
+// Only show The Wire sharing when The Wire plugin is active andnot sharing with a user.
+if(elgg_is_active_plugin('thewire') && $entity->type != 'user') {
 	$navigation_tabs[1] = array(
 			'text' => elgg_echo('missions:the_wire_post'),
 			'href' => elgg_get_site_url() . 'missions/message-share/wire/' . $entity_guid,
