@@ -5,7 +5,7 @@ $group = elgg_get_page_owner_entity();
 $description = gc_explode_translation($group->description,$lang);
 $format_description = '<div><b>'. elgg_echo('description').':</b></div>' . elgg_get_excerpt($description, 300);
 $link_to_about = elgg_view('output/url', array(
-	'text' => 'More about this group / Widgets',
+	'text' => elgg_echo('group:more_button'),
 	'href' => '/groups/about/' .$group->guid,
 	'class' => 'btn btn-default',
 ));
@@ -15,6 +15,6 @@ $info_list = elgg_format_element('ul', ['class'=> 'mrgn-tp-md mrgn-bttm-0 list-u
 $content = elgg_format_element('div', [], $info_list . $format_description . '<div class="mrgn-tp-md">' .$link_to_about. '</div>');
 
 echo elgg_view('page/components/module', array(
-	'title' => 'Group Info',
+	'title' => elgg_echo('group:info'),
 	'body' => $content,
 ));
