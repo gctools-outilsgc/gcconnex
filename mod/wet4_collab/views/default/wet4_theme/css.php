@@ -2049,7 +2049,7 @@ Profile Completness
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
-  white-space: nowrap;
+  white-space: normal;
   padding: 6px 12px;
   font-size: 16px;
   line-height: 1.4375;
