@@ -223,7 +223,7 @@ if( $description_json->en && $description_json->fr ){
 
 		}
 	$download_url = '/file/download/' .$file->guid;
-	$download_link = elgg_format_element('a', ['href' => $download_url], 'Download');
+	$download_link = elgg_format_element('a', ['href' => $download_url], elgg_echo('download'));
 	$params = array(
 		"entity" => $file,
 		"subtitle" => $subtitle . $author_text . ' - ' . $date . ' - ' . $download_link,

@@ -63,7 +63,7 @@ if (empty($files_content)) {
 		$files_content .= "<a id='file_tools_action_bulk_download' href='javascript:void(0);'>" . elgg_echo("file_tools:list:download_selected") . "</a>";
 
         if (elgg_get_page_owner_entity()->canEdit()) {
-            $files_content .= ' | <a id="file_tools_action_move_selected" class="elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/file_tools/move?guids=">Move selected</a>';
+            $files_content .= ' | <a id="file_tools_action_move_selected" class="elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/file_tools/move?guids=">'.elgg_echo('file:move:selected').'</a>';
         }
 
 		$files_content .= "<a id='file_tools_select_all' class='float-alt' href='javascript:void(0);'>";
