@@ -439,10 +439,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     $validInput = false;
                     $error = true;
                 }
-                if($portfolio_edit['datestamped'] == false && trim( $portfolio_edit['pubdate']) == ''){
-                    $validInput = false;
-                    $error = true;
-                }
                 if($validInput == true){
                     if ($portfolio_edit['eguid'] == "new") {
                         $entry = new ElggObject();

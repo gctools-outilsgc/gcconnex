@@ -1117,7 +1117,7 @@ function saveProfile(event) {
                         'eguid': $(this).data('guid'),
                         'title': $(this).find('.gcconnex-portfolio-title').val(),
                         'link': $(this).find('.gcconnex-portfolio-link').val(),
-                        'pubdate': $(this).find('#pubdate').val(),
+                        'pubdate': $(this).find('.hasDatepicker').val(),
                         'datestamped': $(this).find('.gcconnex-portfolio-datestamped').val(),
                         'description': $(this).find('.gcconnex-portfolio-description').val()
                     };
