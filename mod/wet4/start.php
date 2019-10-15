@@ -1100,7 +1100,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 			"confirm" => elgg_echo("group_tools:discussion:confirm:open"),
 			"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 			"is_trusted" => true,
-			"title" => "Open the topic",
+			"title" => elgg_echo('entity:unlock:link:groupforumtopic'),
 			"priority" => 200,
 			"item_class" => ($entity->status == "closed") ? "" : "hidden"
 		));
@@ -1110,7 +1110,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 			"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
 			"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 			"is_trusted" => true,
-			"title" => "Close the topic",
+			"title" => elgg_echo('entity:lock:link:groupforumtopic'),
 			"priority" => 201,
 			"item_class" => ($entity->status == "closed") ? "hidden" : ""
 		));

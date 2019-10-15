@@ -11,16 +11,16 @@ return array(
 	'messageboard:viewall' => "voir tous",
 	'messageboard:postit' => "poster",
 	'messageboard:history:title' => "Histoire",
-	'messageboard:none' => "Il n'y a rien sur ce forum pour le momentt",
+	'messageboard:none' => "Il n'y a rien sur ce babillard pour le moment",
 	'messageboard:num_display' => "Nombre de messages à afficher",
 	'messageboard:desc' => "C'est un babillard que vous pouvez mettre sur votre profil lequel les autres utilisateurs peuvent faire des commentaires.",
 
-	'messageboard:user' => "%s's panneau de message",
+	'messageboard:user' => "Panneau de message de %s",
 
 	'messageboard:replyon' => 'répondre sur',
 	'messageboard:history' => "histoire",
 
-	'messageboard:owner' => '%s\'s panneau de message',
+	'messageboard:owner' => 'Panneau de message de %s',
 	'messageboard:owner_history' => '%s a envoyé un message sur le forum de %s',
 
 	/**
