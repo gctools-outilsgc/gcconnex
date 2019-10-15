@@ -31,8 +31,8 @@ $add_skill_field = elgg_view('input/text', array(
 
 if(!$no_delete) {
 	$delete_skill_button = elgg_view('output/url', array(
-			'text' => ' ' . elgg_echo('missions:delete'),
-			'class' => 'elgg-button btn fa fa-times-circle',
+			'text' => '<div class=" fa fa-times-circle"></div>  ' . elgg_echo('missions:delete'),
+			'class' => 'elgg-button btn',
 			'id' => 'missions-skills-button-delete-' . $numerator,
 			'onclick' => 'delete_skill_field(this)',
 			'style' => 'display:inline;'
