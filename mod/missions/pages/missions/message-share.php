@@ -73,8 +73,8 @@ $navigation_tabs = array(
 		)
 );
 
-// Only show The Wire sharing when The Wire plugin is active.
-if(elgg_is_active_plugin('thewire')) {
+// Only show The Wire sharing when The Wire plugin is active andnot sharing with a user.
+if(elgg_is_active_plugin('thewire') && $entity->type != 'user') {
 	$navigation_tabs[1] = array(
 			'text' => elgg_echo('missions:the_wire_post'),
 			'href' => elgg_get_site_url() . 'missions/message-share/wire/' . $entity_guid,
@@ -85,7 +85,8 @@ if(elgg_is_active_plugin('thewire')) {
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
 if($entity_guid != 0) {
-	elgg_push_breadcrumb(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL());
+	$entity_text = $entity->type == 'user' ? $entity->name : $entity->job_title;
+	elgg_push_breadcrumb(elgg_get_excerpt($entity_text, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL());
 }
 elgg_push_breadcrumb($title);
 
