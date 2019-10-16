@@ -23,16 +23,56 @@ $options['type'] = 'object';
 $options['subtype'] = 'mission';
 $options['metadata_name_value_pairs'] = array(array(
 		'name' => 'state',
-		'value' => 'completed'
-), array(
-		'name' => 'state',
-		'value' => 'cancelled'
+		'value' => array('completed', 'cancelled')
 ));
-$options['metadata_name_value_pairs_operator'] = 'OR';
-$options['limit'] = 0;
-$entity_list = elgg_get_entities_from_metadata($options);
 
-$count = count($entity_list);
+if ($_SESSION['missions_type_field_value']){
+    $options['metadata_name_value_pairs'][] = array(
+		'name' => 'job_type',
+		'value' => $_SESSION['missions_type_field_value']
+    );
+}
+
+if ($_SESSION['missions_role_field_value']){
+    $options['metadata_name_value_pairs'][] = array(
+        'name' => 'role_type',
+        'value' => $_SESSION['missions_role_field_value']
+    );
+}
+
+$options['metadata_name_value_pairs_operator'] = 'AND';
+
+switch($_SESSION['missions_sort_field_value']) {
+    case 'missions:date_posted':
+        $options['order_by'] = 'time_created ';
+        break;
+    case 'missions:date_closed':
+        $options['order_by_metadata'] = array(
+            'name' => 'time_closed',
+            'direction' => 'DESC');
+        break;
+    case 'missions:deadline':
+        $options['order_by_metadata'] = array(
+            'name' => 'deadline',
+            'direction' => 'DESC');
+        break;
+    case 'missions:opportunity_type':
+        $options['order_by_metadata'] = array(
+            'name' => 'job_type',
+            'direction' => 'DESC');
+        break;
+}
+
+if ( $options['order_by'] ){
+    if ( $_SESSION['missions_order_field_value'] == 'missions:descending' )
+        $options['order_by'] .= 'desc';
+    else if ( $_SESSION['missions_order_field_value'] == 'missions:ascending' )
+        $options['order_by'] .= 'asc';
+}
+else if ( $options['order_by_metadata'] && $_SESSION['missions_order_field_value'] == 'missions:ascending' ){
+    $options['order_by_metadata']['direction'] = 'ASC';
+}
+
 $offset = (int) get_input('offset', 0);
 if($entities_per_page) {
 	$max = $entities_per_page;
@@ -40,30 +80,17 @@ if($entities_per_page) {
 else {
 	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
 }
-//Nick - Added the type filter session to the sort hook
-$entity_list = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $entity_list, $_SESSION['missions_type_field_value'], $_SESSION['missions_role_field_value']);
-$count = count($entity_list);       // count the filtered list
-if ( $offset >= $count )            // reset offset if it no longer makes sense after filtering
-    $offset = 0;
 
-$max_reached = '';
-if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
-  if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
-      $max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
-  }
-}
+$options['limit'] = $max;
+$options['offset'] = $offset;
+$options['pagination'] = true;
+$options['list_type'] = 'gallery';
+$options['gallery_class'] = 'wb-eqht clearfix';
+$options['item_class'] = 'col-sm-6 col-md-4';
+$options['mission_full_view'] = false;
 
-$archive_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(
-		'count' => $count,
-		'offset' => $offset,
-		'limit' => $max,
-		'pagination' => true,
-		'list_type' => 'gallery',
-        'gallery_class'=>'wb-eqht clearfix',
-        'item_class'=>'col-sm-6 col-md-4 ',
-//		'gallery_class' => 'mission-gallery',
-		'mission_full_view' => false
-), $offset, $max);
+
+$archive_list = elgg_list_entities_from_metadata( $options );
 
 $change_entities_per_page_form = elgg_view_form('missions/change-entities-per-page', array(
 		'class' => 'form-horizontal'
@@ -108,7 +135,6 @@ if ($opp_type_field || $role_type_field) {
 
 <div class="col-sm-12">
 	<?php echo $sort_missions_form; echo $clear_link; ?>
-    <?php echo $max_reached; ?>
 </div>
 <div class="col-sm-12">
 	<?php echo $archive_list; ?>
