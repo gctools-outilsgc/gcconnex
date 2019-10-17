@@ -33,6 +33,7 @@ if(count($friend_count) > 0){
 }
 
 $db_prefix = elgg_get_config('dbprefix');
+$user_guid = $user->guid;
 $strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1);
 $map = array();
 foreach ($strings as $string) {
