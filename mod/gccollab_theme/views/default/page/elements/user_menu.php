@@ -32,6 +32,7 @@ if(count($friend_count) > 0){
     $friend_badge = '<span class="notif-badge um-badge"><span class="wb-invisible">'.elgg_echo('friend_request:new').'</span></span>';
 }
 
+$db_prefix = elgg_get_config('dbprefix');
 $strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1);
 $map = array();
 foreach ($strings as $string) {
