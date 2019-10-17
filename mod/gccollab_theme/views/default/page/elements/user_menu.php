@@ -32,13 +32,29 @@ if(count($friend_count) > 0){
     $friend_badge = '<span class="notif-badge um-badge"><span class="wb-invisible">'.elgg_echo('friend_request:new').'</span></span>';
 }
 
+$strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1);
+$map = array();
+foreach ($strings as $string) {
+	$id = elgg_get_metastring_id($string);
+	$map[$string] = $id;
+}
+
 $list = elgg_get_entities_from_metadata(array(
         'type' => 'object',
         'subtype' => 'messages',
+        'joins' => array(
+			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
+			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
+			"JOIN {$db_prefix}metadata msg_msg on e.guid = msg_msg.entity_guid",
+		),
+		'wheres' => array(
+			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
+			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
+			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
+		),
         'owner_guid' => $user->guid,
         'full_view' => false,
-        'metadata_name' => 'readYet',
-        'metadata_value' => false,
+        'distinct' => false,
         'limit' => 1,
     ));
 
