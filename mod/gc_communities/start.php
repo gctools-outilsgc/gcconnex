@@ -21,7 +21,6 @@ function gc_communities_init()
 
 	// Register streaming ajax calls
 	elgg_register_ajax_view('ajax/community_feed');
-	elgg_register_ajax_view('ajax/community_wire');
 
 	$communities = json_decode(elgg_get_plugin_setting('communities', 'gc_communities'), true);
 	$context = array();
