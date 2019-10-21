@@ -3,6 +3,8 @@
 
 return array(
 
+	'file:select:file' => 'Choisir le dossier %s',
+	'file:select:folder' => 'Sélectionner le dossier %s',
 	'thewire:head:title' => 'Message sur le fil',
 	'group_operator:find:user:error' => "Impossible de trouver l'utilisateur",
 
