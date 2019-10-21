@@ -48,7 +48,7 @@ if (elgg_is_logged_in()) {
 				'name' => 'addphotos',
 				'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
 				'text' => elgg_echo("photos:addphotos"),
-				'link_class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-primary btn-md'
+				'link_class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-default btn-md'
 			));
 		}
 	} else {
@@ -56,7 +56,7 @@ if (elgg_is_logged_in()) {
 			'name' => 'addphotos',
 			'href' => "ajax/view/photos/selectalbum/?owner_guid=" . elgg_get_logged_in_user_guid(),
 			'text' => elgg_echo("photos:addphotos"),
-			'link_class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-primary btn-md'
+			'link_class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-default btn-md'
 		));
 	}
 }
