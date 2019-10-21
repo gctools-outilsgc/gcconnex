@@ -31,7 +31,6 @@ if (elgg_is_logged_in()) {
 		'name' => 'addphotos',
 		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
 		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
 	));
 }
 
