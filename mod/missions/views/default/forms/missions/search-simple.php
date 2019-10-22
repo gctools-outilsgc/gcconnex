@@ -44,7 +44,7 @@ $input_simple_text = elgg_view('input/text', array(
 	    'value' => $simple,
 	    'id' => 'search-mission-simple-text-input',
 		'placeholder' => $placeholder,
-		'style' => 'width:400px;'
+		'style' => 'width:400px; margin-bottom:0;'
 ));
 
 $input_simple_limit = elgg_view('input/dropdown', array(
