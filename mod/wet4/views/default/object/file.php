@@ -200,7 +200,7 @@ if( $description_json->en && $description_json->fr ){
 		$file_icon = elgg_view_entity_icon($file, "small", array("img_class" => "file-tools-icon-small img-responsive"));
 
 		if (elgg_in_context("file_tools_selector")) {
-			$file_icon_alt = elgg_view("input/checkbox", array("name" => "file_guids[]", "value" => $file->getGUID(), "default" => false, 'class' => '',));
+			$file_icon_alt = elgg_view("input/checkbox", array("name" => "file_guids[]", "value" => $file->getGUID(), "default" => false, 'class' => '', 'aria-label' => elgg_echo('file:select:file', array(gc_explode_translation($file->title, $lang)))));
 		}
 
 		$excerpt = "";
@@ -223,7 +223,7 @@ if( $description_json->en && $description_json->fr ){
 
 		}
 	$download_url = '/file/download/' .$file->guid;
-	$download_link = elgg_format_element('a', ['href' => $download_url], 'Download');
+	$download_link = elgg_format_element('a', ['href' => $download_url], elgg_echo('download'));
 	$params = array(
 		"entity" => $file,
 		"subtitle" => $subtitle . $author_text . ' - ' . $date . ' - ' . $download_link,

@@ -3,6 +3,8 @@
 
 return array(
 
+	'file:select:file' => 'Choisir le dossier %s',
+	'file:select:folder' => 'Sélectionner le dossier %s',
 	'thewire:head:title' => 'Message sur le fil',
 	'group_operator:find:user:error' => "Impossible de trouver l'utilisateur",
 
@@ -53,8 +55,8 @@ return array(
 	'entity:share:link:groupforumtopic' => 'Partager la discussion "%s" sur le fil',
 	'entity:subscribe:link:groupforumtopic' => 'Vous abonner à la discussion "%s"',
 	'entity:unsubscribe:link:groupforumtopic' => 'Vous désabonner de la discussion "%s"',
-	'entity:lock:link:groupforumtopic' => 'Fermer la discussion "%s"',
-	'entity:unlock:link:groupforumtopic' => 'Ouvrir la discussion "%s"',
+	'entity:lock:link:groupforumtopic' => 'Fermer la discussion',
+	'entity:unlock:link:groupforumtopic' => 'Ouvrir la discussion',
 
 	'entity:like:link:discussion_reply' => 'Aimer la réponse à la discussion publiée par %s',
 	'entity:unlike:link:discussion_reply' => 'Enlever la mention j\'aime de la réponse à la discussion publiée par %s',

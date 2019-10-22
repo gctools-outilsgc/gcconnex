@@ -3,6 +3,8 @@ $site_url = elgg_get_site_url();
 
 return array(
 
+	'file:select:file' => 'Select file %s',
+	'file:select:folder' => 'Select folder %s',
     'thewire:head:title' => 'Wire post',
     'group_operator:find:user:error' => "Could not find user",
 
@@ -57,8 +59,8 @@ return array(
     'entity:share:link:groupforumtopic' => 'Share the discussion "%s" on The Wire',
     'entity:subscribe:link:groupforumtopic' => 'Subscribe to the discussion "%s"',
     'entity:unsubscribe:link:groupforumtopic' => 'Unsubscribe to the discussion "%s"',
-    'entity:lock:link:groupforumtopic' => 'Close the discussion "%s"',
-    'entity:unlock:link:groupforumtopic' => 'Open the discussion "%s"',
+    'entity:lock:link:groupforumtopic' => 'Close the discussion',
+    'entity:unlock:link:groupforumtopic' => 'Open the discussion',
 
     'entity:like:link:discussion_reply' => 'Like the discussion reply by %s',
     'entity:unlike:link:discussion_reply' => 'Remove like from the discussion reply by %s',

@@ -120,8 +120,8 @@ $time_field = elgg_view('page/elements/hidden-field', array(
 ));
 
 $add_skill_button = elgg_view('output/url', array(
-		'text' => ' ' . elgg_echo('missions:add'),
-		'class' => 'elgg-button btn fa fa-plus-circle',
+		'text' => '<div class=" fa fa-plus-circle"></div>  ' . elgg_echo('missions:add'),
+		'class' => 'elgg-button btn',
 		'id' => 'add-skill-button',
 		'onclick' => 'add_skill_field()'
 ));

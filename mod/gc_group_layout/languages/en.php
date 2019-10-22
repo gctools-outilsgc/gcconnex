@@ -14,4 +14,6 @@ return array(
     'group:next_set' => "Next",
     'group:previous_set' => "Previous",
     'group:settings' => "Group settings",
+    'group:info' => "Group info",
+    'group:more_button' => "More about this group / Widgets"
 );

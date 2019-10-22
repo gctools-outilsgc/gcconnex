@@ -54,7 +54,7 @@ $input_status = elgg_view('input/dropdown', array(
 
 $graph_generate_button = elgg_view('output/url', array(
 		'text' => elgg_echo('missions:generate'),
-		'class' => 'elgg-button btn btn-success',
+		'class' => 'elgg-button btn btn-primary',
 		'id' => 'data-analytics-generate-graph-button',
 		'onclick' => 'generate_graph()'
 ));

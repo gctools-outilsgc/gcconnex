@@ -110,27 +110,15 @@ if( $description_json->en && $description_json->fr && get_context() != 'widgets'
 	}
 	echo'</div>';
 }
-/*
-	echo elgg_view("object/elements/full", array(
-		"entity" => $folder,
-		"title" => false,
-		"icon" => $icon,
-		"summary" => $summary,
-	));*/
+
     elgg_unregister_menu_item('title2', 'new_folder');
 } else {
-
-	// identify available content
-/*	if(($folder->description2) && ($folder->description)){
-			
-		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}*/
 
 	// summary view
 	$icon = elgg_view_entity_icon($folder, "small");
 	$icon_alt = "";
 	if (!elgg_in_context("widgets")) {
-		$icon_alt = elgg_view("input/checkbox", array("name" => "folder_guids[]", "value" => $folder->getGUID(), "default" => false));
+		$icon_alt = elgg_view("input/checkbox", array("name" => "folder_guids[]", "value" => $folder->getGUID(), "default" => false, 'aria-label' => elgg_echo('file:select:folder', array(gc_explode_translation($folder->title, $lang)))));
 	}
 	
 	$params = array(

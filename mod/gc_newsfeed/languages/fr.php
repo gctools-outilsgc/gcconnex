@@ -18,4 +18,7 @@ return array(
     'newsfeed:undo' => "Les connexions faites avec vos collègues apparaîtront dans votre fil de nouvelles.",
     'newsfeed:filter:title' => "Configuration de votre fil de nouvelles",
 
+    'newsfeed:viewlist' => 'Vue liste',
+    'newsfeed:cardview' => 'Vue détaillée'
+
     );
