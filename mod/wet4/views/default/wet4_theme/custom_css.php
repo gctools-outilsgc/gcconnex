@@ -1597,7 +1597,6 @@ a.wire-share-container:visited {
   margin-bottom: 23px;
   min-width: 350px;
   box-shadow: 0 0 5px rgba(0,0,0,.15);
-  border: 1px solid transparent;
   border-radius: 4px; }
   .elgg-message h4 {
     margin-top: 0;
@@ -1631,9 +1630,14 @@ a.wire-share-container:visited {
     padding-right: 20px;
 }
 
+.alert-error {
+    border: 1px solid #d3080c;
+    border-left: solid 5px #d3080c;
+}
+
 .elgg-state-success, .alert-success {
   background-color: #dff0d8;
-  border-color: #d6e9c6;
+  border: 1px solid #278400;
     z-index: 100000;
    margin: 0 auto;
     width:100%;

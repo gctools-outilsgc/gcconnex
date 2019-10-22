@@ -4684,7 +4684,7 @@ a {
   a.btn {
     text-decoration: none; }
   a:visited {
-    color: #7834bc; }
+    color: #137991; }
 
 .btn-default:visited {
   color: #137991; }
