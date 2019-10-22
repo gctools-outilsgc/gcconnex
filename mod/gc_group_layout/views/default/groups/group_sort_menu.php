@@ -17,7 +17,7 @@ if($user) {
 	$badge = "";
 	if($requests) {
 		/** TODO: make better */
-		$badge = '<span class="notif-badge">o</span>';
+		$badge = '<span class="notif-badge" style="padding:6px;"><span class="wb-invisible">'.elgg_echo('new').'</span></span>';
 	}
 }
 $tabs = array(
