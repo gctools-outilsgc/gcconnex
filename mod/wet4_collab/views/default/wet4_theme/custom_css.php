@@ -108,14 +108,6 @@ textarea.error:focus{
 
   /****************************************/
 
-.list-break{
-
-}
-
-.list-break:last-child{
-    border-bottom:none !important;
-}
-
   /******************** Split Inbox Styling ********************/
 
 .message-dd-block{
@@ -1892,6 +1884,17 @@ figcaption{
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 4px;
 }
+
+.panel .elgg-list-group {
+    border: none;   
+}
+.elgg-module-aside .panel {
+    border: none !important;
+}
+.elgg-module-aside .panel .panel-body {
+    padding: 5px 0;
+}
+
 .elgg-list-group .au_subgroups_group_icon-medium-wet4 {
     margin: 10px 5px 10px 10px !important;
     display: inline-block !important;
@@ -1994,7 +1997,7 @@ figcaption{
 .river-ribbon {
     position: absolute;
     right: -8px;
-    background-color: #0d84b9;
+    background-color: #0C78A7;
     color: white;
     font-size: 13px;
     padding: 2px 6px;
@@ -2144,6 +2147,10 @@ table.bordered td {
     align-self: center!important;
 }
 
+#wb-srch-q {
+    width: 350px;
+}
+
 #wb-srch input {
     border-radius: 16px;
     box-shadow: 0 0 2px rgba(0,0,0,.2);
@@ -2171,6 +2178,23 @@ table.bordered td {
     color: black;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+@media (max-width: 1200px) {
+    #wb-srch button {
+        position:absolute;
+        top:7px;
+        right:-30px;
+    }
+}
+
+#mb-pnl .srch-pnl button {
+    padding: 5px 6px 4px;
+}
+
+#mb-pnl .srch-pnl button:hover {
+    background: #46246A !important;
+    color:white;
 }
 
 #wb-glb-mn .overlay-lnk {
