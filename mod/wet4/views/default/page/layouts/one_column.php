@@ -33,7 +33,6 @@ $context = elgg_extract('context', $vars, elgg_get_context());
     if(elgg_in_context('messages')){
         echo elgg_view('page/layouts/elements/header', $vars);
         echo elgg_view_menu('page', array('sort_by' => 'priority'));
-        echo elgg_view_menu('title', array('sort_by' => 'priority', 'class' => 'list-unstyled text-right', 'item_class' => 'btn btn-primary'));
     } else if(elgg_in_context('search')){
         echo ''; // remove double h1 for gsa search - Nick
     }else{
