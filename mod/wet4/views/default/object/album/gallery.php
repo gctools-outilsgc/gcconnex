@@ -15,7 +15,7 @@ $lang = get_current_language();
 $album = elgg_extract('entity', $vars);
 $album->title = gc_explode_translation($album->title, $lang);       // get the appropriate-language title if multiple ones are present.
 
-$album_cover = elgg_view_entity_icon($album, 'medium');
+$album_cover = elgg_view_entity_icon($album, 'small');
 
 $album_title = $album->getTitle();
 if (strlen($album_title) > 20) {

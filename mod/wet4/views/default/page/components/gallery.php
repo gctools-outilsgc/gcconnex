@@ -95,7 +95,7 @@ if ($position == 'before' || $position == 'both') {
 	echo $nav;
 }
 
-echo elgg_format_element('ul', ['class' => $list_classes .' list-unstyled gallery-padding'], $list_items);
+echo elgg_format_element('ul', ['class' => $list_classes .' list-unstyled gallery-padding panel-body'], $list_items);
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;

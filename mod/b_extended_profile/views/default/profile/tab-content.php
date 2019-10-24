@@ -20,6 +20,10 @@ foreach($fields as $field){
         'distinct' => false,
     );
 
+    if($field == 'Album'){ // get the gallery view for album instead of list
+        $options['list_type'] = 'gallery';
+    }
+
     $content = elgg_list_entities($options);
 
         //fix field to allow proper URLs
