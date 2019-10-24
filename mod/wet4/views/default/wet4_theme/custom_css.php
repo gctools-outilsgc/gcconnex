@@ -2039,4 +2039,8 @@ figcaption{
 
 .community-content{
     padding-top:0
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f4ca52adb159052a0f0318b8d3666a169705207c
