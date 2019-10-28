@@ -122,7 +122,7 @@ $breadcrumbs
        </div>
        
     $group_cover_image
-	<main role="main" property="mainContentOfPage" class="container">
+	<main role="main" property="mainContentOfPage" class="container" style="margin-top: 15px;">
 
         <!--<div class="elgg-inner">-->
 
@@ -140,12 +140,7 @@ $feedback_button
 
 </div>
 </div>
-
-
 	</main>
-
-
-
 	<footer role="contentinfo" id="wb-info" class="centered-xs visible-xs visible-sm visible-md visible-lg wb-navcurr">
 
 			$footer
