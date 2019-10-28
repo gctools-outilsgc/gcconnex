@@ -912,8 +912,6 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 
 	//pass type and entiey/owner name to function to return array of text
 	$hiddenText = generate_hidden_text($contentType, $entName);
-
-
 	$blocked_subtypes = array('comment', 'discussion_reply');
 	if (in_array($entity->getSubtype(), $blocked_subtypes) || elgg_instanceof($entity, 'user')) {
 		//do not let comments or discussion replies to be reshared on the wire
@@ -1340,6 +1338,18 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 				'priority' => 200,
 			);
 			$return[] = \ElggMenuItem::factory($options);
+		}
+		// comment blog
+		if($object->getSubtype() == 'blog'){
+			if ($object->canComment()) {
+				$options = array(
+					"name" => "comments",
+					"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
+					"title" => elgg_echo("comment:this"),
+					"href" => $object->getURL() . "#comments"
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
 		}
 	}
 
