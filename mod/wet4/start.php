@@ -1261,7 +1261,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 				if ($object->title3) {
 					$entName = gc_explode_translation($object->title3, $lang);
 				} else {
-					$entName = $object->title;
+					$entName = gc_explode_translation($object->title, $lang);
 				}
 			} else { //if not get owner instead of name
 				$entName = $object->getOwnerEntity()->name;
@@ -1347,6 +1347,18 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 					"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
 					"title" => elgg_echo("comment:this"),
 					"href" => $object->getURL() . "#comments"
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
+		}
+		// reply discussion
+		if($object->getSubtype() == 'groupforumtopic'){
+			if ($object->status != "closed") {
+				$options = array(
+					"name" => "reply",
+					"text" => '<i class="fa fa-lg fa-reply icon-unsel"><span class="wb-inv">' . elgg_echo("entity:reply:groupdorumtopic",array($entName)) . '</span></i>',
+					"title" => elgg_echo("reply:this"),
+					"href" => $object->getURL() . "#reply"
 				);
 				$return[] = \ElggMenuItem::factory($options);
 			}

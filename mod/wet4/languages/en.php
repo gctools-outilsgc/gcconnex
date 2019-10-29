@@ -60,7 +60,8 @@ return array(
     'entity:subscribe:link:groupforumtopic' => 'Subscribe to the discussion "%s"',
     'entity:unsubscribe:link:groupforumtopic' => 'Unsubscribe to the discussion "%s"',
     'entity:lock:link:groupforumtopic' => 'Close the discussion',
-    'entity:unlock:link:groupforumtopic' => 'Open the discussion',
+	'entity:unlock:link:groupforumtopic' => 'Open the discussion',
+	'entity:reply:groupdorumtopic' => 'Reply to the discussion "%s"',
 
     'entity:like:link:discussion_reply' => 'Like the discussion reply by %s',
     'entity:unlike:link:discussion_reply' => 'Remove like from the discussion reply by %s',
