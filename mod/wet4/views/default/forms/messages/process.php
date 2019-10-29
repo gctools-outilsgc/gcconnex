@@ -20,16 +20,12 @@ if (!$messages) {
 	return true;
 }
 
-echo '<div class="messages-container">';
-echo $messages;
-echo '</div>';
-
-echo '<div class="elgg-foot messages-buttonbank mrgn-tp-md">';
+echo '<div class="messages-buttonbank mrgn-bttm-md">';
 
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',
-	'class' => 'btn-default data-confirm',
+	'class' => 'btn-default data-confirm mrgn-rght-sm',
 	'title' => elgg_echo('deleteconfirm:plural'),
 	'data-confirm' => elgg_echo('deleteconfirm:plural')
 ));
@@ -40,12 +36,9 @@ if ($vars['folder'] == "inbox" || $vars['folder'] =="notifications") {
 		'name' => 'read',
 	));
 }
- 
-/* Removed for checkbox column
-echo elgg_view('input/button', array(
-	'value' => elgg_echo('messages:toggle'),
-	'class' => 'elgg-button btn-default',
-	'id' => 'messages-toggle',
-));
-*/
+
+echo '</div>';
+
+echo '<div class="messages-container">';
+echo $messages;
 echo '</div>';

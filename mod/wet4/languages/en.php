@@ -9,6 +9,7 @@ return array(
 
 	'file:select:file' => 'Select file %s',
 	'file:select:folder' => 'Select folder %s',
+	'notification:select:label' => 'Select',
     'thewire:head:title' => 'Wire post',
     'group_operator:find:user:error' => "Could not find user",
 

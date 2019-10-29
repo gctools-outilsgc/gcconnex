@@ -621,7 +621,7 @@ max-height: 500px;
 .river-ribbon {
     position: absolute;
     right: -8px;
-    background-color: #0d84b9;
+    background-color: #0C78A7;
     color: white;
     font-size: 13px;
     padding: 2px 6px;
