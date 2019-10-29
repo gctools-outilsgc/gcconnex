@@ -2,6 +2,8 @@
 /**
  * settings for the group news widget
  */
+
+return true;
 $widget = $vars["entity"];
 $widgetId = $widget->getGUID();
 $blog_count = sanitise_int($widget->blog_count);
