@@ -92,6 +92,8 @@ return array(
     'entity:share:link:event_calendar' => 'Share the event "%s" on The Wire',
     'entity:subscribe:link:event_calendar' => 'Subscribe to the event "%s"',
     'entity:unsubscribe:link:event_calendar' => 'Unsubscribe to the event "%s"',
+	'entity:add:event_calendar' => 'Add %s to my calendar',
+	'entity:remove:event_calendar' => 'Remove %s to my calendar',
 
     'entity:like:link:bookmarks' => 'Like the bookmark "%s"',
     'entity:unlike:link:bookmarks' => 'Remove like from the bookmark "%s"',

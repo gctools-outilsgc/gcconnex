@@ -1228,6 +1228,7 @@ function wet4_riverItem_remove()
  */
 function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 {
+	$user_guid = elgg_get_logged_in_user_guid();
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
 		$object = $item->getObjectEntity();
@@ -1362,6 +1363,25 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 				);
 				$return[] = \ElggMenuItem::factory($options);
 			}
+		}
+		// add event calendar
+		if($object->getSubtype() == 'event_calendar'){
+			if (check_entity_relationship($user_guid, 'personal_event', $object->guid)) {
+				$options = array(
+					"name" => "calendar",
+					"text" => '<i class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:remove:event_calendar",array($entName)) . '</span></i>',
+					"title" => elgg_echo("event_calendar:remove_from_my_calendar"),
+					"href" => elgg_add_action_tokens_to_url("action/event_calendar/remove_personal?guid={$object->guid}"),
+				);
+			}else{
+				$options = array(
+					"name" => "calendar",
+					"text" => '<i class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:add:event_calendar",array($entName)) . '</span></i>',
+					"title" => elgg_echo("event_calendar:add_to_my_calendar"),
+					"href" => elgg_add_action_tokens_to_url("action/event_calendar/add_personal?guid={$object->guid}"),
+				);
+			}
+			$return[] = \ElggMenuItem::factory($options);
 		}
 	}
 
