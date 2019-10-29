@@ -7,7 +7,7 @@
 		return elgg_trigger_plugin_hook('embed_extender', 'custom_patterns', array(), array());
 	}
 
-	//Generic embed functions - Don�t touch here!
+	//Generic embed functions - Don't touch here!
 	function custom_videoembed_create_embed_object($url, $guid, $videowidth=0, $input) {
 		
 		if (!$input) {

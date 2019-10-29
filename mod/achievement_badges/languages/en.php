@@ -35,7 +35,7 @@ return array(
     'badge:likes:objective:1' => "You've leveled up your Likes badge! Keep contributing and see who else will like your posts!",
     'badge:likes:objective:2' => 'Another level up! Keep it up, we like what you have to say!',
     'badge:likes:objective:3' => "Surprise, you reached the next level! Now you're making waves!",
-    'badge:likes:objective:4' => "Wow, you should get a badge for all Likes you're getting on your content� oh wait, you are! One more level and you will have completed the Likes badge!",
+    'badge:likes:objective:4' => "Wow, you should get a badge for all Likes you're getting on your content... oh wait, you are! One more level and you will have completed the Likes badge!",
     'badge:likes:objective:5' => 'Congratulations! You have unlocked the Likes badge! How does it feel being famous?',
 
     //Achieved

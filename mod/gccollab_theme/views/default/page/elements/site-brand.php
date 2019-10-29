@@ -72,7 +72,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                     </div>
                 </div>
             </div>
-            <div id="mb-pnl"></div>
+            <div id="mb-pnl" tabindex="-1"></div>
         </section>
         <div class="container">
             <div class="row">

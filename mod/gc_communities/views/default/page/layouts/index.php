@@ -10,7 +10,6 @@ $title = (get_current_language() == "fr") ? $community_fr : $community_en;
 
 $widget_based = elgg_get_plugin_setting('widget_based', 'gc_communities', false);
 $newsfeed_limit = elgg_get_plugin_setting('newsfeed_limit', 'gc_communities', 10);
-$wire_limit = elgg_get_plugin_setting('wire_limit', 'gc_communities', 10);
 $subtypes = json_decode(elgg_get_plugin_setting('subtypes', 'gc_communities'));
 
 if ($widget_based) {
@@ -25,7 +24,6 @@ if ($widget_based) {
 if (!get_input('offset')) {
 	// Streaming community feeds
 	elgg_require_js("stream_community_feed");
-	elgg_require_js("stream_community_wire");
 }
 ?>
 
@@ -136,45 +134,6 @@ if (!get_input('offset')) {
 
 		elgg_set_context('search');
 
-		$dbprefix = elgg_get_config('dbprefix');
-		$typeid = get_subtype_id('object', 'thewire');
-		$query = "SELECT wi.guid FROM {$dbprefix}objects_entity wi LEFT JOIN {$dbprefix}entities en ON en.guid = wi.guid WHERE en.type = 'object' AND en.subtype = {$typeid} ";
-
-		if (is_array($community_tags)) {
-			$all_tags = implode("|", $community_tags);
-			$all_tags = str_replace("'", "''", $all_tags);
-			$query .= " AND wi.description REGEXP '{$all_tags}'";
-		} else {
-			$query .= " AND wi.description LIKE '%{$community_tags}%'";
-		}
-
-		$wire_ids = array();
-		$wires = get_data($query);
-		foreach ($wires as $wire) {
-			$wire_ids[] = $wire->guid;
-		}
-
-		$options = array(
-			'type' => 'object',
-			'subtype' => 'thewire',
-			'limit' => $wire_limit,
-			'full_view' => false,
-			'list_type_toggle' => false,
-			'pagination' => true,
-			'guids' => $wire_ids
-		);
-
-		echo '<div class="panel panel-default">
-				<div class="panel-body clearfix">
-					<header class="panel-heading">
-						<h2 class="panel-title">' . elgg_echo('gc_communities:community_wire') . '</h2>
-					</header>
-					<div class="panel-body clearfix">
-						<div class="new-community-wire-holder"></div>
-						<div class="elgg-widget-content community-wire-holder">' . elgg_list_entities($options) . '</div>
-					</div>
-				</div>
-			</div>';
 		?>
 	</div>
 </div>

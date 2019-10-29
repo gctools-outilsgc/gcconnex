@@ -621,7 +621,7 @@ max-height: 500px;
 .river-ribbon {
     position: absolute;
     right: -8px;
-    background-color: #0d84b9;
+    background-color: #0C78A7;
     color: white;
     font-size: 13px;
     padding: 2px 6px;
@@ -2039,4 +2039,8 @@ figcaption{
 
 .community-content{
     padding-top:0
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f4ca52adb159052a0f0318b8d3666a169705207c

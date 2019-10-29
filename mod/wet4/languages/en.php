@@ -3,8 +3,13 @@ $site_url = elgg_get_site_url();
 
 return array(
 
+	'wet:abouthissite' => 'About this site',
+	'canada:symbol' => 'Symbol of the Government of Canada',
+	'top:of:page' => 'Top of page',
+
 	'file:select:file' => 'Select file %s',
 	'file:select:folder' => 'Select folder %s',
+	'notification:select:label' => 'Select',
     'thewire:head:title' => 'Wire post',
     'group_operator:find:user:error' => "Could not find user",
 

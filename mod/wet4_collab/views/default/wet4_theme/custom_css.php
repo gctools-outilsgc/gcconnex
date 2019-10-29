@@ -2195,7 +2195,8 @@ table.bordered td {
     padding: 5px 6px 4px;
 }
 
-#mb-pnl .srch-pnl button:hover {
+#mb-pnl .srch-pnl button:hover,
+#mb-pnl .srch-pnl button:focus {
     background: #46246A !important;
     color:white;
 }
@@ -2215,6 +2216,7 @@ table.bordered td {
     color: #fff !important;
 }
 
+
 .panel .elgg-list-group {
     border: none;   
 }
@@ -2223,6 +2225,17 @@ table.bordered td {
 }
 .elgg-module-aside .panel .panel-body {
     padding: 5px 0;
+ }
+  
+.inboxTable thead th {
+    font-weight: bold;
+    padding: .75rem .75rem .75rem 0 !important;
+    border-bottom: 3px solid #96a8b2;
+}
+
+.inboxTable thead th:first-child,
+.inboxTable tbody tr td:first-child {
+    padding: .75rem !important;
 }
 
 @media (max-width: 991px) {

@@ -121,8 +121,8 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 	$phpmailer->IsSMTP(); // telling the class to use SMTP
 	$phpmailer->Host       = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
 	$phpmailer->Port       = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
-	$phpmailer->SMTPAuth   = true;
-	$phpmailer->SMTPSecure = "tls";
+	$phpmailer->SMTPAuth   = elgg_get_plugin_setting('phpmailer_smtp_auth', 'phpmailer');
+	$phpmailer->SMTPSecure = "";	// set below
 	$phpmailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
 	$phpmailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
 	$phpmailer->SetFrom( elgg_get_plugin_setting('phpmailer_from_email', 'phpmailer'), elgg_get_plugin_setting('phpmailer_from_name', 'phpmailer') );
@@ -213,7 +213,7 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 	$smtp_auth = elgg_get_plugin_setting('phpmailer_smtp_auth', 'phpmailer');
 
 	$is_ssl    = elgg_get_plugin_setting('ep_phpmailer_ssl', 'phpmailer');
-	$ssl_port  = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer');
+	$smtp_port  = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer');
 
 	try {
 
@@ -222,13 +222,14 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 			if ($smtp_auth && $is_ssl) {
 
 				$phpmailer->SMTPSecure = "tls";
-				$phpmailer->Port = $ssl_port;
 				
 			}
 		} else {
 			// use php's mail
 			$phpmailer->IsMail();
 		}
+
+		$phpmailer->Port = $smtp_port;
 	
 		$return = $phpmailer->Send();
 
@@ -239,7 +240,7 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 		$errType = $e->getCode();
 		phpmailer_logging($errMess, $errStack, 'PHPMailer', $errType);
 	}
-	
+
 
 
 	if (!$return) {

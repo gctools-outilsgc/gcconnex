@@ -93,12 +93,21 @@ if(elgg_in_context('messages')) {
         $mess_check = elgg_view('input/checkbox', array(
 			'name' => 'message_id[]',
 			'value' => $item->guid,
-            'class' => 'mrgn-rght-sm'
-		));
+            'class' => 'mrgn-rght-sm',
+            'aria-label' => elgg_echo('notification:select:label')
+        ));
+        
+        if(get_current_language() == 'en') {
+            $split = explode(" | ", $item->title);
+            $msgtitle = $split[0];
+        } else {
+            $split = explode(" | ", $item->title);
+            $msgtitle = $split[1];
+        }
 
         $subject_info = elgg_view('output/url', array(
 	        'href' => $item->getURL(),
-	        'text' => $item->title,
+	        'text' => $msgtitle,
 	        'is_trusted' => true,
         ));
 
@@ -113,10 +122,10 @@ if(elgg_in_context('messages')) {
         }
 
         //stick items in <td> element
-        $list_items = elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], $mess_check);
-        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], '<span>' . $sender . '</span>');
-        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], $subject_info);
-	    $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], elgg_view_friendly_time($item->time_created));
+        $list_items = elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding:10px 10px 10px 0'], $mess_check);
+        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 10px 10px 0'], '<span>' . $sender . '</span>');
+        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 10px 10px 0'], $subject_info);
+	    $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 10px 10px 0'], elgg_view_friendly_time($item->time_created));
         //stick <td> elements in <tr>
 
         if($item->readYet){
@@ -137,11 +146,11 @@ if(elgg_in_context('messages')) {
     $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
 
     //create table head
-    $tHead = elgg_format_element('thead', ['class' => ''], '<tr><th><input type="checkbox" name="select_all" value="Toggle All" id="table-select-all"></th> <th class="">' . $heading1 . ' </th><th>' . elgg_echo('msg:subject') . '</th><th>' . $heading2 . '</th> </tr>');
+    $tHead = elgg_format_element('thead', ['class' => ''], '<tr><th><input type="checkbox" name="select_all" value="Toggle All" id="table-select-all" aria-label="'.elgg_echo('file_tools:list:select_all').'"></th> <th class="">' . $heading1 . ' </th><th>' . elgg_echo('msg:subject') . '</th><th>' . $heading2 . '</th> </tr>');
 
 
         //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
-        $tab =  elgg_format_element('table', ['class' => ' wb-tables table inboxTable', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false, \"bSort\" : false, \"lengthMenu\": [[25, 50, 100, 250], [25, 50, 100, 250]] }"], $tHead . $tBody);
+        $tab =  elgg_format_element('table', ['class' => 'table inboxTable', 'id' => '',], $tHead . $tBody);
         echo elgg_format_element('div', ['class' => 'table-responsive'], $tab);
 ?>
 

@@ -3,8 +3,13 @@
 
 return array(
 
+	'wet:abouthissite' => 'Informations sur le site',
+	'canada:symbol' => 'Symbole du gouvernement du Canada',
+	'top:of:page' => 'Haut de page',
+
 	'file:select:file' => 'Choisir le dossier %s',
 	'file:select:folder' => 'Sélectionner le dossier %s',
+	'notification:select:label' => 'Sélectionner',
 	'thewire:head:title' => 'Message sur le fil',
 	'group_operator:find:user:error' => "Impossible de trouver l'utilisateur",
 

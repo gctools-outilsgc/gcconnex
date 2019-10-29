@@ -236,5 +236,3 @@ if ($vars['entity']->widget_based) {
 echo '<p class="mtl"><label for="widget_based">' . elgg_echo('gc_communities:enable_widgets') . ' ' . elgg_view('input/checkbox', $options) . '</label></p>';
 
 echo '<p class="mtl"><label for="newsfeed_limit">' . elgg_echo('gc_communities:newsfeed_shown') . ' ' . elgg_view('input/select', array('id' => 'newsfeed_limit', 'name' => 'params[newsfeed_limit]', 'value' => (isset($vars['entity']->newsfeed_limit) ? $vars['entity']->newsfeed_limit : 10), 'options' => range(2, 20, 2))) . '</label></p>';
-
-echo '<p class="mtl"><label for="wire_limit">' . elgg_echo('gc_communities:wires_shown') . ' ' . elgg_view('input/select', array('id' => 'wire_limit', 'name' => 'params[wire_limit]', 'value' => (isset($vars['entity']->wire_limit) ? $vars['entity']->wire_limit : 10), 'options' => range(2, 20, 2))) . '</label></p>';

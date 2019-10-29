@@ -11,10 +11,11 @@ $mime = $object->getMimeType();
 if($mime == 'image/jpeg' || $mime == 'image/png'){
   $image_url = $object->getIconURL('large');
   $image_url = elgg_format_url($image_url);
+  $image_alt = gc_explode_translation($object->title,$lang);
   //$download_url = elgg_get_download_url($object);
   echo <<<HTML
   <div class="d-flex justify-content-center">
-    <a href="$download_url" class="elgg-lightbox-photo"><img class="elgg-photo img-responsive" src="$image_url" /></a>
+    <a href="$download_url" class="elgg-lightbox-photo"><img class="elgg-photo img-responsive" src="$image_url" alt="{$image_alt}"/></a>
   </div>
 HTML;
 }else{

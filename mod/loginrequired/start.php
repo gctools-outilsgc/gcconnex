@@ -73,6 +73,7 @@ function loginrequired_init() {
 	$allow[] = 'splash';
 	$allow[] = 'mod/contactform/';
 	$allow[] = 'thewire_image/download/.*';
+	$allow[] = 'manifest\.json';
 
 	if (getenv('SOLR_CRAWLER') != '' && $_SERVER['HTTP_USER_AGENT'] === getenv('SOLR_CRAWLER')){
 		$allow[] = '.*';

@@ -99,7 +99,7 @@
 	<div>
 		<div class="lang_toggle">
 	
-			<form action="<?php echo $vars['url']; ?>action/toggle_language/toggle" method="post" id="formtoggle">
+			<form action="<?php echo $vars['url']; ?>action/toggle_language/toggle" method="post">
 				<?php echo elgg_view('input/securitytoken'); ?>
 			</form>
 			

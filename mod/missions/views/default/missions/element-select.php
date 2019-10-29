@@ -45,6 +45,8 @@ if (get_current_language()=='en'){
     $provinces['pov-que'] = 'Government of Quebec';
     $provinces['pov-sask'] = 'Government of Saskatchewan';
     $provinces['pov-yuk'] = 'Government of Yukon';
+    $provinces['CIRNAC-RCAANC'] = 'Crown-Indigenous Relations and Northern Affairs Canada';
+	$provinces['PPS-SPP'] = 'Parliamentary Protective Service';
 }else{
     $departments = $obj[0]->deptsFr;
     $provinces['pov-alb'] = "Gouvernement de l'Alberta";
@@ -60,6 +62,8 @@ if (get_current_language()=='en'){
     $provinces['pov-que'] = 'Gouvernement du Québec';
     $provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
     $provinces['pov-yuk'] = 'Gouvernement du Yukon';
+    $provinces['CIRNAC-RCAANC'] = 'Relations Couronne-Autochtones et Affaires du Nord Canada';
+	$provinces['PPS-SPP'] = 'Service de Protection Parlementaire';
 }
 $departments = json_decode($departments, true);
 
@@ -131,7 +135,9 @@ else {
                     )
             ));
             break;
-        
+        $departments = array_merge($departments,$provinces);
+        unset($departments['ou=INAC-AANC, o=GC, c=CA']);
+        asort($departments);
         case elgg_echo('missions:department'):
 
              $content .= elgg_view('input/dropdown', array(

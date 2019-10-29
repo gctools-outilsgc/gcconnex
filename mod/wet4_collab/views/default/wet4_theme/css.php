@@ -9940,7 +9940,7 @@ a.shr-opn, a.shr-opn:hover {
     #wb-sm .menu .wb-navcurr {
       /*background: #047177 !important;*/
       background: #EBEBEB !important;
-      color: #707070 !important; }
+      color: #636363 !important; }
     #wb-sm .menu > li {
       border-left: 1px solid transparent;
       display: table-cell;
@@ -9950,7 +9950,9 @@ a.shr-opn, a.shr-opn:hover {
       #wb-sm .menu > li a {
         color: #707070; }
         #wb-sm .menu > li a:hover,
-        #wb-sm .menu > li a:focus {
+        #wb-sm .menu > li a:focus,
+        #wb-sm .menu .active a {
+          color: #636363;
           background: #EBEBEB !important;
           text-shadow: none; }
   #wb-sm .sm.open {

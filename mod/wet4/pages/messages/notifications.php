@@ -35,7 +35,7 @@ $display_num_post = $_GET['num'];
 if (!isset($display_num_post)) $display_num_post = 10;
 
 $count = messages_count_unread_notifications(elgg_get_page_owner_guid());
-$limit = 1000;
+$limit = 100;
 $dbprefix = elgg_get_config('dbprefix');
 $list .= elgg_list_entities_from_metadata(array(
 	'type' => 'object',
