@@ -33,7 +33,7 @@ $feedbackText= elgg_echo('wet:feedbackText');
 <!-- This contains the bottom Footer Links -->
 <div class="container">
     <nav role="navigation">
-        <h2>About this site</h2>
+        <h2><?php echo elgg_echo('wet:abouthissite');?></h2>
 
         <?php
         //Test is the user is logged in and give them links to register in the footer
@@ -103,10 +103,10 @@ $feedbackText= elgg_echo('wet:feedbackText');
     <div class="container">
         <div class="row">
             <div class="col-xs-6 visible-sm visible-xs tofpg">
-                <a href="#wb-cont">Top of Page <span class="glyphicon glyphicon-chevron-up"></span></a>
+                <a href="#wb-cont"><?php echo elgg_echo('top:of:page');?><span class="glyphicon glyphicon-chevron-up"></span></a>
             </div>
             <div class="col-xs-6 col-md-12 text-right">
-                <object type="image/svg+xml" tabindex="-1" role="img" data="<?php echo $site_url; ?>/mod/gccollab_theme/graphics/wmms-blk.svg" aria-label="Symbol of the Government of Canada"></object>
+                <object type="image/svg+xml" tabindex="-1" role="img" data="<?php echo $site_url; ?>/mod/gccollab_theme/graphics/wmms-blk.svg" aria-label="<?php echo elgg_echo('canada:symbol');?>"></object>
             </div>
         </div>
     </div>

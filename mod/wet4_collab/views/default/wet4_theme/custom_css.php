@@ -1691,7 +1691,6 @@ figcaption{
 
 .entity-menu-bubble{
     padding: 3px;
-    background-color: #efefef;
     border: 1px solid transparent;
 
 }
@@ -2192,7 +2191,8 @@ table.bordered td {
     padding: 5px 6px 4px;
 }
 
-#mb-pnl .srch-pnl button:hover {
+#mb-pnl .srch-pnl button:hover,
+#mb-pnl .srch-pnl button:focus {
     background: #46246A !important;
     color:white;
 }
@@ -2210,6 +2210,17 @@ table.bordered td {
 
 .invite-btn {
     color: #fff !important;
+}
+
+.inboxTable thead th {
+    font-weight: bold;
+    padding: .75rem .75rem .75rem 0 !important;
+    border-bottom: 3px solid #96a8b2;
+}
+
+.inboxTable thead th:first-child,
+.inboxTable tbody tr td:first-child {
+    padding: .75rem !important;
 }
 
 @media (max-width: 991px) {

@@ -83,7 +83,8 @@ function mentions_preg_callback($matches) {
 		if (elgg_get_plugin_setting('fancy_links', 'mentions')) {
 			$icon = elgg_view('output/img', array(
 				'src' => $user->getIconURL('topbar'),
-				'class' => 'pas mentions-user-icon'
+				'class' => 'pas mentions-user-icon',
+				'alt' => ''
 			));
 			$replace = elgg_view('output/url', array(
 				'href' => $user->getURL(),
