@@ -10,6 +10,10 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 	
 } else {
 
+	$attr = [
+		'id' => 'reply',
+	];
+
 	 $show_add_form = elgg_extract('show_add_form', $vars, true);
 
 	 $replies = elgg_list_entities(array(
@@ -44,7 +48,9 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 
 	 if ($show_add_form) {
 		 $form_vars = array('class' => 'mtm clearfix');
-		 echo elgg_view_form('discussion/reply/save', $form_vars, $vars);
+		 $content .= elgg_view_form('discussion/reply/save', $form_vars, $vars);
+
+		 echo elgg_format_element('div', $attr, $content);
 	 }
 
  }
