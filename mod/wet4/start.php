@@ -1394,6 +1394,19 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			);
 			$return[] = \ElggMenuItem::factory($options);
 		}
+		//question - answer
+		if($object->getSubtype() == 'question' || $object->getSubtype() == 'answer'){	
+			if ($object->canComment()) {	
+				$options = array(
+					'name' => 'comments',
+					"text" => '<span class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:question", array($entName)) . '</span></span>',
+					"title" => elgg_echo("comment:this"),
+					'href' => $object->getURL() ."#commentsadd{$object->getGUID()}",
+					'priority' => 288,
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
+		}
 	}
 
 	return $return;
