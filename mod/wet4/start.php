@@ -1383,6 +1383,17 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			}
 			$return[] = \ElggMenuItem::factory($options);
 		}
+		// download file
+		if($object->getSubType() == 'file'){
+			$options = array(
+				'name' => 'download',
+				'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></i>',
+				'title' => elgg_echo('download'),
+				'href' => "file/download/{$object->getGUID()}",
+				'priority' => 300,
+			);
+			$return[] = \ElggMenuItem::factory($options);
+		}
 	}
 
 	return $return;
