@@ -50,7 +50,22 @@ if ( $page_mode == 'bilingual_upgrade' ) {
 	));
 
 	access_show_hidden_entities($access_status);
-}
+}else if($page_mode == 'event_calendar_update'){
+	echo "<br /><h3>upgrade event calendat description</h3>";
+	echo elgg_view("output/url",
+		array(
+			'href' => elgg_get_site_url().'admin/plugin_settings/wet4',
+			'text' => '<< back to settings page',
+		)
+	);
+	echo "<br />";
+	$count = get_data_row("SELECT count(distinct guid) as objects FROM `elgg_entities` where `subtype` = 17");
+
+	echo elgg_view('admin/upgrades/view', array(
+		'count' => $count->objects,
+		'action' => 'action/wet4/merge_description',
+	));
+} 
 else {
 	$options = array(
 		'name' => 'params[ExtTheme]',
@@ -84,5 +99,16 @@ else {
 		$options['checked'] = 'checked';
 	}
 	echo "<label>".elgg_view('input/checkbox',$options)." Add Newsfeed-like page for user's department</label>";
+
+	echo "<div>";
+	echo "Run event calendar upgrade Script: <br />";
+	echo elgg_view("output/url",
+		array(
+			'href' => '?script=event_calendar_update',
+			'text' => 'event calendar upgrade script',
+			'class' => 'btn btn-default elgg-button btn-primary elgg-button-submit only-one-click',
+		)
+	);
+	echo "</div>";
 }
 ?>
