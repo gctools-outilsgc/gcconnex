@@ -176,14 +176,16 @@ if( $description_json->en && $description_json->fr ){
 	echo'</div>';
 	}
 
+	echo '<div class="panel">';
 	echo elgg_view("object/elements/full", array(
 			"entity" => $file,
 			"title" => false,
 			"icon" => elgg_view_entity_icon($file, "small"),
 			"summary" => $summary,
 			"body" => $body,
-			'class' => 'panel',
+			'class' => 'panel-body',
 	));
+	echo '</div>';
     elgg_unregister_menu_item('title', 'new_folder');
 
 } elseif (elgg_in_context("gallery")) {

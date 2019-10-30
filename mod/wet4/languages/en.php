@@ -300,6 +300,7 @@ return array(
 		'wet:reshare:image' => 'Image',
 		'wet:reshare:album' => 'Image Album',
 		'wet:reshare:file' => 'File',
+		'wet:reshare:folder' => 'Folder',
 		'wet:reshare:event_calendar' => 'Event',
 		'wet:reshare:etherpad' => 'Doc',
 

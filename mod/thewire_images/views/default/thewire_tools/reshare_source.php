@@ -21,16 +21,23 @@ if ($entity->icontime) {
 		'alt' => '',
 		'class' => 'align-self-center',
 	));
+	if($entity->getSubtype() === 'file'){
+		$owner = $entity->getOwnerEntity();
+		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';
+	}
 	if(elgg_instanceof($entity, 'group')) {
 		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
 		$by_link = '<div>'.elgg_echo('group') . ' - '. $mem . '</div>';
 	}
-} else if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'blog', 'bookmarks', 'mission', 'groupforumtopic', 'poll', 'question', 'thewire_image', 'event_calendar'))){
+} else if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'blog', 'bookmarks', 'mission', 'groupforumtopic', 'poll', 'question', 'thewire_image', 'event_calendar', 'folder'))){
 	$owner = $entity->getOwnerEntity();
 	$icon = elgg_view_entity_icon($owner, 'small', array('use_link' => false, 'use_hover' => false,));
 	if ($entity->getSubtype() === 'thewire'){
 		// Style this like the wire
 		$by_link = '<div class="mrgn-bttm-sm" style="color:#137991;">'.$owner->name.' - <span class="timeStamp">'.elgg_view_friendly_time($entity->time_created).'</span></div>';
+	} else if($entity->getSubtype() === 'folder') {
+		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';
+		$icon = '<img src="'.elgg_get_site_url().'mod/file_tools/_graphics/folder/small.png" alt="">';
 	} else {
 		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';
 	}

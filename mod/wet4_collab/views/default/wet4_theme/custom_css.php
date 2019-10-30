@@ -1126,6 +1126,7 @@ border:none;
     border: 1px solid #ccc;
     border-radius: 4px;
     display: block;
+    text-decoration: none;
 }
 a.wire-share-container:visited {
     color: #606060 !important;

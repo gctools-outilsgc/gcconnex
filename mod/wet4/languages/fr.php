@@ -317,6 +317,7 @@ return array(
 	'wet:reshare:image' => 'Image',
 	'wet:reshare:album' => "Album d'images",
 	'wet:reshare:file' => 'Fichier',
+	'wet:reshare:folder' => 'Dossier',
 	'wet:reshare:event_calendar' => 'Événement',
 	'wet:reshare:etherpad' => 'Doc',
 
