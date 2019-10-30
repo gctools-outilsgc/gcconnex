@@ -19,13 +19,13 @@ if ($entity->icontime) {
 	$icon = elgg_view('output/img', array(
 		'src' => $entity->getIconURL('small'),
 		'alt' => '',
-		'class' => 'img-responsive',
+		'class' => 'align-self-center',
 	));
 	if(elgg_instanceof($entity, 'group')) {
 		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
 		$by_link = '<div>'.elgg_echo('group') . ' - '. $mem . '</div>';
 	}
-} else if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'blog', 'bookmarks', 'mission', 'groupforumtopic', 'poll'))){
+} else if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'blog', 'bookmarks', 'mission', 'groupforumtopic', 'poll', 'question', 'thewire_image', 'event_calendar'))){
 	$owner = $entity->getOwnerEntity();
 	$icon = elgg_view_entity_icon($owner, 'small', array('use_link' => false, 'use_hover' => false,));
 	if ($entity->getSubtype() === 'thewire'){
@@ -38,7 +38,7 @@ if ($entity->icontime) {
 	$icon = elgg_view('output/img', array(
 		'src' => $entity->getIconURL('small'),
 		'alt' => '',
-		'class' => 'img-responsive',
+		'class' => 'align-self-center',
 	));
 	if(elgg_instanceof($entity, 'group')) {
 		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
@@ -60,9 +60,6 @@ if (!empty($entity->title)) {
 	$text = gc_explode_translation($entity->name, $lang);
 } elseif (!empty($entity->description)) {
 	$text = elgg_get_excerpt($entity->description, 140);
-} else {
-	// no text to display
-	return true;
 }
 
 $content = "<div class='elgg-subtext mrgn-lft-md'>";
@@ -78,14 +75,12 @@ if($entity->getSubtype() === 'thewire') {
 $attachment = thewire_image_get_attachments($entity->getGUID());
 if ($attachment) {
 	$content .= "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
-	$content .= '<a class="elgg-lightbox" href="' . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . '">';
 	$content .= elgg_view('output/img', array(
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
 		'alt' => $attachment->original_filename,
 		'class' => 'img-thumbnail',
 		'style' => "max-height: 120px; width: auto;"
 	));
-	$content .= "</a>";
 	$content .= "</div>";
 }
 

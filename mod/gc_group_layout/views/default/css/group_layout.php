@@ -31,6 +31,14 @@
     margin-top: 6.5px;
 }
 
+.nav-tabs > li > a:focus {
+    background-color: transparent;
+    text-decoration: none;
+    padding-bottom: 7px;
+    margin-bottom: 0;
+    border-bottom: 3px solid #055959;
+}
+
  @media (max-width: 767px) {
    .group-cover-photo, .group-place-holder-cover {
        display:none;
