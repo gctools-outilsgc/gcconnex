@@ -2,6 +2,18 @@
 /**
  * content of the group news widget
  */
+
+
+ /*************************************************************
+  * This is temp code to disable this widget
+  */
+echo "This widget is no longer supported. | Ce widget n'est plus supporté.";
+return true;
+
+
+/***************************************************************
+ * End
+ */
 $widget = $vars["entity"];
 
 $configured_projects = array();
