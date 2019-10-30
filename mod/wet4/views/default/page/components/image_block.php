@@ -144,7 +144,7 @@ echo <<<HTML
 	$image$alt_image$body$echo
     <div class="clearfix"></div>
 </article>
-<div class="clearfix"></div>
+<div class="elgg-body edit-comment"></div>
 HTML;
 
 }
