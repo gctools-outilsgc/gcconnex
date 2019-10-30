@@ -908,8 +908,6 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 
 	//pass type and entiey/owner name to function to return array of text
 	$hiddenText = generate_hidden_text($contentType, $entName);
-
-
 	$blocked_subtypes = array('comment', 'discussion_reply');
 	if (in_array($entity->getSubtype(), $blocked_subtypes) || elgg_instanceof($entity, 'user')) {
 		//do not let comments or discussion replies to be reshared on the wire
@@ -1226,6 +1224,7 @@ function wet4_riverItem_remove()
  */
 function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 {
+	$user_guid = elgg_get_logged_in_user_guid();
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
 		$object = $item->getObjectEntity();
@@ -1259,7 +1258,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 				if ($object->title3) {
 					$entName = gc_explode_translation($object->title3, $lang);
 				} else {
-					$entName = $object->title;
+					$entName = gc_explode_translation($object->title, $lang);
 				}
 			} else { //if not get owner instead of name
 				$entName = $object->getOwnerEntity()->name;
@@ -1336,6 +1335,73 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 				'priority' => 200,
 			);
 			$return[] = \ElggMenuItem::factory($options);
+		}
+		// comment blog
+		if($object->getSubtype() == 'blog'){
+			if ($object->canComment()) {
+				$options = array(
+					"name" => "comments",
+					"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
+					"title" => elgg_echo("comment:this"),
+					"href" => $object->getURL() . "#comments"
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
+		}
+		// reply discussion
+		if($object->getSubtype() == 'groupforumtopic'){
+			if ($object->status != "closed") {
+				$options = array(
+					"name" => "reply",
+					"text" => '<i class="fa fa-lg fa-reply icon-unsel"><span class="wb-inv">' . elgg_echo("entity:reply:groupdorumtopic",array($entName)) . '</span></i>',
+					"title" => elgg_echo("reply:this"),
+					"href" => $object->getURL() . "#reply"
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
+		}
+		// add event calendar
+		if($object->getSubtype() == 'event_calendar'){
+			if (check_entity_relationship($user_guid, 'personal_event', $object->guid)) {
+				$options = array(
+					"name" => "calendar",
+					"text" => '<i class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:remove:event_calendar",array($entName)) . '</span></i>',
+					"title" => elgg_echo("event_calendar:remove_from_my_calendar"),
+					"href" => elgg_add_action_tokens_to_url("action/event_calendar/remove_personal?guid={$object->guid}"),
+				);
+			}else{
+				$options = array(
+					"name" => "calendar",
+					"text" => '<i class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:add:event_calendar",array($entName)) . '</span></i>',
+					"title" => elgg_echo("event_calendar:add_to_my_calendar"),
+					"href" => elgg_add_action_tokens_to_url("action/event_calendar/add_personal?guid={$object->guid}"),
+				);
+			}
+			$return[] = \ElggMenuItem::factory($options);
+		}
+		// download file
+		if($object->getSubType() == 'file'){
+			$options = array(
+				'name' => 'download',
+				'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></i>',
+				'title' => elgg_echo('download'),
+				'href' => "file/download/{$object->getGUID()}",
+				'priority' => 300,
+			);
+			$return[] = \ElggMenuItem::factory($options);
+		}
+		//question - answer
+		if($object->getSubtype() == 'question' || $object->getSubtype() == 'answer'){	
+			if ($object->canComment()) {	
+				$options = array(
+					'name' => 'comments',
+					"text" => '<span class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:question", array($entName)) . '</span></span>',
+					"title" => elgg_echo("comment:this"),
+					'href' => $object->getURL() ."#commentsadd{$object->getGUID()}",
+					'priority' => 288,
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
 		}
 	}
 

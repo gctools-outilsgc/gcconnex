@@ -2105,9 +2105,9 @@ Profile Completness
     box-shadow: none; }
 
 .btn-default {
-  color: #137991;
+  color: #46246A;
   background-color: white;
-  border-color: #137991; }
+  border-color: #46246A; }
   .btn-default:hover,
 
   .btn-default:focus,
@@ -2146,18 +2146,18 @@ Profile Completness
     color: #eaebed;
     background-color: #055959; }
     .btn-default>a {
-        color: #137991;
+        color: #6b5088;
         text-decoration: none;
     }
 
 .btn-default>a:visited {
-        color: #137991;
+        color: #6b5088;
     }
     
 .btn-primary {
   color: #fff;
-  background-color: #137991;
-  border-color: #137991; }
+  background-color: #46246A;
+  border-color: #46246A; }
   .btn-primary:hover,
   .btn-primary:focus,
   .btn-primary.focus,
@@ -2165,8 +2165,8 @@ Profile Completness
   .btn-primary.active,
   .open > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #047177;
-    border-color: #047177; }
+    background-color: #6b5088;
+    border-color: #6b5088; }
   .btn-primary:active,
   .btn-primary.active,
   .open > .btn-primary.dropdown-toggle {
@@ -2189,8 +2189,8 @@ Profile Completness
   fieldset[disabled] .btn-primary.focus,
   fieldset[disabled] .btn-primary:active,
   fieldset[disabled] .btn-primary.active {
-    background-color: #055959;
-    border-color: #055959; }
+    background-color: #46246A;
+    border-color: #46246A; }
   .btn-primary .badge {
     color: #2572b4;
     background-color: #fff; }
@@ -3471,8 +3471,8 @@ tbody.collapse.in {
       line-height: 1.4375;
       text-decoration: none;
       color: #335075;
-      background-color: #eaebed;
-      border: 1px solid #dcdee1;
+      background-color: transparent;
+      border: 1px solid transparent;
       margin-left: -1px; }
     .pagination > li:first-child > a,
     .pagination > li:first-child > span {
@@ -3498,8 +3498,8 @@ tbody.collapse.in {
   .pagination > .active > span:focus {
     z-index: 2;
     color: #fff;
-    background-color: #055959;
-    border-color: #055959;
+    background-color: #6b5088;
+    border-color: #6b5088;
     cursor: default; }
   .pagination > .disabled > span,
   .pagination > .disabled > span:hover,
@@ -5209,15 +5209,16 @@ button.close {
  *	Link colour and decoration
  */
 a {
-    color: #137991;
+    color: #0278a4;
+    text-decoration: underline;
 }
   a.btn {
     text-decoration: none; }
   a:visited {
-    color: #7834bc; }
+    color: #0278a4; }
 
 .btn-default:visited {
-  color: #137991; }
+  color: #46246A; }
 
 .btn-primary:visited {
   color: #fff; }
@@ -9261,7 +9262,8 @@ body {
   font-weight: 300; }
 
 a {
-  color: #137991; }
+  color: #0278a4;
+  text-decoration: underline; }
   a img.thumbnail:hover {
     -webkit-box-shadow: 1px 1px 5px #999;
             box-shadow: 1px 1px 5px #999; }
@@ -9955,7 +9957,7 @@ a.shr-opn, a.shr-opn:hover {
           text-shadow: none; }
   #wb-sm .sm.open {
     background: #ccc;
-    border-bottom: 5px solid #137991; }
+    border-bottom: 5px solid #46246A; }
     #wb-sm .sm.open li a,
     #wb-sm .sm.open li summary {
       color: #444;
@@ -10238,7 +10240,7 @@ Carousel
  /*Tabs style*/
 
 .elgg-menu-filter>.elgg-state-selected{
-    color:#055959;
+    color:#0278a4;
     float: left;
     font-weight:bold;
     border-bottom-color: transparent;
@@ -10250,11 +10252,11 @@ Carousel
 .elgg-menu-filter>.elgg-state-selected >a:hover,
 .elgg-menu-filter>.elgg-state-selected >a:focus{
     border-bottom: 3px solid;
-    border-bottom-color: #055959;
+    border-bottom-color: #46246A;
     text-decoration: none;
-    background-color: #f9f9f9;
-        padding-bottom: 0;
-    margin-bottom:10px;
+    background-color: transparent;
+        padding-bottom: 7px;
+    margin-bottom:0px;
      -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 4px 4px 0 0;
@@ -10265,10 +10267,10 @@ Carousel
 
     text-decoration: none;
     border-bottom: 3px solid;
-    border-bottom-color: #055959;
-    background-color: #f9f9f9;
-    padding-bottom: 0;
-    margin-bottom:10px;
+    border-bottom-color: #46246A;
+    background-color: transparent;
+    padding-bottom: 7px;
+    margin-bottom:0px;
     -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 4px 4px 0 0;
@@ -10277,7 +10279,7 @@ Carousel
     cursor: default;}
 
 .elgg-menu-filter > li{
-    color:#295376;
+    color:#0278a4;
     float: left;
     border: 1px solid transparent;
     border-bottom-color: transparent;
@@ -10292,7 +10294,7 @@ Carousel
 }
 
 .elgg-menu-filter > li:hover{
-    color:#055959;
+    color:#46246A;
     float: left;
     border: 1px solid transparent;
     border-bottom-color: transparent;}
@@ -10306,17 +10308,17 @@ Carousel
 }
 
 .elgg-menu-filter > li a:visited{
-    color:#295376;}
+    color:#0278a4;}
 
 .elgg-menu-filter > li>a:hover,
 .elgg-menu-filter > li>a:focus{
     text-decoration: none;
-    border-bottom: 3px solid #055959;
-   padding-bottom: 0;
-   margin-bottom: 10px;
+    border-bottom: 3px solid #46246A;
+   padding-bottom: 7px;
  }
 
 .elgg-menu-filter {
+  margin-bottom: 7px;
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;

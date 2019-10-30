@@ -65,7 +65,8 @@ return array(
     'entity:subscribe:link:groupforumtopic' => 'Subscribe to the discussion "%s"',
     'entity:unsubscribe:link:groupforumtopic' => 'Unsubscribe to the discussion "%s"',
     'entity:lock:link:groupforumtopic' => 'Close the discussion',
-    'entity:unlock:link:groupforumtopic' => 'Open the discussion',
+	'entity:unlock:link:groupforumtopic' => 'Open the discussion',
+	'entity:reply:groupdorumtopic' => 'Reply to the discussion "%s"',
 
     'entity:like:link:discussion_reply' => 'Like the discussion reply by %s',
     'entity:unlike:link:discussion_reply' => 'Remove like from the discussion reply by %s',
@@ -96,6 +97,8 @@ return array(
     'entity:share:link:event_calendar' => 'Share the event "%s" on The Wire',
     'entity:subscribe:link:event_calendar' => 'Subscribe to the event "%s"',
     'entity:unsubscribe:link:event_calendar' => 'Unsubscribe to the event "%s"',
+	'entity:add:event_calendar' => 'Add %s to my calendar',
+	'entity:remove:event_calendar' => 'Remove %s to my calendar',
 
     'entity:like:link:bookmarks' => 'Like the bookmark "%s"',
     'entity:unlike:link:bookmarks' => 'Remove like from the bookmark "%s"',

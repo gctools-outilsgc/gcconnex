@@ -83,10 +83,13 @@ $content .= elgg_format_element('div', ['class' => 'mtm', 'id' => 'question-answ
 
 // add answer form
 if (($question->getStatus() === 'open') && $question->canWriteToContainer(0, 'object', 'answer')) {
-
+	$attr = [
+		'id' => 'commentsadd'.$guid,
+		'class' => 'elgg-state-highlight'
+	];
 	$add_form = elgg_view_form('object/answer/add', [], ['container_guid' => $question->getGUID()]);
 
-	$content .= elgg_format_element('div', [], $add_form);
+	$content .= elgg_format_element('div', $attr, $add_form);
 	
 } elseif ($question->getStatus() === 'closed') {
 	// add an icon to show this question is closed

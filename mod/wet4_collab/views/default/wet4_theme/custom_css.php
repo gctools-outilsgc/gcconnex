@@ -251,7 +251,7 @@ max-height: 500px;
 
     .notif-badge {
       display: inline-block;
-      margin-left: -15px;
+      margin-left: -1px;
       min-width: 10px;
       padding: 2px 5px;
       font-size: 12px;
@@ -613,9 +613,9 @@ max-height: 500px;
     /******************** Custom Button Styles ********************/
 
     .btn-custom {
-          color: #137991;
+          color: #6b5088;
           background-color: white;
-          border-color: #137991;
+          border-color: #6b5088;
         border-radius: 5px;
     }
 
@@ -743,23 +743,16 @@ max-height: 500px;
     /******************** Pager ********************/
 
     .pagination {
-        margin: 0;
-        left: 10%;
-    }
-
-    .pagination li {
-        border-radius: 0;
-    }
-
-    .pagination li a {
-        border-radius: 0;
-        margin-bottom: 0;
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        border-radius: .35rem;
     }
 
     .elgg-pagination{
-        left:25% !important;
-
+        left:0 !important;
     }
+
     .ui-autocomplete {
         padding-left: 0;
     }
@@ -936,13 +929,15 @@ max-height: 500px;
 
 }
 #widget_manager_widgets_select .panel-heading{
-    position: absolute;
     z-index: 44444;
-    width: 91%;
+    background-color: #F5F5F5;
+    padding: 10px;
+    border-radius: 4px;
 }
 
-#widget_manager_widgets_select .panel-body{
-   margin-top:70px;
+#widget_manager_widgets_select {
+    overflow-y: scroll !important;
+    margin: 0 !important;
 }
 
 .multi-widget-count{
@@ -1144,7 +1139,7 @@ a.wire-share-container:visited {
 }
 .wire-share-container .wire-reshare-title, .elgg-river-body .new-wire-reshare .wire-reshare-title {
     font-weight: bold;
-    color: #137991;
+    color: #6b5088;
 }
 
 .img-tn{
@@ -1441,9 +1436,18 @@ a.wire-share-container:visited {
     top: 185px;
 }
 */
-.elgg-state-success {
+.alert-error {
+    border: 1px solid #d3080c;
+    border-left: solid 5px #d3080c;
+    position:fixed;
+    z-index: 100000;
+   margin: 0 auto;
+    width: 1140px;
+}
+
+.elgg-state-success, .alert-success {
   background-color: #dff0d8;
-  border-color: #d6e9c6;
+  border: 1px solid #278400;
     position:fixed;
     z-index: 100000;
 
@@ -2212,6 +2216,17 @@ table.bordered td {
     color: #fff !important;
 }
 
+
+.panel .elgg-list-group {
+    border: none;   
+}
+.elgg-module-aside .panel {
+    border: none !important;
+}
+.elgg-module-aside .panel .panel-body {
+    padding: 5px 0;
+ }
+  
 .inboxTable thead th {
     font-weight: bold;
     padding: .75rem .75rem .75rem 0 !important;
