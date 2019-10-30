@@ -106,5 +106,5 @@ if ($full) {
 	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
-	echo elgg_view_image_block($etherpad_icon, $list_body);
+	echo '<div class="panel mrgn-tp-sm"><div class="panel-body">'.elgg_view_image_block($etherpad_icon, $list_body).'</div></div>';
 }

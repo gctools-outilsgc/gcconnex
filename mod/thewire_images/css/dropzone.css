@@ -174,7 +174,7 @@
   box-sizing: border-box; }
 
 .dropzone {
-  background: rgba(71, 37, 106, 0.075);
+  background: rgba(71, 37, 106, 0.045);
   border-radius: 5px;
   padding: 8px 14px;
   margin-top: 0; }

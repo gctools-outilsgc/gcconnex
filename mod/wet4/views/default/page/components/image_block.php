@@ -125,17 +125,6 @@ HTML;
 </div>
 HTML;
 
-}else if(elgg_get_context() == 'docs'){
-    echo <<<HTML
-    
-    <div class="$class clearfix panel mrgn-bttm-sm">
-        <div class="panel-body">
-	        $image$body
-        </div>
-    </div>
-HTML;
-    
-
 }else{
 
     $body = "<div class=\"wet-image-block-body\" style=\"flex-shrink:8;\">$body</div>";
