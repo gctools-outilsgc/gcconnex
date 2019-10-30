@@ -62,6 +62,7 @@ return array(
 	'entity:unsubscribe:link:groupforumtopic' => 'Vous désabonner de la discussion "%s"',
 	'entity:lock:link:groupforumtopic' => 'Fermer la discussion',
 	'entity:unlock:link:groupforumtopic' => 'Ouvrir la discussion',
+	'entity:reply:groupdorumtopic' => 'Répondre à la discussion "%s"',
 
 	'entity:like:link:discussion_reply' => 'Aimer la réponse à la discussion publiée par %s',
 	'entity:unlike:link:discussion_reply' => 'Enlever la mention j\'aime de la réponse à la discussion publiée par %s',
@@ -92,6 +93,8 @@ return array(
 	'entity:share:link:event_calendar' => 'Partager l\'événement "%s" sur le fil',
 	'entity:subscribe:link:event_calendar' => 'Vous abonner à l\'événemenet "%s"',
 	'entity:unsubscribe:link:event_calendar' => 'Vous désabonner de l\'événement "%s"',
+	'entity:add:event_calendar' => 'Ajouter %s à mon calendrier',
+	'entity:remove:event_calendar' => 'Supprimer %s de mon calendrier',
 
 	'entity:like:link:bookmarks' => 'Aimer le signet "%s"',
 	'entity:unlike:link:bookmarks' => 'Enlever la mention j\'aime du signet "%s"',
