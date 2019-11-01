@@ -7,10 +7,6 @@
  * @package Groups
  */
 
-if ($vars['entity']->activity_enable == 'no') {
-	return true;
-}
-
 $group = $vars['entity'];
 if (!$group) {
 	return true;
