@@ -47,33 +47,63 @@ $error_count = 0;
 
 do {
 	$object_guids = get_data("SELECT distinct e.guid as guid from {$db_prefix}entities e LEFT JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid LEFT JOIN (SELECT * FROM {$db_prefix}metadata WHERE name_id = {$update_id}) mdu ON e.guid = mdu.entity_guid
-		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$name2_id}, {$name3_id}, {$question2_id}, {$question3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id}) AND mdu.value_id IS NULL
-		ORDER BY e.guid DESC
+		WHERE md.name_id IN ({$check_web_conf}, {$url_web_conf}, {$add_web_conf}) AND mdu.value_id IS NULL
 		LIMIT {$offset}, {$limit}");
 
 	if (!$object_guids) {
 		// no users left to process
 		break;
 	}
-
 	// migrate all old storage style of bilingual content to json strings
 	foreach ( $object_guids as $object_guid ) {
 		$object = get_entity($object_guid->guid);
-
 		// check, migrate web conference
-		if ( isset($object->check_web_conf) ){
-			isset($object->url_web_conf) ){
-				$object->description .= gc_implode_translation('Web conference url: '.$object->url_web_conf,'Conférence Web url: '.$object->url_web_conf);	
+		if ( isset($object->teleconference_radio) ){
+			if(isset($object->teleconference)){
+				$new_description = gc_implode_translation( gc_explode_translation($object->description, 'en').'Web conference url: '.$object->teleconference.'<br>', gc_explode_translation($object->description, 'fr').'Web conférence URL: '.$object->teleconference.'<br>' );
+				$object->description = $new_description; 
+				$object->event_update_complete = 1;
+				$object->save();
 			}
-			isset($object->add_web_conf) ){
-				$object->description .= gc_implode_translation('Additional information: '.gc_explode_translation($object->add_web_conf,'en'),'Information supplémentaire: '.gc_explode_translation($object->add_web_conf,'fr'));	
+			if(isset($object->calendar_additional) ){
+				$new_description = gc_implode_translation( gc_explode_translation($object->description, 'en').'Additional information: '. gc_explode_translation($object->calendar_additional,'en').'<br>', gc_explode_translation($object->description, 'fr').'Information supplémentaire: '.gc_explode_translation($object->calendar_additional,'fr').'<br>' );
+				$object->description = $new_description; 
+				$object->event_update_complete = 1;
+				$object->save();
 			}
-			$object->title = $new_title;
-			$object->enfr_update_complete = 1;
+		}
+		if(isset($object->fees) ){
+			$new_description = gc_implode_translation( gc_explode_translation($object->description, 'en').'Fees: '.$object->fees.'<br>', gc_explode_translation($object->description, 'fr').'Frais: '.$object->fees.'<br>' );
+			$object->description = $new_description; 
+			$object->event_update_complete = 1;
 			$object->save();
 		}
-		
-
+		if(isset($object->language) ){
+			$new_description = gc_implode_translation( gc_explode_translation($object->description, 'en').'Language: '.$object->language.'<br>', gc_explode_translation($object->description, 'fr').'Langue: '.$object->language.'<br>' );
+			$object->description = $new_description; 
+			$object->event_update_complete = 1;
+			$object->save();
+		}
+		if ( isset($object->contact_checkbox) ){
+			if(isset($object->contact)){
+				$new_description = gc_implode_translation( gc_explode_translation($object->description, 'en').'Contact: '.$object->contact.'<br>', gc_explode_translation($object->description, 'fr').'Personne ressource: '.$object->contact.'<br>' );
+				$object->description = $new_description; 
+				$object->event_update_complete = 1;
+				$object->save();
+			}
+			if(isset($object->contact_email) ){
+				$new_description = gc_implode_translation( gc_explode_translation($object->description, 'en').'E-mail address: '.$object->contact_email.'<br>', gc_explode_translation($object->description, 'fr').'Adresse courriel: '.$object->contact_email.'<br>' );
+				$object->description = $new_description; 
+				$object->event_update_complete = 1;
+				$object->save();
+			}
+			if(isset($object->contact_phone) ){
+				$new_description = gc_implode_translation( gc_explode_translation($object->description, 'en').'Phone number: '.$object->contact_phone.'<br>', gc_explode_translation($object->description, 'fr').'Numéro de téléphone: '.$object->contact_phone.'<br>' );
+				$object->description = $new_description; 
+				$object->event_update_complete = 1;
+				$object->save();
+			}
+		}
 		$success_count++;
 	}
 } while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs);
