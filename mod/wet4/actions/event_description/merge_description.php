@@ -29,6 +29,7 @@ elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_ov
 
 $db_prefix = elgg_get_config('dbprefix');
 
+$room = elgg_get_metastring_id('room', true);
 $check_web_conf = elgg_get_metastring_id('teleconference_radio', true);
 $url_web_conf = elgg_get_metastring_id('teleconference', true);
 $add_web_conf = elgg_get_metastring_id('calendar_additional', true);// en/fr	
@@ -47,7 +48,7 @@ $error_count = 0;
 
 do {
 	$object_guids = get_data("SELECT distinct e.guid as guid from {$db_prefix}entities e LEFT JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid LEFT JOIN (SELECT * FROM {$db_prefix}metadata WHERE name_id = {$update_id}) mdu ON e.guid = mdu.entity_guid
-		WHERE md.name_id IN ({$check_web_conf}, {$url_web_conf}, {$add_web_conf}) AND mdu.value_id IS NULL
+		WHERE md.name_id IN ({$room}, {$check_web_conf}, {$url_web_conf}, {$add_web_conf}, {$fees}, {$language}, {$check_contact}, {$name_contact}, {$email_contact}, {$phone_contact}) AND mdu.value_id IS NULL
 		LIMIT {$offset}, {$limit}");
 
 	if (!$object_guids) {
@@ -58,6 +59,12 @@ do {
 	foreach ( $object_guids as $object_guid ) {
 		$object = get_entity($object_guid->guid);
 		// check, migrate web conference
+		if(isset($object->room)){
+			$new_venue = $object->venue.', '.$object->room;
+			$object->venue = $new_venue; 
+			$object->event_update_complete = 1;
+			$object->save();
+		}
 		if ( isset($object->teleconference_radio) ){
 			if(isset($object->teleconference)){
 				$new_description = gc_implode_translation( gc_explode_translation($object->description, 'en').'Web conference url: '.$object->teleconference.'<br>', gc_explode_translation($object->description, 'fr').'Web conférence URL: '.$object->teleconference.'<br>' );
