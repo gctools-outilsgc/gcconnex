@@ -71,9 +71,9 @@ if (elgg_is_sticky_form('ticket-submit')) {
     <?php
     if(  $product_id == 2100000289 || $product_id == 2100000298){
     	echo '<label for="department">'.elgg_echo('freshdesk:ticket:department').'</label>';
-    	echo elgg_view('input/department_field');
+    	echo elgg_view('input/department_field', array('lang' => $lang));
     } else {
-      echo elgg_view('input/user_type_field');
+      echo elgg_view('input/user_type_field', array('lang' => $lang));
     }
     ?>
   </div>
