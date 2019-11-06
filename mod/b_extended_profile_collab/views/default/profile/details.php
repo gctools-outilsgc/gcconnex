@@ -274,15 +274,18 @@ if ($user->canEdit()) {
                 'type' => 'object',
                 'subtype' => 'provinces',
             ));
-            $provs = get_entity($provObj[0]->guid);
-
-            $provincial_departments = array();
-            if (get_current_language() == 'en'){
-                $provincial_departments = json_decode($provs->provinces_en, true);
-            } else {
-                $provincial_departments = json_decode($provs->provinces_fr, true);
+            if ($provs = get_entity($provObj[0]->guid)){
+                $provincial_departments = array();
+                if (get_current_language() == 'en'){
+                    $provincial_departments = json_decode($provs->provinces_en, true);
+                } else {
+                    $provincial_departments = json_decode($provs->provinces_fr, true);
+                }
+                uasort($provincial_departments, 'strcoll');
+                $provincial_departments_loaded = true;
             }
-            uasort($provincial_departments, 'strcoll');
+            else
+                $provincial_departments = array('No provincial departments loaded','-----','You might want to do something about that');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -343,7 +346,7 @@ if ($user->canEdit()) {
                 'list' => ''
             ));
 
-            if( !empty($provincial_departments) ){
+            if( $provincial_departments_loaded && !empty($provincial_departments) ){
                 foreach($provincial_departments as $province => $province_name){
                     $municipal = json_decode($municipals->get($province), true);
                     $prov_id = str_replace(" ", "-", strtolower($province));
