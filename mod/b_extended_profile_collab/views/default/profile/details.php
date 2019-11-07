@@ -337,7 +337,7 @@ if ($user->canEdit()) {
                 'subtype' => 'municipal',
             ));
             $municipals = get_entity($munObj[0]->guid);
-////////////////////////////////////////////////////////////////
+			
             echo elgg_view('input/text', array(
                 'name' => $field,
                 'id' => $field,
