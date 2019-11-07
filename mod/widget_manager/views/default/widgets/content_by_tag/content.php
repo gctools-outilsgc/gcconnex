@@ -75,22 +75,24 @@ $values = string_to_tag_array($widget->tags);
 if (!empty($values)) {
 	$names_str = implode(',', $name_ids);
 	$names_where = "(n_table.name_id IN ($names_str))";
-	
+	$TEST_VAR = 'not empty';
 	$value_ids = array();
 	foreach ($values as $value) {
 		$value_ids[] = elgg_get_metastring_id($value, false);
+		$TEST_VAR .= ' -- ' .$value .', '.elgg_get_metastring_id($value, false);
 	}
 
 	$values_where .= "(";
 	foreach ($value_ids as $i => $value_id) {
 		$value_id = implode(',', $value_id);
-		
+		$TEST_VAR .= ' ** '. $value_id;
 		if ($i !== 0) {
 			if ($tags_option == "and") {
 				// AND
-				
+				$TEST_VAR .= ' _*-*_test and';
 				if ($i > 2) {
 					// max 3 ANDs
+					$TEST_VAR .= ' BREAK ';
 					break;
 				}
 
@@ -273,7 +275,7 @@ if (in_array($display_option, array("slim","simple"))) {
 }
 
 if (empty($result)) {
-	$result = elgg_echo("notfound");
+	$result = elgg_echo("notfound") . ' ALSO: '. $widget->tags . ' ALSO ALSO ' . $TEST_VAR;
 } elseif ($widget->show_search_link == "yes" && !empty($widget->tags) && elgg_is_active_plugin("search")) {
 	$tags = $widget->tags;
 	
