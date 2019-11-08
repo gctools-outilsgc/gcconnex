@@ -4,6 +4,22 @@
  *
  */
 $user = elgg_get_logged_in_user_entity();
+if($user) {
+	/** Adding badge to invite tab, just see if there is at least 1 */
+	$request_options = array(
+		"relationship" => "invited",
+		"relationship_guid" => (int) $user->getGUID(),
+		"inverse_relationship" => true,
+		"count" => true,
+		"limit" => 1,
+	);
+	$requests = elgg_get_entities_from_relationship($request_options);
+	$badge = "";
+	if($requests) {
+		/** TODO: make better */
+		$badge = '<span class="notif-badge" style="padding:6px;"><span class="wb-invisible">'.elgg_echo('new').'</span></span>';
+	}
+}
 $tabs = array(
 	"newest" => array(
 		"text" => elgg_echo("sort:newest"),
@@ -51,7 +67,7 @@ $tabs = array(
 		"priority" => 900,
 	),
     "invitations" => array(
-		"text" => elgg_echo("Invitations"),
+		"text" => elgg_echo("Invitations") . $badge,
 		"href" => "groups/invitations/$user->username",
 		"priority" => 900,
 	),

@@ -29,7 +29,6 @@ if($item->action_type != 'friend'){
 $object_text = gc_explode_translation($object->title, $lang);
 }
 
-
 $object_link = elgg_view('output/url', array(
 	'href' => $object->getURL(),
 	'text' => elgg_get_excerpt($object_text, 100),

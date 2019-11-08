@@ -176,13 +176,16 @@ if( $description_json->en && $description_json->fr ){
 	echo'</div>';
 	}
 
+	echo '<div class="panel">';
 	echo elgg_view("object/elements/full", array(
 			"entity" => $file,
 			"title" => false,
 			"icon" => elgg_view_entity_icon($file, "small"),
 			"summary" => $summary,
-			"body" => $body
+			"body" => $body,
+			'class' => 'panel-body',
 	));
+	echo '</div>';
     elgg_unregister_menu_item('title', 'new_folder');
 
 } elseif (elgg_in_context("gallery")) {
@@ -199,7 +202,7 @@ if( $description_json->en && $description_json->fr ){
 		$file_icon = elgg_view_entity_icon($file, "small", array("img_class" => "file-tools-icon-small img-responsive"));
 
 		if (elgg_in_context("file_tools_selector")) {
-			$file_icon_alt = elgg_view("input/checkbox", array("name" => "file_guids[]", "value" => $file->getGUID(), "default" => false, 'class' => '',));
+			$file_icon_alt = elgg_view("input/checkbox", array("name" => "file_guids[]", "value" => $file->getGUID(), "default" => false, 'class' => '', 'aria-label' => elgg_echo('file:select:file', array(gc_explode_translation($file->title, $lang)))));
 		}
 
 		$excerpt = "";
@@ -220,14 +223,14 @@ if( $description_json->en && $description_json->fr ){
 					"item_class" => "mrgn-rght-sm"
 				));
 
-    }
-
+		}
+	$download_url = '/file/download/' .$file->guid;
+	$download_link = elgg_format_element('a', ['href' => $download_url], elgg_echo('download'));
 	$params = array(
 		"entity" => $file,
-		"metadata" => $entity_menu,
-		"subtitle" => $subtitle . $author_text . ' ' . $date,
-		"tags" => $tags,
-		"content" => $excerpt
+		"subtitle" => $subtitle . $author_text . ' - ' . $date . ' - ' . $download_link,
+		"content" => $excerpt,
+		"tags" => false,
 	);
 	$params = $params + $vars;
 	$list_body = elgg_view("object/elements/summary", $params);
@@ -240,6 +243,5 @@ if( $description_json->en && $description_json->fr ){
 			
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
 	}*/
-
 	echo elgg_view_image_block($file_icon, $list_body, array("class" => "file-tools-file", "image_alt" => $file_icon_alt, 'subtype' => $subtype, 'guid' => $guid));
 }

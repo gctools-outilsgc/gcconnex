@@ -12,7 +12,7 @@
 ?>
 
 
-<nav role="navigation" id="wb-sm"  data-trgt="mb-pnl" class="wb-menu hidden-xs" typeof="SiteNavigationElement">
+<nav role="navigation" id="wb-sm"  data-trgt="mb-pnl" class="wb-menu hidden-sm hidden-xs" typeof="SiteNavigationElement">
 		<div class="container nvbar"> <!-- container for screen reader text and list -->
             <h2><?php echo elgg_echo('wet:topicmenu');?></h2>
             <div class="row">

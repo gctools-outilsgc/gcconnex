@@ -19,7 +19,7 @@ if (isset($vars['entity'])) {
 	$container = $poll->getContainerEntity();
 	$categories = elgg_view('output/categories', $vars);
 		
-	$owner_icon = elgg_view_entity_icon($owner, 'medium');
+	$owner_icon = elgg_view_entity_icon($owner, 'tiny');
 	$owner_link = elgg_view('output/url', array(
 				'href' => "polls/owner/$owner->username",
 				'text' => $owner->name,
@@ -106,50 +106,28 @@ echo '<div class="change_language" id="change_language">';
 			}
 		} 
 	
-	echo'</div>';
-
-
-		$params = array(
-			'entity' => $poll,
-			'title' => $title,
-			'metadata' => $metadata,
-			'subtitle' => $subtitle,
-			'tags' => $tags,
-		);
-		$params = $params + $vars;
-		$summary = elgg_view('object/elements/summary', $params);
-
-		echo elgg_view('object/elements/full', array(
-			'summary' => $summary,
-			'icon' => $owner_icon,
-		));
-		
-
+	//echo'</div>';
+		echo '<div class="panel"><div class="panel-body">';
 		echo elgg_view('polls/body',$vars);
-
-
-
-        echo elgg_view('wet4_theme/track_page_entity', array('entity' => $poll));
-
+		echo elgg_format_element('div', ['class' => ''], $tags . '<div class="mrgn-tp-md mrgn-bttm-md">'.$subtitle. '</div>' . $metadata);
+    echo elgg_view('wet4_theme/track_page_entity', array('entity' => $poll));
+		echo '</div></div>';
 	} else {
 		// brief view
 	
 	// identify available content
-/*	if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
-
-		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}*/
-
+		$format_subtitle = elgg_format_element('div', ['class' => 'd-flex'], '<div>'.$owner_icon.'</div><div class="mrgn-lft-sm">'. $subtitle . '</div>');
 		$params = array(
 			'entity' => $poll,
 			'metadata' => $metadata,
-			'subtitle' => $subtitle,
+			'subtitle' => $format_subtitle,
 			'tags' => $tags
 		);
 		$params = $params + $vars;
 		$list_body = elgg_view('object/elements/summary', $params);
 	
-		echo elgg_view_image_block($owner_icon, $list_body);
+		$format_body = elgg_format_element('div', ['class' => 'panel-body'], $list_body);
+		echo elgg_format_element('div', ['class' => 'panel'], $format_body);
 	}
 }
 ?>
@@ -162,8 +140,6 @@ function change_language_polls(lang,guid,title_location,main_title,title){
 $("#"+guid).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
 $(title_location).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
 $(main_title).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
-
-
 
 	 $.ajax(
     {
@@ -206,10 +182,4 @@ function change_link_en(guid){
     $("#change_language").html(link_available)
 }
 
-
-
-
-
-
 </script>
-

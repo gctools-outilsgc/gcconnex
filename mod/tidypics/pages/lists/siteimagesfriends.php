@@ -51,7 +51,7 @@ elgg_register_menu_item('title', array(
 	'name' => 'addphotos',
 	'href' => "ajax/view/photos/selectalbum/?owner_guid=$owner_guid",
 	'text' => elgg_echo("photos:addphotos"),
-	'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+	'link_class' => 'btn btn-primary'
 ));
 
 // only show slideshow link if slideshow is enabled in plugin settings and there are images

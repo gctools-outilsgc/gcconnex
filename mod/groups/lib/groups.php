@@ -404,7 +404,7 @@ function groups_handle_members_page($guid) {
 
 	$params = array(
 		'content' => $content,
-		'title' => $title,
+		'title' => $title . 'TESTING',
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
@@ -488,6 +488,25 @@ function groups_handle_requests_page($guid) {
 		'content' => $content,
 		'title' => $title,
 		'filter' => '',
+	);
+	$body = elgg_view_layout('content', $params);
+
+	echo elgg_view_page($title, $body);
+}
+
+/**
+ * Add an about page for widgets and such
+ *
+ * @param int $guid Group entity GUID
+ */
+function groups_handle_about_page($guid) {
+
+	$content = 'Im AN ABOUT PAGE!';
+	$title = 'ABOOOT THIS GROUP';
+
+	$params = array(
+		'content' => $content,
+		'title' => $title,
 	);
 	$body = elgg_view_layout('content', $params);
 

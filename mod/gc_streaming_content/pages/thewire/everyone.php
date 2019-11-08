@@ -3,7 +3,7 @@
  * All wire posts
  * 
  */
-
+elgg_require_js("stream_wire");
 elgg_push_breadcrumb(elgg_echo('thewire'));
 
 $title = elgg_echo('thewire:everyone');
@@ -26,7 +26,7 @@ $content .= elgg_list_entities(array(
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
-	'content' => $content,
+	'content' => '<div class="elgg-list-group">'.$content.'</div>',
 	'title' => $title,
 	'sidebar' => elgg_view('thewire/sidebar'),
 ));

@@ -79,7 +79,7 @@ if ($comment && $comment->canEdit()) {
 		'value' => $comment->guid,
 	));
 	$comment_label  = elgg_echo("generic_comments:edit");
-	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('save')));
+	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'mrgn-tp-sm btn btn-primary'));
 	$comment_text = $comment->description;
 } else {
 	$comment_label  = elgg_echo("generic_comments:add");
@@ -98,7 +98,7 @@ $cancel_button = '';
 if ($comment) {
 	$cancel_button = elgg_view('input/button', array(
 		'value' => elgg_echo('cancel'),
-		'class' => 'elgg-button-cancel mlm',
+		'class' => 'elgg-button-cancel mrgn-tp-sm mlm',
 		'href' => $entity ? $entity->getURL() : '#',
 	));
 }
@@ -108,7 +108,7 @@ if ($inline) {
 	$comment_input = elgg_view('input/longtext', array(
 		'name' => 'generic_comment',
 		'id' => 'generic_comment_'.$entity->getGUID(),
-    'class' => 'validate-me',
+    'class' => 'validate-me mrgn-bttm-md',
     'required' => 'required',
 		'value' => $comment_text,
 	));

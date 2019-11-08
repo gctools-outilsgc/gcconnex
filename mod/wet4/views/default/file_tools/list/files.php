@@ -63,7 +63,7 @@ if (empty($files_content)) {
 		$files_content .= "<a id='file_tools_action_bulk_download' href='javascript:void(0);'>" . elgg_echo("file_tools:list:download_selected") . "</a>";
 
         if (elgg_get_page_owner_entity()->canEdit()) {
-            $files_content .= ' | <a id="file_tools_action_move_selected" class="elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/file_tools/move?guids=">Move selected</a>';
+            $files_content .= ' | <a id="file_tools_action_move_selected" class="elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/file_tools/move?guids=">'.elgg_echo('file:move:selected').'</a>';
         }
 
 		$files_content .= "<a id='file_tools_select_all' class='float-alt' href='javascript:void(0);'>";
@@ -75,12 +75,12 @@ if (empty($files_content)) {
 	}
 }
 // show the listing
-echo "<div id='file_tools_list_files'>";
+echo "<div id='file_tools_list_files' class='panel'>";
 echo "<div id='file_tools_list_files_overlay'></div>";
-echo $folder_content;
+echo '<div class="panel-body">'.$folder_content;
 echo $files_content;
 echo elgg_view("graphics/ajax_loader");
-echo "</div>";
+echo "</div></div>";
 $page_owner = elgg_get_page_owner_entity();
 if ($page_owner->canEdit() || (elgg_instanceof($page_owner, "group") && $page_owner->isMember())) { ?>
 

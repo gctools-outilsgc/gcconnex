@@ -24,7 +24,7 @@ $content .= elgg_list_entities(array(
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
-	'content' => $content,
+	'content' => '<div class="elgg-list-group">'.$content.'</div>',
 	'title' => $title,
 	'sidebar' => elgg_view('thewire/sidebar'),
 ));

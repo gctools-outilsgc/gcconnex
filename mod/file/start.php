@@ -122,6 +122,7 @@ function file_page_handler($page) {
 			include "$file_dir/friends.php";
 			break;
 		case 'view':
+			elgg_push_context('view_file');
 			set_input('guid', $page[1]);
 			include "$file_dir/view.php";
 			break;

@@ -65,17 +65,18 @@ if (!get_input('offset')) {
 		$options['joins'][] = "JOIN {$dbprefix}metadata md ON (e.guid = md.entity_guid)";
 		$options['wheres'][] = "(md.name_id = {$audience_name} OR md.name_id = {$tags_name}) AND (md.value_id = {$audience_value}{$tags_values})";
 
-		echo '<div class="panel panel-default elgg-module-widget" data-amd="'.$community_audience.'">
-				<header class="panel-heading">
-					<div class="clearfix">
-						<h3 class="elgg-widget-title pull-left">' . elgg_echo('gc_communities:community_newsfeed') . '</h3></div>
-					<p>'.elgg_echo('gc_communities:showing_content', array($tags_display, elgg_echo('gctags:community:'.$community_audience))).'</p>
-				</header>
-				<div class="panel-body clearfix">
-					<div class="new-community-feed-holder"></div>
-					<div class="elgg-widget-content community-feed-holder">'. elgg_list_entities_from_metadata($options) . '</div>
-				</div>
-			</div>';
+		echo '<div class="panel panel-default" data-amd="'.$community_audience.'">
+		<div class="panel-body clearfix">
+			<header class="panel-heading">
+				<h2 class="panel-title">' . elgg_echo('gc_communities:community_newsfeed') . '</h2>
+				<p>'.elgg_echo('gc_communities:showing_content', array($tags_display, elgg_echo('gctags:community:'.$community_audience))).'</p>
+			</header>
+		</div>
+		<div class="panel-body clearfix community-content">
+			<div class="new-community-feed-holder"></div>
+			<div class="elgg-widget-content community-feed-holder">'. elgg_list_entities_from_metadata($options) . '</div>
+		</div>
+	</div>';
 		?>
 	</div>
 	<div class="col-md-4">

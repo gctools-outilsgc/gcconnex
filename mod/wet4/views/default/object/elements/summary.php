@@ -156,7 +156,7 @@ echo "<div class=\"tags col-xs-12\">$tags</div>";
 echo elgg_view('object/summary/extend', $vars);
 
 if ($content) {
-	echo "<div class=\"elgg-content mrgn-tp-sm mrgn-lft-sm\">$content</div>";
+	echo "<div class=\"elgg-content mrgn-tp-sm\">$content</div>";
 }
 
 if($entity instanceof ElggEntity && $entity->getType() == 'group' ){
@@ -186,10 +186,10 @@ if($entity instanceof ElggEntity && $entity->getType() == 'group' ){
 
 	}else{
 
-	echo '<div class="row mrgn-tp-sm">';
+	echo '<div class="mrgn-tp-sm">';
 	if ($metadata) {
 	    if ($checkPage != 'widgets_calendar'){
-	        echo '<div class="col-xs-12 mrgn-lft-md ">' .$metadata . '</div>';
+	        echo '<div class="col-xs-12">' .$metadata . '</div>';
     	}
 	}
 

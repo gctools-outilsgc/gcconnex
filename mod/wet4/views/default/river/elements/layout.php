@@ -47,7 +47,6 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
 
                 	//EW - change to render icon so new ambassador badges can be shown
                 	$htmloutput.= elgg_view_entity_icon(get_entity($userGUID), 'medium', array('use_hover' => false, 'use_link' => false, 'class' => 'elgg-avatar-wet4-sf'));
-                	//$htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('medium') . '" class="avatar-profile-page img-responsive center-block img-circle elgg-avatar-wet4-sf" alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
                 	$htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4></a>';
                 	if($job){ // Nick - Adding department if no job, if none add a space
                 	    $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';
@@ -60,7 +59,6 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
                 	//changed connect button to send a friend request we should change the wording
                 	$htmloutput=$htmloutput.'<a href="'.elgg_add_action_tokens_to_url("action/friends/add?friend={$userGUID}"). '" class="btn btn-primary mrgn-tp-sm">'.elgg_echo('friend:add').'</a>';
                 	$htmloutput=$htmloutput.'</div>';
-               		// $htmloutput=$htmloutput. $row['guid_two'].'-';
 	       }
             }
             $htmloutput=$htmloutput.'</div>';
@@ -81,7 +79,7 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
     }
 }
 
-echo elgg_view('page/components/image_block', array(
+echo elgg_view('page/components/river_image_block', array(
 	'image' => elgg_view('river/elements/image', $vars),
 	'body' => elgg_view('river/elements/body', $vars),
 	'class' => 'col-xs-12  panel panel-river',

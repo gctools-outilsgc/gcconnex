@@ -11,14 +11,17 @@ $group = elgg_get_page_owner_entity();
 //Nick - we will keep the members in the sidebar
 $display_members = $group->getPrivateSetting('group_tools:cleanup:members');
 
-//show group members based on privacy setting
-if($display_members != 'yes'){
-  echo elgg_view('groups/sidebar/group_members', $vars);
-}
 
 if (elgg_group_gatekeeper(false)) {
     //group activity
-    echo elgg_view('groups/sidebar/activity', $vars);
+    // echo elgg_view('groups/sidebar/activity', $vars);
+    //echo elgg_view('groups/sidebar/search', ['entity' => $group]);
+    echo elgg_view('groups/sidebar/group_sidebar');
+}
+
+//show group members based on privacy setting
+if($display_members != 'yes'){
+  echo elgg_view('groups/sidebar/group_members', $vars);
 }
 
 //subgroups

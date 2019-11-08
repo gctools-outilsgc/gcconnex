@@ -17,31 +17,10 @@ $email = elgg_get_logged_in_user_entity()->email;
 $department = elgg_get_logged_in_user_entity()->get('department');
 ?>
 
-
-<div class="clearfix mrgn-bttm-sm">
-    <div class="row mrgn-lft-0 mrgn-rght-sm">
-    <div class="col-xs-4">
-
-        <div class="mrgn-tp-sm">
-            <?php 
-                //EW - change to display new badge
-            echo elgg_view_entity_icon(elgg_get_logged_in_user_entity(), 'medium', array('use_hover' => false, 'class' => 'pro-avatar', 'force_size' => true,)); 
-                ?>
-           </div>
-    </div>
-
-
-    <div class="col-xs-8">
-        <div class="mrgn-tp-sm mrgn-bttm-0 h4"><?php echo $displayName?></div>
-        <div><?php echo  $email ?></div>
-        <div><?php echo $department; ?></div>
-        <a href="<?php echo  $site_url ?>profile/<?php echo  $user ?>" class="btn btn-primary mrgn-tp-sm" style='color:white;'><?php echo elgg_echo('userMenu:profile') ?></a>
-    </div>
-    </div>
-    
-</div>
-
-<div class="panel-footer clearfix">
-    <a href="<?php echo  $site_url ?>settings/user/<?php echo $user ?>" class="btn btn-default mrgn-tp-sm pull-left"><?php echo elgg_echo('userMenu:account') ?></a>
-    <a href="<?php echo  $site_url ?>action/logout" class="btn btn-default mrgn-tp-sm pull-right"><?php echo elgg_echo('logout') ?></a>
+<div>
+    <ul class="list-unstyled">
+        <li><a href="<?php echo  $site_url ?>profile/<?php echo  $user ?>" class=""><?php echo elgg_echo('userMenu:profile') ?></a></li>
+        <li><a href="<?php echo  $site_url ?>settings/user/<?php echo $user ?>" class=""><?php echo elgg_echo('userMenu:account') ?></a></li>
+        <li><a href="<?php echo  $site_url ?>action/logout" class=""><?php echo elgg_echo('logout') ?></a></li>
+    </ul>
 </div>

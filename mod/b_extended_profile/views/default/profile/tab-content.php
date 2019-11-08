@@ -20,6 +20,10 @@ foreach($fields as $field){
         'distinct' => false,
     );
 
+    if($field == 'Album'){ // get the gallery view for album instead of list
+        $options['list_type'] = 'gallery';
+    }
+
     $content = elgg_list_entities($options);
 
         //fix field to allow proper URLs
@@ -92,7 +96,7 @@ foreach($fields as $field){
                     'href' => $action,
                     'text' => $add,
                     'is_trusted' => true,
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-primary mrgn-bttm-md',
                 ));
 
                 //for files we want an additional add folder button
@@ -103,7 +107,7 @@ foreach($fields as $field){
                       'text' => elgg_echo("file_tools:new:title"),
                       'href' => "#",
                       "id" => "file_tools_list_new_folder_toggle",
-                      'class' => 'btn btn-default mrgn-rght-sm',
+                      'class' => 'btn btn-default mrgn-rght-sm mrgn-bttm-md',
                     ));
 
                     //add new folder to add button
@@ -119,7 +123,11 @@ foreach($fields as $field){
         if(!$content){
             echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . $message . '</div>';
         } else {
-            echo $content;
+            if($field === 'File' || $field === 'Thewire'){
+                echo '<div class="elgg-list-group">'.$content. '</div>';
+            } else {
+                echo $content;
+            }
         }
 
         $url = strtolower($field) . "/owner/" . elgg_get_page_owner_entity()->username;
@@ -130,13 +138,13 @@ foreach($fields as $field){
             'class' => 'text-center btn btn-default center-block',
         ));
 
-        echo '<div class="panel-footer text-right">' . $more_link . '</div>';
+        echo '<div class="text-right">' . $more_link . '</div>';
     echo '</div>';
 }
 
 //event calendar tab
 echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
-    echo '<div class="clearfix">';
+    echo '<div class="clearfix elgg-list-group">';
     echo '<h2 class="wb-invisible" tabindex="-1">'.elgg_echo('event_calendar:listing_title:mine', array($user_display_name)).'</h2>';
     if(elgg_is_active_plugin('event_calendar')){
         $events = event_calendar_get_personal_events_for_user(elgg_get_page_owner_guid(), 5);
@@ -159,7 +167,7 @@ echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
         'class' => 'text-center btn btn-default center-block',
 	));
     echo '</div>';
-	echo "<div class=\"elgg-widget-more  panel-footer text-right\">$viewall_link</div>";
+	echo "<div class=\"elgg-widget-more text-right\">$viewall_link</div>";
 echo '</div>';
 elgg_pop_context();
 ?>

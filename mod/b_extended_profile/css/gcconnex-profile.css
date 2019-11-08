@@ -3,6 +3,19 @@
         border: 1px solid #ddd;
 }
 
+.ui-datepicker .ui-datepicker-next {
+    right: 24px;
+}
+
+input[type=url] {
+    border: 1px solid #BDC7D8;
+    padding: .5em;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .b_extended_profile {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -172,8 +185,9 @@
 .gcconnex-languages-entry,
 .gcconnex-portfolio-entry {
     margin-top: 15px;
-    background-color: #f9f9f9;
     padding: 15px;
+    border: 1px solid #047177;
+    border-radius: 4px;
 }
 
 input.gcconnex-endorsements-input-skill,
@@ -669,6 +683,8 @@ td.left-col {
 .gcconnex-portfolio-entry .hasDatepicker {
     width: 100px;
     margin-bottom: 0;
+    border-radius: 4px;
+    margin-right: 5px;
 }
 
 .gcconnex-portfolio-description {
@@ -847,4 +863,8 @@ input:-moz-placeholder { color:#ccc; }
 
 .b_extended_profile .tab-pane {
   outline: none !important;
+}
+
+.profile-title{
+	padding-bottom: 0px;
 }

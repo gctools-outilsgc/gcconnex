@@ -100,20 +100,8 @@ if ($widget->context == "groups") {
 </div>
 
 <div>
-    <?php echo '<label for="5-'.$widgetId.'">'.elgg_echo("widgets:content_by_tag:tags"). '</label><br>';
-          echo elgg_view("input/tags", array("name" => "params[tags]", "value" => $tags, 'id' =>'5-'.$widgetId,)); ?>
-</div>
-
-<div>
-    <?php echo '<label for="6-'.$widgetId.'">'.elgg_echo("widgets:content_by_tag:tags_option"). '</label><br>';
-          echo elgg_view("input/dropdown", array("name" => "params[tags_option]", "options_values" => $tags_options_values, "value" => $tags_option, 'id' =>'6-'.$widgetId,)); ?>
-</div>
-
-<div>
-    <?php
- echo '<label for="7-'.$widgetId.'">'.elgg_echo("widgets:content_by_tag:excluded_tags"). '</label><br>';
- echo elgg_view("input/tags", array("name" => "params[excluded_tags]", "value" => $excluded_tags, 'id' =>'7-'.$widgetId,));
-?>
+		<?php echo '<label for="5-'.$widgetId.'">'.elgg_echo("tag"). '</label><br>';
+          echo elgg_view("input/text", array("name" => "params[tags]", "value" => $tags, 'id' =>'5-'.$widgetId,)); ?>
 </div>
 
 <div>

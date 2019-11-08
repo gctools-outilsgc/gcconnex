@@ -40,7 +40,12 @@ if ($comment_count) {
 	// these comments with the latest at the bottom.
 	$comments = array_reverse($comments);
 
+	elgg_push_context('activity');
+
 	echo elgg_view_entity_list($comments, array('list_class' => 'elgg-river-comments'));
+
+		// restore context
+		elgg_pop_context();
 
 	if ($comment_count > count($comments)) {
 		$url = $object->getURL();

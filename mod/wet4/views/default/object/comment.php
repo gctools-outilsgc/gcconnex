@@ -24,7 +24,7 @@ $friendlytime = elgg_view_friendly_time($comment->time_created);
 
 //check if the icon is in a widget and make it small!
 if(elgg_get_context() !== 'widgets'){
-$commenter_icon = elgg_view_entity_icon($commenter, 'medium');
+$commenter_icon = elgg_view_entity_icon($commenter, 'small');
 }else{
   $commenter_icon = elgg_view_entity_icon($commenter, 'small');  
 }
@@ -55,26 +55,28 @@ if ($full_view) {
 			'value' => elgg_get_excerpt($comment->description),
 		));
 		$comment_text .= '</div>';
+		$commenter_icon = elgg_view_entity_icon($commenter, 'tiny');
 	} else {
 		$comment_text = elgg_view('output/longtext', array(
 			'value' => $comment->description,
 			'class' => 'elgg-inner mrgn-tp-md comment-container',
 			'data-role' => 'comment-text',
 		));
+		$comment_class = 'panel-body';
 	}
 	$body = <<<HTML
 $anchor
 <div class="mbn">
-	$menu
 	$commenter_link
 	<span class="timeStamp">
 		$friendlytime
 	</span>
+	$menu
 	$comment_text
 </div>
 HTML;
 
-	echo elgg_view_image_block($commenter_icon, $body);
+	echo '<div class="'.$comment_class.'">' .elgg_view_image_block($commenter_icon, $body) . '</div>';
 
 } else {
 	// brief view
@@ -83,9 +85,10 @@ HTML;
 	$posted = elgg_echo('generic_comment:on', array($commenter_link, $entity_link));
 
 	$body = <<<HTML
-<span class="elgg-subtext">
-	$posted ($friendlytime): $excerpt
-</span>
+<div class="elgg-subtext mrgn-bttm-md">
+	$posted ($friendlytime):
+	<div>$excerpt</div>
+</div>
 HTML;
 
 	echo elgg_view_image_block($commenter_icon, $body);

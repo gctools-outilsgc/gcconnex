@@ -35,7 +35,7 @@ $owner = $post->getOwnerEntity();
 $container = $post->getContainerEntity();
 //$subtitle = array();
 
-$owner_icon = elgg_view_entity_icon($owner, "medium", array('class' => 'img-responsive'));
+$owner_icon = elgg_view_entity_icon($owner, "small", array('class' => 'img-responsive'));
 $owner_link = elgg_view("output/url", array(
 	"href" => "thewire/owner/$owner->username",
 	"text" => $owner->name,
@@ -48,7 +48,7 @@ $metadata = elgg_view_menu("entity", array(
 	"entity" => $post,
 	"handler" => "thewire",
 	"sort_by" => "priority",
-	'class' => 'list-inline mrgn-bttm-sm mrgn-tp-sm',
+	'class' => 'list-inline mrgn-tp-md',
 ));
 
 // check if need to show group
@@ -84,9 +84,9 @@ $content = thewire_tools_filter($text);
 // check for reshare entity
 $reshare = $post->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));
 if (!empty($reshare)) {
-	$content .= "<div class='elgg-divide-left pls timeStamp clearfix mrgn-lft-sm'>";
+	$content .= '<a class="wire-share-container timeStamp" href="'.$reshare[0]->getURL().'">';
 	$content .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare[0]));
-	$content .= "</div>";
+	$content .= "</a>";
 }
 
 if (elgg_is_logged_in() && !elgg_in_context("thewire_tools_thread")) {
@@ -98,14 +98,11 @@ if (elgg_is_logged_in() && !elgg_in_context("thewire_tools_thread")) {
 }
 
 $author_text = elgg_echo($owner_link);
-$date = elgg_view_friendly_time($post->time_created);
-$subtitle = "$author_text <i class=\"timeStamp\">$date</i>";
+$date = '<span class="timeStamp mrgn-lft-sm"> - ' .elgg_view_friendly_time($post->time_created). '</span>';
 
 $params = array(
 	"entity" => $post,
 	"metadata" => $metadata,
-	//"subtitle" => implode(" ", $subtitle),
-    'subtitle' => $subtitle,
 	"content" => $content,
 	"tags" => false,
 	"title" => false,
@@ -113,8 +110,10 @@ $params = array(
 $params = $params + $vars;
 $list_body = elgg_view("object/elements/thewire_summary", $params);
 
-echo elgg_view_image_block($owner_icon, $list_body);
+// $format_header = elgg_format_element('div', ['class' => 'd-flex mrgn-bttm-md'], $owner_icon . '<div class="mrgn-lft-sm">'.$author_text .$date.'</div>');
+$format_wire = elgg_format_element('div', ['class' => 'd-flex new-wire-list-object'], '<div class="mrgn-rght-md">'.$owner_icon.'</div><div style="width:100%; flex-shrink:8;">' . $author_text . $date. $list_body.'</div>');
 
+echo $format_wire;
 if ($show_thread) {
 	echo elgg_format_element("div", array(
 		"id" => "thewire-thread-" . $post->getGUID(),

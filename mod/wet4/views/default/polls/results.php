@@ -48,8 +48,7 @@ if (isset($vars['entity'])) {
 <div id="progress_indicator">
 	<div class="poll-result-response"><?php echo $response->text . " (" . $response_count . ")"; ?> </div><br>
 	<div id="progressBarContainer" align="left">
-		<div class="polls-filled-bar"
-			style="width: <?php echo $response_percentage; ?>%"></div>
+		<div class="polls-filled-bar" style="width: <?php echo $response_percentage; ?>%"></div>
 	</div>
 </div>
 <br>

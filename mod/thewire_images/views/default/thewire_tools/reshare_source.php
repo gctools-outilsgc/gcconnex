@@ -13,8 +13,46 @@ if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($e
 }
 
 $icon = "";
+$by_link = '';
 if ($entity->icontime) {
-	$icon = elgg_view_entity_icon($entity, "medium");
+	// $icon = elgg_view_entity_icon($entity, "small", array('use_link' => false,));
+	$icon = elgg_view('output/img', array(
+		'src' => $entity->getIconURL('small'),
+		'alt' => '',
+		'class' => 'align-self-center',
+	));
+	if($entity->getSubtype() === 'file'){
+		$owner = $entity->getOwnerEntity();
+		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';
+	}
+	if(elgg_instanceof($entity, 'group')) {
+		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
+		$by_link = '<div>'.elgg_echo('group') . ' - '. $mem . '</div>';
+	}
+} else if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'blog', 'bookmarks', 'mission', 'groupforumtopic', 'poll', 'question', 'thewire_image', 'event_calendar', 'folder'))){
+	$owner = $entity->getOwnerEntity();
+	$icon = elgg_view_entity_icon($owner, 'small', array('use_link' => false, 'use_hover' => false,));
+	if ($entity->getSubtype() === 'thewire'){
+		// Style this like the wire
+		$by_link = '<div class="mrgn-bttm-sm" style="color:#137991;">'.$owner->name.' - <span class="timeStamp">'.elgg_view_friendly_time($entity->time_created).'</span></div>';
+	} else if($entity->getSubtype() === 'folder') {
+		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';
+		$icon = '<img src="'.elgg_get_site_url().'mod/file_tools/_graphics/folder/small.png" alt="">';
+	} else {
+		$by_link = '<div>'.elgg_echo('wet:reshare:'.$entity->getSubtype()) . ' - ' . elgg_echo('byline', array($owner->name)) .'</div>';
+	}
+}else {
+	$icon = elgg_view('output/img', array(
+		'src' => $entity->getIconURL('small'),
+		'alt' => '',
+		'class' => 'align-self-center',
+	));
+	if(elgg_instanceof($entity, 'group')) {
+		$mem = ($entity->isPublicMembership()) ? elgg_echo('groups:open') : elgg_echo('groups:closed');
+		$by_link = '<div>'.elgg_echo('group') . ' - '. $mem . '</div>';
+	} else {
+		$by_link = '<div>'.elgg_echo('wet:reshare:' .$entity->getSubtype()).'</div>';
+	}
 }
 
 $url = $entity->getURL();
@@ -29,41 +67,30 @@ if (!empty($entity->title)) {
 	$text = gc_explode_translation($entity->name, $lang);
 } elseif (!empty($entity->description)) {
 	$text = elgg_get_excerpt($entity->description, 140);
-} else {
-	// no text to display
-	return true;
 }
 
-$content = "<div class='elgg-subtext'>";
-if(!elgg_instanceof($entity, 'group')){
-    $content .= elgg_echo("thewire_tools:reshare:source") . ": ";
-}
-if (!empty($url)) {
-	$content .= elgg_view("output/url", array(
-		"href" => $url,
-		"text" => $text,
-		"is_trusted" => true
-	));
+$content = "<div class='elgg-subtext mrgn-lft-md'>";
+if($entity->getSubtype() === 'thewire') {
+	// Style this like a wire post
+	$content .= $by_link;
+	$content .= '<div>'.$text.'</div>';
 } else {
-	$content .= elgg_view("output/text", array(
-		"value" => $text
-	));
+	$content .= '<div class="wire-reshare-title">'.$text.'</div>';
+	$content .= $by_link;
 }
 
 $attachment = thewire_image_get_attachments($entity->getGUID());
 if ($attachment) {
 	$content .= "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
-	$content .= '<a class="elgg-lightbox" href="' . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . '">';
 	$content .= elgg_view('output/img', array(
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
 		'alt' => $attachment->original_filename,
 		'class' => 'img-thumbnail',
 		'style' => "max-height: 120px; width: auto;"
 	));
-	$content .= "</a>";
 	$content .= "</div>";
 }
 
 $content .= "</div>";
 
-echo elgg_view_image_block($icon, $content, array("class" => "mbn"));
+echo elgg_format_element('div', ['class' => 'd-flex new-wire-reshare'], $icon . $content);

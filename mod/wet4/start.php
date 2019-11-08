@@ -52,6 +52,7 @@ function wet4_theme_init()
 	elgg_unregister_event_handler('pagesetup', 'system', 'messages_notifier');
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_elgg_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_group_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', 'wet4_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'wet4_elgg_page_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
@@ -250,6 +251,13 @@ function wet4_theme_init()
 
 	elgg_register_plugin_hook_handler('register', 'menu:site', 'remove_menu_item_handler');
 
+	// Removing the "All site pages" from the main menu
+	elgg_unregister_menu_item('site', 'file');
+	elgg_unregister_menu_item('site', 'polls');
+	elgg_unregister_menu_item('site', 'event_calendar');
+	elgg_unregister_menu_item('site', 'photos');
+	elgg_unregister_menu_item('site', 'bookmarks');
+	elgg_unregister_menu_item('site', 'activity');
 
 }
 function remove_menu_item_handler($hook, $type, $menu, $params){
@@ -528,7 +536,7 @@ function wet4_theme_pagesetup()
 		$params = array(
 			"name" => "Colleagues",
 			"href" => "friends/" . $user->username,
-			"text" => '<i class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo("userMenu:colleagues") . '</span>',
+			"text" => '<i class="fa fa-users fa-lg"></i><span class="hidden-xs wb-invisible">' . elgg_echo("userMenu:colleagues") . '</span>',
 			"title" => elgg_echo('userMenu:colleagues'),
 			"class" => '',
 			'item_class' => '',
@@ -662,10 +670,6 @@ function wet4_theme_pagesetup()
  */
 function wet4_theme_setup_head($hook, $type, $data)
 {
-	$data['metas']['viewport'] = array(
-		'name' => 'viewport',
-		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
-	);
 
     if( file_exists('mod/wet4_theme/graphics/homescreen.png') ){
     	$data['links']['apple-touch-icon'] = array(
@@ -839,7 +843,7 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params)
 		));
 	}
 
-	if ($entity->canComment()) {
+	if ($entity->canComment() && elgg_is_logged_in()) {
 		$returnvalue[] = \ElggMenuItem::factory(array(
 			"name" => "comments",
 			"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
@@ -904,8 +908,6 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 
 	//pass type and entiey/owner name to function to return array of text
 	$hiddenText = generate_hidden_text($contentType, $entName);
-
-
 	$blocked_subtypes = array('comment', 'discussion_reply');
 	if (in_array($entity->getSubtype(), $blocked_subtypes) || elgg_instanceof($entity, 'user')) {
 		//do not let comments or discussion replies to be reshared on the wire
@@ -1092,7 +1094,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 			"confirm" => elgg_echo("group_tools:discussion:confirm:open"),
 			"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 			"is_trusted" => true,
-			"title" => "Open the topic",
+			"title" => elgg_echo('entity:unlock:link:groupforumtopic'),
 			"priority" => 200,
 			"item_class" => ($entity->status == "closed") ? "" : "hidden"
 		));
@@ -1102,7 +1104,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 			"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
 			"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 			"is_trusted" => true,
-			"title" => "Close the topic",
+			"title" => elgg_echo('entity:lock:link:groupforumtopic'),
 			"priority" => 201,
 			"item_class" => ($entity->status == "closed") ? "hidden" : ""
 		));
@@ -1123,7 +1125,56 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 		}
 	}
 
+	// WIP bookmark objects prototype
+	// TODO: conditional rendering on only objects + pass a better title sometimes
+	if(elgg_is_logged_in()) {
+		if (in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer', 'group_profile', 'bookmarks')) || elgg_instanceof($entity, 'user')) {}else{
+			$user_guid = elgg_get_logged_in_user_guid();
+			$address = urlencode($entity->getUrl());
+			$nameEn = json_decode($entity->title)->en;
+			$nameFr = json_decode($entity->title)->fr;
+			$options = array(
+				'name' => 'bookmarkpage',
+				'text' => '<span class="fa fa-lg fa-bookmark icon-unsel"><span class="wb-invisible">'.elgg_echo('bookmarks:this').'</span></span>',
+				'href' => "bookmarks/add/$user_guid?address=$address&title=$nameEn&title2=$nameFr",
+				'title' => elgg_echo('bookmarks:this'),
+				'rel' => 'nofollow',
+			);
+			$return[] = \ElggMenuItem::factory($options);
+		}
+	}
+
 	return $return;
+}
+
+function wet4_group_entity_menu_setup($hook, $type, $value, $params) {
+	$handler = elgg_extract('handler', $params, false);
+	if ($handler != 'groups') {
+		return $value;
+	}
+	$entity = $params['entity'];
+	foreach ($value as $index => $item) {
+			$name = $item->getName();
+			if ($name == 'likes' || $name == 'likes_count' || $name == 'members' || $name == 'unlike' || $name == 'thewire_tools_reshare_count' || $name == 'bookmark') {
+					unset($value[$index]);
+			}
+	}
+
+	if ($entity->isPublicMembership()) {
+		$mem = elgg_echo("groups:open");
+	} else {
+		$mem = elgg_echo("groups:closed");
+	}
+
+	$options = array(
+		'name' => 'membership',
+		'text' => $mem,
+		'href' => false,
+		'priority' => 100,
+	);
+	$value[] = ElggMenuItem::factory($options);
+
+	return $value;
 }
 
 /*
@@ -1173,6 +1224,7 @@ function wet4_riverItem_remove()
  */
 function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 {
+	$user_guid = elgg_get_logged_in_user_guid();
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
 		$object = $item->getObjectEntity();
@@ -1206,7 +1258,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 				if ($object->title3) {
 					$entName = gc_explode_translation($object->title3, $lang);
 				} else {
-					$entName = $object->title;
+					$entName = gc_explode_translation($object->title, $lang);
 				}
 			} else { //if not get owner instead of name
 				$entName = $object->getOwnerEntity()->name;
@@ -1284,6 +1336,73 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			);
 			$return[] = \ElggMenuItem::factory($options);
 		}
+		// comment blog
+		if($object->getSubtype() == 'blog'){
+			if ($object->canComment()) {
+				$options = array(
+					"name" => "comments",
+					"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
+					"title" => elgg_echo("comment:this"),
+					"href" => $object->getURL() . "#comments"
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
+		}
+		// reply discussion
+		if($object->getSubtype() == 'groupforumtopic'){
+			if ($object->status != "closed") {
+				$options = array(
+					"name" => "reply",
+					"text" => '<i class="fa fa-lg fa-reply icon-unsel"><span class="wb-inv">' . elgg_echo("entity:reply:groupdorumtopic",array($entName)) . '</span></i>',
+					"title" => elgg_echo("reply:this"),
+					"href" => $object->getURL() . "#reply"
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
+		}
+		// add event calendar
+		if($object->getSubtype() == 'event_calendar'){
+			if (check_entity_relationship($user_guid, 'personal_event', $object->guid)) {
+				$options = array(
+					"name" => "calendar",
+					"text" => '<i class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:remove:event_calendar",array($entName)) . '</span></i>',
+					"title" => elgg_echo("event_calendar:remove_from_my_calendar"),
+					"href" => elgg_add_action_tokens_to_url("action/event_calendar/remove_personal?guid={$object->guid}"),
+				);
+			}else{
+				$options = array(
+					"name" => "calendar",
+					"text" => '<i class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:add:event_calendar",array($entName)) . '</span></i>',
+					"title" => elgg_echo("event_calendar:add_to_my_calendar"),
+					"href" => elgg_add_action_tokens_to_url("action/event_calendar/add_personal?guid={$object->guid}"),
+				);
+			}
+			$return[] = \ElggMenuItem::factory($options);
+		}
+		// download file
+		if($object->getSubType() == 'file'){
+			$options = array(
+				'name' => 'download',
+				'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></i>',
+				'title' => elgg_echo('download'),
+				'href' => "file/download/{$object->getGUID()}",
+				'priority' => 300,
+			);
+			$return[] = \ElggMenuItem::factory($options);
+		}
+		//question - answer
+		if($object->getSubtype() == 'question' || $object->getSubtype() == 'answer'){	
+			if ($object->canComment()) {	
+				$options = array(
+					'name' => 'comments',
+					"text" => '<span class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:question", array($entName)) . '</span></span>',
+					"title" => elgg_echo("comment:this"),
+					'href' => $object->getURL() ."#commentsadd{$object->getGUID()}",
+					'priority' => 288,
+				);
+				$return[] = \ElggMenuItem::factory($options);
+			}
+		}
 	}
 
 	return $return;
@@ -1331,6 +1450,7 @@ function my_site_menu_handler($hook, $type, $menu, $params)
 			(elgg_is_logged_in()) ? $item->setHref(elgg_get_site_url().'groups/all?filter=yours') : $item->setHref(elgg_get_site_url().'groups/all?filter=popular');
 		}
 	}
+
 }
 
 /*

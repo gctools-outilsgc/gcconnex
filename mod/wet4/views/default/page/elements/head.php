@@ -138,14 +138,13 @@ echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin ho
 /*--------------------- Web Experience Toolkit 4 ---------------------*/
 
 ?>
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
-
 <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
 wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
 <meta charset="utf-8" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
+
+<meta content="width=device-width, initial-scale=1, user-scalable=1" name="viewport" />
 
 <!-- Meta data -->
 <?php

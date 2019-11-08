@@ -3,6 +3,13 @@ $site_url = elgg_get_site_url();
 
 return array(
 
+	'wet:abouthissite' => 'About this site',
+	'canada:symbol' => 'Symbol of the Government of Canada',
+	'top:of:page' => 'Top of page',
+
+	'file:select:file' => 'Select file %s',
+	'file:select:folder' => 'Select folder %s',
+	'notification:select:label' => 'Select',
     'thewire:head:title' => 'Wire post',
     'group_operator:find:user:error' => "Could not find user",
 
@@ -57,8 +64,9 @@ return array(
     'entity:share:link:groupforumtopic' => 'Share the discussion "%s" on The Wire',
     'entity:subscribe:link:groupforumtopic' => 'Subscribe to the discussion "%s"',
     'entity:unsubscribe:link:groupforumtopic' => 'Unsubscribe to the discussion "%s"',
-    'entity:lock:link:groupforumtopic' => 'Close the discussion "%s"',
-    'entity:unlock:link:groupforumtopic' => 'Open the discussion "%s"',
+    'entity:lock:link:groupforumtopic' => 'Close the discussion',
+	'entity:unlock:link:groupforumtopic' => 'Open the discussion',
+	'entity:reply:groupdorumtopic' => 'Reply to the discussion "%s"',
 
     'entity:like:link:discussion_reply' => 'Like the discussion reply by %s',
     'entity:unlike:link:discussion_reply' => 'Remove like from the discussion reply by %s',
@@ -89,6 +97,8 @@ return array(
     'entity:share:link:event_calendar' => 'Share the event "%s" on The Wire',
     'entity:subscribe:link:event_calendar' => 'Subscribe to the event "%s"',
     'entity:unsubscribe:link:event_calendar' => 'Unsubscribe to the event "%s"',
+	'entity:add:event_calendar' => 'Add %s to my calendar',
+	'entity:remove:event_calendar' => 'Remove %s to my calendar',
 
     'entity:like:link:bookmarks' => 'Like the bookmark "%s"',
     'entity:unlike:link:bookmarks' => 'Remove like from the bookmark "%s"',
@@ -278,6 +288,21 @@ return array(
     'thewire:groupwarning' => 'This content is only viewable to members of: ',
     'thewire:userwarning' => 'This content is only viewable to: ',
 
+		'wet:reshare:mission' => 'Opportunity',
+		'wet:reshare:blog' => 'Blog Post',
+		'wet:reshare:groupforumtopic' => 'Group Discussion',
+		'wet:reshare:bookmarks' => 'Bookmark',
+		'wet:reshare:answer' => 'Answer',
+		'wet:reshare:question' => 'Question',
+		'wet:reshare:thewire' => 'Reshared Wire Post',
+		'wet:reshare:poll' => 'Poll',
+		'wet:reshare:page_top' => 'Group Page',
+		'wet:reshare:image' => 'Image',
+		'wet:reshare:album' => 'Image Album',
+		'wet:reshare:file' => 'File',
+		'wet:reshare:folder' => 'Folder',
+		'wet:reshare:event_calendar' => 'Event',
+		'wet:reshare:etherpad' => 'Doc',
 
     /**
   * Files
@@ -297,7 +322,7 @@ return array(
     'userMenu:account' => "Account Settings",
     'userMenu:messages' => "My Messages",
     'userMenu:colleagues' => "My Colleagues",
-    'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout',
+    'userMenu:usermenuTitle' =>'Click here for links to your profile, account settings and logout',
     'wet:usermenu:helpertext' => "User Menu. Contains Links to Notifications, Profile and Logout",
     /*NEW*/
 		'wet:dd:expand'=>"Open drop down of most recent messages",
@@ -1143,6 +1168,12 @@ These changes will only affect new users on the site.',
 	'friends:tiny' => "tiny",
 	'friends:small' => "small",
 
+	/**
+	 * River Ribbon object subtype lang
+	 */
+		'discussion_reply' => 'Reply',
+		'groupforumtopic' => 'Discussion',
+		'page_top' => 'Page',
 
 /**
  * Icons

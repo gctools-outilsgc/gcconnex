@@ -26,8 +26,6 @@ if (!$vars['title'] && $vars['title'] !== false) {
 	$vars['title'] = elgg_echo($context);
 }
 
-
-
 // 1.8 supported 'filter_override'
 if (isset($vars['filter_override'])) {
 	$vars['filter'] = $vars['filter_override'];
@@ -59,13 +57,7 @@ if (!isset($vars['filter']) && elgg_is_logged_in() && $context) {
                 'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "$context/friends/$username",
                 'selected' => ($filter_context == 'friends'),
                 'priority' => 400,
-            ),/*Hide for now
-            'authors' => array(
-                'text' => elgg_echo('My favorite Authors'),
-                'href' => "activity/blog",
-                'selected' => ($filter_context == 'sharemaps'),
-                'priority' => 500,
-            ),*/
+            ),
         );
         
         } else if((elgg_get_context() == 'thewire')){
@@ -100,12 +92,8 @@ if (!isset($vars['filter']) && elgg_is_logged_in() && $context) {
         );  
             }
 
-            
-            
         }else if((elgg_get_context() == 'friend')){
             $tabs = elgg_view_menu('page', array('sort_by' => 'name'));
-            //echo elgg_view_menu('page', array('sort_by' => 'name'));
-            //echo '<div>Maybe Im stoopid?</div>';
         }else{
     
 	$tabs = array(

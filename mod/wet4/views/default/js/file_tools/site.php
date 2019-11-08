@@ -350,8 +350,8 @@ elgg.file_tools.show_more_files = function() {
 		},
 		success: function(data) {
 			// append the files to the list
-			var li = $(data).find("ul.elgg-list-entity > li");
-			$('#file_tools_list_files ul.elgg-list').append(li);
+			var li = $(data).find("ul.elgg-new-list > li");
+			$('#file_tools_list_files ul.elgg-new-list').append(li);
 			elgg.file_tools.initialize_file_draggable();
 
 			// replace the show more button with new data

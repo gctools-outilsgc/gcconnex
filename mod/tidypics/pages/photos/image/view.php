@@ -64,7 +64,7 @@ if (elgg_is_logged_in()) {
 				'name' => 'addphotos',
 				'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
 				'text' => elgg_echo("photos:addphotos"),
-				'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+				'link_class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-primary'
 			));
 		}
 	} else {
@@ -72,7 +72,7 @@ if (elgg_is_logged_in()) {
 			'name' => 'addphotos',
 			'href' => "ajax/view/photos/selectalbum/?owner_guid=" . elgg_get_logged_in_user_guid(),
 			'text' => elgg_echo("photos:addphotos"),
-			'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+			'link_class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-primary'
 		));
 	}
 }
@@ -83,7 +83,7 @@ if (elgg_get_plugin_setting('download_link', 'tidypics')) {
 		'name' => 'download',
 		'href' => "photos/download/$photo_guid",
 		'text' => elgg_echo('image:download'),
-		'link_class' => 'elgg-button elgg-button-action',
+		'link_class' => 'elgg-button elgg-button-action btn btn-default',
 	));
 }
 

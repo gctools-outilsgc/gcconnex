@@ -23,7 +23,7 @@ $content = elgg_view_entity($post);
 
 $body = elgg_view_layout('content', array(
 	'filter' => false,
-	'content' => $content,
+	'content' => '<div class="elgg-list-group">'.$content.'</div>',
 	'title' => $title,
 ));
 

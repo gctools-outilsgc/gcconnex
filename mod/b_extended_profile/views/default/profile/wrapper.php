@@ -17,9 +17,11 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
 ?>
 
 <div class="profile">
-    <div class="clearfix panel-custom panel">
-        <?php //echo elgg_view('profile/owner_block'); ?>
+    <div class="clearfix panel">
+    <div class="clearfix panel-body">
+ 
         <?php echo elgg_view('profile/details'); ?>
+    </div>
     </div>
 
 

@@ -363,7 +363,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:forms:discussion:quick_start:group' => "Sélectionner un groupe pour cette discussion.",
 'group_tools:forms:discussion:quick_start:group:required' => "Veuillez sélectionner un groupe.",		
 'groups:search:tags' => "chercher",
-'groups:search:title' => "Rechercher des groupe correspondant à '%s'",
+'groups:search:title' => "Rechercher des groupes correspondant à '%s'",
 'groups:searchtag' => "Recherche de groupes",
 		
 // welcome message		

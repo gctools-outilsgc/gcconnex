@@ -30,7 +30,7 @@ if($cover_photo == 'nope' || $cover_photo ==''){
                'alt'=>elgg_echo('wet:cover_photo_alt'),
            ));
 
-       $cover_photo_holder = '<div><div class="group-cover-photo">'.$test_photo.'</div></div>';
+       $cover_photo_holder = '<div class="row group-padding-helper"><div class="group-cover-photo">'.$test_photo.'</div></div>';
 }
 
 echo $cover_photo_holder;

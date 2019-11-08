@@ -151,14 +151,33 @@ textarea.error:focus{
 
   /****************************************/
 
-.list-break{
-    margin-top: 5px !important;
-    padding-bottom: 5px !important;
-    border-bottom: 1px solid #ddd !important;
+.elgg-list-group {
+    background-color: white;
+    margin-top: 10px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 4px;
 }
 
-.list-break:last-child{
-    border-bottom:none !important;
+.panel .elgg-list-group {
+    border: none;   
+}
+
+.elgg-module-aside .panel {
+    border: none !important;
+}
+
+.elgg-module-aside .panel .panel-body {
+    padding: 5px 0;
+}
+
+.elgg-list-group .au_subgroups_group_icon-medium-wet4 {
+    margin: 10px 5px 10px 10px !important;
+    display: inline-block !important;
+    width: 50px !important;
+    max-width: 100% !important;
+}
+.elgg-list-group .au_subgroups_group_icon-medium-wet4 img {
+    border-radius: 2px !important;
 }
 
   /******************** Split Inbox Styling ********************/
@@ -319,6 +338,13 @@ max-height: 500px;
 
     }
 
+    .notif-badge.um-badge {
+        position:absolute;
+        min-height:14px;
+        min-width:14px;
+        right:5px;
+    }
+
     .init-badge {
         display: inline-block;
         width: 35px;
@@ -371,6 +397,17 @@ max-height: 500px;
        border-bottom: 12px solid rgba(0, 0, 0, 0.15) ;
        clear: both;
      }
+
+     .elgg-menu-user-menu-default {
+        margin-right: -35px;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 480px){
+        .elgg-menu-user-menu-default {
+            margin-right: -20px;
+        }
+    }
 
 /****************************************/
 
@@ -491,31 +528,179 @@ max-height: 500px;
 
  }
 
+.elgg-river-image-block {
+    position: relative;
+}
+
+ .elgg-river-image-block .elgg-river-image {
+  float: left;
+  margin-right: 8px;
+}
+
+.river-group-object .river-group-avatar {
+  margin: -25px 12px 12px 12px !important;
+  background-color: white;
+}
+
+.river-group-avatar .au_subgroups_group_icon-medium-wet4 {
+    margin: 0 !important;
+    display: inline-block !important;
+    width: 65px !important;
+    max-width: 100% !important;
+}
+
+.river-group-avatar .au_subgroups_group_icon-medium-wet4 img {
+    border-radius: 0 !important;
+}
+
+.elgg-menu-river {
+  float: none !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  height: 25px;
+  margin-top: 10px;
+}
 
 
+.elgg-menu-river > li {
+  margin-left: 0 !important;
+  margin-right: 10px;
+}
+
+.elgg-menu-river > li > a .elgg-icon {
+  color: #aaa;
+  font-size: 22px;
+  margin: 0 auto;
+}
+
+.elgg-list-river {
+  border-top: none !important;
+}
+
+.elgg-list-river > li {
+  border: none !important;
+}
+
+.elgg-river-attachments, .elgg-river-message, .elgg-river-content { 
+  border-left: none !important;
+  padding-left: 0px !important;
+}
+
+.elgg-river-responses .elgg-item-object-comment {
+  position: relative;
+  margin: 35px 0 0 0;
+  border: none !important;
+  padding: 8px 10px !important;
+  margin-top: 14px;
+}
+
+.elgg-river-responses .elgg-output {
+  background-color: #f8f9fa !important;
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.elgg-river-responses .elgg-body .elgg-output {
+  margin-top: 5px !important;
+}
  .noWrap {
      overflow-wrap: break-word;
   word-wrap: break-word;
   white-space:inherit;
  }
 
+ .elgg-river-timestamp {
+    color: #666;
+    font-size: 85%;
+    font-style: italic;
+    line-height: 1.2em;
+    display: inline-block;
+}
 
+.river-ribbon {
+    position: absolute;
+    right: -8px;
+    background-color: #0C78A7;
+    color: white;
+    font-size: 13px;
+    padding: 2px 6px;
+    border-radius: 4px 0 0 4px;
+}
+
+.river-ribbon:after {
+    position: absolute;
+    content: '';
+    top: 100%;
+    background-color: transparent!important;
+    left: auto;
+    right: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 0;
+    border-color: transparent;
+    border-top-color: #116084;
+    width: 0;
+    height: 0;
+}
+
+.elgg-river-message {
+    margin: 12px 0;
+}
+
+.elgg-river-file-attachment{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+}
+.elgg-river-file-attachment .river-file-title{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.elgg-river-summary {
+    padding-right: 45px;
+}
 
  .department-test{
      width: 43%;
-
  }
 
-.elgg-menu-user-menu-subMenu {
-    padding: 0;
+.d-flex{
+    display: flex!important;
 }
 
-.elgg-menu-user-menu-subMenu .elgg-menu-content {
-    display: none;
+.title-button-combo {
+    align-items: center!important;
+    padding-bottom: 2px;
+    margin-bottom: 12px;
+}
+.title-button-combo h2 {
+    margin-top: 16px;
+}
+
+.title-action-button {
+    margin-left: auto!important;
+    margin-top: 12px;
+}
+.title-action-button ul {
+    padding-right: 0 !important;
+}
+.title-action-button ul li {
+    padding-right: 0 !important;
+}
+
+.wet-image-block-body{
+    margin-left: 8px;
+    width: 100%;
+}
+.justify-content-center {
+    justify-content: center!important;
 }
 
 .visited-link li a:visited{
-   color: #055959;
+   color: #137991;
 }
 
 .btn-primary:visited{
@@ -527,11 +712,7 @@ max-height: 500px;
     padding-top:5px;
 }
 
-
-
-
-
-    .elgg-gallery li {
+.elgg-gallery li {
         border: 0px;
     }
 
@@ -619,8 +800,6 @@ max-height: 500px;
         background-color: #efefef;
     }
 
-
-
 /*This is where the elgg icons get loaded!*/
 <?php echo elgg_view('css/elements/icons - Copy', $vars); ?>
 
@@ -635,10 +814,10 @@ max-height: 500px;
     /******************** Custom Button Styles ********************/
 
     .btn-custom {
-          color: #335075;
-          background-color: #f3f3f3;
-          border-color: #dcdee1;
-        border-radius: 0;
+          color: #137991;
+          background-color: white;
+          border-color: #137991;
+        border-radius: 5px;
     }
 
     .btn-custom a {
@@ -719,12 +898,9 @@ max-height: 500px;
         border-left: solid 1px #ddd;
 
     }
-    /****************************************/
 
-    /******************** Removing Ugly rounded Corners ********************/
-
-    .form-control {
-        border-radius: 0;
+    .elgg-form .form-control {
+        margin-bottom: 20px;
     }
 
 .dropdown a:focus {
@@ -766,46 +942,34 @@ max-height: 500px;
     /******************** Pager ********************/
 
     .pagination {
-        margin: 0;
-        left: 10%;
-    }
-
-    .pagination li {
-        border-radius: 0;
-    }
-
-    .pagination li a {
-        border-radius: 0;
-        margin-bottom: 0;
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        border-radius: .35rem;
     }
 
     .elgg-pagination{
-        left:25% !important;
-
+        left: 0 !important;
     }
     .ui-autocomplete {
         padding-left: 0;
     }
 
     .elgg-tag {
-
-
-        padding: 2px;
-        border: 1px solid #055959;
-        border-radius: 8px;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
+        padding: 3px;
+        border: 1px solid #CAD7DC;
         color: white;
-        margin: 1px;
+        margin: 1px 8px 1px 1px;
+        background-color: #EBFAFF;
+        position: relative;
     }
-
     .elgg-tag:hover{
 
         background: #f5f5f5;
     }
 
     .elgg-tag a {
-
+        color: #707070;
         text-decoration: none;
     }
 
@@ -856,7 +1020,6 @@ max-height: 500px;
     }
 
     /****************************************/
-
     .ideaPoints {
         font-size: 1.25em;
     }
@@ -896,7 +1059,7 @@ max-height: 500px;
 
 .col-md-8 .custom-index-panel:first-of-type{
     background:transparent;
-    border:none;
+    border:none !important;
     box-shadow:none;
 
 }
@@ -959,13 +1122,15 @@ max-height: 500px;
 
 }
 #widget_manager_widgets_select .panel-heading{
-    position: absolute;
     z-index: 44444;
-    width: 91%;
+    background-color: #F5F5F5;
+    padding: 10px;
+    border-radius: 4px;
 }
 
-#widget_manager_widgets_select .panel-body{
-   margin-top:70px;
+#widget_manager_widgets_select{
+    overflow-y: scroll !important;
+    margin: 0 !important;
 }
 
 .multi-widget-count{
@@ -1144,6 +1309,36 @@ border:none;
     background: none;
 }
 
+.new-wire-list-object, .thewire-form {
+    padding: 15px;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.wire-share-container, .elgg-river-body .new-wire-reshare {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+    text-decoration: none;
+}
+a.wire-share-container:visited {
+    color: #606060 !important;
+}
+.wire-share-container .elgg-avatar, .elgg-river-body .new-wire-reshare .elgg-avatar {
+    width: 40px !important;
+    height: 40px !important;
+}
+.wire-share-container .elgg-subtext, .elgg-river-body .new-wire-reshare {
+    flex-shrink: 8;
+}
+.wire-share-container .wire-reshare-title, .elgg-river-body .new-wire-reshare .wire-reshare-title {
+    font-weight: bold;
+    color: #137991;
+}
+
+
 .img-tn{
     width:60px;
     height: 60px;
@@ -1192,21 +1387,11 @@ border:none;
 }
 .tab-content {
     padding: 5px;
-    /*border: 1px solid #ddd;*/
-}
-
-.tab-pane {
-    /*margin-top: -25px;*/
-}
-
-.nav-tabs {
-    /*border-bottom: none;*/
 }
 
 .tags {
     font-size: 13px;
 }
-
 
     .gsa-radio-filter li{
         float: left !important;
@@ -1229,24 +1414,20 @@ border:none;
 .group-tab-menu-search-box{
     width:65% !important;
     margin-right: 3px;
-
 }
 
 .group-tab-menu-search-icon{
     color: #055959;
     padding-top: 2.5%;
-
 }
 
 .search-dropdown{
     padding:5px;
-
 }
 
 .gsa-filter-text{
     margin:8px;
     font-weight:bold;
-
 }
 
 .gsa-search-title{
@@ -1266,12 +1447,21 @@ border:none;
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom:20px;
-
 }
 
 .group-search-button{
     color: #055959;
+}
 
+.file-tools-file {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+.file-tools-file .summary-title {
+    margin-bottom: 0px !important;
+}
+.file-tools-file .summary-title a {
+    font-size: 18px !important;
 }
 
 /*Color box - Nick */
@@ -1335,7 +1525,6 @@ border:none;
      content: " ";
   display: block;
   list-style: none;
-
   clear: both;
 }
 
@@ -1345,7 +1534,6 @@ border:none;
 
 .ui-autocomplete .ui-menu-item a:hover{
     color: #047177 !important;
-
 }
 .elgg-menu-hover{
     z-index: 1000;
@@ -1408,7 +1596,8 @@ border:none;
 .elgg-message {
   padding: 15px;
   margin-bottom: 23px;
-  border: 1px solid transparent;
+  min-width: 350px;
+  box-shadow: 0 0 5px rgba(0,0,0,.15);
   border-radius: 4px; }
   .elgg-message h4 {
     margin-top: 0;
@@ -1435,21 +1624,25 @@ border:none;
 
 .custom-message{
     position: fixed;
-    width: 95%;
-    max-width: 600px;
     z-index: 1039;
-    left:2% ;
+    right: 0;
+    top: 0;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+.alert-error {
+    border: 1px solid #d3080c;
+    border-left: solid 5px #d3080c;
 }
 
 .elgg-state-success, .alert-success {
   background-color: #dff0d8;
-  border-color: #d6e9c6;
-    position:fixed;
+  border: 1px solid #278400;
     z-index: 100000;
-
    margin: 0 auto;
     width:100%;
-    max-width: 600px;
+    max-width: 350px;
     border-left: solid 5px #2b542c;
    }
   .elgg-state-success hr {
@@ -1473,11 +1666,11 @@ details.elgg-state-success:before {
 .elgg-state-error {
   background-color: #f2dede;
   border-color: #ebccd1;
-      position:fixed;
     z-index: 100000;
 
    margin: 0 auto;
-    width: 1140px;;
+   width:100%;
+    max-width: 350px;
     border-left: solid 5px #843534;
 }
   .elgg-state-error hr {
@@ -1504,7 +1697,6 @@ details.elgg-state-success:before {
     width:100%;
 }
 
-
 /** Photo Gallery Custom Classes**/
 
 .panel-body-gallery {
@@ -1513,10 +1705,11 @@ details.elgg-state-success:before {
 
 /****** New Header style stuff *******/
 #app-brand{
-    background-color: #047177;
+    background: #0d727a;
+    background: -webkit-linear-gradient(left,#0d727a,#0d84b9);
+    background: linear-gradient(90deg,#0d727a 0,#0d84b9);
     color: #fff;
     min-height: 45px;
-    /*padding-top: 5px;*/
 }
 
 #app-brand a{
@@ -1526,7 +1719,6 @@ details.elgg-state-success:before {
 
 .brand h1{
   border:none;
-
 }
 
 .brand h1 a{
@@ -1570,26 +1762,6 @@ details.elgg-state-success:before {
 .app-name{
     font-size: 1.6em;
     padding-top:5px;
-    padding-left: 20px;
-    background-color: #055959;
-    min-height: 45px;
-    max-width: 165px;
-   margin-left:-5px;
-}
-
-.app-name:before{
-       content: '';
-    display: block;
-    position: absolute;
-    left: 165px;
-    top: 0;
-    width: 0;
-    height: 0;
-	border-top: 22.5px solid transparent;
-	border-bottom: 22.5px solid transparent;
-
-	border-left: 20px solid #055959;
-    clear: both;
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
@@ -1639,7 +1811,6 @@ details.elgg-state-success:before {
 .tools-navigator{
     font-size: 1.1em;
     margin-top:10px;
-
 }
 
 .tools-navigator-menu{
@@ -1656,7 +1827,6 @@ details.elgg-state-success:before {
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-
 	border-bottom: 12px solid #fff;
     clear: both;
 }
@@ -1709,33 +1879,14 @@ figcaption{
        font-weight: bold;
 }
 
-
-
 /******* Entity Menu Style ********/
 
 .entity-menu-bubble{
     padding: 3px;
-    background-color: #efefef;
     border: 1px solid transparent;
 
 }
 
-/* removing arrow on like and share bubble
-.entity-menu-bubble:before{
-       content: '';
-    display: block;
-    position: absolute;
-    left: -10px;
-    top: 5px;
-    width: 0;
-    height: 0;
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-
-	border-right:10px solid #efefef;
-    clear: both;
-}
-*/
 
 .data-table-list-item{
     padding:10px;
@@ -1750,7 +1901,6 @@ figcaption{
 /** Widget Stuff **/
 
 .elgg-widget-title{
-
         margin:5px 0;
 }
 
@@ -1760,7 +1910,6 @@ figcaption{
 
 .wet-hidden{
     display:none;
-
 }
 
 .pager-wet-hidden{
@@ -1888,3 +2037,11 @@ figcaption{
 .full-width {
   width: 100%;
 }
+
+.community-content{
+    padding-top:0
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> f4ca52adb159052a0f0318b8d3666a169705207c

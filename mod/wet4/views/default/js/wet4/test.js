@@ -16,16 +16,6 @@ require.config({
         "datatables": dtpath
     }
 });
-/*
-//testing only one-click button elgg-form-groups-edit
-$("input[type=submit]").click(function () {
-
-    $(this).click(function () {
-      //After this was clicked do not submit again
-        return false;
-    });
-    return true;
-});*/
 
 //System message 
     $('.elgg-system-messages').find('li').animate({opacity: 1}, 6000);
@@ -91,7 +81,5 @@ $('.close-msg-dd').on('focusin', function(){
 $('.close-notif-dd').on('focusin', function(){
   $('.close-msg-dd').find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
 })
-// { "dom": '<"top"ilf>' }
 requirejs( ["datatables"], function() {
-// $('.wb-tables').dataTable( { "dom": '<"top"ilf>' } );
 } );

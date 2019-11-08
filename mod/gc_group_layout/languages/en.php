@@ -13,4 +13,7 @@ return array(
     'group:no_results' => 'No result',
     'group:next_set' => "Next",
     'group:previous_set' => "Previous",
+    'group:settings' => "Group settings",
+    'group:info' => "Group info",
+    'group:more_button' => "More about this group / Widgets"
 );

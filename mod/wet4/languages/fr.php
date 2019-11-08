@@ -3,6 +3,13 @@
 
 return array(
 
+	'wet:abouthissite' => 'Informations sur le site',
+	'canada:symbol' => 'Symbole du gouvernement du Canada',
+	'top:of:page' => 'Haut de page',
+
+	'file:select:file' => 'Choisir le dossier %s',
+	'file:select:folder' => 'Sélectionner le dossier %s',
+	'notification:select:label' => 'Sélectionner',
 	'thewire:head:title' => 'Message sur le fil',
 	'group_operator:find:user:error' => "Impossible de trouver l'utilisateur",
 
@@ -53,8 +60,9 @@ return array(
 	'entity:share:link:groupforumtopic' => 'Partager la discussion "%s" sur le fil',
 	'entity:subscribe:link:groupforumtopic' => 'Vous abonner à la discussion "%s"',
 	'entity:unsubscribe:link:groupforumtopic' => 'Vous désabonner de la discussion "%s"',
-	'entity:lock:link:groupforumtopic' => 'Fermer la discussion "%s"',
-	'entity:unlock:link:groupforumtopic' => 'Ouvrir la discussion "%s"',
+	'entity:lock:link:groupforumtopic' => 'Fermer la discussion',
+	'entity:unlock:link:groupforumtopic' => 'Ouvrir la discussion',
+	'entity:reply:groupdorumtopic' => 'Répondre à la discussion "%s"',
 
 	'entity:like:link:discussion_reply' => 'Aimer la réponse à la discussion publiée par %s',
 	'entity:unlike:link:discussion_reply' => 'Enlever la mention j\'aime de la réponse à la discussion publiée par %s',
@@ -85,6 +93,8 @@ return array(
 	'entity:share:link:event_calendar' => 'Partager l\'événement "%s" sur le fil',
 	'entity:subscribe:link:event_calendar' => 'Vous abonner à l\'événemenet "%s"',
 	'entity:unsubscribe:link:event_calendar' => 'Vous désabonner de l\'événement "%s"',
+	'entity:add:event_calendar' => 'Ajouter %s à mon calendrier',
+	'entity:remove:event_calendar' => 'Supprimer %s de mon calendrier',
 
 	'entity:like:link:bookmarks' => 'Aimer le signet "%s"',
 	'entity:unlike:link:bookmarks' => 'Enlever la mention j\'aime du signet "%s"',
@@ -295,6 +305,22 @@ return array(
 	'thewire:groupwarning' => 'Ce contenu peut être consulté par les membres de : ',
 	'thewire:userwarning' => 'Seuls les utilisateurs suivants peuvent consulter ce contenu : ',
 
+	'wet:reshare:mission' => 'Opportunité',
+	'wet:reshare:blog' => 'Blogue',
+	'wet:reshare:groupforumtopic' => 'Discussion de groupe',
+	'wet:reshare:bookmarks' => 'Signet',
+	'wet:reshare:answer' => 'Réponse',
+	'wet:reshare:question' => 'Question',
+	'wet:reshare:thewire' => 'Reshared Wire Post',
+	'wet:reshare:poll' => 'Sondage',
+	'wet:reshare:page_top' => 'Page de groupe',
+	'wet:reshare:image' => 'Image',
+	'wet:reshare:album' => "Album d'images",
+	'wet:reshare:file' => 'Fichier',
+	'wet:reshare:folder' => 'Dossier',
+	'wet:reshare:event_calendar' => 'Événement',
+	'wet:reshare:etherpad' => 'Doc',
+
 	/**
    * Files
    */
@@ -313,7 +339,7 @@ return array(
 	'userMenu:account' => "Paramètres",
 	'userMenu:messages' => "Mes messages",
 	'userMenu:colleagues' => "Mes collègues",
-	'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout(translate me)', /*NEW*/
+	'userMenu:usermenuTitle' => 'Cliquez ici pour des liens vers votre profil, les paramètres de compte et la déconnexion',
 	'wet:usermenu:helpertext' => "Menu Utilisateur. Liens vers Notifications, Profil et Déconnexion",
 	'wet:dd:expand'=>"Open drop down of most recent messages(fr)",
 
@@ -1070,6 +1096,13 @@ return array(
 	'friends:icon_size' => "Taille des icônes",
 	'friends:tiny' => "Minuscule",
 	'friends:small' => "Petit",
+
+	/**
+	 * River Ribbon object subtype lang
+	 */
+	'discussion_reply' => 'Résponse',
+	'groupforumtopic' => 'Discussion',
+	'page_top' => 'Page',
 
 /**
  * Icons

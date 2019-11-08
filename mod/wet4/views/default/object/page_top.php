@@ -131,13 +131,8 @@ if( $description_json->en && $description_json->fr ){
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
 
-	echo elgg_view('object/elements/full', array(
-		'entity' => $page,
-		'title' => false,
-		'icon' => $page_icon,
-		'summary' => $summary,
-		'body' => $body,
-	));
+	$format_full_body = elgg_format_element('div', ['class' => 'panel-body'], $body . '<div class="mrgn-tp-md mrgn-bttm-md">' .$subtitle .'</div>' . $metadata);
+	echo elgg_format_element('div', ['class' => 'panel'], $format_full_body);
 
 } else {
 	// brief view
@@ -165,5 +160,5 @@ if( $description_json->en && $description_json->fr ){
 	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
-	echo elgg_view_image_block($page_icon, $list_body);
+	echo elgg_format_element('div', ['class'=>'panel'], '<div class="panel-body">' .$list_body .'</div>');
 }

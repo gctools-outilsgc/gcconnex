@@ -23,13 +23,11 @@
  * @author GCTools Team
  */
 
-$checkPage = elgg_get_context();
-
 $body = elgg_extract('body', $vars, '');
 $image = elgg_extract('image', $vars, '');
 $alt_image = elgg_extract('image_alt', $vars, '');
-$test = $_SESSION[idpage];
-$class = 'col-xs-12 mrgn-tp-sm ';
+// $test = $_SESSION[idpage];
+$class = '';
 $additional_class = elgg_extract('class', $vars, '');
 
 $reshared = elgg_extract('reshare', $vars, '');
@@ -42,8 +40,6 @@ $id = '';
 if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 }
-
-
 
 //elgg body appends the edit comment text box thing
 
@@ -76,37 +72,29 @@ HTML;
 
 }else if(elgg_in_context('file_tools_selector')){ //for files and folders
 
-
-
 if ($image) {
-	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
+	$image = "<div class=\"mrgn-rght-md\">$image</div>";
 }
 
 if ($alt_image) {
-	$alt_image = '<div class="elgg-image-alt  col-xs-1 mrgn-tp-md">' . $alt_image . '</div>';
+	$alt_image = '<div class="mrgn-rght-md">' . $alt_image . '</div>';
 }
 
     //see if entity is file or folder
 $entity = elgg_extract('subtype', $vars, '');
 $guid = elgg_extract('guid', $vars, '');
 
-
-
-
 //only display move link on files
 if($entity == 'file' && elgg_is_logged_in() && elgg_get_logged_in_user_entity()->canEdit()){
-    $body = '<div class="mrgn-tp-sm col-xs-9">' . $body . '</div>';
+    $body = '<div class="">' . $body . '</div>';
 } else {
-    $body = "<div class=\"mrgn-tp-sm col-xs-9\">$body</div>";
+    $body = "<div class=\"\">$body</div>";
     $move_link = '';
 }
 
-
-
-
 echo <<<HTML
 
-<div class="$class clearfix mrgn-bttm-sm" $id>
+<div class="$class clearfix file-list-object d-flex" $id>
 	$alt_image$image$body
     <div class=" elgg-body clearfix edit-comment">
 
@@ -139,29 +127,24 @@ HTML;
 
 }else{
 
-    $body = "<div class=\"mrgn-tp-sm col-xs-10 noWrap\">$body</div>";
+    $body = "<div class=\"wet-image-block-body\" style=\"flex-shrink:8;\">$body</div>";
 
 if ($image) {
-	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
-     //$echo = elgg_get_context();
+	$image = "<div class=\"\">$image</div>";
 }
 
 if ($alt_image) {
 	$alt_image = "<div class=\"elgg-image-alt\">$alt_image</div>";
 
 }
-
 echo <<<HTML
 
-<article class="$class mrgn-bttm-sm" $id>
+<article class="d-flex $class" $id>
 
 	$image$alt_image$body$echo
     <div class="clearfix"></div>
-    <div class=" elgg-body edit-comment">
-
-    </div>
 </article>
-<div class="clearfix"></div>
+<div class="elgg-body edit-comment"></div>
 HTML;
 
 }

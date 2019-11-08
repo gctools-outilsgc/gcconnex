@@ -11,8 +11,7 @@
 elgg_register_event_handler('init', 'system', 'tags_and_communities');
 
 function tags_and_communities(){
-    //Register selectize library
-    elgg_require_js("selectize_require");
+
     elgg_extend_view('css/elgg', 'css/selectize.bootstrap3.css');
     
     //Custom CSS

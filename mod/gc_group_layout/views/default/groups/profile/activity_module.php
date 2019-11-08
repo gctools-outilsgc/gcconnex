@@ -7,10 +7,6 @@
  * @package Groups
  */
 
-if ($vars['entity']->activity_enable == 'no') {
-	return true;
-}
-
 $group = $vars['entity'];
 if (!$group) {
 	return true;
@@ -22,10 +18,10 @@ $all_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
-elgg_push_context('widgets');
+elgg_push_context('activity');
 $db_prefix = elgg_get_config('dbprefix');
 $content = elgg_list_river(array(
-	'limit' => 4,
+	'limit' => 10,
 	'pagination' => false,
     'distinct' => false,
 	'wheres' => array(
@@ -37,6 +33,9 @@ elgg_pop_context();
 if (!$content) {
 	$content = '<p>' . elgg_echo('groups:activity:none') . '</p>';
 }
+
+
+echo '<div>'.elgg_view('groups/profile/tab_menu'). '</div>';
 
 echo elgg_view('groups/profile/module', array(
 	'title' => elgg_echo('groups:activity'),

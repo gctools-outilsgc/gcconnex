@@ -28,10 +28,7 @@ if (!$poster) {
 	$excerpt = elgg_get_excerpt(gc_explode_translation($topic->description, $lang));
 	$description = gc_explode_translation($topic->description, $lang);
 
-
-
-
-$poster_icon = elgg_view_entity_icon($poster, 'medium');
+$poster_icon = elgg_view_entity_icon($poster, 'tiny');
 $poster_link = elgg_view('output/url', array(
 	'href' => $poster->getURL(),
 	'text' => $poster->name,
@@ -39,7 +36,6 @@ $poster_link = elgg_view('output/url', array(
 ));
 
 $poster_text = elgg_echo('groups:started', array($poster_link));
-//$poster_text = elgg_echo('groups:started', array($poster->name));
 
 $tags = elgg_view('output/tags', array('tags' => $topic->tags));
 $date = elgg_view_friendly_time($topic->time_created);
@@ -107,8 +103,30 @@ if (elgg_in_context('widgets')) {
 	));
 }
 
+$title_link = elgg_extract('title', $vars, '');
+if ($title_link === '') {//add translation
+	if ( isset($topic->title) || isset($topic->name) ) {
+		if( $topic->title ){
+			$text = gc_explode_translation( $topic->title, $lang );
+		}elseif($topic->name){
+			$text = $topic->name;
+		}elseif($topic->name2){
+			$text = $topic->name2;
+		}
+
+	} else {
+		$text = gc_explode_translation($topic->title3, $lang);
+	}
+	if ($topic instanceof ElggEntity) {
+		$params = array(
+			'text' => elgg_get_excerpt($text, 100),
+			'href' => $topic->getURL(),
+			'is_trusted' => true,
+		);
+	}
+	$title_link = elgg_view('output/url', $params);
+}
 if ($full) {
-    // $replies_link - went here
 	$subtitle = "$poster_text $date ";
 
 // identify available content
@@ -134,52 +152,33 @@ if( $description_json->en && $description_json->fr ){
 	echo'</div>';
 }
 
-	$params = array(
-		'entity' => $topic,
-        'title' => false,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
-		'tags' => $tags,
-	);
-	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
-
-	$info = elgg_view_image_block($poster_icon, $list_body);
-
+	$format_full_image = elgg_format_element('div', [], $poster_icon . $subtitle);
 	$body = elgg_view('output/longtext', array(
 		'value' => $description,
-		'class' => 'clearfix mrgn-lft-sm mrgn-rght-sm mrgn-tp-md content_desc',
+		'class' => 'clearfix content_desc',
 	));
     
-    $repliesFoot = '<div class="col-xs-12 text-right">' . $replies_link . '</div>';
-
 	echo <<<HTML
-<div class="panel-heading clearfix">$info</div>
-$body
-$repliesFoot
+	<div class="panel">
+	<div class="panel-body">
+<div class="mrgn-bttm-md">$body</div>
+<div>$tags</div>
+<div class="mrgn-tp-sm">$format_full_image</div>
+<div class="mrgn-tp-md">$metadata</div>
+</div>
+</div>
 HTML;
 
     echo elgg_view('wet4_theme/track_page_entity', array('entity' => $topic));
 
 } else {
-	// brief view
-	$subtitle = "<p class=\"mrgn-tp-sm mrgn-bttm-0\">$poster_text $date</p> <p class=\"mrgn-bttm-sm\">$reply_text</p> $replies_link";
+	// brief view - made my own instead of relying on the image block
+	$subtitle = "<div class=\"mrgn-lft-sm\"><div>$poster_text $date</div></div>";
 
-	// identify available content
-/*	if(($topic->description2) && ($topic->description)){
-			
-		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';
-	}*/
-
-	$params = array(
-		'entity' => $topic,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
-		'tags' => $tags,
-		'content' => $excerpt,
-	);
-	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
-
-	echo elgg_view_image_block($poster_icon, $list_body);
+  $format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], $poster_icon . $subtitle);
+  $format_title = elgg_format_element('h3', ['class' => 'mrgn-tp-0 mrgn-bttm-md'], $title_link);
+  $format_metadata = elgg_format_element('div', ['class' => 'mrgn-tp-md'], $metadata);
+	$image_block_body = elgg_format_element('div', ['class' => 'panel-body'], $format_title . $excerpt . '<div class="mrgn-tp-sm">'.$replies_link .'</div>' . $format_subtitle . $format_metadata);
+	$format_image_block = elgg_format_element('div', ['class' => 'panel'], $image_block_body);
+  echo $format_image_block;
 }

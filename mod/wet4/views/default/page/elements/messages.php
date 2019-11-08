@@ -27,10 +27,10 @@ if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object'
 
             if($type=='error')
             {
-                echo '<li data-dismiss="alert" class="fade in alert alert-'.$type.' clearfix" >'; //elgg-system-messages custom-message
+                echo '<li data-dismiss="alert" class="fade in alert elgg-message alert-'.$type.' clearfix" >'; //elgg-system-messages custom-message
             }else
             {
-                echo '<li data-dismiss="alert" class="fade in elgg-system-messages clearfix custom-message alert alert-'.$type.' ">';
+                echo '<li data-dismiss="alert" class="fade in elgg-system-messages clearfix alert elgg-message alert-'.$type.' ">';
             }
             echo '<ul class="list-unstyled" >';
             echo '<a href="#" class="close" tabindex="0" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>';

@@ -27,7 +27,7 @@
 
 
 $items = $vars['items'];
-$count = elgg_extract('count', $vars);
+//$count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
@@ -63,7 +63,7 @@ $list_items = '';
 ///DATATABLES///
 ////////////////
 
-if(elgg_in_context('friends') || elgg_in_context('my_groups')){ //datatable for colleagues, my groups
+if(elgg_in_context('messages')) {
 
     foreach ($items as $item) {
 	    $item_view = elgg_view_list_item($item, $vars);
@@ -84,210 +84,6 @@ if(elgg_in_context('friends') || elgg_in_context('my_groups')){ //datatable for 
 
 		    $li_attrs['class'][] = "elgg-item-$type";
 		    if ($subtype) {
-                //
-			    $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
-		    }
-	    } else if (is_callable(array($item, 'getType'))) {
-		    $li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
-	    }
-
-        //stick items in <td> element
-	    $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $item_view);
-        //stick <td> elements in <tr>
-        $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
-    }
-
-    if ($position == 'before' || $position == 'both') {
-	    echo $nav;
-    }
-
-    //determine what to put in table head based on item subtype
-    if($heading == 'user' && elgg_in_context('friends')){ //friends
-        $heading = elgg_echo('friends');
-    } else if($heading == 'user' && elgg_in_context('groups_members')){ //group members
-        $heading = elgg_echo('groups:members');
-    } else if($heading == 'group' && elgg_in_context('my_groups')){ //my groups
-        $heading = elgg_echo('groups');
-    }
-
-    //create table body
-    $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
-
-    //create table head
-    $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class=""> ' . $heading . '</th> </tr>');
-
-        if(elgg_get_context() == 'messages'){
-            //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
-            echo elgg_format_element('table', ['class' => ' wb-tables table ', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
-        }else{
-            //pull it all together and display table
-            echo elgg_format_element('table', ['class' => ' wb-tables table table-striped', 'id' => ''], $tHead . $tBody);
-        }
-
-
-
-    if ($position == 'after' || $position == 'both') {
-	    echo $nav;
-    }
-
-} else
-    if(elgg_in_context('groups_members')){ //datatable group members   EW - 2016-09-16 Added members join date to table
-
-        $page_owner = elgg_get_page_owner_guid();
-
-        foreach ($items as $item) {
-            $item_view = elgg_view_list_item($item, $vars);
-            if (!$item_view) {
-                continue;
-            }
-
-            $heading = $item->getType();
-
-            $li_attrs = ['class' => $item_classes];
-
-            if ($item instanceof \ElggEntity) {
-                $guid = $item->getGUID();
-                $type = $item->getType();
-                $subtype = $item->getSubtype();
-
-                $relationship = check_entity_relationship($guid, 'member', $page_owner);
-
-                $join_date = '<p style="padding-top:10px;">'.date("Y-m-d H:i", $relationship->time_created).'</p>';
-
-                $li_attrs['id'] = "elgg-$type-$guid";
-
-                $li_attrs['class'][] = "elgg-item-$type";
-                if ($subtype) {
-                    //
-                    $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
-                }
-            } else if (is_callable(array($item, 'getType'))) {
-                $li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
-            }
-
-            //stick items in <td> element
-            $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $item_view);
-            $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item '], $join_date);
-            //stick <td> elements in <tr>
-            $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
-        }
-
-        if ($position == 'before' || $position == 'both') {
-            echo $nav;
-        }
-
-        //determine what to put in table head based on item subtype
-        if($heading == 'user' && elgg_in_context('friends')){ //friends
-            $heading = elgg_echo('friends');
-        } else if($heading == 'user' && elgg_in_context('groups_members')){ //group members
-            $heading = elgg_echo('groups:members');
-        } else if($heading == 'group' && elgg_in_context('my_groups')){ //my groups
-            $heading = elgg_echo('groups');
-        }
-
-        //create table body
-        $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
-
-        //create table head
-        $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class=""> ' . elgg_echo('groups:members') . '</th><th>'.elgg_echo('c_bin:sort_guid').'</th> </tr>');
-
-        //pull it all together and display table
-        echo elgg_format_element('table', ['class' => ' wb-tables table table-striped', 'id' => ''], $tHead . $tBody);
-
-
-
-
-        if ($position == 'after' || $position == 'both') {
-            echo $nav;
-        }
-
-    } else
-        if(elgg_in_context('groups') && get_input("filter") == 'yours'){ //datatable for groups/all?filter=yours page
-
-    foreach ($items as $item) {
-	    $item_view = elgg_view_list_item($item, $vars);
-	    if (!$item_view) {
-		    continue;
-	    }
-
-        $heading = $item->getType();
-
-	    $li_attrs = ['class' => $item_classes];
-
-	    if ($item instanceof \ElggEntity) {
-		    $guid = $item->getGUID();
-		    $type = $item->getType();
-		    $subtype = $item->getSubtype();
-
-		    $li_attrs['id'] = "elgg-$type-$guid";
-
-		    $li_attrs['class'][] = "elgg-item-$type";
-		    if ($subtype) {
-                //
-			    $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
-		    }
-	    } else if (is_callable(array($item, 'getType'))) {
-		    $li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
-	    }
-
-        //stick items in <td> element
-	    $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $item_view);
-        //stick <td> elements in <tr>
-        $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
-    }
-
-    if ($position == 'before' || $position == 'both') {
-	    echo $nav;
-    }
-
-    //determine what to put in table head based on item subtype
-
-  if($heading == 'group' && elgg_in_context('groups')){ //my groups
-        $heading = elgg_echo('groups');
-    }
-
-    //create table body
-    $tBody = elgg_format_element('tbody', ['class' => 'msgTable'], $tR);
-
-    //create table head
-    $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class=""> ' . $heading . '</th> </tr>');
-
-    if(elgg_get_context() == 'messages'){
-        //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
-        echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
-    }else{
-        //pull it all together and display table
-        echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => ''], $tHead . $tBody);
-    }
-
-
-
-    if ($position == 'after' || $position == 'both') {
-	    echo $nav;
-    }
-
-} else if(elgg_in_context('messages')) {
-
-    foreach ($items as $item) {
-	    $item_view = elgg_view_list_item($item, $vars);
-	    if (!$item_view) {
-		    continue;
-	    }
-
-        $heading = $item->getType();
-
-	    $li_attrs = ['class' => $item_classes];
-
-	    if ($item instanceof \ElggEntity) {
-		    $guid = $item->getGUID();
-		    $type = $item->getType();
-		    $subtype = $item->getSubtype();
-
-		    $li_attrs['id'] = "elgg-$type-$guid";
-
-		    $li_attrs['class'][] = "elgg-item-$type";
-		    if ($subtype) {
-                //
 			    $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
 		    }
 	    } else if (is_callable(array($item, 'getType'))) {
@@ -297,13 +93,21 @@ if(elgg_in_context('friends') || elgg_in_context('my_groups')){ //datatable for 
         $mess_check = elgg_view('input/checkbox', array(
 			'name' => 'message_id[]',
 			'value' => $item->guid,
-            'class' => 'mrgn-rght-sm'
-		));
-            /* $item->toId    $item->fromId  $item->title   elgg_view_friendly_time($item->time_created) elgg_extract('metadata_name', $vars) */
+            'class' => 'mrgn-rght-sm',
+            'aria-label' => elgg_echo('notification:select:label')
+        ));
+        
+        if(get_current_language() == 'en') {
+            $split = explode(" | ", $item->title);
+            $msgtitle = $split[0];
+        } else {
+            $split = explode(" | ", $item->title);
+            $msgtitle = $split[1];
+        }
 
         $subject_info = elgg_view('output/url', array(
 	        'href' => $item->getURL(),
-	        'text' => $item->title,
+	        'text' => $msgtitle,
 	        'is_trusted' => true,
         ));
 
@@ -318,12 +122,11 @@ if(elgg_in_context('friends') || elgg_in_context('my_groups')){ //datatable for 
         }
 
         //stick items in <td> element
-        $list_items = elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], $mess_check);
-        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], '<span>' . $sender . '</span>');
-        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], $subject_info);
-	    $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], elgg_view_friendly_time($item->time_created));
+        $list_items = elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding:10px 10px 10px 0'], $mess_check);
+        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 10px 10px 0'], '<span>' . $sender . '</span>');
+        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 10px 10px 0'], $subject_info);
+	    $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 10px 10px 0'], elgg_view_friendly_time($item->time_created));
         //stick <td> elements in <tr>
-
 
         if($item->readYet){
             $read = 'read';
@@ -343,11 +146,11 @@ if(elgg_in_context('friends') || elgg_in_context('my_groups')){ //datatable for 
     $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
 
     //create table head
-    $tHead = elgg_format_element('thead', ['class' => ''], '<tr><th><input type="checkbox" name="select_all" value="Toggle All" id="table-select-all"></th> <th class="">' . $heading1 . ' </th><th>' . elgg_echo('msg:subject') . '</th><th>' . $heading2 . '</th> </tr>');
+    $tHead = elgg_format_element('thead', ['class' => ''], '<tr><th><input type="checkbox" name="select_all" value="Toggle All" id="table-select-all" aria-label="'.elgg_echo('file_tools:list:select_all').'"></th> <th class="">' . $heading1 . ' </th><th>' . elgg_echo('msg:subject') . '</th><th>' . $heading2 . '</th> </tr>');
 
 
         //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
-        $tab =  elgg_format_element('table', ['class' => ' wb-tables table inboxTable', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false, \"bSort\" : false, \"lengthMenu\": [[25, 50, 100, 250], [25, 50, 100, 250]] }"], $tHead . $tBody);
+        $tab =  elgg_format_element('table', ['class' => 'table inboxTable', 'id' => '',], $tHead . $tBody);
         echo elgg_format_element('div', ['class' => 'table-responsive'], $tab);
 ?>
 
@@ -374,13 +177,6 @@ if(elgg_in_context('friends') || elgg_in_context('my_groups')){ //datatable for 
 } else if(elgg_in_context('member_by_dept')) { //members by deptartment
 
     foreach ($items as $item) {
-	//$item_view = elgg_view_list_item($item, $vars);
-	/*if (!$item_view) {
-		continue;
-	}*/
-
-
-
 	$li_attrs = ['class' => $item_classes];
 
 	if ($item instanceof \ElggEntity) {
@@ -452,8 +248,6 @@ if ($position == 'after' || $position == 'both') {
 }
 
 
-
-
 } else { //normal list for everything else
 
     foreach ($items as $item) {
@@ -471,14 +265,12 @@ if ($position == 'after' || $position == 'both') {
 
 		$li_attrs['id'] = "elgg-$type-$guid";
 
-
-
 		$li_attrs['class'][] = "elgg-item-$type list-break mrgn-tp-md clearfix noWrap";
 
 
 		if ($subtype) {
 
-			$li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
+            $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
 		}
 	} else if (is_callable(array($item, 'getType'))) {
 		$li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
@@ -491,7 +283,7 @@ if ($position == 'before' || $position == 'both') {
 	echo $nav;
 }
 
-echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
+echo elgg_format_element('ul', ['class' => 'list-unstyled elgg-new-list elgg-list-'.$type], $list_items);
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;

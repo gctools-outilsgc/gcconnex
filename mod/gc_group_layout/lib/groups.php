@@ -75,7 +75,7 @@ function groups_handle_all_page() {
 					'type' => 'object',
 					'subtype' => 'groupforumtopic',
 					'order_by' => 'e.last_action desc',
-					'limit' => 40,
+					'limit' => 20,
 					'full_view' => false,
 					'no_results' => elgg_echo('discussion:none'),
 				);
@@ -182,7 +182,7 @@ function groups_handle_owned_page() {
 		'full_view' => false,
 		'no_results' => elgg_echo('groups:none'),
 		'distinct' => false,
-        'limit' => 0,
+        'limit' => 20,
 	));
 $filter = elgg_view("groups/group_sort_menu", array("selected" => $selected_tab));
 $sidebar = elgg_view("groups/sidebar/find");
@@ -231,7 +231,7 @@ function groups_handle_mine_page() {
 		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
 		'order_by' => 'ge.name ASC',
 		'no_results' => elgg_echo('groups:none'),
-        'limit' => false, //this should work but it doesn't
+        'limit' => 5, //this should work but it doesn't
 	));
 
     $sidebar = elgg_view('groups/sidebar/find');
@@ -340,14 +340,15 @@ function groups_handle_profile_page($guid) {
 	// turn this into a core function
 	global $autofeed;
 	$autofeed = true;
-	$lang = get_current_language();
-	$title = gc_explode_translation($title,$lang);
 
 	elgg_push_context('group_profile');
 
 	elgg_entity_gatekeeper($guid, 'group');
 
 	$group = get_entity($guid);
+
+	$lang = get_current_language();
+	$title = gc_explode_translation($group->name,$lang);
 
 	elgg_push_breadcrumb($title);
 
@@ -429,21 +430,18 @@ function groups_handle_members_page($guid) {
 
 	elgg_push_breadcrumb(gc_explode_translation($group->title,$lang), $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('groups:members'));
-/*
+
 	$db_prefix = elgg_get_config('dbprefix');
-	$content = elgg_list_entities_from_relationship(array(
+	$content = elgg_view('input/find_group_member', array('guid' => $guid));
+	$content .= elgg_list_entities_from_relationship(array(
 		'relationship' => 'member',
 		'relationship_guid' => $group->guid,
 		'inverse_relationship' => true,
 		'type' => 'user',
-		'limit' => 0,
+		'limit' => 25,
 		'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid"),
 		'order_by' => 'u.name ASC',
 	));
-
-	$content .= " <br/>-----<br/>";
-*/
-	$content .= elgg_view('group/group_members', array('group_guid' => $guid));
 
 	$params = array(
 		'content' => $content,
@@ -520,7 +518,7 @@ function groups_handle_requests_page($guid) {
 		'relationship' => 'membership_request',
 		'relationship_guid' => $guid,
 		'inverse_relationship' => true,
-		'limit' => 0,
+		'limit' => 20,
 	));
 	$content = elgg_view('groups/membershiprequests', array(
 		'requests' => $requests,

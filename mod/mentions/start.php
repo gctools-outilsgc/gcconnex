@@ -12,7 +12,6 @@ elgg_register_event_handler('init', 'system', 'mentions_init');
 
 function mentions_init() {
 	elgg_extend_view('css/elgg', 'css/mentions');
-	elgg_require_js('mentions/autocomplete');
 
 	elgg_extend_view('input/longtext', 'mentions/popup');
 	elgg_extend_view('input/plaintext', 'mentions/popup');
@@ -84,7 +83,8 @@ function mentions_preg_callback($matches) {
 		if (elgg_get_plugin_setting('fancy_links', 'mentions')) {
 			$icon = elgg_view('output/img', array(
 				'src' => $user->getIconURL('topbar'),
-				'class' => 'pas mentions-user-icon'
+				'class' => 'pas mentions-user-icon',
+				'alt' => ''
 			));
 			$replace = elgg_view('output/url', array(
 				'href' => $user->getURL(),

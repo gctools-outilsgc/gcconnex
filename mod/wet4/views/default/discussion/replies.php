@@ -10,6 +10,10 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 	
 } else {
 
+	$attr = [
+		'id' => 'reply',
+	];
+
 	 $show_add_form = elgg_extract('show_add_form', $vars, true);
 
 	 $replies = elgg_list_entities(array(
@@ -19,6 +23,7 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 		 'reverse_order_by' => true,
 		 'distinct' => false,
 		 'url_fragment' => 'group-replies',
+		 'item_class' => 'panel',
 	 ));
 
 	 // check how many replies topic has
@@ -31,20 +36,21 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 	 ));
 
 
-	 echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
+	 echo '<div id="group-replies" class="elgg-comments clearfix mrgn-tp-lg">';
 
 	 // if topic has replies show replies header
 	 if($num_replies != 0)
-		 echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('group:replies') . '</h2>';
+		 echo '<h2 class="panel-title mrgn-bttm-md">' . elgg_echo('group:replies') . '</h2>';
 	 
-
 	 echo $replies;
 
 	 echo '</div>';
 
 	 if ($show_add_form) {
 		 $form_vars = array('class' => 'mtm clearfix');
-		 echo elgg_view_form('discussion/reply/save', $form_vars, $vars);
+		 $content .= elgg_view_form('discussion/reply/save', $form_vars, $vars);
+
+		 echo elgg_format_element('div', $attr, $content);
 	 }
 
  }

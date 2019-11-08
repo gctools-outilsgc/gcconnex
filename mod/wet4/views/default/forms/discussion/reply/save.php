@@ -42,7 +42,7 @@ $cancel_button = '';
 if ($reply) {
 	$cancel_button = elgg_view('input/button', array(
 		'value' => elgg_echo('cancel'),
-		'class' => 'elgg-button-cancel mlm',
+		'class' => 'elgg-button-cancel mrgn-tp-sm mlm',
 		'href' => $entity ? $entity->getURL() : '#',
 	));
 }
