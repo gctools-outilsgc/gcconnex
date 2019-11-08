@@ -170,15 +170,17 @@ if ($user->canEdit()) {
                 'type' => 'object',
                 'subtype' => 'federal_departments',
             ));
-            $departments = get_entity($obj[0]->guid);
-            
-            $federal_departments = array();
-            if (get_current_language() == 'en'){
-                $federal_departments = json_decode($departments->federal_departments_en, true);
-            } else {
-                $federal_departments = json_decode($departments->federal_departments_fr, true);
+            if ( $departments = get_entity($obj[0]->guid) ){
+                $federal_departments = array();
+                if (get_current_language() == 'en'){
+                    $federal_departments = json_decode($departments->federal_departments_en, true);
+                } else {
+                    $federal_departments = json_decode($departments->federal_departments_fr, true);
+                }
+                uasort($federal_departments, 'strcoll');
             }
-            uasort($federal_departments, 'strcoll');
+            else
+                $federal_departments = array('No federal departments loaded','-----','You might want to do something about that');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -213,15 +215,17 @@ if ($user->canEdit()) {
                 'type' => 'object',
                 'subtype' => 'universities',
             ));
-            $unis = get_entity($uniObj[0]->guid);
-
-            $universities = array();
-            if (get_current_language() == 'en'){
-                $universities = json_decode($unis->universities_en, true);
-            } else {
-                $universities = json_decode($unis->universities_fr, true);
+            if ($unis = get_entity($uniObj[0]->guid) ){
+                $universities = array();
+                if (get_current_language() == 'en'){
+                    $universities = json_decode($unis->universities_en, true);
+                } else {
+                    $universities = json_decode($unis->universities_fr, true);
+                }
+                uasort($universities, 'strcoll');
             }
-            uasort($universities, 'strcoll');
+            else
+                $universities = array('No universities loaded','-----','You might want to do something about that');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -240,15 +244,17 @@ if ($user->canEdit()) {
                 'type' => 'object',
                 'subtype' => 'colleges',
             ));
-            $cols = get_entity($colObj[0]->guid);
-
-            $colleges = array();
-            if (get_current_language() == 'en'){
-                $colleges = json_decode($cols->colleges_en, true);
-            } else {
-                $colleges = json_decode($cols->colleges_fr, true);
+            if ($cols = get_entity($colObj[0]->guid)){
+                $colleges = array();
+                if (get_current_language() == 'en'){
+                    $colleges = json_decode($cols->colleges_en, true);
+                } else {
+                    $colleges = json_decode($cols->colleges_fr, true);
+                }
+                uasort($colleges, 'strcoll');
             }
-            uasort($colleges, 'strcoll');
+            else
+                $colleges = array('No colleges loaded','-----','You might want to do something about that');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -268,15 +274,18 @@ if ($user->canEdit()) {
                 'type' => 'object',
                 'subtype' => 'provinces',
             ));
-            $provs = get_entity($provObj[0]->guid);
-
-            $provincial_departments = array();
-            if (get_current_language() == 'en'){
-                $provincial_departments = json_decode($provs->provinces_en, true);
-            } else {
-                $provincial_departments = json_decode($provs->provinces_fr, true);
+            if ($provs = get_entity($provObj[0]->guid)){
+                $provincial_departments = array();
+                if (get_current_language() == 'en'){
+                    $provincial_departments = json_decode($provs->provinces_en, true);
+                } else {
+                    $provincial_departments = json_decode($provs->provinces_fr, true);
+                }
+                uasort($provincial_departments, 'strcoll');
+                $provincial_departments_loaded = true;
             }
-            uasort($provincial_departments, 'strcoll');
+            else
+                $provincial_departments = array('No provincial departments loaded','-----','You might want to do something about that');
 
             echo elgg_view('input/select', array(
                 'name' => $field,
@@ -292,15 +301,17 @@ if ($user->canEdit()) {
                 'type' => 'object',
                 'subtype' => 'ministries',
             ));
-            $mins = get_entity($minObj[0]->guid);
-
-            $ministries = array();
-            if (get_current_language() == 'en'){
-                $ministries = json_decode($mins->ministries_en, true);
-            } else {
-                $ministries = json_decode($mins->ministries_fr, true);
+            if ($mins = get_entity($minObj[0]->guid)){
+                $ministries = array();
+                if (get_current_language() == 'en'){
+                    $ministries = json_decode($mins->ministries_en, true);
+                } else {
+                    $ministries = json_decode($mins->ministries_fr, true);
+                }
+                uasort($ministries, 'strcoll');
             }
-            uasort($ministries, 'strcoll');
+            else
+                $ministries = array('No ministries loaded','-----','You might want to do something about that');
 
             foreach($provincial_departments as $province => $name){
                 $prov_value = ($user->get('provincial') == $province) ? $user->get('ministry'): "";
@@ -326,7 +337,7 @@ if ($user->canEdit()) {
                 'subtype' => 'municipal',
             ));
             $municipals = get_entity($munObj[0]->guid);
-
+			
             echo elgg_view('input/text', array(
                 'name' => $field,
                 'id' => $field,
@@ -335,7 +346,7 @@ if ($user->canEdit()) {
                 'list' => ''
             ));
 
-            if( !empty($provincial_departments) ){
+            if( $provincial_departments_loaded && !empty($provincial_departments) ){
                 foreach($provincial_departments as $province => $province_name){
                     $municipal = json_decode($municipals->get($province), true);
                     $prov_id = str_replace(" ", "-", strtolower($province));
@@ -361,15 +372,17 @@ if ($user->canEdit()) {
                 'type' => 'object',
                 'subtype' => 'federal_departments',
             ));
-            $depts = get_entity($deptObj[0]->guid);
-
-            $federal_departments = array();
-            if (get_current_language() == 'en'){
-                $federal_departments = json_decode($depts->federal_departments_en, true);
-            } else {
-                $federal_departments = json_decode($depts->federal_departments_fr, true);
+            if ($depts = get_entity($deptObj[0]->guid)){
+                $federal_departments = array();
+                if (get_current_language() == 'en'){
+                    $federal_departments = json_decode($depts->federal_departments_en, true);
+                } else {
+                    $federal_departments = json_decode($depts->federal_departments_fr, true);
+                }
+                uasort($federal_departments, 'strcoll');
             }
-            uasort($federal_departments, 'strcoll');
+            else
+                $federal_departments = array('No federal departments loaded','-----','You might want to do something about that');
 
             echo elgg_view('input/text', array(
                 'name' => $field,
@@ -396,15 +409,17 @@ if ($user->canEdit()) {
                 'type' => 'object',
                 'subtype' => 'other',
             ));
-            $others = get_entity($otherObj[0]->guid);
-
-            $other = array();
-            if (get_current_language() == 'en'){
-                $other = json_decode($others->other_en, true);
-            } else {
-                $other = json_decode($others->other_fr, true);
+            if ($others = get_entity($otherObj[0]->guid)){
+                $other = array();
+                if (get_current_language() == 'en'){
+                    $other = json_decode($others->other_en, true);
+                } else {
+                    $other = json_decode($others->other_fr, true);
+                }
+                uasort($other, 'strcoll');
             }
-            uasort($other, 'strcoll');
+            else
+                $other = array('No other choices loaded','-----','You might want to do something about that');
 
             echo elgg_view('input/text', array(
                 'name' => $field,
