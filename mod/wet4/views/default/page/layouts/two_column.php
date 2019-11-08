@@ -20,7 +20,7 @@ if(elgg_get_context() == 'groups'){
 	echo elgg_view('page/elements/cover_photo', array());
 	echo elgg_view('groups/profile/summary', $vars);
 	elgg_push_context('groupSubPage');
-	echo '<div class="two-column-menu">'.elgg_view('groups/profile/tab_menu').'</div>';
+	// echo '<div class="two-column-menu">'.elgg_view('groups/profile/tab_menu').'</div>';
 	elgg_pop_context();
 }
 //echo $vars['title'];

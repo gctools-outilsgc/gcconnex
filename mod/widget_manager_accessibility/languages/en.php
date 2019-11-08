@@ -99,6 +99,7 @@
 		"widget-accessibility:info:groups:Twitter_search" => "",
 
 		"widgets:content_by_tag:one_tag" => "Enter only 1 tag",
+		"tag" => "Tag",
 	);
 	add_translation("en", $english);
 	

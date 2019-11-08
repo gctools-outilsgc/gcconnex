@@ -100,8 +100,7 @@ if ($widget->context == "groups") {
 </div>
 
 <div>
-		<?php echo '<label for="5-'.$widgetId.'">'.elgg_echo("tags"). '</label><br>';
-					echo '<p class="timeStamp">'.elgg_echo("widgets:content_by_tag:one_tag").'</p>';
+		<?php echo '<label for="5-'.$widgetId.'">'.elgg_echo("tag"). '</label><br>';
           echo elgg_view("input/text", array("name" => "params[tags]", "value" => $tags, 'id' =>'5-'.$widgetId,)); ?>
 </div>
 

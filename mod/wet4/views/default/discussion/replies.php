@@ -36,7 +36,7 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false || 
 	 ));
 
 
-	 echo '<div id="group-replies" class="elgg-comments clearfix">';
+	 echo '<div id="group-replies" class="elgg-comments clearfix mrgn-tp-lg">';
 
 	 // if topic has replies show replies header
 	 if($num_replies != 0)
