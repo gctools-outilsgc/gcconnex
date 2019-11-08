@@ -877,3 +877,6 @@ input:-moz-placeholder { color:#ccc; }
     margin-left: -15px;
     padding-right: 5px;
 }
+.profile-title{
+	padding-bottom: 0px;
+}
