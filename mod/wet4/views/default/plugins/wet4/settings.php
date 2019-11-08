@@ -59,7 +59,9 @@ if ( $page_mode == 'bilingual_upgrade' ) {
 		)
 	);
 	echo "<br />";
-	$count = get_data_row("SELECT count(distinct guid) as objects FROM `elgg_entities` where `subtype` = 17");
+	$db_prefix = elgg_get_config('dbprefix');
+	$event_subtype_id = get_subtype_id('object', 'event_calendar');
+$count = get_data_row("SELECT count(distinct guid) as objects FROM `{$db_prefix}entities` where `subtype` = {$event_subtype_id}");
 
 	echo elgg_view('admin/upgrades/view', array(
 		'count' => $count->objects,
