@@ -53,7 +53,9 @@ function login_as_user_hover_menu($hook, $type, $menu, $params) {
  * Add a menu item to the topbar menu for logging out of an account
  */
 function login_as_add_topbar_link() {
-	$original_user_guid = isset($_SESSION['login_as_original_user_guid']) ? $_SESSION['login_as_original_user_guid'] : NULL;
+	$session = elgg_get_session();
+
+	$original_user_guid = $session->get('login_as_original_user_guid');
 
 	// short circuit view if not logged in as someone else.
 	if (!$original_user_guid) {

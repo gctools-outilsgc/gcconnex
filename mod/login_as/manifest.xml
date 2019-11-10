@@ -3,7 +3,7 @@
 	<id>login_as</id>
 	<name>Login As</name>
 	<author>Brett Profitt</author>
-	<version>1.9.1</version>
+	<version>1.9.2</version>
 	<category>admin</category>
 	<category>bundled</category>
 	<description>Allows admin users to login as another user.</description>

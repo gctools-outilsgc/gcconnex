@@ -1,3 +1,9 @@
+### Login As 1.9.2 - September 3, 2015 ###
+ * Fixes fatal error on logout
+
+### Login As 1.9.1 - February 28, 2015 ###
+ * No user-facing changes - only the composer package name was changed
+
 ### Login As 1.9.0 - February 18, 2015 ###
  * Updated for Elgg 1.9 (basically just tested it still works and it does)
  * Added German translations
