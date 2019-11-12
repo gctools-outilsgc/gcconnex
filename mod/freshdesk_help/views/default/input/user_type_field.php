@@ -1,5 +1,5 @@
 <?php
-
+$lang = (string) get_input('lang');
 $user = elgg_get_logged_in_user_entity();
 
 $fields = array('user_type', 'Federal', 'Provincial', 'Institution', 'University', 'College', 'Highschool', 'Municipal', 'International', 'NGO', 'Community', 'Business', 'Media', 'Retired', 'Other');
@@ -26,7 +26,7 @@ foreach ($fields as $field) {
     // occupation input
     if (strcmp($field, 'user_type') == 0) {
 
-        echo "<label for='{$field}' >" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}' >" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
         echo elgg_view('input/select', array(
             'name' => $field,
@@ -35,18 +35,18 @@ foreach ($fields as $field) {
             'value' => $value,
             'options_values' => array(
                 'None' => '...',
-                'academic' => elgg_echo('gcconnex-profile-card:academic'),
-                'student' => elgg_echo('gcconnex-profile-card:student'),
-                'federal' => elgg_echo('gcconnex-profile-card:federal'),
-                'provincial' => elgg_echo('gcconnex-profile-card:provincial'),
-                'municipal' => elgg_echo('gcconnex-profile-card:municipal'),
-                'international' => elgg_echo('gcconnex-profile-card:international'),
-                'ngo' => elgg_echo('gcconnex-profile-card:ngo'),
-                'community' => elgg_echo('gcconnex-profile-card:community'),
-                'business' => elgg_echo('gcconnex-profile-card:business'),
-                'media' => elgg_echo('gcconnex-profile-card:media'),
-                'retired' => elgg_echo('gcconnex-profile-card:retired'),
-                'other' => elgg_echo('gcconnex-profile-card:other')
+                'academic' => elgg_echo('gcconnex-profile-card:academic', array(), $lang),
+                'student' => elgg_echo('gcconnex-profile-card:student', array(), $lang),
+                'federal' => elgg_echo('gcconnex-profile-card:federal', array(), $lang),
+                'provincial' => elgg_echo('gcconnex-profile-card:provincial', array(), $lang),
+                'municipal' => elgg_echo('gcconnex-profile-card:municipal', array(), $lang),
+                'international' => elgg_echo('gcconnex-profile-card:international', array(), $lang),
+                'ngo' => elgg_echo('gcconnex-profile-card:ngo', array(), $lang),
+                'community' => elgg_echo('gcconnex-profile-card:community', array(), $lang),
+                'business' => elgg_echo('gcconnex-profile-card:business', array(), $lang),
+                'media' => elgg_echo('gcconnex-profile-card:media', array(), $lang),
+                'retired' => elgg_echo('gcconnex-profile-card:retired', array(), $lang),
+                'other' => elgg_echo('gcconnex-profile-card:other', array(), $lang)
             ),
         ));
 
@@ -119,7 +119,7 @@ foreach ($fields as $field) {
     // federal input field
     } else if ($field == 'federal') {
 
-        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
 
         $obj = elgg_get_entities(array(
@@ -145,10 +145,10 @@ foreach ($fields as $field) {
 
     } else if (strcmp($field, 'institution') == 0) {
 
-        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
 
-        $institution_list = array("university" => elgg_echo('gcconnex-profile-card:university'), "college" => elgg_echo('gcconnex-profile-card:college'), "highschool" => elgg_echo('gcconnex-profile-card:highschool'));
+        $institution_list = array("university" => elgg_echo('gcconnex-profile-card:university', array(), $lang), "college" => elgg_echo('gcconnex-profile-card:college', array(), $lang), "highschool" => elgg_echo('gcconnex-profile-card:highschool', array(), $lang));
 
         echo elgg_view('input/select', array(
             'name' => $field,
@@ -160,7 +160,7 @@ foreach ($fields as $field) {
 
     } else if (strcmp($field, 'university') == 0) {
 
-        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
 
         $uniObj = elgg_get_entities(array(
@@ -186,7 +186,7 @@ foreach ($fields as $field) {
 
     } else if (strcmp($field, 'college') == 0) {
 
-        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
 
         $colObj = elgg_get_entities(array(
@@ -213,7 +213,7 @@ foreach ($fields as $field) {
     // provincial input field
     } else if ($field == 'provincial') {
 
-        echo "<label for='{$field}' class=' {$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}' class=' {$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
 
         $provObj = elgg_get_entities(array(
@@ -257,7 +257,7 @@ foreach ($fields as $field) {
               $prov_value = ($user->get('provincial') == $province) ? $user->get('ministry'): "";
             }
             $prov_id = str_replace(" ", "-", strtolower($province));
-            echo '<div class="form-group col-xs-12 occupation-choices provincial-choices" id="' . $prov_id . '-wrapper"><label for="' . $prov_id . '-choices">' . elgg_echo('freshdesk:ticket:basic:ministry') . '</label><div>';
+            echo '<div class="form-group col-xs-12 occupation-choices provincial-choices" id="' . $prov_id . '-wrapper"><label for="' . $prov_id . '-choices">' . elgg_echo('freshdesk:ticket:basic:ministry', array(), $lang) . '</label><div>';
             echo elgg_view('input/select', array(
                 'name' => 'ministry',
                 'id' => $prov_id . '-choices',
@@ -270,7 +270,7 @@ foreach ($fields as $field) {
 
     } else if (strcmp($field, 'municipal') == 0) {
 
-        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
 
         $munObj = elgg_get_entities(array(
@@ -304,7 +304,7 @@ foreach ($fields as $field) {
 
     } else if (strcmp($field, 'retired') == 0) {
 
-        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
 
         $deptObj = elgg_get_entities(array(
@@ -338,7 +338,7 @@ foreach ($fields as $field) {
 
     } else if (strcmp($field, 'other') == 0) {
 
-        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>';
 
         $otherObj = elgg_get_entities(array(
@@ -380,7 +380,7 @@ foreach ($fields as $field) {
         );
 
         // set up label and input field for the basic profile stuff
-        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}")."</label>";
+        echo "<label for='{$field}'>" . elgg_echo("freshdesk:ticket:basic:{$field}", array(), $lang)."</label>";
         echo '<div>'; // field wrapper for css styling
         echo elgg_view("input/text", $params);
 
