@@ -47,7 +47,7 @@ var pushDN;
 var authIDsetting = "<?php echo elgg_get_plugin_setting('auth_key', 'geds_sync'); ?>";
 
 //url for GEDS service
-var gedsURL = "<?php echo elgg_get_plugin_setting('geds_url', 'geds_sync'); ?>";
+var gedsURL = "https://api.geds-sage.gc.ca";//"<?php echo elgg_get_plugin_setting('geds_url', 'geds_sync'); ?>";
 
 // searcchVal - the page owners email
 var searchVal = "<?php echo $owner->email; ?> ";
