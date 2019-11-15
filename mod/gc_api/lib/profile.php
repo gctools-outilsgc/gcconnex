@@ -1,5 +1,15 @@
 <?php
 elgg_ws_expose_function(
+	"profile.get",
+	"get_api_profile",
+	array("id" => array('type' => 'string')),
+	'provide user GUID number and all profile information is returned',
+	'GET',
+	false,
+	false
+);
+
+elgg_ws_expose_function(
 	"get.profile",
 	"get_api_profile",
 	array("id" => array('type' => 'string')),
