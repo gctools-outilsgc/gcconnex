@@ -31,6 +31,7 @@ services:
       - ./data/data:/data
       - /var/www/html/vendor
       - /var/www/html/docker
+      - /var/www/html/mod/pleio/vendor
     depends_on:
       - gcconnex-db
       # - nginx-proxy
