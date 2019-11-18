@@ -20,7 +20,7 @@ $all_link = elgg_view('output/url', array(
 
 elgg_push_context('activity');
 $db_prefix = elgg_get_config('dbprefix');
-$content = elgg_list_river(array(
+$content = newsfeed_list_river(array(
 	'limit' => 10,
 	'pagination' => false,
     'distinct' => false,
