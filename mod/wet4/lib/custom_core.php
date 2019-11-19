@@ -213,17 +213,15 @@ function elgg_list_group_river(array $options = array()) {
 		$options["pagination"] = false;
 	}
 
-	$options['count'] = true;
-	$count = elgg_get_group_river($options);
-
-	if ($count > 0) {
-		$options['count'] = false;
-		$items = elgg_get_group_river($options);
-	} else {
-		$items = array();
+	if ( $options["pagination"] || $options['count'] ){
+		$options['count'] = true;
+		$count = elgg_get_group_river($options);
+		$options['count'] = $count;
 	}
+	
+	$options['count'] = false;
+	$items = elgg_get_group_river($options);
 
-	$options['count'] = $count;
 	$options['items'] = $items;
 
 	return elgg_view('page/components/list', $options);
