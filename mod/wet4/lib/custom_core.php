@@ -216,12 +216,14 @@ function elgg_list_group_river(array $options = array()) {
 	if ( $options["pagination"] || $options['count'] ){
 		$options['count'] = true;
 		$count = elgg_get_group_river($options);
-		$options['count'] = $count;
 	}
+	else
+		$count = NULL;
 	
 	$options['count'] = false;
 	$items = elgg_get_group_river($options);
 
+	$options['count'] = $count;
 	$options['items'] = $items;
 
 	return elgg_view('page/components/list', $options);
