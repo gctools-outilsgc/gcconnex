@@ -16,7 +16,7 @@ return array(
     'newsfeed:do' => "Colleague connections will no longer display on your News Feed.",
     'newsfeed:undo' => "Colleague connections will now display on your News Feed.",
     'newsfeed:filter:title' => "News Feed settings",
-    'newsfeed:viewlist' => 'List view',
+    'newsfeed:listview' => 'List view',
     'newsfeed:cardview' => 'Card view'
 
     );

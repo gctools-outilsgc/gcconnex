@@ -45,7 +45,7 @@ function newsfeed_init(){
     //Register newsfeed filter form
     elgg_register_ajax_view("ajax/newsfeed_filter");
     elgg_register_action("newsfeed/filter", elgg_get_plugins_path() . "/gc_newsfeed/actions/newsfeed/filter.php");
-    elgg_register_action('newsfeed/view_toggle', elgg_get_plugins_path(). 'gc_newsfeed/actions/newsfeed/view_toggle.php');
+    elgg_register_action('newsfeed/news_toggle', elgg_get_plugins_path(). 'gc_newsfeed/actions/newsfeed/news_toggle.php');
     elgg_extend_view('widgets/stream_newsfeed_index/content', 'newsfeed/filter', 450);
     elgg_extend_view('widgets/newsfeed/content', 'newsfeed/filter', 450);
 }
