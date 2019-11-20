@@ -295,7 +295,7 @@ if ($user->canEdit()) {
                 'options_values' => $provincial_departments,
             ));
 
-            
+            echo "</div></div>";
 
             $minObj = elgg_get_entities(array(
                 'type' => 'object',
