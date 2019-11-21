@@ -51,10 +51,12 @@
    }
  }
 
+.groups-info {
+    flex-shrink: 8;
+}
+
  @media (max-width: 992px) {
-     .group-cover-photo{
-       height: 170px;
-   }
+
    .groups-profile{
        margin-top: 0px;
    }

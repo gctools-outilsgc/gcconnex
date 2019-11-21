@@ -44,6 +44,15 @@ if(elgg_get_context() == 'groupSubPage'){
     'priority' => '0',
     ));
 
+    elgg_register_menu_item('owner_block', array(
+        'name' => 'about2',
+        'href' => '/groups/about/' . $owner->getGUID(),
+        'text' => elgg_echo('gprofile:about'),
+        'item_class' => '',
+        'class' => '',
+        'priority' => '13',
+    ));
+
 } else if(elgg_get_context() == 'profile'){
     if ($pg == 'splashboard'){
 

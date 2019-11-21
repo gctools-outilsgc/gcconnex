@@ -537,9 +537,20 @@ max-height: 500px;
   margin-right: 8px;
 }
 
+.river-group-object {
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 .river-group-object .river-group-avatar {
   margin: -25px 12px 12px 12px !important;
   background-color: white;
+}
+
+.river-group-cover {
+    background: -webkit-linear-gradient(left,#0d727a,#0d84b9);
+    background: linear-gradient(90deg,#0d727a 0,#0d84b9);
 }
 
 .river-group-avatar .au_subgroups_group_icon-medium-wet4 {

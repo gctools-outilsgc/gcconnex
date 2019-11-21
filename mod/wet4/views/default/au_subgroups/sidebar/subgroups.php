@@ -23,12 +23,12 @@ if (!$subgroups) {
 
 		$subgroup_name = gc_explode_translation( $subgroup->name, $lang);
 
-		$body .= elgg_view_image_block(
+		$body .= '<div class="mrgn-bttm-sm">'. elgg_view_image_block(
 				elgg_view_entity_icon($subgroup, 'tiny'), elgg_view('output/url', array(
 			'href' => $subgroup->getURL(),
 			'text' => $subgroup_name,
 			'is_trusted' => true))
-		);
+		) . '</div>';
 	}
 
     //count total number of subgroups and add it to view all link
@@ -41,10 +41,11 @@ $title = elgg_echo('au_subgroups:subgroups');
 $all_link = elgg_view('output/url', array(
 	'href' => 'groups/subgroups/list/' . $vars['entity']->guid,
 	'text' => elgg_echo('au_subgroups:subgroups:more') . $sgCount,
+	'class' => 'btn btn-default text-center center-block',
 	'is_trusted' => true,
 		));
 
-$footer = "<div class='text-right'>$all_link</div>";
+$footer = "<div>$all_link</div>";
 
 //only show subgroups widget if the group has subgroups
 if($sgCount){
