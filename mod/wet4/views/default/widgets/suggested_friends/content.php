@@ -29,10 +29,11 @@ try{
          * echo '<div class="panel panel-custom elgg-module-aside"><div class="panel-heading"><h2 class="">'.elgg_echo('ps:profilestrength').'</h2></div><div class="panel-body clearfix">'.elgg_view('widgets/profile_completness/content').'</div></div>';
          * 
          * */
-        
         if(intval($result->num_rows)>0){
             $count=0;
-            $htmloutput='<div class="panel clearfix panel-custom elgg-module-aside">';
+            $htmloutput='<div class="panel panel-default elgg-module-aside">';
+            
+            $htmloutput .='<div class="panel-body clearfix">';
             
             $htmloutput=$htmloutput.'<div class="panel-heading">';
             $htmloutput=$htmloutput.'<h3 class="panel-title">'.elgg_echo('sf:suggcolleagues').'</h3>';
@@ -60,7 +61,7 @@ try{
                		// $htmloutput=$htmloutput. $row['guid_two'].'-';
             	}
 	    }
-            $htmloutput=$htmloutput.'</div></div>';
+            $htmloutput=$htmloutput.'</div></div></div>';
             $htmloutput=$htmloutput.'<div class="clearfix"></div>';
             //$htmloutput=$htmloutput.'</div>';
             echo $htmloutput;
