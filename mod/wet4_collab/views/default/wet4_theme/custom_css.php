@@ -1869,7 +1869,7 @@ figcaption{
   background-color: #46246A;
 }
 
-.group-cover-photo{
+.group-cover-photo, .group-place-holder-cover {
     background-color: #5197bf !important;
     background-image: linear-gradient(270deg, #5197bf 0%, #46246a 100%) !important;
 }
@@ -1904,6 +1904,14 @@ figcaption{
 }
 .elgg-module-aside .panel .panel-body {
     padding: 5px 0;
+}
+
+.elgg-module-highlight {
+    box-shadow: none !important;
+}
+
+.elgg-module-highlight {
+    box-shadow: none !important;
 }
 
 .elgg-list-group .au_subgroups_group_icon-medium-wet4 {

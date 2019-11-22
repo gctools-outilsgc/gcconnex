@@ -91,27 +91,6 @@ if (elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_enti
 							</div>
 
 						</div>
-
-						<?php
-							//Add tags for new layout to profile stats
-							$profile_fields = elgg_get_config('group');
-							foreach ($profile_fields as $key => $valtype) {
-								$options = array('value' => $group->$key, 'list_class' => 'mrgn-bttm-sm',);
-								if ($valtype == 'tags') {
-									$options['tag_names'] = $key;
-									$tags .= elgg_view("output/$valtype", $options);
-								}
-							}
-							//check to see if tags have been made
-							//dont list tag header if no tags
-							//hide tags on mobile screens
-							if(!$tags){
-							} else {
-								echo '<div class="hidden-xs">'.$tags.'</div>';
-							}
-						?>
-
-
 					</div>
 				</div>
 
