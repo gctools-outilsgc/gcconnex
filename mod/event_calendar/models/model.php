@@ -1418,7 +1418,7 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 
 
 	$params = event_calendar_generate_listing_params($page_type, $container_guid, $start_date, $display_mode, $filter, $region);
-	$title = $params['title2'];
+	$title = $params['title'];
 	$event_page = $params['event_page'];
 	$url = current_page_url();
 	if (substr_count($url, '?')) {
@@ -1855,11 +1855,9 @@ $logged_in_user = elgg_get_logged_in_user_entity();
 		$sidebar = "";
 	}
 elgg_push_breadcrumb($title);
-$title2 = elgg_view_title($title);
 
 	$params = array(
-		'title' => $title2,
-		'title2' => $title,
+		'title' => $title,
 		'content' => $content,
 		'other' => $other,
 		'context' => 'event_calendar',
