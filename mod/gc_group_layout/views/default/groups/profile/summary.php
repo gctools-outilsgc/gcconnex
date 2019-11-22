@@ -112,39 +112,7 @@ if (elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_enti
 							}
 						?>
 						</div>
-
-						<div class="mrgn-bttm-sm pull-left mrgn-lft-lg">
-						<?php
-							if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
-								echo elgg_view('output/url', array(
-									'href' => "http://stats.gctools-outilsgc.ca/gcconnex?filter=".$group->guid,
-									'text' =>  elgg_echo('groups:stats'),
-									'is_trusted' => true,
-									'class' => '',
-								));
-							}
-						?>
-						</div>
 					</div>
-
-					<?php
-					//Add tags for new layout to profile stats
-					$profile_fields = elgg_get_config('group');
-					foreach ($profile_fields as $key => $valtype) {
-						$options = array('value' => $group->$key, 'list_class' => 'mrgn-bttm-sm',);
-						if ($valtype == 'tags') {
-							$options['tag_names'] = $key;
-							$tags .= elgg_view("output/$valtype", $options);
-						}
-					}
-					//check to see if tags have been made
-					//dont list tag header if no tags
-					if(!$tags){
-					} else {
-						if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false)
-							echo '<div class="hidden-xs">'.$tags.'</div>';
-					}
-					?>
 				</div>
 			</div>
 

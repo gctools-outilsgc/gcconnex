@@ -1270,7 +1270,6 @@ a.wire-share-container:visited {
 
 .group-search-button{
     color: #46246A;
-
 }
 
 /*Color box - Nick */
@@ -1871,8 +1870,16 @@ figcaption{
 }
 
 .group-cover-photo{
-  background-color: #46246A !important;
+    background-color: #5197bf !important;
+    background-image: linear-gradient(270deg, #5197bf 0%, #46246a 100%) !important;
 }
+
+.group-summary-holder {
+    z-index: 2;
+    position: relative;
+    padding: 0 15px 20px;
+}
+
 .bar .progress-bar {
   background-color: #46246A !important;
 }
@@ -1920,6 +1927,17 @@ figcaption{
 
 .elgg-river-summary {
     padding-right: 45px;
+}
+
+.river-group-object {
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.river-group-cover {
+    background-color: #5197bf !important;
+    background-image: linear-gradient(270deg, #5197bf 0%, #46246a 100%) !important;
 }
 
 .river-group-object .river-group-avatar {
