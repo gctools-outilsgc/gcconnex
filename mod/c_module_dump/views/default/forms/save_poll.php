@@ -15,9 +15,9 @@ td
 	<tr>
 		<td>
 			<div>
-				<?php elgg_echo('c_polls_msg:notice') ?>
+				<?php echo elgg_echo('c_polls_msg:notice') ?>
 			</div>
 		</td>
 	</tr>
-</table>
+</table> 
 <br/>
