@@ -27,7 +27,7 @@ if($cover_photo == 'nope' || $cover_photo ==''){
        //Format Image
        $test_photo = elgg_view('output/img', array(
                'src'=>$cover_photo_link,
-               'alt'=>elgg_echo('wet:cover_photo_alt'),
+               'alt'=>"",
            ));
 
        $cover_photo_holder = '<div class="row group-padding-helper"><div class="group-cover-photo">'.$test_photo.'</div></div>';
