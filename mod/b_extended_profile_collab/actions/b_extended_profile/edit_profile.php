@@ -110,7 +110,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             foreach ( $social_media as $f => $v ) {
                 $link = $v;
                 if (filter_var($link, FILTER_VALIDATE_URL) == false) {
-                    $user->set($f, $link);
+                    $user->set($f, htmlspecialchars($link));
                 }
             }
             //$user->micro = get_input('micro');
