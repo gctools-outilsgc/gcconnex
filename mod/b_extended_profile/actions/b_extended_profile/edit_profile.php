@@ -129,7 +129,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     } else {
                         if($f == 'website'){
                             if ($v && !preg_match("#^((ht|f)tps?:)?//#i", $v)) {
-                                $v = "http://$v";
+                                $v = "https://$v";
                             }
                         }
                         $user->set($f, $v);
