@@ -103,6 +103,11 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     $user->set($f, $v);
 
                 } else {
+                    if($f == 'website'){
+                        if ($v && !preg_match("#^((ht|f)tps?:)?//#i", $v)) {
+                            $v = "http://$v";
+                        }
+                    }
             		$user->set($f, $v);
             	}
             }
