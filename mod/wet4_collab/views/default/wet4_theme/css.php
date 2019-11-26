@@ -2919,7 +2919,7 @@ tbody.collapse.in {
           text-decoration: none;
           padding-bottom: 7px;
           margin-bottom: 0;
-          border-bottom: 3px solid #590559;
+          border-bottom: 3px solid #055959;
          }
     .nav-tabs > li.active > a,
     .nav-tabs > li.active > a:hover,
