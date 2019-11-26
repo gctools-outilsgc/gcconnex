@@ -623,7 +623,7 @@ a.text-danger:hover {
   color: #fff; }
 
 .bg-primary {
-  background-color: #055959 !important; }
+  background-color: #46246a !important; }
 
 a.bg-primary:hover {
   background-color: #1c578a; }
@@ -2919,7 +2919,7 @@ tbody.collapse.in {
           text-decoration: none;
           padding-bottom: 7px;
           margin-bottom: 0;
-          border-bottom: 3px solid #055959;
+          border-bottom: 3px solid #590559;
          }
     .nav-tabs > li.active > a,
     .nav-tabs > li.active > a:hover,
