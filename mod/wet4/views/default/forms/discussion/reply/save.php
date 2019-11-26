@@ -52,7 +52,8 @@ $submit_input = elgg_view('input/submit', array('value' => $submit_text, 'class'
 if ($inline) {
 	$description_input = elgg_view('input/text', array(
 		'name' => 'description',
-		'value' => $value
+		'value' => $value,
+		'aria-label' => elgg_echo('reply:this')
 	));
 
 echo <<<FORM
