@@ -6752,7 +6752,6 @@ var componentName = "wb-menu",
 	menuIncrement = function( $menuItems, $current, indexChange ) {
 		var menuItemsLength = $menuItems.length,
 			index = $menuItems.index( $current ) + indexChange;
-
 		// Correct out-of-range indexes
 		index = index === menuItemsLength ? 0 : index === -1 ? menuItemsLength - 1 : index;
 
@@ -6991,6 +6990,12 @@ $document.on( "keydown", selector + " [role=menuitem]", function( event ) {
 					which === 37 ? -1 : 1
 				);
 
+				if(hasPopup){
+					$($menuItem).parent().removeClass('active sm-open');
+					$($menuItem).next('.sm').removeClass('open').attr('aria-expanded', false);
+				}
+				
+
 			// Enter sub-menu
 			} else if ( hasPopup && ( which === 13 || which === 38 || which === 40 ) ) {
 				event.preventDefault();
@@ -7104,11 +7109,25 @@ $document.on( "keydown", selector + " [role=menuitem]", function( event ) {
 
 					// Left / right key = Next / previous menu bar item
 					} else if ( $parentMenu.attr( "role" ) === "menubar" ) {
-						menuIncrement(
-							$parentMenu.find( "> li > a" ),
-							$menuLink,
-							which === 37 ? -1 : 1
-						);
+						if($menuItem.parent().parent().hasClass('sm')){
+							var currentMenuItem = $menuItem.closest('ul').prev('a');
+
+							menuIncrement(
+								$menuItem.closest('ul[role=menubar]').find(' > li > a'),
+								currentMenuItem,
+								which === 37 ? -1 : 1
+							);
+
+							$(currentMenuItem).parent().removeClass('active sm-open');
+							$($menuItem).closest('ul').removeClass('open').attr('aria-expanded', false);
+
+						} else {
+							menuIncrement(
+								$parentMenu.find( "> li > a" ),
+								$menuLink,
+								which === 37 ? -1 : 1
+							);
+						}
 					}
 
 				// Escape or left arrow: Go up a level if there is a higher-level
@@ -7154,6 +7173,12 @@ $document.on( "keydown", selector + " [role=menuitem]", function( event ) {
 			}
 		}
 	}
+} );
+
+// Prevent Firefox from double-triggering menu behaviour
+$document.on( "keyup", selector + " [role=menuitem]", function( event ) {
+	event.preventDefault();
+	return false;
 } );
 
 // Close the mobile panel if switching to medium, large or extra large view

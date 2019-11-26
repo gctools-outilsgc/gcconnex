@@ -14,7 +14,8 @@ return array(
   'wet:searchgctools' => "Search GCcollab",
   'wet:more' => "More",
   'wet:inboxmore' => "More (archived)",
-  'wet:topicmenu' => "Topic menu",
+  'wet:topicmenu' => "Main navigation",
+
   'wet:youarehere' => "You are here:",
   'wet:errmess' => "<h3 class='h3'>The form could not be submitted because errors were found.</h3>",
   'wet:feedbackText' => "Feedback<span class='wb-inv'> about this web site</span>",

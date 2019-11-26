@@ -14,7 +14,8 @@ return array(
   'wet:searchgctools' => "Recherche sur GCcollab",
   'wet:more' => "Autres",
   'wet:inboxmore'=>"Autres (archivé)",
-  'wet:topicmenu' => "Menu des sujets",
+  'wet:topicmenu' => "Navigation principale",
+
   'wet:youarehere' => "Vous êtes ici :",
   'wet:errmess' => "<h3 class='h3'>Le formulaire n'a pu être soumis, car une ou des erreurs ont été trouvées.</h3>",
   'wet:feedbackText' => "Rétroaction<span class='wb-inv'> sur ce site Web</span>",
