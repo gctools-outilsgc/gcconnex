@@ -250,11 +250,17 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 		$errType = "custom";
 		phpmailer_logging($errMess, $errStack, 'PHPMailer', $errType);
 	}
-
+	count_emails();
 	return $return;
 }
 
+function count_emails(){
+	$m = new Memcached();
+	$m->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
+	$m->addServer('localhost', 11211);
 
+	$n = $m->increment('test', 1, 1);
+}
 
 function phpmailer_logging($errMess, $errStack, $type, $errType) {
 	// logging mechanism
