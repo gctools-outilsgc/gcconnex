@@ -2051,8 +2051,14 @@ figcaption{
 
 .community-content{
     padding-top:0
-<<<<<<< HEAD
 }
-=======
+
+
+.wb-inv {
+    color:#0278a4;
+    background: white;
 }
->>>>>>> f4ca52adb159052a0f0318b8d3666a169705207c
+
+.wb-slc {
+    height: 0;
+}

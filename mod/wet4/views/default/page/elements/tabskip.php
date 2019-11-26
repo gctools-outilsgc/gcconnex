@@ -12,7 +12,7 @@ $site_url = elgg_get_site_url();
 ?>
 
 
-        <ul id="wb-tphp">
+        <ul class="mrgn-bttm-0">
             <li class="wb-slc">
                 <a class="wb-sl" href="#wb-cont"><?php echo elgg_echo('wet:skiptomain');?></a>
             </li>

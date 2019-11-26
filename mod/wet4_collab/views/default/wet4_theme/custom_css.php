@@ -2291,3 +2291,12 @@ table.bordered td {
         width:100%;
     }
 }
+
+.wb-inv {
+    color:#0278a4;
+    background: white;
+}
+
+.wb-slc {
+    height: 0;
+}
