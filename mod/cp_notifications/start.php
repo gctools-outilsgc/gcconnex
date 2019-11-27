@@ -150,7 +150,7 @@ function minor_save_hook_handler($hook, $type, $value, $params) {
     return true;
 }
 
-function count_emails( $type ){
+function count_email_types( $type ){
 	try {
 		$m = new Memcached();
 		$m->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
@@ -182,7 +182,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	$embed_image = NULL;
 	$sender_guid = elgg_get_site_entity()->guid;
 
-	count_emails($cp_msg_type);
+	count_email_types($cp_msg_type);
 	switch ($cp_msg_type) {
 		/// EMAIL NOTIFICATIONS ONLY (password reset, registration, etc)
 		case 'cp_friend_invite': // invitefriends/actions/invite.php
@@ -770,7 +770,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 					else{
 						(elgg_is_active_plugin('phpmailer')) ? phpmailer_send($watcher->email, $watcher->name, $subject, $template, NULL, true) : mail($watcher->email, $subject, $template, cp_get_headers());
-						count_emails($message['cp_en_entity']);
+						count_email_types($message['cp_en_entity']);
 					}
 				
 					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID()))
@@ -816,7 +816,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 					}
 					else {
 						(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
-						count_emails($message['cp_en_entity']);
+						count_email_types($message['cp_en_entity']);
 					}
 
 
@@ -1012,7 +1012,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 					if (elgg_is_active_plugin('phpmailer')) {
 						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-						count_emails($message['cp_msg_type']);
+						count_email_types($message['cp_msg_type']);
 					}
 					else
 						mail($to_recipient->email, $subject, $template, cp_get_headers());
@@ -1460,7 +1460,7 @@ function cp_create_notification($event, $type, $object) {
 				
 						if (elgg_is_active_plugin('phpmailer')){
 							phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-							count_emails($message['cp_msg_type']);
+							count_email_types($message['cp_msg_type']);
 						}
 						else
 							mail($to_recipient->email,$subject,$template,cp_get_headers());
@@ -1654,7 +1654,7 @@ function cp_digest_email_handler($hook, $entity_type, $return_value, $params, $c
 			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
 			$result = delete_data($query);
 
-			count_emails($message["digest_$cron_freq"]);
+			count_email_types("digest_$cron_freq");
 		}
 	}
 }
