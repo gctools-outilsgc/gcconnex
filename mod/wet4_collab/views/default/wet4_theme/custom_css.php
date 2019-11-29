@@ -1870,8 +1870,8 @@ figcaption{
 }
 
 .group-cover-photo, .group-place-holder-cover {
-    background-color: #46246a !important;
-    background-image: linear-gradient(270deg, #7847ae 0%, #46246a 100%) !important;
+    background-color: #5197bf !important;
+    background-image: linear-gradient(270deg, #5197bf 0%, #46246a 100%) !important;
 }
 
 .group-summary-holder {
@@ -1944,8 +1944,8 @@ figcaption{
 }
 
 .river-group-cover {
-    background-color: #46246a !important;
-    background-image: linear-gradient(270deg, #7847ae 0%, #46246a 100%) !important;
+    background-color: #5197bf !important;
+    background-image: linear-gradient(270deg, #5197bf 0%, #46246a 100%) !important;
 }
 
 .river-group-object .river-group-avatar {
