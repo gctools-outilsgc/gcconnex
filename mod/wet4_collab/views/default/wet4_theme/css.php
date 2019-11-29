@@ -10252,7 +10252,7 @@ Carousel
 .elgg-menu-filter>.elgg-state-selected >a:hover,
 .elgg-menu-filter>.elgg-state-selected >a:focus{
     border-bottom: 3px solid;
-    border-bottom-color: #46246A;
+    border-bottom-color: #055959;
     text-decoration: none;
     background-color: transparent;
         padding-bottom: 7px;
@@ -10267,7 +10267,7 @@ Carousel
 
     text-decoration: none;
     border-bottom: 3px solid;
-    border-bottom-color: #46246A;
+    border-bottom-color: #055959;
     background-color: transparent;
     padding-bottom: 7px;
     margin-bottom:0px;
@@ -10313,7 +10313,7 @@ Carousel
 .elgg-menu-filter > li>a:hover,
 .elgg-menu-filter > li>a:focus{
     text-decoration: none;
-    border-bottom: 3px solid #46246A;
+    border-bottom: 3px solid #055959;
    padding-bottom: 7px;
  }
 
