@@ -125,7 +125,7 @@ $params = array(
 $params = $params + $vars;
 $list_body = elgg_view("object/elements/thewire_summary", $params);
 
-$format_wire = elgg_format_element('div', ['class' => 'd-flex new-wire-list-object'], '<div class="mrgn-rght-md">'.$owner_icon.'</div><div style="width:100%; flex-shrink:8;">' . $author_text . $date. $list_body.'</div>');
+$format_wire = elgg_format_element('article', ['class' => 'd-flex new-wire-list-object'], '<div class="mrgn-rght-md">'.$owner_icon.'</div><div style="width:100%; flex-shrink:8;">' . $author_text . $date. $list_body.'</div>');
 
 echo $format_wire;
 

@@ -94,12 +94,12 @@ if($entity == 'file' && elgg_is_logged_in() && elgg_get_logged_in_user_entity()-
 
 echo <<<HTML
 
-<div class="$class clearfix file-list-object d-flex" $id>
+<article class="$class clearfix file-list-object d-flex" $id>
 	$alt_image$image$body
     <div class=" elgg-body clearfix edit-comment">
 
     </div>
-</div>
+</article>
 HTML;
 
 }else if($reshared == true){ //for reshared items
