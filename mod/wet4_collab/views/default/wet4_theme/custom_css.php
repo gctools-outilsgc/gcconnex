@@ -2292,7 +2292,7 @@ table.bordered td {
     }
 }
 
-.wb-inv {
+.wb-inv, .wb-invisible {
     color:#0278a4;
     background: white;
 }
