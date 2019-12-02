@@ -20,6 +20,7 @@ $class = elgg_extract('class', $vars, '');
 $item_class = elgg_extract('item_class', $vars, '');
 $id = elgg_extract('id', $vars, '');
 $get_role = elgg_extract('role', $vars, '');
+$item_role = elgg_extract('item-role', $vars, '');
 if ($headers) {
 	$name = elgg_extract('name', $vars);
 	$section = elgg_extract('section', $vars);
@@ -39,6 +40,7 @@ if (is_array($items)) {
 		echo elgg_view('navigation/menu/elements/item', array(
 			'item' => $menu_item,
 			'item_class' => $item_class,
+			'item-role' => $item_role
 		));
 	}
 }

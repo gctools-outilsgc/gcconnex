@@ -132,7 +132,7 @@ if( $description_json->en && $description_json->fr ){
 		$title = false;
 
 		// prepend title to the excerpt
-		$title_link = "<h3>" . elgg_view("output/url", array("text" => gc_explode_translation($blog->title, $lang), "href" => $blog->getURL())) . "</h3>";
+		$title_link = "<div>" . elgg_view("output/url", array("text" => gc_explode_translation($blog->title, $lang), "href" => $blog->getURL(), "class" => "h3")) . "</div>";
 		$excerpt = $title_link . $excerpt;
 
 		// add read more link
@@ -146,7 +146,7 @@ if( $description_json->en && $description_json->fr ){
 
 		$excerpt = date("F j, Y", $blog->time_created) . " - " . $excerpt;
 	}
-	$title_link = "<h3 class='mrgn-tp-0 mrgn-bttm-md'>" . elgg_view("output/url", array("text" => gc_explode_translation($blog->title, $lang), "href" => $blog->getURL())) . "</h3>";
+	$title_link = "<div class='mrgn-tp-0 mrgn-bttm-md h3'>" . elgg_view("output/url", array("text" => gc_explode_translation($blog->title, $lang), "href" => $blog->getURL())) . "</div>";
 
 	// prepend icon
 	$excerpt = $blog_icon . $excerpt;
@@ -154,6 +154,6 @@ if( $description_json->en && $description_json->fr ){
 	// echo elgg_view_image_block($owner_icon, $list_body);
 	$format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], $owner_icon . '<div class="mrgn-lft-sm">' . $subtitle . '</div>');
 	$format_panel_body = elgg_format_element('div', ['class' => 'panel-body'], $title_link . $excerpt . $format_subtitle . '<div class="mrgn-tp-md">' .$metadata.'</div>');
-	echo elgg_format_element('div', ['class' => 'panel'], $format_panel_body);
+	echo elgg_format_element('article', ['class' => 'panel'], $format_panel_body);
 	
 }

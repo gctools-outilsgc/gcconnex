@@ -176,9 +176,9 @@ HTML;
 	$subtitle = "<div class=\"mrgn-lft-sm\"><div>$poster_text $date</div></div>";
 
   $format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], $poster_icon . $subtitle);
-  $format_title = elgg_format_element('h3', ['class' => 'mrgn-tp-0 mrgn-bttm-md'], $title_link);
+  $format_title = elgg_format_element('div', ['class' => 'h3 mrgn-tp-0 mrgn-bttm-md'], $title_link);
   $format_metadata = elgg_format_element('div', ['class' => 'mrgn-tp-md'], $metadata);
 	$image_block_body = elgg_format_element('div', ['class' => 'panel-body'], $format_title . $excerpt . '<div class="mrgn-tp-sm">'.$replies_link .'</div>' . $format_subtitle . $format_metadata);
-	$format_image_block = elgg_format_element('div', ['class' => 'panel'], $image_block_body);
+	$format_image_block = elgg_format_element('article', ['class' => 'panel'], $image_block_body);
   echo $format_image_block;
 }

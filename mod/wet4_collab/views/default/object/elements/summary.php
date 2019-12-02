@@ -69,13 +69,13 @@ if ($title_link) {
     //Nick - putting these titles in headings to make it quicker to navigate for screen readers
     //Nick - each context of the summary view will have a different heading based on it's parent
     if(elgg_in_context('widgets')){
-        echo "<h4 class=\"mrgn-bttm-0 summary-title\">$title_link</h4>";
+        echo "<div class=\"h4 mrgn-bttm-0 summary-title\">$title_link</div>";
     }else if(elgg_in_context('profile') || elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), "group")){
     	if($entity instanceof ElggEntity && $entity->getSubtype() != 'answer'){//if answer in group question
-    		echo "<h3 class=\"mrgn-bttm-0 summary-title\">$title_link</h3>";
+    		echo "<div class=\"h3 mrgn-bttm-0 summary-title\">$title_link</div>";
     	}
     }else{
-       echo "<h2 class=\"mrgn-bttm-0 summary-title\">$title_link</h2>";
+       echo "<div class=\"h2 mrgn-bttm-0 summary-title\">$title_link</div>";
     }
 
 	// identify available content

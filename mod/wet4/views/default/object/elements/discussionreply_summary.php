@@ -47,10 +47,6 @@ if ($tags === '') {
 	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
 }
 
-if ($title_link) {
-    echo "<h3 class=\"mrgn-bttm-0 panel-title\">$title_link</h3>";
-}
-
 if ($metadata) {
 	echo $metadata;
 }

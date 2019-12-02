@@ -53,4 +53,4 @@ $holder = elgg_format_element('div', [
 $params = $vars;
 $params['class'] = $class;
 
-echo elgg_format_element('div', $params, $holder);
+echo elgg_format_element('article', $params, $holder);

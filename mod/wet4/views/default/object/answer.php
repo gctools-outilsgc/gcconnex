@@ -92,4 +92,4 @@ $params = [
 $summary = $correct . elgg_view('page/components/summary', $params);
 
 $format_panel_body = elgg_format_element('div', ['class' => ' d-flex panel-body'], '<div'.$correct_style.'>'.$image.'</div>' . '<div class="wet-image-block-body">' . '<div class="mrgn-bttm-sm">' . $subtitle . '</div>' . $body . '</div>');
-echo elgg_format_element('div', ['class' => 'panel'], $format_panel_body);
+echo elgg_format_element('article', ['class' => 'panel'], $format_panel_body);

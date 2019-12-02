@@ -225,5 +225,5 @@ if( $description_json->en && $description_json->fr ){
 
 	$format_subtitle = elgg_format_element('div', ['class' => 'd-flex mrgn-tp-md'], '<span class="align-self-center">'.$poster_icon.'</span>' . '<div class="mrgn-lft-sm">' . implode(' ', $subtitle) . $answer_text . '</div>');
 	$format_panel_body = elgg_format_element('div', ['class' => 'panel-body'], $title_link . $excerpt . $format_subtitle . '<div class="mrgn-tp-md">' .$metadata.'</div>');
-	echo elgg_format_element('div', ['class' => 'panel'], $format_panel_body);
+	echo elgg_format_element('article', ['class' => 'panel'], $format_panel_body);
 }

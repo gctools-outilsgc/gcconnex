@@ -17,7 +17,7 @@ return array(
     'wet:searchgctools' => "Recherche sur GCconnex",
 
     'wet:inboxmore'=>"Autres (archivé)",
-    'wet:topicmenu' => "Menu des sujets",
+    'wet:topicmenu' => "Navigation principale",
     'wet:youarehere' => "Vous êtes ici :",
     'wet:errmess' => "<h3 class='h3'>Le formulaire n'a pu être soumis, car une ou des erreurs ont été trouvées.</h3>",
 

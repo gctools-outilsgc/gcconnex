@@ -61,7 +61,7 @@ if( $type == 'GPmod'){
         $contents = elgg_format_element('div', ['class' => 'elgg-inner'], $contents);
     }
 
-    echo elgg_format_element('div', $attrs, $contents);
+    echo elgg_format_element('section', $attrs, $contents);
 
 } else if ($checkPage =='gallery'){
     // check to see if the page is a photo gallery to style the photo stuff :)
@@ -146,7 +146,7 @@ if( $type == 'GPmod'){
     if ($header !== null) {
         $header = elgg_format_element('header', ['class' => 'panel-heading'], $header);
     }
-    $body = elgg_format_element('div', ['class' => 'panel-body clearfix'], $header . $body);
+    $body = elgg_format_element('section', ['class' => 'panel-body clearfix'], $header . $body);
     if ($footer) {
         $footer = elgg_format_element('div', ['class' => 'text-right'], $footer);
     }

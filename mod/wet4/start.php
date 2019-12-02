@@ -2008,43 +2008,46 @@ function generate_hidden_text($type, $name)
 {
 	$hiddenText = array();
 
+	$lang = get_current_language();
+	$translated_name = gc_explode_translation($name, $lang);
+
 	//create all unique menu items
 	switch ($type) {
 		case 'page_top':
 		case 'page':
-			$hiddenText['history'] = elgg_echo('entity:history:link:'.$type, array($name));
+			$hiddenText['history'] = elgg_echo('entity:history:link:'.$type, array($translated_name));
 			break;
 
 		case 'thewire':
-			$hiddenText['reply'] = elgg_echo('entity:reply:link:'.$type, array($name));
+			$hiddenText['reply'] = elgg_echo('entity:reply:link:'.$type, array($translated_name));
 			break;
 
 		case 'comment':
-			$hiddenText['comment'] = elgg_echo('entity:comment:link:'.$type, array($name));
+			$hiddenText['comment'] = elgg_echo('entity:comment:link:'.$type, array($translated_name));
 			break;
 
 		case 'groupforumtopic':
-			$hiddenText['lock'] = elgg_echo('entity:lock:link:'.$type, array($name));
-			$hiddenText['unlock'] = elgg_echo('entity:unlock:link:'.$type, array($name));
+			$hiddenText['lock'] = elgg_echo('entity:lock:link:'.$type, array($translated_nameame));
+			$hiddenText['unlock'] = elgg_echo('entity:unlock:link:'.$type, array($translated_name));
 			break;
 
 		case 'file':
-			$hiddenText['download'] = elgg_echo('entity:download:link:'.$type, array($name));
+			$hiddenText['download'] = elgg_echo('entity:download:link:'.$type, array($translated_name));
 			break;
 
 		case 'idea':
-			$hiddenText['upvote'] = elgg_echo('entity:upvote:link:'.$type, array($name));
-			$hiddenText['downvote'] = elgg_echo('entity:downvote:link:'.$type, array($name));
+			$hiddenText['upvote'] = elgg_echo('entity:upvote:link:'.$type, array($translated_name));
+			$hiddenText['downvote'] = elgg_echo('entity:downvote:link:'.$type, array($translated_name));
 			break;
 	}
 
 	//default menus that ever item has
-	$hiddenText['like'] = elgg_echo('entity:like:link:'.$type, array($name));
-	$hiddenText['unlike'] = elgg_echo('entity:unlike:link:'.$type, array($name));
-	$hiddenText['edit'] = elgg_echo('entity:edit:link:'.$type, array($name));
-	$hiddenText['delete'] = elgg_echo('entity:delete:link:'.$type, array($name));
-	$hiddenText['share'] = elgg_echo('entity:share:link:'.$type, array($name));
-	$hiddenText['subscribe'] = elgg_echo('entity:subscribe:link:'.$type, array($name));
+	$hiddenText['like'] = elgg_echo('entity:like:link:'.$type, array($translated_name));
+	$hiddenText['unlike'] = elgg_echo('entity:unlike:link:'.$type, array($translated_name));
+	$hiddenText['edit'] = elgg_echo('entity:edit:link:'.$type, array($translated_name));
+	$hiddenText['delete'] = elgg_echo('entity:delete:link:'.$type, array($translated_name));
+	$hiddenText['share'] = elgg_echo('entity:share:link:'.$type, array($translated_name));
+	$hiddenText['subscribe'] = elgg_echo('entity:subscribe:link:'.$type, array($translated_name));
 
 	return $hiddenText;
 }
