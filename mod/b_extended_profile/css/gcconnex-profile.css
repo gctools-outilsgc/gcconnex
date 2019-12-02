@@ -773,6 +773,7 @@ body #editProfile {
     width: 95%;
     /*background-color: rgba(125,125,125,0.3);*/
     padding-left: 0 10px 0;
+    border-radius:6px;
 }
 #editProfile{
     max-width: 1100px !important;
@@ -781,7 +782,7 @@ body #editProfile {
 }
 
 #editProfile header{
-    background-color: #047177;
+    background-color: #137991;
 }
 
 .dialog-box {

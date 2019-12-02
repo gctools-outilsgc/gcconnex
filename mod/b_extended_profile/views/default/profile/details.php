@@ -33,8 +33,6 @@ if (elgg_is_active_plugin('member_selfdelete') && (elgg_is_admin_logged_in() || 
         echo '<h2 class="modal-title">' . elgg_echo('gcconnex_profile:basic:header') . '</h2>';
         echo '</header>';
         echo '<div class="panel-body overflow-body">';
-        $editAvatar = elgg_get_site_url(). 'avatar/edit/' . $user->username;
-        echo '<div><a href='.$editAvatar.' class="btn btn-primary">'. elgg_echo('gcconnex_profile:profile:edit_avatar') .'</a></div>';
         echo '<div class="basic-profile-standard-field-wrapper col-md-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
         $fields = array('Name', 'Job', 'Department', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
@@ -192,6 +190,7 @@ if (elgg_is_active_plugin('member_selfdelete') && (elgg_is_admin_logged_in() || 
 
         </div>
                 <div class="panel-footer text-right profile-edit-footer">
+                <a href="'.elgg_get_site_url(). 'avatar/edit/' . $user->username.'" class="btn btn-primary pull-left">'. elgg_echo('gcconnex_profile:profile:edit_avatar') .'</a>
                     <button type="button" class="btn btn-primary save-profile">' . elgg_echo('gcconnex_profile:basic:save') . '</button>
                     <button type="button" class="btn btn-default overlay-close" style="background-color: #eaebed;">' . elgg_echo('gcconnex_profile:cancel') . '</button>
                 </div>
