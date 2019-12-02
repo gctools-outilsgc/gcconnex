@@ -1460,7 +1460,7 @@ function cp_create_notification($event, $type, $object) {
 				
 						if (elgg_is_active_plugin('phpmailer')){
 							phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-							count_email_types($message['cp_msg_type']);
+							count_email_types($message['cp_msg_type'] . $object->getSubtype());
 						}
 						else
 							mail($to_recipient->email,$subject,$template,cp_get_headers());
