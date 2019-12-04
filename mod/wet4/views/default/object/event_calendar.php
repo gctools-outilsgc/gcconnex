@@ -16,7 +16,7 @@ $lang = get_current_language();
 
 $event = $vars['entity'];
 $full = elgg_extract('full_view', $vars, false);
-
+$tags = elgg_view('output/tags', array('tags' => $event->tags));
 if ($full) {
 
 	//Identify available content
