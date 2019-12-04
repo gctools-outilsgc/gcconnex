@@ -2062,3 +2062,9 @@ figcaption{
 .wb-slc {
     height: 0;
 }
+
+.cke_focus .cke_contents {
+    border-color: #269abc;
+    outline: 0;
+    box-shadow: 0 0 3px rgba(0,0,0,.2), 0 0 3px rgba(38,154,188,.7) !important;
+}
