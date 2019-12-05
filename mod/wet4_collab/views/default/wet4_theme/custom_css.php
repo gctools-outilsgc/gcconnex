@@ -2304,5 +2304,5 @@ table.bordered td {
 .cke_focus .cke_contents {
     border-color: #269abc;
     outline: 0;
-    box-shadow: 0 0 3px rgba(0,0,0,.2), 0 0 3px rgba(38,154,188,.7) !important;
+    box-shadow: 0px 0px 8px 2px rgba(102,175,233,.6), 0 0 8px rgba(102,175,233,.6) !important;
 }
