@@ -13,7 +13,6 @@
  * @uses $vars['title']     Title link (optional) false = no title, '' = default
  * @uses $vars['metadata']  HTML for entity menu and metadata (optional)
  * @uses $vars['subtitle']  HTML for the subtitle (optional)
- * @uses $vars['tags']      HTML for the tags (default is tags on entity, pass false for no tags)
  * @uses $vars['content']   HTML for the entity content (optional)
  *
  * GC_MODIFICATION
@@ -42,26 +41,16 @@ $metadata = elgg_extract('metadata', $vars, '');
 $subtitle = elgg_extract('subtitle', $vars, '');
 $content = elgg_extract('content', $vars, '');
 
-$tags = elgg_extract('tags', $vars, '');
-if ($tags === '') {
-	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
+//This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
+if($entity->getType() == 'group'){
+   echo '';
+}else{
+  echo "<span class=\" mrgn-bttm-sm timeStamp\">$subtitle</span>";   
 }
 
 if ($metadata) {
 	echo $metadata;
 }
-
-//This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
-if($entity->getType() == 'group'){
-   echo '';
-}else{
-  echo "<div class=\" mrgn-bttm-sm timeStamp clearfix\">$subtitle</div>";   
-}
-
-
-echo "<div class=\"tags\">$tags</div>";
-
-
 
 echo elgg_view('object/summary/extend', $vars);
 

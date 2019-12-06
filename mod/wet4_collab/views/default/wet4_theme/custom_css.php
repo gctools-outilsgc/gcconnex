@@ -2300,3 +2300,9 @@ table.bordered td {
 .wb-slc {
     height: 0;
 }
+
+.cke_focus .cke_contents {
+    border-color: #269abc;
+    outline: 0;
+    box-shadow: 0px 0px 8px 2px rgba(102,175,233,.6), 0 0 8px rgba(102,175,233,.6) !important;
+}
