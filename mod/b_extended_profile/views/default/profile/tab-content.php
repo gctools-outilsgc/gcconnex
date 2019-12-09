@@ -4,7 +4,7 @@
 */
 //generate content tabs
 elgg_push_context('profile');
-$fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Album', 'task_top', 'question');
+$fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Album', 'task_top', 'question', 'events');
 $user_display_name = elgg_get_page_owner_entity()->name;
 foreach($fields as $field){
 
@@ -78,6 +78,12 @@ foreach($fields as $field){
                 $message = elgg_echo('questions:none');
                 $field = 'questions';
                 break;
+            case 'events':
+                $title = elgg_echo('event_calendar:listing_title:mine', array($user_display_name));
+                $add = elgg_echo('event_calendar:add');
+                $message = elgg_echo('event_calendar:no_events_found');
+                $field = 'event_calendar';
+                break;
         }
 
         if(elgg_get_page_owner_entity()->canEdit()){
@@ -91,7 +97,12 @@ foreach($fields as $field){
 
                 //display add button
             echo '<div class="text-right">';
+            if ($field == 'event_calendar'){
+                $action = strtolower($field) . "/add/";
+            }else{
                 $action = strtolower($field) . "/add/" . elgg_get_page_owner_entity()->guid;
+            }
+                
                $addButton = elgg_view('output/url', array(
                     'href' => $action,
                     'text' => $add,
@@ -119,8 +130,15 @@ foreach($fields as $field){
 
             }
         }
-
-        if(!$content){
+        if($field == "event_calendar"){    
+            $events = event_calendar_get_personal_events_for_user(elgg_get_page_owner_guid(), 5);
+            if(!$events){
+                echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . elgg_echo('event_calendar:no_events_found11') . '</div>';
+            }
+            foreach($events as $event) {
+                echo elgg_view("object/event_calendar", array('entity' => $event));
+            }
+        } else if(!$content){
             echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . $message . '</div>';
         } else {
             if($field === 'File' || $field === 'Thewire'){
@@ -141,33 +159,4 @@ foreach($fields as $field){
         echo '<div class="text-right">' . $more_link . '</div>';
     echo '</div>';
 }
-
-//event calendar tab
-echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
-    echo '<div class="clearfix elgg-list-group">';
-    echo '<h2 class="wb-invisible" tabindex="-1">'.elgg_echo('event_calendar:listing_title:mine', array($user_display_name)).'</h2>';
-    if(elgg_is_active_plugin('event_calendar')){
-        $events = event_calendar_get_personal_events_for_user(elgg_get_page_owner_guid(), 5);
-    }
-
-    if(!$events){
-        echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . elgg_echo('event_calendar:no_events_found') . '</div>';
-    }
-
-    foreach($events as $event) {
-		echo elgg_view("object/event_calendar", array('entity' => $event));
-	}
-
-    $date = date('Y-m-d'/*, strtotime("-1 days")*/);
-    $event_url = "event_calendar/owner/". elgg_get_page_owner_entity()->username;
-	$viewall_link = elgg_view('output/url', array(
-		'href' => $event_url,
-		'text' => elgg_echo('link:view:all'),
-		'is_trusted' => true,
-        'class' => 'text-center btn btn-default center-block',
-	));
-    echo '</div>';
-	echo "<div class=\"elgg-widget-more text-right\">$viewall_link</div>";
-echo '</div>';
-elgg_pop_context();
 ?>
