@@ -4695,6 +4695,7 @@ button.close {
  */
 a {
     color: #137991;
+    text-decoration: underline;
 }
   a.btn {
     text-decoration: none; }
