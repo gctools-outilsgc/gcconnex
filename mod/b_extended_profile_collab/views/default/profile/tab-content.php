@@ -135,7 +135,7 @@ foreach($fields as $field){
         if($field == "event_calendar"){    
             $events = event_calendar_get_personal_events_for_user(elgg_get_page_owner_guid(), 5);
             if(!$events){
-                echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . elgg_echo('event_calendar:no_events_found11') . '</div>';
+                echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . elgg_echo('event_calendar:no_events_found') . '</div>';
             }
             foreach($events as $event) {
                 echo elgg_view("object/event_calendar", array('entity' => $event));
