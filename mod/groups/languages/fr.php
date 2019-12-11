@@ -130,7 +130,7 @@ return array(
 	'groups:access:private' => 'Fermé - Les utilisateurs doivent être invités',
 	'groups:access:public' => 'Ouvert - Tous les utilisateurs peuvent joindre le groupe',
 	'groups:access:group' => 'Membres du groupe seulement',
-	'groups:closedgroup' => "Ceci est un groupe fermé '.",
+	'groups:closedgroup' => "Ceci est un groupe fermé.",
 	'groups:closedgroup:request' => 'Pour y devenir membre, cliquez sur le lien "Demande d\'adhésion"',
 	'groups:closedgroup:membersonly' => "Ceci est un groupe fermé. Seuls les membres ont accès au contenu de ce groupe.",
 	'groups:opengroup:membersonly' => "Le contenu de ce groupe est accessible uniquement à ses membres.",
