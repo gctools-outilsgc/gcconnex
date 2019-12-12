@@ -70,14 +70,20 @@ requirejs( ["fileinput"], function() {
             indicatorLoadingTitle: 'ajout ...'
         },
         previewZoomButtonTitles: {
-            prev: 'View previous file',
-            next: 'View next file',
-            toggleheader: 'Toggle header',
-            fullscreen: 'Toggle full screen',
-            borderless: 'Toggle borderless mode',
-            close: 'Close detailed preview'
+            prev: 'Afficher le fichier précédent',
+            next: 'Voir le fichier suivant',
+            toggleheader: "Cacher l'en-tête",
+            fullscreen: 'Basculer en plein écran',
+            borderless: 'Basculer en mode sans bordure',
+            close: 'Fermer la vue détaillée'
         }
     };
+
+    tActionDelete = '<button type="button" class="kv-file-remove {removeClass}" ' + 'title="{removeTitle}" {dataUrl}{dataKey}>{removeIcon}<span class="wb-inv">{removeTitle}</span></button>\n';
+    tActionUpload = '<button type="button" class="kv-file-upload {uploadClass}" title="{uploadTitle}">' +
+        '{uploadIcon}<span class="wb-inv">{uploadTitle}</span></button>';
+    tActionZoom = '<button type="button" class="kv-file-zoom {zoomClass}" title="{zoomTitle}">{zoomIcon}<span class="wb-inv">{zoomTitle}</span></button>';
+    tModalMain = '<div id="kvFileinputModal" class="file-zoom-dialog modal fade" tabindex="-1"></div>';
 
     //console.log(elgg.get_page_owner_guid());
     $("#multi-file-upload").fileinput({
@@ -110,7 +116,13 @@ requirejs( ["fileinput"], function() {
         'mov': '<i class="fa fa-file-movie-o text-warning"></i>',
         'mp4': '<i class="fa fa-file-movie-o text-warning"></i>',
         'mp3': '<i class="fa fa-file-audio-o text-warning"></i>',
-    },
+        },
+        layoutTemplates: {
+            actionDelete: tActionDelete,
+            actionZoom: tActionZoom,
+            actionUpload: tActionUpload,
+            modalMain: tModalMain,
+        }
     });
     $('#multi-file-upload').on('filebatchuploadsuccess', function(event, data) {
         //window.location.replace(data.response.forward_url);
@@ -134,5 +146,22 @@ requirejs( ["fileinput"], function() {
         //console.log('extra '+JSON.stringify(extra));
     });
 
+    //add text to generated buttons
+    $('#kvFileinputModal .kv-zoom-actions').find('button').each(function(i, button){
+        var buttonHTML = $(button).html();
+        $(button).html(buttonHTML + '<span class="wb-inv">'+$(button).attr('title')+'</span>');
+    });
+    $('#kvFileinputModal .modal-body').find('button').each(function(i, button){
+        var buttonHTML = $(button).html();
+        $(button).html(buttonHTML + '<span class="wb-inv">'+$(button).attr('title')+'</span>');
+    });
+
+    //adding focus class to browse button
+    $('#multi-file-upload').focusin(function(){
+        $(this).parent().addClass('multi-input-focus');
+    });
+    $('#multi-file-upload').focusout(function(){
+        $(this).parent().removeClass('multi-input-focus');
+    });
 
 });
