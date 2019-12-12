@@ -70,12 +70,12 @@ requirejs( ["fileinput"], function() {
             indicatorLoadingTitle: 'ajout ...'
         },
         previewZoomButtonTitles: {
-            prev: 'View previous file',
-            next: 'View next file',
-            toggleheader: 'Toggle header',
-            fullscreen: 'Toggle full screen',
-            borderless: 'Toggle borderless mode',
-            close: 'Close detailed preview'
+            prev: 'Afficher le fichier précédent',
+            next: 'Voir le fichier suivant',
+            toggleheader: "Cacher l'en-tête",
+            fullscreen: 'Basculer en plein écran',
+            borderless: 'Basculer en mode sans bordure',
+            close: 'Fermer la vue détaillée'
         }
     };
 
