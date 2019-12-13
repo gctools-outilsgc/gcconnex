@@ -1100,7 +1100,7 @@ return array(
 	/**
 	 * River Ribbon object subtype lang
 	 */
-	'discussion_reply' => 'Résponse',
+	'discussion_reply' => 'Réponse',
 	'groupforumtopic' => 'Discussion',
 	'page_top' => 'Page',
 
