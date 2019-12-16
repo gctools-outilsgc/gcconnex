@@ -29,7 +29,8 @@ $summary = elgg_echo("river:create:object:thewire", array($subject_link, $object
 $attachments = "";
 $reshare = $object->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));
 if (!empty($reshare)) {
-	$attachments = elgg_view("thewire_tools/reshare_source", array("entity" => $reshare[0]));
+	$reshare_object = elgg_view("thewire_tools/reshare_source", array("entity" => $reshare[0]));
+	$attachments = elgg_format_element('a', ['href' => $reshare[0]->getURL(), 'class' => 'river-wire-reshare timeStamp'], $reshare_object);
 }
 
 $attachment = thewire_image_get_attachments($object->getGUID());

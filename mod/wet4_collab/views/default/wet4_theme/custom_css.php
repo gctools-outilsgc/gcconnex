@@ -1142,6 +1142,15 @@ a.wire-share-container:visited {
     font-weight: bold;
     color: #6b5088;
 }
+a.river-wire-reshare {
+    width: 100%;
+    text-decoration: none;
+    display: block;
+}
+a.river-wire-reshare:hover {
+    text-decoration: underline;
+    color: #606060;
+}
 
 .img-tn{
     width:60px;
