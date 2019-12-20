@@ -398,6 +398,31 @@ function _elgg_set_landing_page()
 	return false;
 }
 
+function _elgg_set_timezone_page()
+{
+	$page = strip_tags(get_input('new_timezone'));
+	$user_guid = get_input('guid');
+
+	if ($user_guid) {
+		$user = get_user($user_guid);
+	} else {
+		$user = elgg_get_logged_in_user_entity();
+	}
+
+	if ($user && $user->canEdit() && $page) {
+		if ($page != $user->name) {
+			$user->new_timezone = $page;
+			if ($user->save()) {
+				return true;
+			}
+		} else {
+			// no change
+			return null;
+		}
+	}
+	return false;
+}
+
 function consistent_menu_styler($hook, $type, $menu, $params) {
 	$classes = array('btn', 'btn-primary', 'btn-md');
 	if(elgg_get_context() != 'photos'){
@@ -1866,7 +1891,15 @@ function wet4_messages_page_handler($page)
 function enhanced_friendly_time_hook($hook, $type, $return, $params)
 {
 	$diff = time() - ((int) $params['time']);
-
+	$newdate = date(  $params['time'] - 6 * 3600 );
+	//$timezone = get_input('new_timezone');
+	$user = elgg_get_logged_in_user_entity();
+		if ($user->new_timezone) {
+		$params['time'] = $newdate;
+		$timezone =$user->new_timezone;
+		$diff = time() - 6*3600 - ((int) $params['time']);
+	}
+	
 	$minute = 60;
 	$hour = $minute * 60;
 	$day = $hour * 24;
@@ -1921,7 +1954,8 @@ function enhanced_friendly_time_hook($hook, $type, $return, $params)
 
 	$attributes = array();
 	$attributes['title'] = date(elgg_echo('friendlytime:date_format'), $params['time']);
-	$attributes['datetime'] = date('c', $params['time']);
+	$attributes['datetime'] = $timezone;
+	
 	$attrs = elgg_format_attributes($attributes);
 
 	return "<time $attrs>$friendly_time</time>";
