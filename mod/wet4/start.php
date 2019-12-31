@@ -1905,8 +1905,7 @@ function enhanced_friendly_time_hook($hook, $type, $return, $params)
 			$la_time = new DateTimeZone($timezone);
 			$datetime->setTimezone($la_time);
 			
-			$params['time'] = $datetime;
-
+			$params['time'] =  $params['time'] =  $datetime->getTimestamp();
 			$diff = time() - ((int) $params['time']);
 	}
 
@@ -1964,8 +1963,7 @@ function enhanced_friendly_time_hook($hook, $type, $return, $params)
 
 	$attributes = array();
 	$attributes['title'] = date(elgg_echo('friendlytime:date_format'), $params['time']);
-	//$attributes['datetime'] = date(elgg_echo('friendlytime:date_format'),$datetime);
-	$attributes['datetime'] = $datetime->format('Y-m-d H:i');
+	$attributes['datetime'] = date('Y-m-d H:i', $params['time']);
 	
 	$attrs = elgg_format_attributes($attributes);
 
