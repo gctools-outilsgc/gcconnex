@@ -1891,15 +1891,25 @@ function wet4_messages_page_handler($page)
 function enhanced_friendly_time_hook($hook, $type, $return, $params)
 {
 	$diff = time() - ((int) $params['time']);
-	$newdate = date(  $params['time'] - 6 * 3600 );
-	//$timezone = get_input('new_timezone');
 	$user = elgg_get_logged_in_user_entity();
-		if ($user->new_timezone) {
-		$params['time'] = $newdate;
-		$timezone =$user->new_timezone;
-		$diff = time() - 6*3600 - ((int) $params['time']);
-	}
 	
+		if ($user->new_timezone && elgg_get_plugin_setting("server_timezone", "wet4")) {
+			$timezone =$user->new_timezone;
+			$timezone_server = elgg_get_plugin_setting("server_timezone", "wet4");
+
+			date_default_timezone_set($timezone_server);
+
+			$datetime = new DateTime();
+			$datetime->setTimestamp($params['time']);
+
+			$la_time = new DateTimeZone($timezone);
+			$datetime->setTimezone($la_time);
+			
+			$params['time'] = $datetime;
+
+			$diff = time() - ((int) $params['time']);
+	}
+
 	$minute = 60;
 	$hour = $minute * 60;
 	$day = $hour * 24;
@@ -1954,7 +1964,8 @@ function enhanced_friendly_time_hook($hook, $type, $return, $params)
 
 	$attributes = array();
 	$attributes['title'] = date(elgg_echo('friendlytime:date_format'), $params['time']);
-	$attributes['datetime'] = $timezone;
+	//$attributes['datetime'] = date(elgg_echo('friendlytime:date_format'),$datetime);
+	$attributes['datetime'] = $datetime->format('Y-m-d H:i');
 	
 	$attrs = elgg_format_attributes($attributes);
 
