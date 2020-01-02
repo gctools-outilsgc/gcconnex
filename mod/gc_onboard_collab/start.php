@@ -22,6 +22,7 @@ function onboard_ME_collab() {
     elgg_register_page_handler('profileonboard', 'profileonboard_collab_page_handler');
     elgg_register_page_handler('groupsonboard', 'groupsonboard_collab_page_handler');
     elgg_register_page_handler('tutorials', 'tutorials_page_handler');
+    elgg_register_page_handler('updateorg','updateorg_collab_page_handler');
 
     //views for intro profile onboarding
     elgg_register_ajax_view('welcome-steps/stepOne');
@@ -32,6 +33,7 @@ function onboard_ME_collab() {
     elgg_register_ajax_view('welcome-steps/stepSix');
 
     elgg_extend_view('contactform/form', 'onboard/module_links');
+    elgg_extend_view('page/elements/navbar', 'page/elements/update_banner');
 
 }
 
@@ -47,6 +49,11 @@ function groupsonboard_collab_page_handler(){
 
 function tutorials_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/tutorials.php");
+    return true;
+}
+
+function updateorg_collab_page_handler(){
+    @include (dirname (__FILE__). "/pages/update-org.php");
     return true;
 }
 
