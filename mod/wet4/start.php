@@ -1893,21 +1893,15 @@ function enhanced_friendly_time_hook($hook, $type, $return, $params)
 	$diff = time() - ((int) $params['time']);
 	$user = elgg_get_logged_in_user_entity();
 	
-		if ($user->new_timezone && elgg_get_plugin_setting("server_timezone", "wet4")) {
-			$timezone =$user->new_timezone;
-			$timezone_server = elgg_get_plugin_setting("server_timezone", "wet4");
+ 		if ($user->new_timezone ) {
+ 			$timezone =$user->new_timezone;
+ 			date_default_timezone_set($timezone);
 
-			date_default_timezone_set($timezone_server);
-
-			$datetime = new DateTime();
-			$datetime->setTimestamp($params['time']);
-
-			$la_time = new DateTimeZone($timezone);
-			$datetime->setTimezone($la_time);
-			
-			$params['time'] =  $params['time'] =  $datetime->getTimestamp();
-			$diff = time() - ((int) $params['time']);
-	}
+ 			$datetime = new DateTime();
+ 			$datetime->setTimestamp($params['time']);
+ 			$params['time'] =  $datetime->getTimestamp();
+ 			$diff = time() - ((int) $params['time']);
+ 	}
 
 	$minute = 60;
 	$hour = $minute * 60;
