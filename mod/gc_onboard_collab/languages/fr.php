@@ -77,4 +77,11 @@ return array(
     'degree:phd' => "Doctorat en philosophie (Ph.D.)",
     'degree:engineer' => "Baccalauréat en génie",
     'degree:other' => "Autre",
+
+    /** Update org */
+    'updateorg:title' => "Mise à jour de l'organisation",
+    'updateorg:banner:text' => "Votre profil est incomplet : SVP mettre à jour votre organisation!",
+    'updateorg:banner:link' => "Mise à jour de l'organisation",
+    'updateorg:form:title' => "Mise à jour de l'organisation",
+    'updateorg:form:sub' => "Choisissez votre occupation, puis choisissez votre organisation. Si votre occupation choisie est «étudiant», choisissez votre type d'institution, puis votre école.",
 );

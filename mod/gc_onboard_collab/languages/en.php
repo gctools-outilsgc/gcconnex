@@ -78,4 +78,11 @@ return array(
     'degree:phd' => "Doctor of Philosophy (Ph.D.)",
     'degree:engineer' => "Engineer’s Degree",
     'degree:other' => "Other",
+
+    /** Update org */
+    'updateorg:title' => 'Update organization',
+    'updateorg:banner:text' => 'Your profile is incomplete: Please update your organization!',
+    'updateorg:banner:link' => 'Update organisation',
+    'updateorg:form:title' => 'Update Organization',
+    'updateorg:form:sub' => 'Choose your occupation, then choose your organization. If your chosen occupation is "student," choose your type of institution, then your school.',
 );

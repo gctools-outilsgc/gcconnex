@@ -10,8 +10,11 @@ $forward_url = get_input('forward');
 ?>
 <div class="panel">
 <div class="panel-body">
-    <p class="mrgn-lft-sm mrgn-bttm-sm">
-        <?php echo $forward_url; ?>
+    <h1 class="h2">
+        <?php echo elgg_echo('updateorg:form:title'); ?>
+    </h1>
+    <p class="mrgn-bttm-md">
+        <?php echo elgg_echo('updateorg:form:sub'); ?>
     </p>
     <div class="clearfix" id="onboard-table">
         <div class="col-sm-12 clearfix">
