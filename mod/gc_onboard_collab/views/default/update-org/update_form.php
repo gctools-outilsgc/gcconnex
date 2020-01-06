@@ -457,7 +457,7 @@ $forward_url = get_input('forward');
     </div>
 
     <div id="stepOneButtons" class="mrgn-bttm-md mrgn-tp-md pull-right">
-        <a id="save" class="btn btn-primary" href="#"><?php echo elgg_echo('save'); ?></a>
+        <a id="save" class="btn btn-primary only-one-click" href="#"><?php echo elgg_echo('save'); ?></a>
     </div>
 </div>
 </div>
@@ -541,6 +541,7 @@ $(document).ready(function () {
 
     //Save info and move on
     $('#save').on('click', function () {
+        $(this).attr("disabled");
         var profile = {};
 
         profile.user_type = $("#user_type").val();
@@ -570,7 +571,7 @@ $(document).ready(function () {
             },
             success: function(data) {
                 console.log(data);
-                elgg.system_message(elgg.echo('success'));
+                elgg.system_message(elgg.echo('save:success'));
                 window.location.replace("<?php echo $forward_url; ?>");
             }
         });
