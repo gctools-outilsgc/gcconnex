@@ -33,6 +33,12 @@ if (!$title) {
 	$title = elgg_view('output/url', $link_params);
 }
 
+//Display group join date for group member list - Nick
+if(elgg_in_context('groups_members')){
+	$group_relationship = check_entity_relationship($entity->guid, 'member', elgg_get_page_owner_guid());
+	$join_date = '<p style="padding-top:10px;">'.elgg_echo('group:member_date_joined'). ': ' .date("Y-m-d H:i", $group_relationship->time_created).'</p>';
+}
+
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $entity,
 	'sort_by' => 'priority',
@@ -57,7 +63,7 @@ if (elgg_get_context() == 'gallery') {
 		$params = array(
 			'entity' => $entity,
 			'title' => $title,
-			'metadata' => $metadata,
+			'metadata' => $metadata . $join_date,
 			'subtitle' => $entity->job,
 			'content' => elgg_view('user/status', array('entity' => $entity)),
 		);
