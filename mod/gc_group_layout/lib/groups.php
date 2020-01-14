@@ -429,6 +429,7 @@ function groups_handle_members_page($guid) {
 
 	$db_prefix = elgg_get_config('dbprefix');
 	$content = elgg_view('input/find_group_member', array('guid' => $guid));
+	$content .= elgg_format_element('div',['class' =>'h5'], elgg_echo('sort:newest').':');
 	$content .= elgg_list_entities_from_relationship(array(
 		'relationship' => 'member',
 		'relationship_guid' => $group->guid,
@@ -436,7 +437,7 @@ function groups_handle_members_page($guid) {
 		'type' => 'user',
 		'limit' => 25,
 		'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid"),
-		'order_by' => 'u.name ASC',
+		'order_by' => 'r.time_created DESC',
 	));
 
 	$params = array(
