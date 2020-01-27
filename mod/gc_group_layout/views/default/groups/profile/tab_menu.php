@@ -21,25 +21,13 @@ $pg = '';
 
 }
 
-if(elgg_get_context() == 'groupSubPage'){
+if(elgg_get_context() == 'groupSubPage' || elgg_get_context() == 'group_profile'){
 
     elgg_register_menu_item('owner_block', array(
     'name' => 'about',
     'href' => $owner->getURL(),
     'text' => elgg_echo('activity'),
     'title' => elgg_echo('activity'),
-    'class' => '',
-    'priority' => '0',
-    ));
-
-} else if(elgg_get_context() == 'group_profile'){
-
-    elgg_register_menu_item('owner_block', array(
-    'name' => 'about',
-    'href' => $owner->getURL(),
-    'text' => elgg_echo('activity'),
-    'title' => elgg_echo('activity'),
-    'item_class' => '',
     'class' => '',
     'priority' => '0',
     ));
