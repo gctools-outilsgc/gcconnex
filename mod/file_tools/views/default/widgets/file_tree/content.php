@@ -41,7 +41,7 @@ if ($folder_guids = $widget->folder_guids) {
 				$folders .= elgg_view_entity_list($entities, array("full_view" => false, "pagination" => false));
 				$folders .= "</div>";
 			} else {
-				$folders .= elgg_view_entity($folder);
+				$folders .= elgg_view_entity($folder, array("full_view" => false));
 			}
 		}
 	}
