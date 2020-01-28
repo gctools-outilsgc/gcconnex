@@ -15,17 +15,17 @@ if ( strcmp(_elgg_services()->session->get('language'),'en') == 0 ) {
     $terms = "{$site_url}terms";
     $priv = "{$site_url}privacy";
 
-    $faq = "{$site_url}help/knowledgebase";
-
 } else {
     // french links (under about)
     $about = "{$site_url}a_propos";
     $terms = "{$site_url}termes";
     $priv = "{$site_url}confidentialite";
-
-    $faq = "{$site_url}help/knowledgebase";
 }
-
+if(elgg_get_plugin_setting("product_id", "freshdesk_help") == 2100000290){
+    $faq = "https://support.gccollab.ca";
+} else {
+    $faq = "{$site_url}help/knowledgebase1";
+}
 $feedbackText= elgg_echo('wet:feedbackText');
 
 ?>
@@ -62,7 +62,7 @@ $feedbackText= elgg_echo('wet:feedbackText');
                     <a href="<?php echo $faq;?>"><?php echo elgg_echo('wet:footFAQ');?></a>
                   </li>
                   <?php /*if(elgg_is_active_plugin('gc_onboard')){ echo '<li><a href="'.elgg_get_site_url().'tutorials">'.elgg_echo('onboard:footTutorials').'</a></li>'; }*/?>
-                  <li><a href="<?php echo elgg_get_site_url() . 'help/knowledgebase'; ?>"> <?php echo elgg_echo('contactform:help_menu_item'); ?> </a></li>
+                  <li><a href="<?php echo $faq; ?>"> <?php echo elgg_echo('contactform:help_menu_item'); ?> </a></li>
                    
                 </ul>
             </section>

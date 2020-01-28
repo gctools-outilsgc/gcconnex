@@ -85,7 +85,11 @@ $userMenu = "";
 
 if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
 	if(elgg_is_active_plugin('freshdesk_help')){
-		$feedback_link = elgg_get_site_url().'help/knowledgebase/';
+		if(elgg_get_plugin_setting("product_id", "freshdesk_help") == 2100000290){
+			$feedback_link = "https://support.gccollab.ca";
+		} else {
+			$feedback_link = "help/knowledgebase";
+		}
 	} else {
 		$feedback_link = elgg_get_site_url().'mod/contactform/';
 	}
