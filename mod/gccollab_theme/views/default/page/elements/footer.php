@@ -21,10 +21,10 @@ if ( strcmp(_elgg_services()->session->get('language'),'en') == 0 ) {
     $terms = "{$site_url}termes";
     $priv = "{$site_url}confidentialite";
 }
-if(elgg_get_plugin_setting("product_id", "freshdesk_help") == 2100000290){
-    $faq = "https://support.gccollab.ca";
+if(elgg_get_plugin_setting("custom_domain_url", "freshdesk_help")){
+    $faq = elgg_get_plugin_setting("custom_domain_url", "freshdesk_help");
 } else {
-    $faq = "{$site_url}help/knowledgebase1";
+    $faq = "{$site_url}help/knowledgebase";
 }
 $feedbackText= elgg_echo('wet:feedbackText');
 

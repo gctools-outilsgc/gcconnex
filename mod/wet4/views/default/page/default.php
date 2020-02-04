@@ -61,7 +61,11 @@ $userMenu = elgg_view('page/elements/topbar_wrapper', $vars);
 
 if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
 	if(elgg_is_active_plugin('freshdesk_help')){
-		$feedback_link = elgg_get_site_url().'/help/knowledgebase';
+		if(elgg_get_plugin_setting("custom_domain_url", "freshdesk_help")){
+			$feedback_link = elgg_get_plugin_setting("custom_domain_url", "freshdesk_help");
+		} else {
+			$feedback_link = elgg_get_site_url()."help/knowledgebase";
+		}
 	} else {
 		$feedback_link = elgg_get_site_url().'/mod/contactform';
 	}

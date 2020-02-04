@@ -16,8 +16,8 @@ function freshdesk_help_init() {
     elgg_extend_view("js/elgg", "js/freshdesk_help/functions");
     elgg_extend_view('css/elgg', 'freshdesk/css');
 
-    if(elgg_get_plugin_setting("product_id", "freshdesk_help") == 2100000290){
-        $help_link = "https://support.gccollab.ca";
+    if(elgg_get_plugin_setting("custom_domain_url", "freshdesk_help")){
+        $help_link = elgg_get_plugin_setting("custom_domain_url", "freshdesk_help");
     } else {
         $help_link = "help/knowledgebase";
     }

@@ -17,6 +17,13 @@ if (_elgg_services()->session->get('language') == 'en') {
 } else {
 	$graphic_lang = 'fr';
 }
+
+if(elgg_get_plugin_setting("custom_domain_url", "freshdesk_help")){
+    $faq = elgg_get_plugin_setting("custom_domain_url", "freshdesk_help");
+} else {
+    $faq = "{$site_url}help/knowledgebase";
+}
+$feedbackText= elgg_echo('wet:feedbackText');
 ?>
 <!-- This contains the bottom Footer Links -->
 <div class="container">
@@ -55,13 +62,7 @@ if (_elgg_services()->session->get('language') == 'en') {
 				</h3>
 				<ul class="list-unstyled">
 					<li>
-						<?php
-							if (elgg_is_active_plugin('freshdesk_help')) {
-								echo '<a href="'. elgg_get_site_url() . 'help/knowledgebase">'.elgg_echo('freshdesk:page:title').'</a>';
-							} else {
-								echo '<a href="'. elgg_get_site_url() . 'mod/contactform/">'.elgg_echo('contactform:help_menu_item').'</a>';
-							}
-						?>
+						<a href="<?php echo $faq; ?>"> <?php echo elgg_echo('contactform:help_menu_item'); ?> </a>
 					</li>
 				</ul>
 			</section>
