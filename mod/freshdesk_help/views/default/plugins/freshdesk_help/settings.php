@@ -40,6 +40,18 @@ echo '<label for="domain">Domain</label>';
 echo elgg_view("input/text", $params);
 echo '</div>';
 
+//domain
+$params = array(
+  'name' => 'params[custom_domain_url]',
+  'id' => 'custom_domain_url',
+  'class' => 'mrgn-bttm-sm',
+  'value' => $vars['entity']->custom_domain_url,
+);
+
+echo '<div class="basic-profile-field">';
+echo '<label for="custom_domain_url">Custom Domain URL</label>';
+echo elgg_view("input/text", $params);
+echo '</div>';
 
 //portal
 echo '<div class="basic-profile-field">';
