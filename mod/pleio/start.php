@@ -13,6 +13,7 @@ elgg_register_event_handler("init", "system", "pleio_init");
 function pleio_init() {
     elgg_unregister_page_handler("login");
     elgg_register_page_handler("login", "pleio_page_handler");
+    elgg_register_page_handler("migrate_openid", "pleio_migration_page_handler");
 
     elgg_unregister_action("register");
     elgg_unregister_page_handler("register");
@@ -141,6 +142,9 @@ function pleio_init() {
 
 function pleio_page_handler($page) {
     include(dirname(__FILE__) . "/pages/login.php");
+}
+function pleio_migration_page_handler($page) {
+    include(dirname(__FILE__) . "/pages/migrate_openid.php");
 }
 
 function pleio_access_requested_page_handler($page) {

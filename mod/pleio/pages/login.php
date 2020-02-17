@@ -8,7 +8,16 @@ $auth_client = elgg_get_plugin_setting('auth_client', 'pleio');
 $auth_secret = elgg_get_plugin_setting('auth_secret', 'pleio');
 
 if (elgg_is_logged_in()) {
-    forward("/");
+    if ( !user_has_pleioid(elgg_get_logged_in_user_guid()) ){
+        // with a logged in user we start the migration
+        forward("migrate_openid");
+    }
+    else
+        forward("/");
+}
+else{
+    // not logged in - need email to determine if user needs to be migrated to openid or not
+    forward("migrate_openid");          // will be a different from from the logged in one when that exists
 }
 
 $site = elgg_get_site_url();
@@ -205,4 +214,9 @@ if ($auth == 'oidc') {
             forward("/");
         }
     }
+}
+
+function user_has_pleioid($guid){
+    $dbprefix = elgg_get_config('dbprefix');
+    return get_data("select pleio_guid as pid from {$dbprefix}users_entity where guid = $guid")->pid !== NULL;
 }
