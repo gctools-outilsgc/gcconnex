@@ -29,10 +29,10 @@
         },
         previewZoomButtonIcons: {
             prev: '<i class="fa fa-caret-left fa-lg"></i>',
-            next: '<i class="fa fa-caret-right fa-lg"></i>',
+            next: '<span class="fa fa-caret-right fa-lg"></span>',
             toggleheader: '<i class="fa fa-arrows-v"></i>',
             fullscreen: '<i class="fa fa-arrows-alt"></i>',
-            borderless: '<i class="fa fa-external-link"></i>',
+            borderless: '<span class="fa fa-external-link"></span>',
             close: '<i class="fa fa-remove"></i>'
         },
         previewFileIcon: '<i class="fa fa-file"></i>',

@@ -29,7 +29,7 @@ if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 
     echo elgg_view('output/url', array(
         'href' => 'collections/edit/' . elgg_get_logged_in_user_entity()->guid . '?collection=' . $coll->id,
-        'text' => '<i class="fa fa-edit fa-2x icon-unsel"><span class="wb-inv">' . elgg_echo('friends:collections:edit') . ' ' . $coll->name . '</span></i>',
+        'text' => '<span class="fa fa-edit fa-2x icon-unsel"><span class="wb-inv">' . elgg_echo('friends:collections:edit') . ' ' . $coll->name . '</span></span>',
         'title' => elgg_echo('friends:collections:edit') . ': ' . $coll->name,
         'class' => 'mrgn-rght-sm mrgn-tp-sm'
         ));

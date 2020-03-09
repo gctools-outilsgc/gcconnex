@@ -47,7 +47,7 @@ return array(
 	'wet:login_engage_2'=>'Find people you need. The opportunities you want.',
 	'wet:login_engage_3'=>'Promote government-wide GC activities.',
 	'wet:login_welcome'=>'Welcome to GCconnex',
-	'wet:jobs:link' => 'GC Jobs <i class="fa fa-external-link mrgn-lft-sm"></i>',
+	'wet:jobs:link' => 'GC Jobs <span class="fa fa-external-link mrgn-lft-sm"></span>',
 	'wet:jobs:href' => "https://www.canada.ca/en/public-service-commission/jobs/services/gc-jobs.html",
 
 	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/

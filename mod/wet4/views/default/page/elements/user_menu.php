@@ -76,7 +76,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             // admin
             echo '<li class="elgg-menu-item-admin">
                 <a href="/admin" title="Admin" class="elgg-menu-content">
-                    <i class="fa fa-wrench fa-lg mrgn-rght-sm"></i>
+                    <span class="fa fa-wrench fa-lg mrgn-rght-sm"></i>
                     <span class="hidden-xs">Admin</span>
                 </a>
             </li>';

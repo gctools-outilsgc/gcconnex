@@ -86,14 +86,14 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             // admin
             echo '<li class="elgg-menu-item-admin">
                 <a href="/admin" title="Admin" class="elgg-menu-content">
-                    <i class="fa fa-wrench fa-lg mrgn-rght-sm"></i>
+                    <span class="fa fa-wrench fa-lg mrgn-rght-sm"></span>
                 </a>
             </li>';
         } ?>
         <li>
             <?php 
                 echo elgg_view('output/url', array(
-                    'text' => '<i class="fa fa-bookmark fa-lg"><span class="wb-invisible">'.elgg_echo('bookmarks').'</span></i>',
+                    'text' => '<span class="fa fa-bookmark fa-lg"><span class="wb-invisible">'.elgg_echo('bookmarks').'</span></span>',
                     'href' => '/bookmarks/owner/' .$username,
                     'title' => elgg_echo('bookmarks')
                 ));
@@ -103,7 +103,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             <?php
                 // colleagues
                 echo '<a href="/friends/'.$username.'" title="'.elgg_echo("userMenu:colleagues").'" class="elgg-menu-content">
-                    <i class="fa fa-users fa-lg"><span class="wb-invisible">'.elgg_echo("userMenu:colleagues").'</span></i>'.$friend_badge.'
+                    <span class="fa fa-users fa-lg"><span class="wb-invisible">'.elgg_echo("userMenu:colleagues").'</span></span>'.$friend_badge.'
                 </a>';
             ?>
         </li>
@@ -111,7 +111,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             <?php
                 // notifications
                 echo '<a href="/messages/notifications/'.$username.'" title="'.elgg_echo('notifications:subscriptions:changesettings').'" data-dd-type="notif_dd" class="elgg-menu-content">
-                    <i class="fa fa-bell fa-lg"><span class="wb-inv">'.elgg_echo('notifications:subscriptions:changesettings').'</span></i>'.$notification_badge.'   
+                    <span class="fa fa-bell fa-lg"><span class="wb-inv">'.elgg_echo('notifications:subscriptions:changesettings').'</span></span>'.$notification_badge.'   
                 </a>';
             ?>
         </li>

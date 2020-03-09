@@ -59,7 +59,7 @@ if (is_array($items)) {
     }
 
     if($count > $num_items){
-        echo '<li><a href="" data-toggle="dropdown" class="elgg-menu-content dropdown-toggle" aria-expanded="true">'.elgg_echo('gprofile:more').'<b class="caret"></b></a>';
+        echo '<li><a href="" data-toggle="dropdown" class="elgg-menu-content dropdown-toggle" aria-expanded="true">'.elgg_echo('gprofile:more').'<span class="caret"></span></a>';
         echo elgg_format_element('ul', ['class' => 'dropdown-menu pull-right'], $more_menu);
         echo '</li>';
     }
