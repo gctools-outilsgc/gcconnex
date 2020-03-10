@@ -447,7 +447,7 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 			));
 			$result[] = ElggMenuItem::factory(array(
 				"name" => "status_change_close",
-				"text" => '<i class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">Close</span></i>', //elgg_echo("close");,
+				"text" => '<span class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">Close</span></span>', //elgg_echo("close");,
 				"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
 				"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 				"is_trusted" => true,

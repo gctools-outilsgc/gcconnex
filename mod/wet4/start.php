@@ -849,7 +849,7 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params)
 	if ($entity->canComment() && elgg_is_logged_in()) {
 		$returnvalue[] = \ElggMenuItem::factory(array(
 			"name" => "comments",
-			"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
+			"text" => '<span class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></span>',
 			"title" => elgg_echo("comment:this"),
 			"href" => $entity->getURL() . "#comments"
 		));
@@ -1068,7 +1068,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
         // download link
 		$options = array(
 			'name' => 'download',
-			'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></i>',
+			'text' => '<span class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></span>',
 			'title' => 'Download File',
 			'href' => "file/download/{$entity->getGUID()}",
 			'priority' => 300,
@@ -1081,7 +1081,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 		//history icon
 		$options = array(
 			'name' => 'history',
-			'text' => '<i class="fa fa-history fa-lg icon-unsel"><span class="wb-inv">' . $hiddenText['history'] . '</span></i>',
+			'text' => '<span class="fa fa-history fa-lg icon-unsel"><span class="wb-inv">' . $hiddenText['history'] . '</span></span>',
 			'title'=> elgg_echo('pages:history'),
 			'href' => "pages/history/$entity->guid",
 			'priority' => 150,
@@ -1093,7 +1093,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 	if (elgg_instanceof($entity, "object", "groupforumtopic") && $entity->canEdit() && elgg_is_active_plugin('group_tools')) {
 		$return[] = ElggMenuItem::factory(array(
 			"name" => "status_change_open",
-			"text" => '<i class="fa fa-lock fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['unlock'].'</span></i>',
+			"text" => '<span class="fa fa-lock fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['unlock'].'</span></span>',
 			"confirm" => elgg_echo("group_tools:discussion:confirm:open"),
 			"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 			"is_trusted" => true,
@@ -1103,7 +1103,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 		));
 		$return[] = ElggMenuItem::factory(array(
 			"name" => "status_change_close",
-			"text" => '<i class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['lock'].'</span></i>',
+			"text" => '<span class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['lock'].'</span></span>',
 			"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
 			"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 			"is_trusted" => true,
@@ -1386,7 +1386,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 		if($object->getSubType() == 'file'){
 			$options = array(
 				'name' => 'download',
-				'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></i>',
+				'text' => '<span class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></span>',
 				'title' => elgg_echo('download'),
 				'href' => "file/download/{$object->getGUID()}",
 				'priority' => 300,
