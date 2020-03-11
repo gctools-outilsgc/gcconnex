@@ -118,10 +118,10 @@ if ($show_menu) {
         $badge = '<div class="gcProfileBadge">';
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/amb_badge_v1_5.png',
-						'aria-hidden' => 'true',
+			'aria-hidden' => 'true',
             'class' => 'img-responsive',
             'title' => elgg_echo('gcProfilePictureBadges:ambassador'),
-						'alt' => elgg_echo('gcProfilePictureBadges:ambassador'),
+			'alt' => '',
         ));
         $badge .= '</div>';
 
@@ -135,10 +135,10 @@ if ($show_menu) {
 
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/'.$user->init_badge.'.png',
-						'aria-hidden' => 'true',
+			'aria-hidden' => 'true',
             'class' => 'img-responsive',
             'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$user->init_badge),
-						'alt' => elgg_echo('gcProfilePictureBadges:badge:title:'.$user->init_badge),
+			'alt' => '',
         ));
 
         $badge .= '</div>';
