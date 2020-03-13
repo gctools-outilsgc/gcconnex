@@ -296,7 +296,7 @@ if ($user->mobile != null) {
 }
 
 if ($user->email != null) {
-    echo '<p class="mrgn-bttm-sm"><i class="fa fa-envelope fa-lg"></i> <a href="mailto:' . $user->email . '">' . $user->email . '</a></p>';
+    echo '<p class="mrgn-bttm-sm"><span class="fa fa-envelope fa-lg"></span> <a href="mailto:' . $user->email . '">' . $user->email . '</a></p>';
 }
 
 if ($user->website != null) {
@@ -329,7 +329,7 @@ foreach ($social as $media) {
         if ($media == 'flickr') { $link = "http://flickr.com/" . $link; $class = "fa-flickr"; }
         if ($media == 'youtube') { $link = "http://www.youtube.com/" . $link; $class = "fa-youtube";}
 
-        echo '<a href="' . $link . '" target="_blank"><i class="socialMediaIcons fa ' . $class . ' fa-2x"></i></a>';
+        echo '<a href="' . $link . '" target="_blank"><span class="socialMediaIcons fa ' . $class . ' fa-2x"></span></a>';
 
     }
 }

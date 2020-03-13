@@ -13,12 +13,12 @@ if($user->location){
     $content .= '<div>'.$user->location.'</div>';
 }
 if($user->phone){
-    $content .= '<div><i class="fa fa-phone fa-lg mrgn-rght-sm" style="width:16px;"></i>'.$user->phone.'</div>';
+    $content .= '<div><span class="fa fa-phone fa-lg mrgn-rght-sm" style="width:16px;"></span>'.$user->phone.'</div>';
 }
 if($user->mobile){
-    $content .= '<div><i class="fa fa-mobile fa-lg mrgn-rght-sm" style="width:16px;"></i>'.$user->mobile.'</div>';
+    $content .= '<div><span class="fa fa-mobile fa-lg mrgn-rght-sm" style="width:16px;"></span>'.$user->mobile.'</div>';
 }
-$content .= '<div><i class="fa fa-envelope  mrgn-rght-sm" style="width:16px;"></i>'.$user->email.'</div>';
+$content .= '<div><span class="fa fa-envelope  mrgn-rght-sm" style="width:16px;"></span>'.$user->email.'</div>';
 
 
 echo '<div class="panel-body">';

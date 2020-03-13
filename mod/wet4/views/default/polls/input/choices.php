@@ -29,7 +29,7 @@ if ($poll) {
 			);
 
 				$body .= '<a href="#" alt="'.elgg_echo('polls:delete_choice').'" title="'.elgg_echo('polls:delete_choice').' id="choice_delete_'.$i.'" onclick="javascript:polls_delete_choice('.$i.'); return false;">';
-			$body .= '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i></a>';
+			$body .= '<span class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></span></a>';
 			$body .= '</div>';
 			
 			
@@ -63,7 +63,7 @@ if ($poll) {
 				)
 			);
 			$body .= '<a href="#" alt="'.elgg_echo('polls:delete_choice').'" title="'.elgg_echo('polls:delete_choice').' id="choice_delete_'.$s.'" onclick="javascript:polls_delete_choice2('.$s.'); return false;">';
-			$body .= '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i></a>';
+			$body .= '<span class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></span></a>';
 			$body .= '</div>';
 			
 			$s += 1;
@@ -113,7 +113,7 @@ $('#add_choice').click(
         new_html += '<label class="mrgn-rght-sm" for="choice_text_'+cnum+'">Response '+displaynum+':</label>';
 		new_html += '<input type="text" class="input-poll-choice form-control form-inline" id="choice_text_'+cnum+'" name="choice_text_'+cnum+'"> ';
 		new_html += '<a href="#add_choice" title="<?php echo elgg_echo('polls:delete_choice'); ?>" class="form-inline" alt="<?php echo elgg_echo('polls:delete_choice'); ?>" id="choice_delete_'+cnum+'" onclick="javascript:polls_delete_choice('+cnum+'); return false;">';
-		new_html += '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i></a>'
+		new_html += '<span class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></span></a>'
 		new_html += '</div>';
 		$('#new_choices_area').append(new_html);
 	}
@@ -129,7 +129,7 @@ $('#add_choice2').click(
         new_html += '<label class="mrgn-rght-sm" for="choice_text_f'+cnum2+'">Response '+displaynum2+':</label>';
 		new_html += '<input type="text" class="input-poll-choice2 form-control form-inline" id="choice_text_f'+cnum2+'" name="choice_text_f'+cnum2+'"> ';
 		new_html += '<a href="#add_choice2" title="<?php echo elgg_echo('polls:delete_choice'); ?>" class="form-inline" alt="<?php echo elgg_echo('polls:delete_choice'); ?>" id="choice_delete_'+cnum2+'" onclick="javascript:polls_delete_choice2('+cnum2+'); return false;">';
-		new_html += '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i></a>'
+		new_html += '<span class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></span></a>'
 		new_html += '</div>';
 		$('#new_choices_area2').append(new_html);
 	}

@@ -24,7 +24,7 @@ if(elgg_is_logged_in()){
     ));
   }
 
-  $filter_form = '<a id="newsfeed_filter" href="#" style="margin-top: -35px;" title="'.elgg_echo('newsfeed:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v fa-2x icon-unsel"><span class="wb-inv">'.elgg_echo('newsfeed:filter:title').'</span></i></a><ul style="position: relative;" class="dropdown-menu pull-right act-filter" aria-labelledby="newsfeed_filter"><li id="filter_form">'.$filter_link.'</li><li>'.$view_link.'</li></ul>';
+  $filter_form = '<a id="newsfeed_filter" href="#" style="margin-top: -35px;" title="'.elgg_echo('newsfeed:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-ellipsis-v fa-2x icon-unsel"><span class="wb-inv">'.elgg_echo('newsfeed:filter:title').'</span></span></a><ul style="position: relative;" class="dropdown-menu pull-right act-filter" aria-labelledby="newsfeed_filter"><li id="filter_form">'.$filter_link.'</li><li>'.$view_link.'</li></ul>';
 
   echo $filter_form;
 }

@@ -975,7 +975,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 	if ($entity->getSubtype() == 'thewire' && elgg_is_logged_in()) {
 		$options = array(
 			'name' => 'reply',
-			'text' => '<i class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['reply'].'</span></i>',
+			'text' => '<span class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['reply'].'</span></span>',
 			'title' => elgg_echo('reply'),
 			'href' => 'ajax/view/thewire_tools/reply?guid=' . $entity->getGUID(),
 			'link_class' => 'elgg-lightbox',

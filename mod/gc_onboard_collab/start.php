@@ -71,19 +71,19 @@ function get_my_profile_strength_collab(){
 
     //avatar
     if($userEnt->getIconURL() !=  elgg_get_site_url() . '_graphics/icons/user/defaultmedium.gif'){
-        $avIcon = '<i class="fa fa-check text-primary"></i>';
+        $avIcon = '<span class="fa fa-check text-primary"></span>';
         $avTotal = 100;
     }else{
-        $avIcon = '<i class="fa fa-exclamation-triangle text-danger"></i>';
+        $avIcon = '<span class="fa fa-exclamation-triangle text-danger"></span>';
         $avTotal = 0;
     }
 
     //About me
     if($userEnt->description){
-        $aboutIcon = '<i class="fa fa-check text-primary"></i>';
+        $aboutIcon = '<span class="fa fa-check text-primary"></span>';
         $aboutTotal = 100;
     }else{
-        $aboutIcon = '<i class="fa fa-exclamation-triangle text-danger"></i>';
+        $aboutIcon = '<span class="fa fa-exclamation-triangle text-danger"></span>';
         $aboutTotal = 0;
     }
 

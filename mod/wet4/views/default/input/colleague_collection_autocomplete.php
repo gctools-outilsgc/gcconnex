@@ -78,7 +78,7 @@ if ($minChars < 1) {
 					}
 					result += ui.item.content;
 
-					result += "<?php echo addslashes('<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></i>'); ?>";
+					result += "<?php echo addslashes('<span class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></span>'); ?>";
 					result += "</div>";
 
 					$('#<?php echo $destination; ?>').append(result);
@@ -135,7 +135,7 @@ if ($minChars < 1) {
 					}
 					result += item[0].content;
 
-					result += "<?php echo addslashes('<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></i>'); ?>";
+					result += "<?php echo addslashes('<span class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></span>'); ?>";
 					result += "</div>";
 
 					$('#<?php echo $destination; ?>').append(result);

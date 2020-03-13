@@ -70,16 +70,16 @@ if (elgg_is_logged_in()) {
             echo '<ul class="list-unstyled colcount-sm-2 colcount-md-2 colcount-lg-2">';
             echo '<li><strong>Avatar</strong>: ';
             if($getResult["@AvatarPerc"]==100){
-                echo '<i class="fa fa-check text-primary"></i>';
+                echo '<span class="fa fa-check text-primary"></span>';
             }else{
-                echo '<i class="fa fa-exclamation-triangle text-danger"></i>';
+                echo '<span class="fa fa-exclamation-triangle text-danger"></span>';
             }
             echo '</li>';
             echo '<li><strong>'.elgg_echo('profile:aboutme').'</strong>:  ';
             if($getResult["@AboutPerc"]==100){
-                echo '<i class="fa fa-check text-primary"></i>';
+                echo '<span class="fa fa-check text-primary"></span>';
             }else{
-                echo '<i class="fa fa-exclamation-triangle text-danger"></i>';
+                echo '<span class="fa fa-exclamation-triangle text-danger"></span>';
             }
             echo '</li>';
             echo '</ul><ul class="list-unstyled colcount-sm-1 colcount-md-1 colcount-lg-1">';
