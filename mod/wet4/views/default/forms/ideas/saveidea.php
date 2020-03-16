@@ -20,6 +20,13 @@ $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid
 $guid = elgg_extract('guid', $vars, null);
 $user = elgg_get_logged_in_user_guid();
 
+$enAutofocus = 'autofocus';
+$frAutofocus = '';
+if(get_current_language() == 'fr'){
+  $enAutofocus = '';
+  $frAutofocus = 'autofocus';
+}
+
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
@@ -30,11 +37,11 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class='en'>
     <label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-    <?php echo elgg_view('input/text', array('name' => 'title', 'id' => 'title', 'value' => $title, 'required '=> "required")); ?>
+    <?php echo elgg_view('input/text', array('name' => 'title', 'id' => 'title', 'value' => $title, 'required '=> "required", $enAutofocus => 'true',)); ?>
 </div>
 <div class='fr'>
     <label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
-    <?php echo elgg_view('input/text', array('name' => 'title2', 'id' => 'title2', 'value' => $title2, 'required '=> "required")); ?>
+    <?php echo elgg_view('input/text', array('name' => 'title2', 'id' => 'title2', 'value' => $title2, 'required '=> "required", $frAutofocus => 'true',)); ?>
 </div>
 <div class='en'>
     <label for="description"><?php echo elgg_echo('description:ideas:en'); ?></label>

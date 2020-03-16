@@ -28,7 +28,14 @@ $description2 = elgg_extract('description2', $vars, '');
    $description2 = $json_desc->fr;
    $description = $json_desc->en;
  }
- 
+
+ $enAutofocus = 'autofocus';
+ $frAutofocus = '';
+ if(get_current_language() == 'fr'){
+   $enAutofocus = '';
+   $frAutofocus = 'autofocus';
+ }
+
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, get_default_access());
 $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
@@ -44,12 +51,12 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class="en">
 	<label for="title"><?php echo elgg_echo('album:title:en'); ?></label>
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'class' => 'mrgn-bttm-md', 'required' => 'required')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'class' => 'mrgn-bttm-md', 'required' => 'required', $enAutofocus => 'true',)); ?>
 </div>
 
 <div class="fr">
 	<label for="title2"><?php echo elgg_echo('album:title:fr'); ?></label>
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'class' => 'mrgn-bttm-md', 'required' => 'required')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'class' => 'mrgn-bttm-md', 'required' => 'required', $frAutofocus => 'true',)); ?>
 </div>
 <div class="en">
 	<label for="description"><?php echo elgg_echo('album:desc:en'); ?></label>

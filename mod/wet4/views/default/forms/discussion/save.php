@@ -32,7 +32,12 @@ if ( $json_desc ){
  $desc = $json_desc->en;
 }
 
-
+$enAutofocus = 'autofocus';
+$frAutofocus = '';
+if(get_current_language() == 'fr'){
+	$enAutofocus = '';
+	$frAutofocus = 'autofocus';
+}
 
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
@@ -44,12 +49,12 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class="mrgn-bttm-md en">
 	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'required '=> "required")); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'required '=> "required", $enAutofocus => 'true',)); ?>
 </div>
 
 <div class="mrgn-bttm-md fr">
 	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'required '=> "required")); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'required '=> "required", $frAutofocus => 'true',)); ?>
 </div>
 <div class="quick-start-collapse">
 
