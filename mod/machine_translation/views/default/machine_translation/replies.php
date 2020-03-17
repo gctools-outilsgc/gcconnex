@@ -121,7 +121,7 @@
             var replyMenu = $('.elgg-item-object-discussion_reply').find('.elgg-menu-entity-default');
             //adds translate link to the front of the metadata list
             //replyMenu.prepend("<li class='mrgn-lft-sm'><a href='javascript:void(0);' id='translink' class='translink' name='trans' data-toggle='modal' data-target='#LCToolModal'><?php echo elgg_echo("machine:linktext"); ?></a></li>");
-            replyMenu.prepend('<li class="mrgn-lft-sm"><a href="javascript:void(0);" id="translink" class="translink" name="trans" data-toggle="modal" data-target="#modal-transparent"><i class="fa fa-language fa-lg icon-unsel" title="Language Comprehension Tool" aria-hidden="true"><span class="wb-inv"><?php echo elgg_echo("machine:linktext"); ?></span></i></a></li>');
+            replyMenu.prepend('<li class="mrgn-lft-sm"><a href="javascript:void(0);" id="translink" class="translink" name="trans" data-toggle="modal" data-target="#modal-transparent"><span class="fa fa-language fa-lg icon-unsel" title="Language Comprehension Tool" aria-hidden="true"><span class="wb-inv"><?php echo elgg_echo("machine:linktext"); ?></span></span></a></li>');
 
             
             $('.translink').click(function(){

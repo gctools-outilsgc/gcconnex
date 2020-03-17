@@ -2084,12 +2084,12 @@ var componentName = "wb-geomap",
 			aoiDiv.parent().hide();
 			mapDiv.append( "<button id='geomap-aoi-toggle-mode-draw-" + geomap.mapid +
 					"' href='#' class='btn btn-sm geomap-geoloc-aoi-btn' title='" + i18nText.aoiBtnDraw +
-					"'><i class='glyphicon glyphicon-edit'></i><span class='wb-inv'> " +
+					"'><span class='glyphicon glyphicon-edit'></span><span class='wb-inv'> " +
 					i18nText.aoiBtnDraw + "</span></button>" );
 		} else {
 			$( "#geomap-aoi-btn-clear-" + geomap.mapid ).after( "<button id='geomap-aoi-toggle-mode-draw-" + geomap.mapid +
 					"' href='#' class='btn btn-sm geomap-geoloc-aoi-btn' title='" + i18nText.aoiBtnDraw +
-					"'><i class='glyphicon glyphicon-edit'></i> " +
+					"'><span class='glyphicon glyphicon-edit'></span> " +
 					i18nText.aoiBtnDraw + "</button>" );
 		}
 

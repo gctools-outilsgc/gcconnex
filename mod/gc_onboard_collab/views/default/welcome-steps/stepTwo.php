@@ -27,7 +27,7 @@
     <section class="alert-gc clearfix">
         <div class="clearfix">
             <div class="pull-left mrgn-lft-0">
-                <i class="fa fa-info-circle fa-3x alert-gc-icon" aria-hidden="true"></i>
+                <span class="fa fa-info-circle fa-3x alert-gc-icon" aria-hidden="true"></span>
             </div>
             <div style="width:80%;" class="pull-left alert-gc-msg">
                 <h3>
@@ -112,7 +112,7 @@
                         }
 
                         echo '<div tabindex="0" title="Click to remove '.$skill->title.' skill" class="gcconnex-skill-entry clearfix picked-skill" data-type="skill" onclick="deleteEntry(this)" data-guid="' . $skill_guid . '"><div class="skill-container clearfix" style="display:inline-block">';
-                        echo '<div class="gcconnex-endorsements-skill" data-type="skill">' . $skill->title . ' <i class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></i></div></div></div>';
+                        echo '<div class="gcconnex-endorsements-skill" data-type="skill">' . $skill->title . ' <span class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></span></div></div></div>';
                     }
                 }
             }
@@ -235,7 +235,7 @@
         // inject HTML for newly added skill
         $('.gcconnex-skills-skills-list-wrapper').append('<div tabindex="0" title="Click to remove ' + newSkill + ' skill" class="gcconnex-skill-entry picked-skill temporarily-added" data-type="skill" onclick="deleteEntry(this)" data-skill="' + newSkill + '">' +
 
-        '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + ' <i class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' + '<?php elgg_echo('delete:this') ?>' + '</span></i></div>' +
+        '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + ' <span class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' + '<?php elgg_echo('delete:this') ?>' + '</span></span></div>' +
         '</div>');
         $('.skillMessage').remove();
         checkLimit();
@@ -260,7 +260,7 @@
         if ($('.gcconnex-skill-entry:visible').length < 15) {
             $('.gcconnex-skills-skills-list-wrapper').append('<div tabindex="0" title="Click to remove ' + newSkill + ' skill" class="gcconnex-skill-entry picked-skill temporarily-added" data-type="skill" onclick="deleteEntry(this)" data-skill="' + newSkill + '">' +
 
-            '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + ' <i class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' + '<?php elgg_echo('delete:this') ?>' + '</span></i></div>' +
+            '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + ' <span class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' + '<?php elgg_echo('delete:this') ?>' + '</span></span></div>' +
             '</div>');
         }
         $('.skillMessage').remove();
@@ -381,7 +381,7 @@
 
         //skip to next step
         $('#skip').on('click', function () {
-          $(this).html('<i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i><span class="sr-only">Loading...</span>');
+          $(this).html('<span class="fa fa-spinner fa-pulse fa-lg fa-fw"></span><span class="sr-only">Loading...</span>');
             elgg.get('ajax/view/welcome-steps/stepThree', {
                 success: function (output) {
                     $('#welcome-step').html(output);

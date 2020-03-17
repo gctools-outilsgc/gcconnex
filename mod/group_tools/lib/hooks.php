@@ -437,7 +437,7 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 		} elseif (elgg_instanceof($entity, "object", "groupforumtopic") && $entity->canEdit()) {
 			$result[] = ElggMenuItem::factory(array(
 				"name" => "status_change_open",
-				"text" => '<i class="fa fa-lock fa-lg icon-unsel"><span class="wb-inv">Open</span></i>', //elgg_echo("open");,
+				"text" => '<span class="fa fa-lock fa-lg icon-unsel"><span class="wb-inv">Open</span></span>', //elgg_echo("open");,
 				"confirm" => elgg_echo("group_tools:discussion:confirm:open"),
 				"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 				"is_trusted" => true,

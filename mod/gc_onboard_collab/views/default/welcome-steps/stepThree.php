@@ -790,7 +790,7 @@
         if (button.attr('id') != '') {
 
           //change to loading spinner
-          button.html('<i class="fa fa-spinner fa-spin fa-lg fa-fw"></i><span class="sr-only">Loading...</span>').removeClass('btn-primary add-friend').addClass('btn-default');
+          button.html('<span class="fa fa-spinner fa-spin fa-lg fa-fw"></span><span class="sr-only">Loading...</span>').removeClass('btn-primary add-friend').addClass('btn-default');
           var id = $(this).attr('id');
 
           //do the elgg friend request action
@@ -816,7 +816,7 @@
 
       //skip to next step
       $('#next').on('click', function () {
-        $(this).html('<i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i><span class="sr-only">Loading...</span>');
+        $(this).html('<span class="fa fa-spinner fa-pulse fa-lg fa-fw"></span><span class="sr-only">Loading...</span>');
           elgg.get('ajax/view/welcome-steps/stepFour', {
               success: function (output) {
 

@@ -27,7 +27,7 @@
     <section class="alert-gc clearfix">
         <div class="clearfix">
             <div class="pull-left mrgn-lft-0">
-                <i class="fa fa-info-circle fa-3x alert-gc-icon" aria-hidden="true"></i>
+                <span class="fa fa-info-circle fa-3x alert-gc-icon" aria-hidden="true"></span>
             </div>
             <div style="width:80%;" class="pull-left alert-gc-msg">
                 <h4 class=" mrgn-tp-sm mrgn-bttm-sm">

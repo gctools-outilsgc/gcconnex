@@ -539,7 +539,7 @@ function wet4_theme_pagesetup()
 		$params = array(
 			"name" => "Colleagues",
 			"href" => "friends/" . $user->username,
-			"text" => '<i class="fa fa-users fa-lg"></i><span class="hidden-xs wb-invisible">' . elgg_echo("userMenu:colleagues") . '</span>',
+			"text" => '<span class="fa fa-users fa-lg"></span><span class="hidden-xs wb-invisible">' . elgg_echo("userMenu:colleagues") . '</span>',
 			"title" => elgg_echo('userMenu:colleagues'),
 			"class" => '',
 			'item_class' => '',
@@ -594,7 +594,7 @@ function wet4_theme_pagesetup()
 			$params = array(
 				"name" => "Colleagues",
 				"href" => "friends/" . $user->username,
-				"text" => '<i class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">'. elgg_echo("friends") . "</span><span class='notif-badge'>" . $count . "</span>",
+				"text" => '<span class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></span><span class="hidden-xs">'. elgg_echo("friends") . "</span><span class='notif-badge'>" . $count . "</span>",
 				"title" => elgg_echo('userMenu:colleagues') . ' - ' . $countTitle . ' ' . elgg_echo('friend_request') .'(s)',
 				"class" => '',
 				'item_class' => '',
@@ -1356,7 +1356,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			if ($object->status != "closed") {
 				$options = array(
 					"name" => "reply",
-					"text" => '<i class="fa fa-lg fa-reply icon-unsel"><span class="wb-inv">' . elgg_echo("entity:reply:groupdorumtopic",array($entName)) . '</span></i>',
+					"text" => '<span class="fa fa-lg fa-reply icon-unsel"><span class="wb-inv">' . elgg_echo("entity:reply:groupdorumtopic",array($entName)) . '</span></span>',
 					"title" => elgg_echo("reply:this"),
 					"href" => $object->getURL() . "#reply"
 				);
@@ -1722,7 +1722,7 @@ function wet4_widget_menu_setup($hook, $type, $return, $params)
 
 	$options = array(
 		'name' => 'collapse',
-		'text' => '<i class="fa fa-lg icon-unsel"><span class="wb-inv">'. elgg_echo('wet:collapseWidget', array($widget->getTitle())).'</span></i> ',
+		'text' => '<span class="fa fa-lg icon-unsel"><span class="wb-inv">'. elgg_echo('wet:collapseWidget', array($widget->getTitle())).'</span></span> ',
 		'title' => elgg_echo('wet:collapseWidget', array($widget->getTitle())),
 		'href' => "#elgg-widget-content-$widget->guid",
 		'link_class' => 'elgg-widget-collapse-button ',

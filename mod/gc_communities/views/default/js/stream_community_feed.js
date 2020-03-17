@@ -66,7 +66,7 @@ function check_for_community_feed_items() {
 
 function load_new_community_feed_items() {
 	// Spinner
-	$('.stream-new-newsfeed').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
+	$('.stream-new-newsfeed').html('<span class="fa fa-refresh fa-spin fa-1g fa-fw"></span><span class="sr-only">Loading...</span>');
 
 	// Get the guid from the post id
 	var firstPostOnPage = $('.community-feed-holder ul li').first().attr('id');

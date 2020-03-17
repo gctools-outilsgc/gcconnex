@@ -66,7 +66,7 @@ $group_entity = get_entity($welcomeGroup_guid);
 
     //skip to next step
     $('#skip').on('click', function () {
-      $(this).html('<i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i><span class="sr-only">Loading...</span>');
+      $(this).html('<span class="fa fa-spinner fa-pulse fa-lg fa-fw"></span><span class="sr-only">Loading...</span>');
         elgg.get('ajax/view/welcome-steps/stepFive', {
             success: function (output) {
 
@@ -87,7 +87,7 @@ $group_entity = get_entity($welcomeGroup_guid);
         var oldHTML = $('#' + type + '-' + guid).html();
 
         //add spinner - chane button colour
-        $('#' + type + '-' + guid).html('<i class="fa fa-spinner fa-spin fa-lg fa-fw"></i><span class="sr-only">Loading...</span>').removeClass('btn-primary').addClass('btn-default');
+        $('#' + type + '-' + guid).html('<span class="fa fa-spinner fa-spin fa-lg fa-fw"></span><span class="sr-only">Loading...</span>').removeClass('btn-primary').addClass('btn-default');
 
         //perform join action
         elgg.action('onboard/join', {

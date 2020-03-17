@@ -43,7 +43,7 @@
     <script>
         //skip to next step
         $('#next').on('click', function () {
-            $(this).html('<i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i><span class="sr-only">Loading...</span>');
+            $(this).html('<span class="fa fa-spinner fa-pulse fa-lg fa-fw"></span><span class="sr-only">Loading...</span>');
             elgg.get('ajax/view/welcome-steps/stepSix', {
                 success: function (output) {
                     $('#welcome-step').html(output);
@@ -58,7 +58,7 @@
             var message = $(".thewire-textarea").val();
 
             if( message !== "" ){
-                $(this).html('<i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i><span class="sr-only">Posting...</span>');
+                $(this).html('<span class="fa fa-spinner fa-pulse fa-lg fa-fw"></span><span class="sr-only">Posting...</span>');
                 elgg.action('thewire/add', {
                     data: {
                         'body': message,

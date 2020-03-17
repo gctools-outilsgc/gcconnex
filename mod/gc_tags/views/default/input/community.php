@@ -45,7 +45,7 @@ $communities_input = elgg_view('input/select', array(
 ));
 
 $input_toggle_button = elgg_view('output/url',array(
-    'text' => '<i class="fa fa-caret-down" aria-hidden="true"></i>',
+    'text' => '<span class="fa fa-caret-down" aria-hidden="true"></span>',
     'href' => 'javascript:void(0)',
     'class' => 'community-input-toggle',
     'data-commtoggle' => 'caret',

@@ -93,7 +93,7 @@ if ($full && !elgg_in_context('gallery')) {
 		echo'</div>';
 	}
 
-	$bookmark_icon = '<i class="fa fa-link mrgn-rght-md"></i>';
+	$bookmark_icon = '<span class="fa fa-link mrgn-rght-md"></span>';
 	$body = <<<HTML
 <div class="bookmark elgg-content mts">
 	$bookmark_icon<span class="elgg-heading-basic mbs">$link</span>
@@ -141,7 +141,7 @@ HTML;
 		'text' => $display_text,
 	));
 
-	$content = '<i class="fa fa-link mrgn-rght-md"></i>' . "$link{$excerpt}";
+	$content = '<span class="fa fa-link mrgn-rght-md"></span>' . "$link{$excerpt}";
 
     if(elgg_in_context('group_profile')){
         $metadata = elgg_view_menu('entity', array(

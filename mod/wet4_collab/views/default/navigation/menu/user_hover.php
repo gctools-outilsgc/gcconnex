@@ -151,7 +151,7 @@ if( $userType == 'federal' ){
     <?php
         // admin
         if( elgg_is_admin_logged_in() && $admin ){
-            echo '<div class="panel-footer coll-' . $user->guid . '"><div class="text-center"><a  role="button" data-toggle="collapse" href="#adminoptions-' . $user->guid . '" aria-expanded="false" aria-controls="collapseExample">' . elgg_echo('gprofile:edit:admin') . ' <i class="fa fa-caret-down fa-lg"></i></a></div>';
+            echo '<div class="panel-footer coll-' . $user->guid . '"><div class="text-center"><a  role="button" data-toggle="collapse" href="#adminoptions-' . $user->guid . '" aria-expanded="false" aria-controls="collapseExample">' . elgg_echo('gprofile:edit:admin') . ' <span class="fa fa-caret-down fa-lg"></span></a></div>';
 
             foreach($admin as $menu_item){
                 $items .= elgg_view('navigation/menu/elements/item', array(

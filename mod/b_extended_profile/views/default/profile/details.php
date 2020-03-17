@@ -288,11 +288,11 @@ echo '<div class="gcconnex-profile-location">' . $user->location . '</div>';
 echo '<div class="gcconnex-profile-contact-info">';
 
 if ($user->phone != null) {
-    echo '<p class="mrgn-bttm-sm"><i class="fa fa-phone fa-lg"></i> ' . $user->phone . '</p>';
+    echo '<p class="mrgn-bttm-sm"><span class="fa fa-phone fa-lg"></span> ' . $user->phone . '</p>';
 }
 
 if ($user->mobile != null) {
-    echo '<p class="mrgn-bttm-sm"><i class="fa fa-mobile fa-lg"></i> ' . $user->mobile . '</p>';
+    echo '<p class="mrgn-bttm-sm"><span class="fa fa-mobile fa-lg"></span> ' . $user->mobile . '</p>';
 }
 
 if ($user->email != null) {
@@ -300,7 +300,7 @@ if ($user->email != null) {
 }
 
 if ($user->website != null) {
-    echo '<p class="mrgn-bttm-sm"><i class="fa fa-globe fa-lg"></i> ';
+    echo '<p class="mrgn-bttm-sm"><span class="fa fa-globe fa-lg"></span> ';
     echo elgg_view('output/url', array(
         'href' => $user->website,
         'text' => $user->website

@@ -12,6 +12,6 @@ if($user && $user->user_type == ""){
     'href'=> 'updateorg?forward='.current_page_url(),
     'class' => 'pull-right',
   ));
-  $format_body = elgg_format_element('div',['class' => 'container', 'style' => 'padding:15px 0;'], '<i class="fa fa-user" style="color:#46246A; margin-right:10px; font-size:25px; vertical-align: -5%;"></i>'. elgg_echo('updateorg:banner:text') .$update_link);
+  $format_body = elgg_format_element('div',['class' => 'container', 'style' => 'padding:15px 0;'], '<span class="fa fa-user" style="color:#46246A; margin-right:10px; font-size:25px; vertical-align: -5%;"></span>'. elgg_echo('updateorg:banner:text') .$update_link);
   echo elgg_format_element('div',['class'=>'panel mrgn-bttm-0', 'style' =>'margin-bottom:0 !important'], $format_body);
 }
