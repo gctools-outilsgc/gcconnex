@@ -123,6 +123,12 @@ if ( $json_add ){
   $calendar_additional = $json_add->en;
 }
 
+$enAutofocus = 'autofocus';
+$frAutofocus = '';
+if(get_current_language() == 'fr'){
+	$enAutofocus = '';
+	$frAutofocus = 'autofocus';
+}
 
 $body = '<div class="event-calendar-edit-form">';
 
@@ -141,12 +147,12 @@ $body .= elgg_view('input/hidden', array('name' => 'event_guid', 'value' => $eve
 $body .= '<div class="event-calendar-edit-form-block">';
 //English
 $body .= '<div class="form-group en"><label for="calendar-title" class="required">'.elgg_echo("event_calendar:title_label").'</label>';
-$body .= elgg_view("input/text", array('name' => 'title', 'value' => $title, 'id' => 'calendar-title', 'class' => 'form-control', 'required' => 'required'));
+$body .= elgg_view("input/text", array('name' => 'title', 'value' => $title, 'id' => 'calendar-title', 'class' => 'form-control', 'required' => 'required', $enAutofocus => 'true',));
 $body .= '</div>';
 $body .= '<p class="wb-inv">'.$prefix['title'].elgg_echo('event_calendar:title_description').'</p>';
 //French
 $body .= '<div class="form-group fr"><label for="calendar-title2" class="required">'.elgg_echo("event_calendar:title_label2").'</label>';
-$body .= elgg_view("input/text", array('name' => 'title2', 'value' => $title2, 'id' => 'calendar-title2', 'class' => 'form-control', 'required' => 'required'));
+$body .= elgg_view("input/text", array('name' => 'title2', 'value' => $title2, 'id' => 'calendar-title2', 'class' => 'form-control', 'required' => 'required', $frAutofocus => 'true',));
 $body .= '</div>';
 $body .= '<p class="wb-inv">'.$prefix['title2'].elgg_echo('event_calendar:title_description').'</p>';
 
