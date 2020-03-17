@@ -65,7 +65,6 @@ if (($name == 'title2') || ($name == 'description2')){
 
 		echo '<div class="form-group fr">';
 		}elseif (($name == 'title') || ($name == 'description')){
-
 			echo '<div class="form-group en">';
 		}else{
 			echo '<div class="form-group ">';
@@ -78,7 +77,6 @@ if (($name == 'title2') || ($name == 'description2')){
 		if ($type != 'longtext') {
 			echo '<br />';
 		}
-
 
 		$view_vars = array(
 			'name' => $name,
@@ -103,7 +101,17 @@ if (($name == 'title2') || ($name == 'description2')){
 				}
 			}
 		}
-
+		// Autofocus for title based on site language
+		if(get_current_language() == 'fr'){
+			if($name == 'title2') {
+				$view_vars['autofocus'] = 'true';
+			}
+		} else {
+			if($name == 'title') {
+				$view_vars['autofocus'] = 'true';
+			}
+		}
+		
 		echo elgg_view($input_view, $view_vars);
 	?>
 </div>
