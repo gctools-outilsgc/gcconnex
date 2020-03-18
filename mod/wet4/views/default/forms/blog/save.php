@@ -76,13 +76,19 @@ $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
 </ul>';
 
+$enAutofocus = 'autofocus';
+$frAutofocus = '';
+if(get_current_language() == 'fr'){
+	$enAutofocus = '';
+	$frAutofocus = 'autofocus';
+}
 $label = elgg_echo('title:en');
 $input = elgg_view('input/text', array(
 	'name' => 'title',
 	'id' => 'blog_title_en',
   'required' => 'required',
 	'value' => $vars['title'],
-    'autofocus' =>'true',
+	$enAutofocus => 'true',
 ));
 
 $label2 = elgg_echo('title:fr');
@@ -90,7 +96,8 @@ $input2 = elgg_view('input/text', array(
 	'name' => 'title2',
 	'id' => 'blog_title_fr',
   'required' => 'required',
-	'value' => $vars['title2']
+	'value' => $vars['title2'],
+	$frAutofocus => 'true',
 ));
 
 $excerpt_label = elgg_echo('blog:excerpt:en');

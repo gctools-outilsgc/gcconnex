@@ -22,10 +22,17 @@
 
 	$type = elgg_extract("type", $vars);
 
+	$enAutofocus = 'autofocus';
+	$frAutofocus = '';
+	if(get_current_language() == 'fr'){
+		$enAutofocus = '';
+		$frAutofocus = 'autofocus';
+	}
+
  if ($type === 'en'){ ?><!-- If english tab -->
-	<input type="text" name="name" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
+	<input type="text" name="name" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" <?php echo $enAutofocus; ?> />
 	<?php } else {?><!-- If french tab -->
-	<input type="text" name="name2" id="<?php echo $id; ?>_autocomplete2" class="elgg-input elgg-input-autocomplete" />
+	<input type="text" name="name2" id="<?php echo $id; ?>_autocomplete2" class="elgg-input elgg-input-autocomplete" <?php echo $frAutofocus; ?> />
 
 	<?php } ?>
 	

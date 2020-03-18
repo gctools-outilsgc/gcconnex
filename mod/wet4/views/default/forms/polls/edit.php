@@ -39,12 +39,18 @@ if ( $json_question ){
   $desc = $json_desc->en;
 }*/
 
+$enAutofocus = 'autofocus';
+$frAutofocus = '';
+if(get_current_language() == 'fr'){
+	$enAutofocus = '';
+	$frAutofocus = 'autofocus';
+}
 
 $question_label = elgg_echo('polls:questionen');
-$question_textbox = elgg_view('input/text', array('name' => 'question', 'id' => 'question', 'value' => $question, 'required' => 'required'));
+$question_textbox = elgg_view('input/text', array('name' => 'question', 'id' => 'question', 'value' => $question, 'required' => 'required', $enAutofocus => 'true',));
 
 $question_label2 = elgg_echo('polls:questionfr');
-$question_textbox2 = elgg_view('input/text', array('name' => 'question2', 'id' => 'question2', 'value' => $question2, 'required' => 'required'));
+$question_textbox2 = elgg_view('input/text', array('name' => 'question2', 'id' => 'question2', 'value' => $question2, 'required' => 'required', $frAutofocus => 'true',));
 
 $responses_label = elgg_echo('polls:responses');
 $responses_control = elgg_view('polls/input/choices',array('poll'=>$poll, 'test' => $lang));
