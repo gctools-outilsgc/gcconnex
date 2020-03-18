@@ -48,7 +48,7 @@
 </div>
 <div  style="display:inline-block;<?php echo $alignment; ?>">
 
-    <span class="<?php echo $additional_class; ?>"><i class="fa fa-caret-right caret-color mrgn-rght-sm" id="<?php echo $icon_id; ?>"></i><?php echo $toggle; ?></span>
+    <span class="<?php echo $additional_class; ?>"><span class="fa fa-caret-right caret-color mrgn-rght-sm" id="<?php echo $icon_id; ?>"></span><?php echo $toggle; ?></span>
 	 <span style="font-style:italic;"><?php echo $additional_text; ?></span>
 </div>
  <div class="<?php echo $bordering; ?>" id="<?php echo $field_id; ?>" style="display:none;padding:8px;">

@@ -90,7 +90,7 @@ function check_for_newsfeed_items(){
 function loadNewNewsfeedItems(){
     //Goes through how 
     //Spinner
-    $('.stream-new-newsfeed').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
+    $('.stream-new-newsfeed').html('<span class="fa fa-refresh fa-spin fa-1g fa-fw"></span><span class="sr-only">Loading...</span>');
 
     //Get the guid from the post id
     var firstPostOnPage = $('#activity .elgg-list-river .elgg-item').first().attr('id');

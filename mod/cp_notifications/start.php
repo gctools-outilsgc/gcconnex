@@ -1830,7 +1830,7 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {
 
 
-			$bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell"><span class="wb-inv">'.elgg_echo('entity:unsubscribe:link:'.$entType, array($entName)).'</span></i>' : elgg_echo('cp_notify:stop_subscribe');
+			$bell_status = (elgg_is_active_plugin('wet4')) ? '<span class="icon-unsel fa fa-lg fa-bell"><span class="wb-inv">'.elgg_echo('entity:unsubscribe:link:'.$entType, array($entName)).'</span></span>' : elgg_echo('cp_notify:stop_subscribe');
 
 
 		    $return[] = ElggMenuItem::factory(array(
@@ -1845,7 +1845,7 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 
 	    } else {
 
-		    $bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:'.$entType, array($entName)).'</span></i>' : elgg_echo('cp_notify:start_subscribe');
+		    $bell_status = (elgg_is_active_plugin('wet4')) ? '<span class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:'.$entType, array($entName)).'</span></span>' : elgg_echo('cp_notify:start_subscribe');
 
 
 		    $return[] = ElggMenuItem::factory(array(

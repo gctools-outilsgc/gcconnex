@@ -30,11 +30,11 @@ requirejs(["selectize"], function () {
         plugins: ['remove_button', 'clear_button'],
         onFocus: function(){
             $('.community-input-toggle').data('commtoggle','up');
-            $('.community-input-toggle').html('<i class="fa fa-caret-up" aria-hidden="true"></i>');
+            $('.community-input-toggle').html('<span class="fa fa-caret-up" aria-hidden="true"></span>');
         },
         onBlur: function(){
             $('.community-input-toggle').data('commtoggle','caret');
-            $('.community-input-toggle').html('<i class="fa fa-caret-down" aria-hidden="true"></i>');
+            $('.community-input-toggle').html('<span class="fa fa-caret-down" aria-hidden="true"></span>');
         },
         theme: 'bootstrap',
         onChange: function(){
@@ -48,11 +48,11 @@ requirejs(["selectize"], function () {
     //button for opening and closing the community dropdown
     $('.community-input-toggle').on('click', function(){
         if($(this).data('commtoggle') == 'caret'){
-            $(this).html('<i class="fa fa-caret-up" aria-hidden="true"></i>');
+            $(this).html('<span class="fa fa-caret-up" aria-hidden="true"></span>');
             comm_selectized[0].selectize.focus();
             $(this).data('commtoggle','up');
         }else{
-            $(this).html('<i class="fa fa-caret-down" aria-hidden="true"></i>');
+            $(this).html('<span class="fa fa-caret-down" aria-hidden="true"></span>');
             $(this).data('commtoggle','caret');
         }
     });

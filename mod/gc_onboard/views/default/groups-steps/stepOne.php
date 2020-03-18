@@ -70,7 +70,7 @@
         var oldHTML = $('#' + type + '-' + guid).html();
 
         //add spinner - chane button colour
-        $('#' + type + '-' + guid).html('<i class="fa fa-spinner fa-spin fa-lg fa-fw"></i><span class="sr-only">Loading...</span>').removeClass('btn-primary').addClass('btn-default');
+        $('#' + type + '-' + guid).html('<span class="fa fa-spinner fa-spin fa-lg fa-fw"></span><span class="sr-only">Loading...</span>').removeClass('btn-primary').addClass('btn-default');
 
         //perform join action
         elgg.action('onboard/join', {

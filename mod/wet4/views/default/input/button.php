@@ -44,7 +44,7 @@ if (isset($vars['src']) && strpos($vars['src'], elgg_get_site_url()) === false) 
 //Nick I modified the button input to test for group search button so I can put the icon in the button.
 //Existing buttons should not be affected
 if($vars['type'] == 'group_search'){
-    $button_input ='<button type="submit" '.elgg_format_attributes($vars).'><i class="fa fa-search" aria-hidden="true"></i><span class="wb-inv">'.elgg_echo('search').'</span></button>';
+    $button_input ='<button type="submit" '.elgg_format_attributes($vars).'><span class="fa fa-search" aria-hidden="true"></span><span class="wb-inv">'.elgg_echo('search').'</span></button>';
 } else if($vars['type'] == 'submit'){
 		  $button_input ='<button type="submit" '.elgg_format_attributes($vars).'>'.$vars['value'].'</button>';
 } else{

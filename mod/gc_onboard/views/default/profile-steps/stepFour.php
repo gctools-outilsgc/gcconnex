@@ -62,7 +62,7 @@
                     }
 
                     echo '<div tabindex="0" title="Click to remove '.$skill->title.' skill" class="gcconnex-skill-entry clearfix picked-skill" data-type="skill" onclick="deleteEntry(this)" data-guid="' . $skill_guid . '"><div class="skill-container clearfix" style="display:inline-block">';
-                    echo '<div class="gcconnex-endorsements-skill" data-type="skill">' . $skill->title . ' <i class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></i></div></div></div>';
+                    echo '<div class="gcconnex-endorsements-skill" data-type="skill">' . $skill->title . ' <span class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></span></div></div></div>';
                 }
             }
         }
@@ -227,7 +227,7 @@
             // inject HTML for newly added skill
             $('.gcconnex-skills-skills-list-wrapper').append('<div tabindex="0" title="Click to remove ' + newSkill + ' skill" class="gcconnex-skill-entry picked-skill temporarily-added" data-type="skill" onclick="deleteEntry(this)" data-skill="' + newSkill + '">' +
 
-            '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + ' <i class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' + '<?php elgg_echo('delete:this') ?>' + '</span></i></div>' +
+            '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + ' <span class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' + '<?php elgg_echo('delete:this') ?>' + '</span></span></div>' +
             '</div>');
             $('.skillMessage').remove();
             checkLimit();
@@ -252,7 +252,7 @@
             if ($('.gcconnex-skill-entry:visible').length < 15) {
                 $('.gcconnex-skills-skills-list-wrapper').append('<div tabindex="0" title="Click to remove ' + newSkill + ' skill" class="gcconnex-skill-entry picked-skill temporarily-added" data-type="skill" onclick="deleteEntry(this)" data-skill="' + newSkill + '">' +
 
-                '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + ' <i class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' + '<?php elgg_echo('delete:this') ?>' + '</span></i></div>' +
+                '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + ' <span class="fa fa-times fa-lg close-x" aria-hidden="true"><span class="wb-inv">' + '<?php elgg_echo('delete:this') ?>' + '</span></span></div>' +
                 '</div>');
             }
             $('.skillMessage').remove();

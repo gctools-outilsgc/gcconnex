@@ -539,7 +539,7 @@ function wet4_theme_pagesetup()
 		$params = array(
 			"name" => "Colleagues",
 			"href" => "friends/" . $user->username,
-			"text" => '<i class="fa fa-users fa-lg"></i><span class="hidden-xs wb-invisible">' . elgg_echo("userMenu:colleagues") . '</span>',
+			"text" => '<span class="fa fa-users fa-lg"></span><span class="hidden-xs wb-invisible">' . elgg_echo("userMenu:colleagues") . '</span>',
 			"title" => elgg_echo('userMenu:colleagues'),
 			"class" => '',
 			'item_class' => '',
@@ -594,7 +594,7 @@ function wet4_theme_pagesetup()
 			$params = array(
 				"name" => "Colleagues",
 				"href" => "friends/" . $user->username,
-				"text" => '<i class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">'. elgg_echo("friends") . "</span><span class='notif-badge'>" . $count . "</span>",
+				"text" => '<span class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></span><span class="hidden-xs">'. elgg_echo("friends") . "</span><span class='notif-badge'>" . $count . "</span>",
 				"title" => elgg_echo('userMenu:colleagues') . ' - ' . $countTitle . ' ' . elgg_echo('friend_request') .'(s)',
 				"class" => '',
 				'item_class' => '',
@@ -735,7 +735,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params)
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'likes',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
-			'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.$hiddenText['like'].'</span>',
+			'text' => '<span class="fa fa-thumbs-up fa-lg icon-unsel"></span><span class="wb-inv">'.$hiddenText['like'].'</span>',
 			'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'hidden' : '',
 			'priority' => 998,
@@ -743,7 +743,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params)
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'unlike',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
-			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'.$hiddenText['unlike'].'</span>',
+			'text' => '<span class="fa fa-thumbs-up fa-lg icon-sel"></span><span class="wb-inv">'.$hiddenText['unlike'].'</span>',
 			'title' => elgg_echo('likes:remove') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'pad-rght-xs' : 'hidden',
 			'priority' => 998,
@@ -849,7 +849,7 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params)
 	if ($entity->canComment() && elgg_is_logged_in()) {
 		$returnvalue[] = \ElggMenuItem::factory(array(
 			"name" => "comments",
-			"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
+			"text" => '<span class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></span>',
 			"title" => elgg_echo("comment:this"),
 			"href" => $entity->getURL() . "#comments"
 		));
@@ -952,7 +952,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 			//reshare on the wire
 			$options = array(
 				'name' => 'thewire_tools_reshare',
-				'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['share'].'</span></i>',
+				'text' => '<span class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['share'].'</span></span>',
 				'title' => elgg_echo('thewire_tools:reshare'),
 				'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $entity->getGUID(),
 				'link_class' => 'elgg-lightbox',
@@ -975,7 +975,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 	if ($entity->getSubtype() == 'thewire' && elgg_is_logged_in()) {
 		$options = array(
 			'name' => 'reply',
-			'text' => '<i class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['reply'].'</span></i>',
+			'text' => '<span class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['reply'].'</span></span>',
 			'title' => elgg_echo('reply'),
 			'href' => 'ajax/view/thewire_tools/reply?guid=' . $entity->getGUID(),
 			'link_class' => 'elgg-lightbox',
@@ -1003,7 +1003,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
             if($entity->getSubtype() != 'thewire' && $entity->getSubtype() != 'discussion_reply'){
                 $options = array(
                     'name' => 'edit',
-                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></i>',
+                    'text' => '<span class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></span>',
                     'title' => elgg_echo('edit:this') . ' ' . $entContext,
                     'href' => "$handler/edit/{$entity->getGUID()}",
                     'priority' => 299,
@@ -1015,7 +1015,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
             if (elgg_is_logged_in() && $entity->getSubtype() != 'discussion_reply'){
             		$options = array(
             			'name' => 'delete',
-            			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
+            			'text' => '<span class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></span>',
             			'title' => elgg_echo('delete:this') . ' ' . $entContext,
             			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
             			'confirm' => elgg_echo('deleteconfirm'),
@@ -1041,7 +1041,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 										if($entity->owner_guid == $user['guid'] || elgg_is_admin_logged_in() || ($page_owner instanceof ElggGroup && $page_owner->getOwnerGUID() == $user['guid']) || $page_owner->canEdit()){
 				                    $options = array(
 				                    'name' => 'edit',
-				                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></i>',
+				                    'text' => '<span class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></span>',
 				                    'title' => elgg_echo('edit:this') . ' ' . $entContext,
 				                    'href' => "$handler/edit/{$entity->getGUID()}",
 				                    'priority' => 299,
@@ -1050,7 +1050,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 
 				                    $options = array(
 				                        'name' => 'delete',
-				                        'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
+				                        'text' => '<span class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></span>',
 				                        'title' => elgg_echo('delete:this') . ' ' . $entContext,
 				                        'href' => "action/$handler/delete?guid={$entity->getGUID()}",
 				                        'confirm' => elgg_echo('deleteconfirm'),
@@ -1068,7 +1068,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
         // download link
 		$options = array(
 			'name' => 'download',
-			'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></i>',
+			'text' => '<span class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></span>',
 			'title' => 'Download File',
 			'href' => "file/download/{$entity->getGUID()}",
 			'priority' => 300,
@@ -1081,7 +1081,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 		//history icon
 		$options = array(
 			'name' => 'history',
-			'text' => '<i class="fa fa-history fa-lg icon-unsel"><span class="wb-inv">' . $hiddenText['history'] . '</span></i>',
+			'text' => '<span class="fa fa-history fa-lg icon-unsel"><span class="wb-inv">' . $hiddenText['history'] . '</span></span>',
 			'title'=> elgg_echo('pages:history'),
 			'href' => "pages/history/$entity->guid",
 			'priority' => 150,
@@ -1093,7 +1093,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 	if (elgg_instanceof($entity, "object", "groupforumtopic") && $entity->canEdit() && elgg_is_active_plugin('group_tools')) {
 		$return[] = ElggMenuItem::factory(array(
 			"name" => "status_change_open",
-			"text" => '<i class="fa fa-lock fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['unlock'].'</span></i>',
+			"text" => '<span class="fa fa-lock fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['unlock'].'</span></span>',
 			"confirm" => elgg_echo("group_tools:discussion:confirm:open"),
 			"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 			"is_trusted" => true,
@@ -1103,7 +1103,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 		));
 		$return[] = ElggMenuItem::factory(array(
 			"name" => "status_change_close",
-			"text" => '<i class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['lock'].'</span></i>',
+			"text" => '<span class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['lock'].'</span></span>',
 			"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
 			"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 			"is_trusted" => true,
@@ -1286,7 +1286,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			$return[] = ElggMenuItem::factory(array(
 				'name' => 'likes',
 				'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$object->guid}"),
-				'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.$hiddenText['like'].'</span>',
+				'text' => '<span class="fa fa-thumbs-up fa-lg icon-unsel"></span><span class="wb-inv">'.$hiddenText['like'].'</span>',
 				'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
 				'item_class' => $hasLiked ? 'hidden' : '',
 				'priority' => 100,
@@ -1294,7 +1294,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			$return[] = ElggMenuItem::factory(array(
 				'name' => 'unlike',
 				'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$object->guid}"),
-				'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'.$hiddenText['unlike'].'</span>',
+				'text' => '<span class="fa fa-thumbs-up fa-lg icon-sel"></span><span class="wb-inv">'.$hiddenText['unlike'].'</span>',
 				'title' => elgg_echo('likes:remove') . ' ' . $entContext,
 				'item_class' => $hasLiked ? '' : 'hidden',
 				'priority' => 100,
@@ -1318,7 +1318,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 		} else {
 			$return[]= ElggMenuItem::factory(array(
 				'name' => 'thewire_tools_reshare',
-				'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['share'].'</span></i>',
+				'text' => '<span class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['share'].'</span></span>',
 				'title' => elgg_echo('thewire_tools:reshare'),
 				'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $object->getGUID(),
 				'link_class' => 'elgg-lightbox',
@@ -1332,7 +1332,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			$options = array(
 				'name' => 'delete',
 				'href' => elgg_add_action_tokens_to_url("action/river/delete?id=$item->id"),
-				'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i>',
+				'text' => '<span class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></span>',
 				'title' => elgg_echo('river:delete'),
 				'confirm' => elgg_echo('deleteconfirm'),
 				'priority' => 200,
@@ -1344,7 +1344,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			if ($object->canComment()) {
 				$options = array(
 					"name" => "comments",
-					"text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></i>',
+					"text" => '<span class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:blog", array($entName)) . '</span></span>',
 					"title" => elgg_echo("comment:this"),
 					"href" => $object->getURL() . "#comments"
 				);
@@ -1356,7 +1356,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			if ($object->status != "closed") {
 				$options = array(
 					"name" => "reply",
-					"text" => '<i class="fa fa-lg fa-reply icon-unsel"><span class="wb-inv">' . elgg_echo("entity:reply:groupdorumtopic",array($entName)) . '</span></i>',
+					"text" => '<span class="fa fa-lg fa-reply icon-unsel"><span class="wb-inv">' . elgg_echo("entity:reply:groupdorumtopic",array($entName)) . '</span></span>',
 					"title" => elgg_echo("reply:this"),
 					"href" => $object->getURL() . "#reply"
 				);
@@ -1368,14 +1368,14 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 			if (check_entity_relationship($user_guid, 'personal_event', $object->guid)) {
 				$options = array(
 					"name" => "calendar",
-					"text" => '<i class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:remove:event_calendar",array($entName)) . '</span></i>',
+					"text" => '<span class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:remove:event_calendar",array($entName)) . '</span></span>',
 					"title" => elgg_echo("event_calendar:remove_from_my_calendar"),
 					"href" => elgg_add_action_tokens_to_url("action/event_calendar/remove_personal?guid={$object->guid}"),
 				);
 			}else{
 				$options = array(
 					"name" => "calendar",
-					"text" => '<i class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:add:event_calendar",array($entName)) . '</span></i>',
+					"text" => '<span class="fa fa-lg fa-calendar icon-unsel"><span class="wb-inv">' . elgg_echo("entity:add:event_calendar",array($entName)) . '</span></span>',
 					"title" => elgg_echo("event_calendar:add_to_my_calendar"),
 					"href" => elgg_add_action_tokens_to_url("action/event_calendar/add_personal?guid={$object->guid}"),
 				);
@@ -1386,7 +1386,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 		if($object->getSubType() == 'file'){
 			$options = array(
 				'name' => 'download',
-				'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></i>',
+				'text' => '<span class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['download'].'</span></span>',
 				'title' => elgg_echo('download'),
 				'href' => "file/download/{$object->getGUID()}",
 				'priority' => 300,
@@ -1722,7 +1722,7 @@ function wet4_widget_menu_setup($hook, $type, $return, $params)
 
 	$options = array(
 		'name' => 'collapse',
-		'text' => '<i class="fa fa-lg icon-unsel"><span class="wb-inv">'. elgg_echo('wet:collapseWidget', array($widget->getTitle())).'</span></i> ',
+		'text' => '<span class="fa fa-lg icon-unsel"><span class="wb-inv">'. elgg_echo('wet:collapseWidget', array($widget->getTitle())).'</span></span> ',
 		'title' => elgg_echo('wet:collapseWidget', array($widget->getTitle())),
 		'href' => "#elgg-widget-content-$widget->guid",
 		'link_class' => 'elgg-widget-collapse-button ',
@@ -1734,7 +1734,7 @@ function wet4_widget_menu_setup($hook, $type, $return, $params)
 	if ($widget->canEdit()) {
 		$options = array(
 			'name' => 'delete',
-			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('widget:delete', array($widget->getTitle())).'</span></i>',
+			'text' => '<span class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('widget:delete', array($widget->getTitle())).'</span></span>',
 			'title' => elgg_echo('widget:delete', array($widget->getTitle())),
 			'href' => "action/widgets/delete?widget_guid=$widget->guid&context=" . $widget->getContainerGUID(),
 			'is_action' => true,
@@ -1749,7 +1749,7 @@ function wet4_widget_menu_setup($hook, $type, $return, $params)
 		if ($show_edit) {
 			$options = array(
 				'name' => 'settings',
-				'text' => '<i class="fa fa-cog fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('widget:edit', array($widget->getTitle())).'</span></i>',
+				'text' => '<span class="fa fa-cog fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('widget:edit', array($widget->getTitle())).'</span></span>',
 				'title' => elgg_echo('widget:edit', array($widget->getTitle())),
 				'href' => "#widget-edit-$widget->guid",
 				'link_class' => "elgg-widget-edit-button",

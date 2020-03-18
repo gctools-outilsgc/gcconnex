@@ -29,7 +29,7 @@ if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 
     echo elgg_view('output/url', array(
         'href' => 'collections/edit/' . elgg_get_logged_in_user_entity()->guid . '?collection=' . $coll->id,
-        'text' => '<i class="fa fa-edit fa-2x icon-unsel"><span class="wb-inv">' . elgg_echo('friends:collections:edit') . ' ' . $coll->name . '</span></i>',
+        'text' => '<span class="fa fa-edit fa-2x icon-unsel"><span class="wb-inv">' . elgg_echo('friends:collections:edit') . ' ' . $coll->name . '</span></span>',
         'title' => elgg_echo('friends:collections:edit') . ': ' . $coll->name,
         'class' => 'mrgn-rght-sm mrgn-tp-sm'
         ));
@@ -37,7 +37,7 @@ if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
     echo elgg_view('output/url', array(
 			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
 			'class' => 'delete_collection mrgn-rght-sm mrgn-tp-sm',
-			'text' => '<span class="wb-invisible">' . elgg_echo("delete"). ' ' . $coll->name . '</span><i class="fa fa-trash-o fa-2x icon-unsel"></i>',
+			'text' => '<span class="wb-invisible">' . elgg_echo("delete"). ' ' . $coll->name . '</span><span class="fa fa-trash-o fa-2x icon-unsel"></span>',
             'title' => elgg_echo('delete') . ' ' . $coll->name,
 			'encode_text' => false,
 			'confirm' => true,
@@ -46,7 +46,7 @@ if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
     echo elgg_view('output/url', array(
 			'href' => elgg_get_site_url() . 'messages/compose?collection=' . $coll->id,
 			'class' => 'delete_collection',
-			'text' => '<span class="wb-invisible">' . elgg_echo('collections_circle_send') . ' ' . $coll->name . '</span><i class="fa fa-envelope-o fa-2x icon-unsel"></i>',
+			'text' => '<span class="wb-invisible">' . elgg_echo('collections_circle_send') . ' ' . $coll->name . '</span><span class="fa fa-envelope-o fa-2x icon-unsel"></span>',
             'title' => elgg_echo('collections_circle_send') . ' ' . $coll->name,
 			'encode_text' => false,
 			'confirm' => true,

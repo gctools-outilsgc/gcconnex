@@ -230,7 +230,7 @@ echo $form_data;
                              //remove blank entries and add emails to list
                              if (blankTest != '') {
 
-                                 var email = '<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="' + $.trim(emails[i]) + '" name="user_guid_email[]">' + $.trim(emails[i]) + '<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i></div>';
+                                 var email = '<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="' + $.trim(emails[i]) + '" name="user_guid_email[]">' + $.trim(emails[i]) + '<span class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></span></div>';
 
                                  $('#group_tools_group_invite_autocomplete_email_autocomplete_results').append(email);
                              }

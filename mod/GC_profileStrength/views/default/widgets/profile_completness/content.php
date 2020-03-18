@@ -11,19 +11,19 @@ $userEnt = get_user ( $user_guid );
 
 //avatar
 if($userEnt->getIconURL() !=  elgg_get_site_url() . '_graphics/icons/user/defaultmedium.gif'){
-    $avIcon = '<i class="fa fa-check text-primary"><span class="wb-inv">' . elgg_echo('ps:avatar:added') . '</span></i>';
+    $avIcon = '<span class="fa fa-check text-primary"><span class="wb-inv">' . elgg_echo('ps:avatar:added') . '</span></span>';
     $avTotal = 100;
 }else{
-    $avIcon = '<i class="fa fa-exclamation-triangle text-danger"><span class="wb-inv">' . elgg_echo('ps:avatar:notadded') . '</span></i>';
+    $avIcon = '<span class="fa fa-exclamation-triangle text-danger"><span class="wb-inv">' . elgg_echo('ps:avatar:notadded') . '</span></span>';
     $avTotal = 0;
 }
 
 //About me
 if($userEnt->description){
-    $aboutIcon = '<i class="fa fa-check text-primary"><span class="wb-inv">' . elgg_echo('ps:about:added') . '</span></i>';
+    $aboutIcon = '<span class="fa fa-check text-primary"><span class="wb-inv">' . elgg_echo('ps:about:added') . '</span></span>';
     $aboutTotal = 100;
 }else{
-    $aboutIcon = '<i class="fa fa-exclamation-triangle text-danger"><span class="wb-inv">' . elgg_echo('ps:about:notadded') . '</span></i>';
+    $aboutIcon = '<span class="fa fa-exclamation-triangle text-danger"><span class="wb-inv">' . elgg_echo('ps:about:notadded') . '</span></span>';
     $aboutTotal = 0;
 }
 

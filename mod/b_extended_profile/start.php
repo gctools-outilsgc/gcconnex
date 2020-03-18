@@ -404,7 +404,7 @@ function list_avatars($options) {
     }
     //$list .= count($guids);
     if($options['id'] && $options['skill_guid'] && count($guids) > 4){
-        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" title="'.elgg_echo('gcconnex_profile:gc_skill:allendorse').'" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guid=' . $options['skill_guid'] .'" ><i class="fa fa-flip-vertical mrgn-tp-sm fa-ellipsis-h" aria-hidden="true"><span class="wb-invisible">'.elgg_echo('gcconnex_profile:gc_skill:allendorse').'</span></i></a>';
+        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" title="'.elgg_echo('gcconnex_profile:gc_skill:allendorse').'" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guid=' . $options['skill_guid'] .'" ><span class="fa fa-flip-vertical mrgn-tp-sm fa-ellipsis-h" aria-hidden="true"><span class="wb-invisible">'.elgg_echo('gcconnex_profile:gc_skill:allendorse').'</span></span></a>';
     }
     $list .= '</ul>'; // close div class="list-avatars"
     return $list;

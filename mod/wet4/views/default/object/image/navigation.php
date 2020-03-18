@@ -20,7 +20,7 @@ $index = $album->getIndex($photo->getGUID());
 echo '<ul class="elgg-menu elgg-menu-hz tidypics-album-nav">';
 echo '<li>';
 echo elgg_view('output/url', array(
-	'text' => '<i class="fa fa-arrow-left fa-lg icon-unsel"></i><span class="wb-inv">Previous Photo</span>',
+	'text' => '<span class="fa fa-arrow-left fa-lg icon-unsel"></span><span class="wb-inv">Previous Photo</span>',
 	'href' => $previous_photo->getURL(),
 ));
 echo '</li>';
@@ -31,7 +31,7 @@ echo '</li>';
 
 echo '<li>';
 echo elgg_view('output/url', array(
-	'text' => '<i class="fa fa-arrow-right fa-lg icon-unsel"></i><span class="wb-inv">Next Photo</span>',
+	'text' => '<span class="fa fa-arrow-right fa-lg icon-unsel"></span><span class="wb-inv">Next Photo</span>',
 	'href' => $next_photo->getURL(),
 ));
 echo '</li>';

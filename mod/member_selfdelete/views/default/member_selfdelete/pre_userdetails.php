@@ -13,5 +13,5 @@ if ($user->member_selfdelete == "anonymized"){
 	forward(REFERRER);
 }elseif($user->gcdeactivate == true){
 	//If the user has deactivated we allow users to view profile but with a message
-	echo elgg_format_element('div',array('class'=>'alert alert-warning clearfix col-sm-12'),'<i class="fa fa-exclamation" aria-hidden="true"></i> '.elgg_echo('member_selfdelete:gc:deactivate:profile'));
+	echo elgg_format_element('div',array('class'=>'alert alert-warning clearfix col-sm-12'),'<span class="fa fa-exclamation" aria-hidden="true"></span> '.elgg_echo('member_selfdelete:gc:deactivate:profile'));
 }

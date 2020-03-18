@@ -93,7 +93,7 @@ function check_for_posts(){
 function loadNewPosts(){
     //Goes through how 
     //Spinner
-    $('.stream-new-wire').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
+    $('.stream-new-wire').html('<span class="fa fa-refresh fa-spin fa-1g fa-fw"></span><span class="sr-only">Loading...</span>');
     //get all of the wire posts currently loaded on the page.
     var postsOnPage = $('.elgg-item-object-thewire .elgg-content');
     var existingArray =[];

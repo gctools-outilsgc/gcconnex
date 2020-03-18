@@ -35,7 +35,7 @@ function gc_communities_init()
 
 			$text = (get_current_language() == 'fr') ? $community['community_fr'] : $community['community_en'];
 			if (elgg_is_logged_in() && (elgg_is_admin_logged_in() || $community_animator == elgg_get_logged_in_user_entity()->username)) {
-				$text .= " <span class='elgg-lightbox' data-colorbox-opts='".json_encode(['href'=>elgg_normalize_url('ajax/view/tags/form?community_url='.$url),'width'=>'800px','height'=>'255px'])."'><i class='fa fa-cog fa-lg'><span class='wb-inv'>Customize this Community</span></i></span>";
+				$text .= " <span class='elgg-lightbox' data-colorbox-opts='".json_encode(['href'=>elgg_normalize_url('ajax/view/tags/form?community_url='.$url),'width'=>'800px','height'=>'255px'])."'><span class='fa fa-cog fa-lg'><span class='wb-inv'>Customize this Community</span></span></span>";
 			}
 
 			//Register Community page handler

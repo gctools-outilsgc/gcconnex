@@ -15,31 +15,31 @@
 
     $.fn.fileinputThemes.fa = {
         fileActionSettings: {
-            removeIcon: '<i class="fa fa-trash text-danger"></i>',
-            uploadIcon: '<i class="fa fa-upload text-info"></i>',
-            zoomIcon: '<i class="fa fa-search-plus"></i>',
-            dragIcon: '<i class="fa fa-bars"></i>',
-            indicatorNew: '<i class="fa fa-hand-o-down text-warning"></i>',
-            indicatorSuccess: '<i class="fa fa-check-circle text-success"></i>',
-            indicatorError: '<i class="fa fa-exclamation-circle text-danger"></i>',
-            indicatorLoading: '<i class="fa fa-hand-o-up text-muted"></i>'
+            removeIcon: '<span class="fa fa-trash text-danger"></span>',
+            uploadIcon: '<span class="fa fa-upload text-info"></span>',
+            zoomIcon: '<span class="fa fa-search-plus"></span>',
+            dragIcon: '<span class="fa fa-bars"></span>',
+            indicatorNew: '<span class="fa fa-hand-o-down text-warning"></span>',
+            indicatorSuccess: '<span class="fa fa-check-circle text-success"></span>',
+            indicatorError: '<span class="fa fa-exclamation-circle text-danger"></span>',
+            indicatorLoading: '<span class="fa fa-hand-o-up text-muted"></span>'
         },
         layoutTemplates: {
-            fileIcon: '<i class="fa fa-file kv-caption-icon"></i> '
+            fileIcon: '<span class="fa fa-file kv-caption-icon"></span> '
         },
         previewZoomButtonIcons: {
-            prev: '<i class="fa fa-caret-left fa-lg"></i>',
-            next: '<i class="fa fa-caret-right fa-lg"></i>',
-            toggleheader: '<i class="fa fa-arrows-v"></i>',
-            fullscreen: '<i class="fa fa-arrows-alt"></i>',
-            borderless: '<i class="fa fa-external-link"></i>',
-            close: '<i class="fa fa-remove"></i>'
+            prev: '<span class="fa fa-caret-left fa-lg"></span>',
+            next: '<span class="fa fa-caret-right fa-lg"></span>',
+            toggleheader: '<span class="fa fa-arrows-v"></span>',
+            fullscreen: '<span class="fa fa-arrows-alt"></span>',
+            borderless: '<span class="fa fa-external-link"></span>',
+            close: '<span class="fa fa-remove"></span>'
         },
-        previewFileIcon: '<i class="fa fa-file"></i>',
-        browseIcon: '<i class="fa fa-folder-open"></i>',
-        removeIcon: '<i class="fa fa-trash"></i>',
-        cancelIcon: '<i class="fa fa-ban"></i>',
-        uploadIcon: '<i class="fa fa-upload"></i>',
-        msgValidationErrorIcon: '<i class="fa fa-exclamation-circle"></i> '
+        previewFileIcon: '<span class="fa fa-file"></span>',
+        browseIcon: '<span class="fa fa-folder-open"></span>',
+        removeIcon: '<span class="fa fa-trash"></span>',
+        cancelIcon: '<span class="fa fa-ban"></span>',
+        uploadIcon: '<span class="fa fa-upload"></span>',
+        msgValidationErrorIcon: '<span class="fa fa-exclamation-circle"></span> '
     };
 })(window.jQuery);

@@ -22,7 +22,7 @@ if(!isset(elgg_get_logged_in_user_entity()->DAconnections) || elgg_get_logged_in
 
 $tabs = elgg_view('dept_activity/tabs');
 
-$filter_form = '<a href="#" style="position:absolute; top:10px; right:20px;" title="'.elgg_echo('dept:activity:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v fa-2x icon-unsel"><span class="wb-inv">'.elgg_echo('dept:activity:filter:title').'</span></i></a><ul style="top:45px; right: 8px;" class="dropdown-menu pull-right act-filter" aria-labelledby="dropdownMenu2"><li id="filter_form">'.$filter_link.'</li></ul>';
+$filter_form = '<a href="#" style="position:absolute; top:10px; right:20px;" title="'.elgg_echo('dept:activity:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-ellipsis-v fa-2x icon-unsel"><span class="wb-inv">'.elgg_echo('dept:activity:filter:title').'</span></span></a><ul style="top:45px; right: 8px;" class="dropdown-menu pull-right act-filter" aria-labelledby="dropdownMenu2"><li id="filter_form">'.$filter_link.'</li></ul>';
 
 //get the department we are working with
 $dept = elgg_get_logged_in_user_entity()->department;

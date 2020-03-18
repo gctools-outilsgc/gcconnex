@@ -49,7 +49,7 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
             /*echo elgg_echo('gcconnex:registerText');*/ //Nick - This replaces the older register text
             $login_list_array = ['wet:login_engage_1','wet:login_engage_2','wet:login_engage_3'];
             foreach($login_list_array as $list_text){
-                $contents .='<li><i class="fa fa-circle-o pull-left mrgn-rght-sm" aria-hidden="true"></i>'.elgg_echo($list_text) .'</li>';
+                $contents .='<li><span class="fa fa-circle-o pull-left mrgn-rght-sm" aria-hidden="true"></span>'.elgg_echo($list_text) .'</li>';
             }
 
             echo elgg_format_element('ul', array('class'=>'login-engage-list center-block'), $contents );

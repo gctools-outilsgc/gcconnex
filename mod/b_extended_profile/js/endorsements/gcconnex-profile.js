@@ -432,7 +432,7 @@ function editProfile(event) {
 
             // create a "delete this skill" link for each skill
             $('.gcconnex-endorsements-count').each(function(){
-                $(this).after('<button class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + '<i class="fa fa-2x icon-unsel fa-trash-o delete-skill-img"><span class="wb-inv">' + elgg.echo('delete') + '</span></i></button>'); //goes in here i think..
+                $(this).after('<button class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + '<span class="fa fa-2x icon-unsel fa-trash-o delete-skill-img"><span class="wb-inv">' + elgg.echo('delete') + '</span></span></button>'); //goes in here i think..
             });
             $('.save-' + $section).show();
             $('.save-' + $section).removeClass('hidden');
@@ -1406,7 +1406,7 @@ function addNewSkill(newSkill) {
     $('.gcconnex-skills-skills-list-wrapper').append('<div tabindex="-1" class="gcconnex-skill-entry temporarily-added" data-skill="' + newSkill + '">' +
     '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + '</div>' +
     '<div class="gcconnex-endorsements-count" data-skill="' + newSkill + '">0</div>' +
-    '<button class="delete-skill" data-type="skill" onclick="deleteEntry(this)">' + '<i class="fa fa-2x icon-unsel fa-trash-o delete-skill-img"><span class="wb-inv">' + elgg.echo('delete') + '</span></i></button></div>');
+    '<button class="delete-skill" data-type="skill" onclick="deleteEntry(this)">' + '<span class="fa fa-2x icon-unsel fa-trash-o delete-skill-img"><span class="wb-inv">' + elgg.echo('delete') + '</span></span></button></div>');
     $('.gcconnex-endorsements-input-skill').val('');                                 // clear the text box
     $('.gcconnex-endorsements-input-skill').typeahead('val', '');                                           // clear the typeahead box
     $('.gcconnex-endorsements-input-skill').hide();                                  // hide the text box

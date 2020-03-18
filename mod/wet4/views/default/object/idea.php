@@ -149,16 +149,16 @@ if($container) { // ds - was a weird bug where the container presumably didn't e
 
         //$vote .= "<span class='idea-likes'>" . count($likes) . "</span>";
         if($userVote == 1) {
-            $vote .= "<a href='$url' data-value='1' data-idea='{$idea->guid}'><i class='fa fa-arrow-up fa-lg icon-sel'></i><span class='wb-inv'>".elgg_echo('entity:upvote:link', array($title))."</span></a>";
+            $vote .= "<a href='$url' data-value='1' data-idea='{$idea->guid}'><span class='fa fa-arrow-up fa-lg icon-sel'></span><span class='wb-inv'>".elgg_echo('entity:upvote:link', array($title))."</span></a>";
         } else {
-            $vote .= "<a href='$url' data-value='1' data-idea='{$idea->guid}'><i class='fa fa-arrow-up fa-lg icon-unsel'></i><span class='wb-inv'>".elgg_echo('entity:upvote:link', array($title))."</span></a>";
+            $vote .= "<a href='$url' data-value='1' data-idea='{$idea->guid}'><span class='fa fa-arrow-up fa-lg icon-unsel'></span><span class='wb-inv'>".elgg_echo('entity:upvote:link', array($title))."</span></a>";
         }
         $vote .= $points;
 
         if($userVote == -1) {
-            $vote .= "<a href='$url' data-value='-1' data-idea='{$idea->guid}'><i class='fa fa-arrow-down fa-lg icon-sel'></i><span class='wb-inv'>".elgg_echo('entity:downvote:link', array($title))."</span></a>";
+            $vote .= "<a href='$url' data-value='-1' data-idea='{$idea->guid}'><span class='fa fa-arrow-down fa-lg icon-sel'></span><span class='wb-inv'>".elgg_echo('entity:downvote:link', array($title))."</span></a>";
         } else {
-            $vote .= "<a href='$url' data-value='-1' data-idea='{$idea->guid}'><i class='fa fa-arrow-down fa-lg icon-unsel'></i><span class='wb-inv'>".elgg_echo('entity:downvote:link', array($title))."</span></a>";
+            $vote .= "<a href='$url' data-value='-1' data-idea='{$idea->guid}'><span class='fa fa-arrow-down fa-lg icon-unsel'></span><span class='wb-inv'>".elgg_echo('entity:downvote:link', array($title))."</span></a>";
         }
         //$vote .= "<span class='idea-dislikes'>" . count($dislikes) . "</span>";
 

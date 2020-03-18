@@ -288,19 +288,19 @@ echo '<div class="gcconnex-profile-location">' . $user->location . '</div>';
 echo '<div class="gcconnex-profile-contact-info">';
 
 if ($user->phone != null) {
-    echo '<p class="mrgn-bttm-sm"><i class="fa fa-phone fa-lg"></i> ' . $user->phone . '</p>';
+    echo '<p class="mrgn-bttm-sm"><span class="fa fa-phone fa-lg"></span> ' . $user->phone . '</p>';
 }
 
 if ($user->mobile != null) {
-    echo '<p class="mrgn-bttm-sm"><i class="fa fa-mobile fa-lg"></i> ' . $user->mobile . '</p>';
+    echo '<p class="mrgn-bttm-sm"><span class="fa fa-mobile fa-lg"></span> ' . $user->mobile . '</p>';
 }
 
 if ($user->email != null) {
-    echo '<p class="mrgn-bttm-sm"><i class="fa fa-envelope fa-lg"></i> <a href="mailto:' . $user->email . '">' . $user->email . '</a></p>';
+    echo '<p class="mrgn-bttm-sm"><span class="fa fa-envelope fa-lg"></span> <a href="mailto:' . $user->email . '">' . $user->email . '</a></p>';
 }
 
 if ($user->website != null) {
-    echo '<p class="mrgn-bttm-sm"><i class="fa fa-globe fa-lg"></i> ';
+    echo '<p class="mrgn-bttm-sm"><span class="fa fa-globe fa-lg"></span> ';
     echo elgg_view('output/url', array(
         'href' => $user->website,
         'text' => $user->website
@@ -329,7 +329,7 @@ foreach ($social as $media) {
         if ($media == 'flickr') { $link = "http://flickr.com/" . $link; $class = "fa-flickr"; }
         if ($media == 'youtube') { $link = "http://www.youtube.com/" . $link; $class = "fa-youtube";}
 
-        echo '<a href="' . $link . '" target="_blank"><i class="socialMediaIcons fa ' . $class . ' fa-2x"></i></a>';
+        echo '<a href="' . $link . '" target="_blank"><span class="socialMediaIcons fa ' . $class . ' fa-2x"></span></a>';
 
     }
 }
