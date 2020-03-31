@@ -675,6 +675,10 @@ ol {
     list-style: none;
 }
 
+[data-role="discussion-reply-text"] li {
+    list-style: disc;
+}
+
 .list-inline {
   padding-left: 0;
   list-style: none;
