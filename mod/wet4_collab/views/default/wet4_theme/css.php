@@ -676,7 +676,7 @@ ol {
 }
 
 [data-role="discussion-reply-text"] ul > li{
-    list-style: disc;
+    list-style: disc !important;
 }
 
 [data-role="discussion-reply-text"] ol > li{
