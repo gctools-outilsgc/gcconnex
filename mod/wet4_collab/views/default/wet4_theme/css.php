@@ -675,6 +675,14 @@ ol {
     list-style: none;
 }
 
+[data-role="discussion-reply-text"] ul > li{
+    list-style: disc;
+}
+
+[data-role="discussion-reply-text"] ol > li{
+    list-style: decimal;
+}
+
 .list-inline {
   padding-left: 0;
   list-style: none;
