@@ -222,13 +222,16 @@ function mm_create_button_set_base($mission, $full_view=false) {
 			if($relationship_count < $mission->number) {
 				$user = elgg_get_logged_in_user_entity();
 				$mmdep = trim( explode('/', $mission->department_path_english)[0] );
-				if ( !$mission->openess || stripos( $user->department, $mmdep ) !== false )
-					$button_three = '<div id="apply-button-mission-' . $mission->guid . '" name="apply-button" style="display:inline-block;">' . $apply_button = elgg_view('output/url', array(
-			 				'href' => elgg_get_site_url() . 'missions/mission-application/' . $mission->guid,
-			 				'text' => elgg_echo('missions:apply').elgg_echo("mission:button:apply", array($mission->title)),
-			 				'class' => 'elgg-button btn btn-primary',
-		 					'style' => 'margin:2px;'
-			 		)) . '</div>';
+				if( $mission->role_type != 'missions:seeking'){
+					if ((!$mission->openess || stripos( $user->department, $mmdep ) !== false) && ($mission->role_type != 'missions:seeking')){
+						$button_three = '<div id="apply-button-mission-' . $mission->guid . '" name="apply-button" style="display:inline-block;">' . $apply_button = elgg_view('output/url', array(
+								'href' => elgg_get_site_url() . 'missions/mission-application/' . $mission->guid,
+								'text' => elgg_echo('missions:apply').elgg_echo("mission:button:apply", array($mission->title)),
+								'class' => 'elgg-button btn btn-primary',
+								'style' => 'margin:2px;'
+						)) . '</div>';
+					}
+				}	
 			}
 
 			if(check_entity_relationship($mission->guid, 'mission_tentative', elgg_get_logged_in_user_guid())) {
