@@ -226,7 +226,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 					if ((!$mission->openess || stripos( $user->department, $mmdep ) !== false) && ($mission->role_type != 'missions:seeking')){
 						$button_three = '<div id="apply-button-mission-' . $mission->guid . '" name="apply-button" style="display:inline-block;">' . $apply_button = elgg_view('output/url', array(
 								'href' => elgg_get_site_url() . 'missions/mission-application/' . $mission->guid,
-								'text' => elgg_echo('missions:apply111').elgg_echo("mission:button:apply", array($mission->title)),
+								'text' => elgg_echo('missions:apply').elgg_echo("mission:button:apply", array($mission->title)),
 								'class' => 'elgg-button btn btn-primary',
 								'style' => 'margin:2px;'
 						)) . '</div>';
