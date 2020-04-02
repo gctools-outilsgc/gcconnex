@@ -44,7 +44,7 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <!-- title en -->
 <div class="en">
-    <label for="name">
+    <label for="name_autocomplete">
         <?php echo elgg_echo("groups:name"); ?>
     </label>
     <br />
@@ -53,6 +53,7 @@ echo $btn_language;
         //if creating a group
     if(empty($group)){
         echo elgg_view("input/groups_autocomplete", array(
+                'id' => 'name',
 				'name' => 'name',
 				'value' => elgg_extract('name', $vars),
                 'type' => 'en',
@@ -72,7 +73,7 @@ echo $btn_language;
 
 <!-- title fr -->
 <div class="fr">
-    <label for="name2">
+    <label for="name2_autocomplete2">
         <?php echo elgg_echo("groups:name2"); ?>
     </label>
     <br />
@@ -81,6 +82,7 @@ echo $btn_language;
       //if creating a group
     if(empty($group)){
         echo elgg_view("input/groups_autocomplete", array(
+                'id' => 'name2',
                 'name' => 'name',
                 'value' => elgg_extract('name', $vars),
                 'type' => 'fr',
