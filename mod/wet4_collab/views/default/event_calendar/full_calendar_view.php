@@ -143,7 +143,7 @@ getEvents = function(start, end, timezone, callback) {
 			$.each(events, function(i, item) {
 				var titleParsed = $.parseJSON(item.title);
 				var title = titleParsed[lang] ? titleParsed[lang] : titleParsed['en'];
-			    newEvents.push({'title': title, 'start': new Date(item.start.replace(/-/g, '\/').replace(/T.+/, '')), 'end': new Date(item.end.replace(/-/g, '\/').replace(/T.+/, '')), 'allDay': item.allDay, 'url': item.url, 'guid': item.guid, 'id': item.id, 'is_event_poll': item.is_event_poll });
+			    newEvents.push({'title': title, 'start': item.start, 'end': item.end, 'allDay': item.allDay, 'url': item.url, 'guid': item.guid, 'id': item.id, 'is_event_poll': item.is_event_poll });
 			});
 			callback(newEvents);
 		}
