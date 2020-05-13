@@ -5,10 +5,11 @@
 $lang = get_current_language();
 $file = $vars['entity'];
 $object = $vars['item']->getObjectEntity();
-$excerpt = strip_tags($object->description);
+$excerpt = gc_explode_translation($object->description,$lang);
+$excerpt = strip_tags($excerpt);
 $excerpt = elgg_get_excerpt($excerpt);
 echo elgg_view('river/elements/layout', array(
   'item' => $vars['item'],
-  'message' => gc_explode_translation($excerpt,$lang),
+  'message' => $excerpt,
   'attachments' => elgg_view('river/object/file/attachment', array('item' => $vars['item'],)),
 ));
