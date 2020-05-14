@@ -53,7 +53,7 @@ function gc_explode_translation($imploded_txt, $lang)
         $value=$imploded_txt;
     }
 
-    return $value;
+    return htmlspecialchars_decode($value);
 }
 
 function old_gc_explode_translation($imploded_txt, $lang)
