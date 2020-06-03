@@ -2,7 +2,7 @@
 elgg_ws_expose_function(
 	"get.fields",
 	"get_register_fields",
-	array("id" => array('type' => 'string')),
+	array(),
 	'return occupation fields data to populate dropdowns',
 	'GET',
 	false,
@@ -85,10 +85,19 @@ function get_register_fields() {
 	$fields['municipal']['en'] = $provs->provinces_en;
 	$fields['municipal']['fr'] = $provs->provinces_fr;
 
-	//municipal
-	$fields['municipal']['en'] = $provs->provinces_en;
-	$fields['municipal']['fr'] = $provs->provinces_fr;
+	$munObj = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => 'municipal',
+ 	));
+	$municipals = get_entity($munObj[0]->guid);
 
+	$provincial_departments = json_decode($provs->provinces_en, true);
+
+	foreach($provincial_departments as $prov => $name){
+		$municipal = $municipals->get($prov);
+		$fields['municipal']['towns'][str_replace(" ", "", strtolower($prov))] = $municipal;
+	}
+	
 	//other
 	$otherObj = elgg_get_entities(array(
 		'type' => 'object',
