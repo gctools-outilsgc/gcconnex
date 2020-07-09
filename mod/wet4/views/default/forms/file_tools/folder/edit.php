@@ -78,7 +78,7 @@ $form_data .= "<div class='fr' id='frtitle'>";
 $form_data .= "<label for='title2'>" . elgg_echo("title:fr") . "</label>";
 $form_data .= elgg_view("input/text", array("name" => "title2", "id" => "title2", "value" => $title2, 'required '=> "required"));
 $form_data .= "</div>";
-
+/*
 $form_data .= "<div class='en' id='endesc'>";
 $form_data .= "<label for='description'>" . elgg_echo("file_tools:forms:edit:description") . "</label>";
 $form_data .= elgg_view("input/longtext", array("name" => "description", "id" => "description", "value" => $desc));
@@ -88,10 +88,10 @@ $form_data .= "<div class='fr' id='frdesc'>";
 $form_data .= "<label for='description2'>" . elgg_echo("file_tools:forms:edit:description2") . "</label>";
 $form_data .= elgg_view("input/longtext", array("name" => "description2", "id" => "description2", "value" => $desc2));
 $form_data .= "</div>";
-
+*/
 $form_data .= "<div>";
 $form_data .= "<label for='file_tools_parent_guid'>" . elgg_echo("file_tools:forms:edit:parent") . "</label>";
-$form_data .= "<br />";
+//$form_data .= "<br />";
 if (!empty($folder)) {
 $form_data .= elgg_view("input/folder_select_move", array("name" => "file_tools_parent_guid", "id" => "file_tools_parent_guid", "folder" => $folder, "value" => $parent, "container_guid" => $page_owner->getGUID(), 'type' => 'folder'));
 } else {
@@ -105,7 +105,7 @@ elgg_set_context("file_tools");
 
 $form_data .= "<div>";
 $form_data .= "<label for='access_id'>" . elgg_echo("access") . "</label>";
-$form_data .= "<br />";
+//$form_data .= "<br />";
 $form_data .= elgg_view("input/access", array("name" => "access_id", "id" => "access_id", "value" => $access_id, 'entity' => $folder));
 $form_data .= "</div>";
 
@@ -137,9 +137,9 @@ if(get_current_language() == 'fr'){
   btnfr_folder.classList.add("active");
 
   document.getElementById('frtitle').style.display = "block";
-  document.getElementById('frdesc').style.display = "block";
+  //document.getElementById('frdesc').style.display = "block";
   document.getElementById('entitle').style.display = "none";
-  document.getElementById('endesc').style.display = "none";
+  //document.getElementById('endesc').style.display = "none";
 
     </script>
 <?php
@@ -151,9 +151,9 @@ if(get_current_language() == 'fr'){
   btnen_folder.classList.add("active");
 
   document.getElementById('entitle').style.display = "block";
-  document.getElementById('endesc').style.display = "block";
+  //document.getElementById('endesc').style.display = "block";
   document.getElementById('frtitle').style.display = "none";
-  document.getElementById('frdesc').style.display = "none";
+  //document.getElementById('frdesc').style.display = "none";
 
     </script>
 <?php
@@ -174,16 +174,16 @@ jQuery(function(){
 function showen() {
 
    document.getElementById('entitle').style.display = "block";
-   document.getElementById('endesc').style.display = "block";
+   //document.getElementById('endesc').style.display = "block";
    document.getElementById('frtitle').style.display = "none";
-   document.getElementById('frdesc').style.display = "none";
+   //document.getElementById('frdesc').style.display = "none";
 }
 function showfr() {
 
    document.getElementById('frtitle').style.display = "block";
-   document.getElementById('frdesc').style.display = "block";
+   //document.getElementById('frdesc').style.display = "block";
    document.getElementById('entitle').style.display = "none";
-   document.getElementById('endesc').style.display = "none";
+   //document.getElementById('endesc').style.display = "none";
 }
 
 //do form validation here for ajax view
