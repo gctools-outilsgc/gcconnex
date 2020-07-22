@@ -38,8 +38,17 @@ if ($user->canEdit()) {
 
     $fields_test = array('Name', 'Job', 'Location', 'Phone', 'Mobile');
     echo '<div class="row mrgn-bttm-md"><div class="col-sm-6"><h4 class="mrgn-tp-0">WIP DIRECTORY INFO</h4></div><div class="col-sm-6"><div class="pull-right"><a href="#" role="button" class="btn btn-primary" target="_blank">Edit Profile in Directory</a></div></div></div>';
+
+    $icon = elgg_view_entity_icon($user, $size, array(
+        'use_hover' => false,
+        'use_link' => false,
+        'class' => 'pro-avatar',
+        'force_size' => true,
+    ));
+
     echo '<div class="row">';
-    echo '<div class="col-xs-6">';
+    echo '<div class="col-xs-2">'.$icon.'<a href="'.elgg_get_site_url(). 'avatar/edit/' . $user->username.'" class="btn btn-primary btn-block mrgn-tp-md">'. elgg_echo('gcconnex_profile:profile:edit_avatar') .'</a></div>';
+    echo '<div class="col-xs-5">';
     foreach($fields_test as $field) {
         $field = strtolower($field);
         $value = htmlspecialchars_decode($user->get($field));
@@ -59,7 +68,7 @@ if ($user->canEdit()) {
         echo '</div></div>';
     }
     echo '</div>';
-    echo '<div class="col-xs-6">';
+    echo '<div class="col-xs-5">';
 
     foreach ($fields as $field) {
 
@@ -545,7 +554,6 @@ if ($user->canEdit()) {
 
     </div>
             <div class="panel-footer text-right profile-edit-footer">
-                <a href="'.elgg_get_site_url(). 'avatar/edit/' . $user->username.'" class="btn btn-primary pull-left">'. elgg_echo('gcconnex_profile:profile:edit_avatar') .'</a>
                 <button type="button" class="btn btn-default overlay-close" style="background-color: #eaebed;">' . elgg_echo('gcconnex_profile:cancel') . '</button>
                 <button type="button" class="btn btn-primary save-profile">' . elgg_echo('gcconnex_profile:basic:save') . '</button>
             </div>
