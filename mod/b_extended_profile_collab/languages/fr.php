@@ -58,6 +58,12 @@ $french = array(
     'gcconnex_profile:basic:mobile' => 'Cellulaire : ',
     'gcconnex_profile:basic:email' => 'Courriel : ',
     'gcconnex_profile:basic:website' =>  'Site Web : ',
+    'gcconnex_profile:basic:streetaddress' => 'Street Address: [t] ',
+    'gcconnex_profile:basic:city' => 'City: [t]',
+    'gcconnex_profile:basic:province' => 'Province: [t]',
+    'gcconnex_profile:basic:postalcode' => 'Postal Code: [t]',
+    'gcconnex_profile:basic:country' => 'Country: [t]',
+    'gcconnex_profile:basic:jobfr' => 'Job Title FR: [t]',
     'gcconnex_profile:basic:micro_confirmation' => 'Les micro-affectations sont des affectations de courte durée publiées sur GCcollab et offertes à tous les fonctionnaires, sans égard à leur ministère. Elles sont de courte durée et de portée restreinte.<p>Avant de présenter votre candidature pour participer à des micro-affectations, vous devez d\'abord obtenir l\'autorisation de votre gestionnaire, puis cliquer sur la case à cocher ci-dessous.', //Micro affectation ou micro-mission?
 
     // EDUCATION

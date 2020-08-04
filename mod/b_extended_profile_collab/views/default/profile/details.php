@@ -36,8 +36,10 @@ if ($user->canEdit()) {
 
     $fields = array('user_type', 'Federal', 'Provincial', 'Institution', 'University', 'College', 'Highschool', 'Municipal', 'International', 'NGO', 'Community', 'Business', 'Media', 'Retired', 'Other', 'Website');
 
-    $fields_test = array('Name', 'Job', 'Location', 'Phone', 'Mobile');
-    echo '<div class="row mrgn-bttm-md"><div class="col-sm-6"><h4 class="mrgn-tp-0">WIP DIRECTORY INFO</h4></div><div class="col-sm-6"><div class="pull-right"><a href="#" role="button" class="btn btn-primary" target="_blank">Edit Profile in Directory</a></div></div></div>';
+    $fields_test = array('Name', 'Job', 'JobFr', 'Phone', 'Mobile');
+    $new_address = array('streetAddress', 'city', 'province', 'postalcode', 'country');
+
+    echo '<div class="row mrgn-bttm-md"><div class="col-sm-6"><h4 class="mrgn-tp-0">WIP DIRECTORY INFO</h4></div><div class="col-sm-6"><div class="pull-right"><span class="text-muted mrgn-rght-md">In sync with Directory </span><a href="#" role="button" class="btn btn-primary" target="_blank">Edit Profile in Directory</a></div></div></div>';
 
     $icon = elgg_view_entity_icon($user, $size, array(
         'use_hover' => false,
@@ -64,8 +66,10 @@ if ($user->canEdit()) {
         // set up label and input field for the basic profile stuff
         echo "<label for='{$field}' class='col-sm-4'>" . elgg_echo("gcconnex_profile:basic:{$field}")."</label>";
         echo '<div class="col-sm-8">'; // field wrapper for css styling
+        echo '<div class="input-group">';
+        echo '<span class="input-group-addon" style="float:none;">S</span>';
         echo elgg_view("input/text", $params);
-        echo '</div></div>';
+        echo '</div></div></div>';
     }
     echo '</div>';
     echo '<div class="col-xs-5">';
@@ -89,6 +93,8 @@ if ($user->canEdit()) {
             
             echo "<label for='{$field}' class='col-sm-4'>" . elgg_echo("gcconnex_profile:basic:{$field}")."</label>";
             echo '<div class="col-sm-8">';
+            echo '<div class="input-group">';
+            echo '<span class="input-group-addon" style="float:none;">S</span>';
             echo elgg_view('input/select', array(
                 'name' => $field,
                 'id' => $field,
@@ -109,7 +115,7 @@ if ($user->canEdit()) {
                     'other' => elgg_echo('gcconnex-profile-card:other')
                 ),
             ));
-
+            echo '</div>';
             // jquery for the occupation dropdown - institution
     ?>
 
@@ -492,7 +498,45 @@ if ($user->canEdit()) {
 
     } // end for-loop
 
-    echo '</div></div></div>'; // close div class="basic-profile-standard-field-wrapper"
+    echo '</div></div>'; // close div class="basic-profile-standard-field-wrapper"
+    echo '<div class="row mrgn-tp-md">';
+    echo '<div class="col-sm-10 col-sm-offset-2">';
+    foreach($new_address as $field) {
+        $field = strtolower($field);
+        $value = htmlspecialchars_decode($user->get($field));
+
+        echo "<div class='form-group col-xs-6 {$field}'>";
+        
+        $params = array(
+            'name' => $field,
+            'id' => $field,
+            'class' => 'gcconnex-basic-'.$field,
+            'value' => $value,
+        );
+
+        // set up label and input field for the basic profile stuff
+        echo "<label for='{$field}' class='col-sm-4'>" . elgg_echo("gcconnex_profile:basic:{$field}")."</label>";
+        echo '<div class="col-sm-8">'; // field wrapper for css styling
+        echo '<div class="input-group">';
+        echo '<span class="input-group-addon" style="float:none;">S</span>';
+        echo elgg_view("input/text", $params);
+        echo '</div>';
+        echo '</div></div>';
+    }
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="col-sm-5 col-sm-offset-2">';
+    echo '<label for="location" class="col-sm-4">' . elgg_echo("gcconnex_profile:basic:location") .'</label>';
+    echo '<div class="col-sm-8">';
+    echo elgg_view("input/text", array(
+        'name'=> 'location',
+        'id' => 'location',
+        'class' => 'gcconnex-basic-location',
+        'value' => htmlspecialchars_decode($user->get('location')),
+    ));
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
     echo '<h3>WIP SOCIALS</h3>';
     echo '<div class="basic-profile-social-media-wrapper col-md-12 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 

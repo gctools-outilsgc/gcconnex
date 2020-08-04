@@ -36,7 +36,7 @@ $english = array(
 
     // BASIC INFORMATION PROFILE FORM
     'gcconnex_profile:basic:name' => 'Name: ',
-    'gcconnex_profile:basic:job' => 'Job Title: ',
+    'gcconnex_profile:basic:job' => 'Job Title EN: ',
     'gcconnex_profile:basic:federal' => 'Organization: ',
     'gcconnex_profile:basic:ministry' => 'Ministry: ',
     'gcconnex_profile:basic:university' => 'University: ',
@@ -56,6 +56,12 @@ $english = array(
     'gcconnex_profile:basic:mobile' => 'Mobile: ',
     'gcconnex_profile:basic:email' => 'Email: ',
     'gcconnex_profile:basic:website' => 'Website: ',
+    'gcconnex_profile:basic:streetaddress' => 'Street Address: ',
+    'gcconnex_profile:basic:city' => 'City: ',
+    'gcconnex_profile:basic:province' => 'Province: ',
+    'gcconnex_profile:basic:postalcode' => 'Postal Code: ',
+    'gcconnex_profile:basic:country' => 'Country: ',
+    'gcconnex_profile:basic:jobfr' => 'Job Title FR: ',
 
     // EDUCATION
     'gcconnex_profile:education:school' => 'Institution Name: ',

@@ -682,6 +682,13 @@ function saveProfile(event) {
             profile.email = $(".gcconnex-basic-email").val();
             profile.website = $(".gcconnex-basic-website").val();
 
+            profile.jobfr = $(".gcconnex-basic-jobfr").val();
+            profile.streetaddress = $(".gcconnex-basic-streetaddress").val();
+            profile.city = $(".gcconnex-basic-city").val();
+            profile.province = $(".gcconnex-basic-province").val();
+            profile.postalcode = $(".gcconnex-basic-postalcode").val();
+            profile.country = $(".gcconnex-basic-country").val();
+
             var social_media = {};
 
             social_media.facebook = $(".gcconnex-basic-facebook").val();
