@@ -99,6 +99,18 @@ function get_api_profile($id)
 
 	$user['Website'] = $user_entity->website;
 
+	$user['jobTitleFr'] = $user_entity->jobfr;
+
+	$user['streetAddress'] = $user_entity->streetaddress;
+
+	$user['city'] = $user_entity->city;
+
+	$user['province'] = $user_entity->province;
+
+	$user['postalCode'] = $user_entity->postalcode;
+
+	$user['country'] = $user_entity->country;
+
 	if ($user_entity->facebook) {
 		$user['links']['facebook'] = "http://www.facebook.com/".$user_entity->facebook;
 	}
