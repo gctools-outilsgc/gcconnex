@@ -121,6 +121,8 @@ if ($auth == 'oidc') {
         $session = elgg_get_session();
         $returnto = $session->get('last_forward_from');
 
+        $session->set('token', $oidc->getAccessToken());
+
         if ($returnto && pleio_is_valid_returnto($returnto)) {
             forward($returnto);
         } else {
