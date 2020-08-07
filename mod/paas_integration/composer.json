@@ -1,0 +1,15 @@
+{
+    "name": "gccollab/paas_integration",
+    "description": "This plugin contains libraries to integrate PaaS into GCcollab",
+    "type": "elgg-plugin",
+    "keywords": [
+        "elgg",
+        "plugin",
+        "oauth2",
+        "graphql"
+    ],
+    "license": "GPL-2.0",
+    "require": {
+        "euautomation/graphql-client": "^0.3.0"
+    }
+}
