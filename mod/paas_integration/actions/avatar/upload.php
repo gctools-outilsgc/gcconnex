@@ -50,15 +50,7 @@ foreach ($icon_sizes as $name => $size_info) {
 	}
 }
 
-// reset crop coordinates
-$owner->x1 = 0;
-$owner->x2 = 0;
-$owner->y1 = 0;
-$owner->y2 = 0;
-
-$owner->icontime = time();
-
-// Prepare for GraphQL query to PaaS
+// Prepare for GraphQL mutation to PaaS
 
 $dbprefix = elgg_get_config("dbprefix");
 $service_url = elgg_get_plugin_setting("graphql_client", "paas_integration");
@@ -91,7 +83,6 @@ $headers = [
 
 $query = 'mutation ($gcID: ID!, $data: ModifyProfileInput!) {
 	modifyProfile(gcID: $gcID, data: $data) {
-		name
 		avatar
 	}
 }';
@@ -106,9 +97,21 @@ $variables = array(
 // Send data to PaaS
 $response = $client->response($query, $variables, $headers);
 
-error_log("///////////////////////////////////////////////////////////////////////////////////////////// ".serialize($response->errors()));
-error_log("///////////////////////////////////////////////////////////////////////////////////////////// ".$response->modifyProfile->avatar);
-error_log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\".serialize($response->all()));
+// Error check
+if($response->errors()){
+	register_error(elgg_echo('avatar:upload:fail'));
+	forward(REFERER);
+} else { // Assign new avatar url
+	$owner->avatar = $response->modifyProfile->avatar;
+}
+
+// reset crop coordinates
+$owner->x1 = 0;
+$owner->x2 = 0;
+$owner->y1 = 0;
+$owner->y2 = 0;
+
+$owner->icontime = time();
 
 if (elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
 	system_message(elgg_echo("avatar:upload:success"));
