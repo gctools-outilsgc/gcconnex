@@ -66,6 +66,8 @@ if (get_current_language() == 'en'){
 } else {
 	$federal_departments = json_decode($depts->federal_departments_fr, true);
 }
+uksort($federal_departments, 'strcasecmp');
+
 
 $input_department = elgg_view('input/text', array(
 	'name' => 'department',
