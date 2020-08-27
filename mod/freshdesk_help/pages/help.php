@@ -2,7 +2,7 @@
 
 	//redirect to new portal if set to gccollab
 	if(elgg_get_plugin_setting("custom_domain_url", "freshdesk_help")){
-		header("Location: " + elgg_get_plugin_setting("custom_domain_url", "freshdesk_help")); 
+		header("Location: " . elgg_get_plugin_setting("custom_domain_url", "freshdesk_help")); 
 		exit();
 	}
 
