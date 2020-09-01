@@ -13,7 +13,10 @@ RUN apk --no-cache add \
   php5-zlib \
   php5-curl \
   curl
-RUN mkdir /app && mkdir /app/pleio && mkdir /app/paas_integration && curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
+RUN mkdir /app && \
+    mkdir /app/pleio && \
+    mkdir /app/paas_integration && \
+    curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
 RUN ln -s /usr/bin/php5 /usr/bin/php
 WORKDIR /app
 COPY composer.json composer.json /app/
@@ -110,4 +113,3 @@ RUN chmod +x docker/start.sh
 RUN rm -f /run/apache2/httpd.pid
 ENTRYPOINT [ "docker/start.sh" ]
 CMD  ["/usr/sbin/httpd -D FOREGROUND"]
-
