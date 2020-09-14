@@ -56,13 +56,25 @@ if ($user->canEdit()) {
         $value = htmlspecialchars_decode($user->get($field));
 
         echo "<div class='form-group col-xs-12 {$field}'>";
-        $params = array(
-            'name' => $field,
-            'id' => $field,
-            'class' => 'gcconnex-basic-'.$field,
-            'value' => $value,
-        );
 
+        if($field == 'phone' || $field == 'mobile') {
+            $params = array(
+                'name' => $field,
+                'id' => $field,
+                'class' => 'gcconnex-basic-'.$field,
+                'value' => $value,
+                'type' => 'tel',
+                'pattern' => "^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$",
+            );
+        } else {
+            $params = array(
+                'name' => $field,
+                'id' => $field,
+                'class' => 'gcconnex-basic-'.$field,
+                'value' => $value,
+            );
+        }
+        
         // set up label and input field for the basic profile stuff
         echo "<label for='{$field}' class='col-sm-4'>" . elgg_echo("gcconnex_profile:basic:{$field}")."</label>";
         echo '<div class="col-sm-8">'; // field wrapper for css styling
@@ -507,12 +519,22 @@ if ($user->canEdit()) {
 
         echo "<div class='form-group col-xs-6 {$field}'>";
         
-        $params = array(
-            'name' => $field,
-            'id' => $field,
-            'class' => 'gcconnex-basic-'.$field,
-            'value' => $value,
-        );
+        if ($field == 'postalcode') {
+            $params = array(
+                'name' => $field,
+                'id' => $field,
+                'class' => 'gcconnex-basic-'.$field,
+                'value' => $value,
+                'pattern' => '[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]',
+            );
+        } else {
+            $params = array(
+                'name' => $field,
+                'id' => $field,
+                'class' => 'gcconnex-basic-'.$field,
+                'value' => $value,
+            );
+        }
 
         // set up label and input field for the basic profile stuff
         echo "<label for='{$field}' class='col-sm-4'>" . elgg_echo("gcconnex_profile:basic:{$field}")."</label>";

@@ -653,6 +653,29 @@ function saveProfile(event) {
         case "profile":
 
             var profile = {};
+            var errs = false;
+            // Error checking for these inputs
+            var postalTest = $(".gcconnex-basic-postalcode").val();
+            var phoneTest = $(".gcconnex-basic-phone").val();
+            var mobileTest = $(".gcconnex-basic-mobile").val();
+            if(!/[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]/.test(postalTest)) {
+                errs = true;
+                $(".gcconnex-basic-postalcode").addClass('error');
+            } else {
+                $(".gcconnex-basic-postalcode").removeClass('error');
+            }
+            if (!/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(phoneTest)) {
+                errs = true;
+                $(".gcconnex-basic-phone").addClass('error');
+            } else {
+                $(".gcconnex-basic-phone").removeClass('error');
+            }
+            if (!/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(mobileTest)) {
+                errs = true;
+                $(".gcconnex-basic-mobile").addClass('error');
+            } else {
+                $(".gcconnex-basic-mobile").removeClass('error');
+            }
 
             profile.name = $(".gcconnex-basic-name").val();
             profile.job = $(".gcconnex-basic-job").val();
@@ -703,21 +726,25 @@ function saveProfile(event) {
             social_media.youtube = $(".gcconnex-basic-youtube").val();
 
 
-            elgg.action('b_extended_profile/edit_profile', {
-                data: {
-                    'guid': elgg.get_page_owner_guid(),
-                    'section': "profile",
-                    'profile': profile,
-                    'social_media': social_media
-                },
-                success: function() {
-                    //if (response.system_messages["success"] != "") {
-                        // close the modal
-                        window.location.replace(window.location.href);
-                    //}
-                }
-            });
-
+            if (errs){
+                alert(elgg.echo('gcconnex_profile:error:phonepostal'));
+            } else {
+                elgg.action('b_extended_profile/edit_profile', {
+                    data: {
+                        'guid': elgg.get_page_owner_guid(),
+                        'section': "profile",
+                        'profile': profile,
+                        'social_media': social_media
+                    },
+                    success: function() {
+                        //if (response.system_messages["success"] != "") {
+                            // close the modal
+                            window.location.replace(window.location.href);
+                        //}
+                    }
+                });
+            }
+            
             //$('#editProfile').modal('hide');
 
             break;

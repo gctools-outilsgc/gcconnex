@@ -63,6 +63,7 @@ $english = array(
     'gcconnex_profile:basic:country' => 'Country: ',
     'gcconnex_profile:basic:jobfr' => 'Job Title FR: ',
 
+    'gcconnex_profile:error:phonepostal' => 'Invalid format on phone number or postal code',
     // EDUCATION
     'gcconnex_profile:education:school' => 'Institution Name: ',
     'gcconnex_profile:education:start_month' => 'Start Month: ',
