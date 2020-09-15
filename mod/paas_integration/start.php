@@ -72,10 +72,10 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
         'gcID' => $gcID,
         'data' => array(
             'name' => $profile_fields['name'],
-            'titleEn' => copy_value_to_object_if_defined('job', $profile_fields['job']),
-            'titleFr' => copy_value_to_object_if_defined('jobfr', $profile_fields['jobfr']),
-            'mobilePhone' => copy_value_to_object_if_defined('mobile', $profile_fields['mobile']),
-            'officePhone' => copy_value_to_object_if_defined('phone', $profile_fields['phone']),
+            'titleEn' => copy_value_to_object_if_defined($profile_fields['job']),
+            'titleFr' => copy_value_to_object_if_defined($profile_fields['jobfr']),
+            'mobilePhone' => copy_value_to_object_if_defined($profile_fields['mobile']),
+            'officePhone' => copy_value_to_object_if_defined($profile_fields['phone']),
             'address' => address_validation($address),
         )
     );
@@ -109,7 +109,7 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
   }
 
   // Set value to null if not set
-  function copy_value_to_object_if_defined($field, $value){
+  function copy_value_to_object_if_defined($value){
     if($value != null && $value != "undefined"){
         return $value;
     } else {
