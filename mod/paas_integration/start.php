@@ -8,6 +8,8 @@ function paas_integration_init() {
 
     elgg_register_action("avatar/upload", elgg_get_plugins_path() . "paas_integration/actions/avatar/upload.php");
     elgg_register_plugin_hook_handler("action", "b_extended_profile/edit_profile", "edit_profile_paas_mutation");
+
+    elgg_register_action('b_extended_profile/edit_profile', elgg_get_plugins_path() . 'paas_integration/actions/b_extended_profile/edit_profile.php');
 }
 
 /**
@@ -21,7 +23,6 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
 
     $dbprefix = elgg_get_config("dbprefix");
     $service_url = elgg_get_plugin_setting("graphql_client", "paas_integration");
-    $dev_url = elgg_get_plugin_setting("dev_url", "paas_integration");
 
     $session = elgg_get_session();
     $token = $session->get('token');
@@ -29,12 +30,6 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
     $result = get_data_row("SELECT pleio_guid FROM {$dbprefix}users_entity WHERE guid = $guid");
     if ($result->pleio_guid) {
         $gcID = $result->pleio_guid;
-    }
-
-    if($dev_url){
-        $site_url = $dev_url;
-    } else {
-        $site_url = elgg_get_site_url();
     }
 
     $client = new Client($service_url);
@@ -74,11 +69,11 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
             'mobilePhone' => copy_value_to_object_if_defined('mobile', $profile_fields['mobile']),
             'officePhone' => copy_value_to_object_if_defined('phone', $profile_fields['phone']),
             'address' => array(
-                'streetAddress' => $profile_fields['streetaddress'],
-                'city' => $profile_fields['city'],
-                'province' => $profile_fields['province'],
-                'postalCode' => $profile_fields['postalcode'],
-                'country' => $profile_fields['country'],
+                'streetAddress' => copy_value_to_object_if_defined($profile_fields['streetaddress']),
+                'city' => copy_value_to_object_if_defined($profile_fields['city']),
+                'province' => copy_value_to_object_if_defined($profile_fields['province']),
+                'postalCode' => copy_value_to_object_if_defined($profile_fields['postalcode']),
+                'country' => copy_value_to_object_if_defined($profile_fields['country']),
             )
         )
     );
@@ -90,6 +85,22 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
     if($response->errors()){
         return false;
     }
+
+    // Contact details
+    $owner->name = $response->modifyProfile->name;
+    $owner->job = $response->modifyProfile->titleEn;
+    $owner->jobfr = $response->modifyProfile->titleFr;
+    $owner->mobile = $response->modifyProfile->mobilePhone;
+    $owner->phone = $response->modifyProfile->officePhone;
+
+    // Address details
+    $owner->streetaddress = $response->modifyProfile->address->streetAddress;
+    $owner->city = $response->modifyProfile->address->city;
+    $owner->province = $response->modifyProfile->address->province;
+    $owner->postalcode = $response->modifyProfile->address->postalCode;
+    $owner->country = $response->modifyProfile->address->country;
+
+    $owner->save();
 
     // Mutation has gone through
     return true;
