@@ -32,6 +32,7 @@ services:
       - /var/www/html/vendor
       - /var/www/html/docker
       - /var/www/html/mod/pleio/vendor
+      - /var/www/html/mod/paas_integration/vendor
     depends_on:
       - gcconnex-db
       # - nginx-proxy
