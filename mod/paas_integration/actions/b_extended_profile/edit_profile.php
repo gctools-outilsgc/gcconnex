@@ -8,6 +8,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         case "profile":
             $profile_fields = get_input('profile');
             $social_media = get_input('social_media');
+            $paas_fields = array("job", "jobfr", "mobile", "phone", "streetaddress", "city", "province", "postalcode", "country");
             $error_message = '';
             foreach ( $profile_fields as $f => $v ) {
                 // cyu - check if email field is empty
@@ -107,6 +108,9 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                         if ($v && !preg_match("#^((ht|f)tps?:)?//#i", $v)) {
                             $v = "https://$v";
                         }
+                        $user->set($f, $v);
+                    }
+                    if(!(in_array($f, $paas_fields))){
                         $user->set($f, $v);
                     }
             	}

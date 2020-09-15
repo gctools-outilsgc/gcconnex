@@ -60,6 +60,14 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
 
     $profile_fields = get_input('profile');
 
+    $address = array(
+        'streetAddress' => copy_value_to_object_if_defined($profile_fields['streetaddress']),
+        'city' => copy_value_to_object_if_defined($profile_fields['city']),
+        'province' => copy_value_to_object_if_defined($profile_fields['province']),
+        'postalCode' => copy_value_to_object_if_defined($profile_fields['postalcode']),
+        'country' => copy_value_to_object_if_defined($profile_fields['country']),
+    );
+
     $variables = array(
         'gcID' => $gcID,
         'data' => array(
@@ -68,13 +76,7 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
             'titleFr' => copy_value_to_object_if_defined('jobfr', $profile_fields['jobfr']),
             'mobilePhone' => copy_value_to_object_if_defined('mobile', $profile_fields['mobile']),
             'officePhone' => copy_value_to_object_if_defined('phone', $profile_fields['phone']),
-            'address' => array(
-                'streetAddress' => copy_value_to_object_if_defined($profile_fields['streetaddress']),
-                'city' => copy_value_to_object_if_defined($profile_fields['city']),
-                'province' => copy_value_to_object_if_defined($profile_fields['province']),
-                'postalCode' => copy_value_to_object_if_defined($profile_fields['postalcode']),
-                'country' => copy_value_to_object_if_defined($profile_fields['country']),
-            )
+            'address' => address_validation($address),
         )
     );
     
@@ -106,10 +108,23 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
     return true;
   }
 
+  // Set value to null if not set
   function copy_value_to_object_if_defined($field, $value){
     if($value != null && $value != "undefined"){
         return $value;
     } else {
         return null;
     }
+  }
+
+  // Set array to null if all fields are null
+  function address_validation($address) {
+
+    foreach($address as $k => $v ) {
+        if($v != null) {
+            return $address;
+        }
+    }
+
+    return null;
   }
