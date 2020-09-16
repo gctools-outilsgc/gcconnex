@@ -36,6 +36,8 @@ $french = array(
 
     'gcconnex_profile:about_me:access' => 'Accès aux renseignements à mon sujet : ',
 
+    'gcconnex_profile:approvals' => 'The following fields are awaiting approval on <a href="https://profile.gccollab.ca/">Directory</a> and may not reflect what has previously been entered.',
+
     // BASIC PROFILE FORM
     'gcconnex_profile:basic:name' => 'Nom : ',
     'gcconnex_profile:basic:job' => 'Titre : ',

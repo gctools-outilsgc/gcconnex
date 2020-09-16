@@ -34,6 +34,8 @@ $english = array(
 
     'gcconnex_profile:about_me:access' => 'Who can see my description:',
 
+    'gcconnex_profile:approvals' => 'The following fields are awaiting approval on <a href="https://profile.gccollab.ca/">Directory</a> and may not reflect what has previously been entered.',
+
     // BASIC INFORMATION PROFILE FORM
     'gcconnex_profile:basic:name' => 'Name: ',
     'gcconnex_profile:basic:job' => 'Job Title EN: ',
