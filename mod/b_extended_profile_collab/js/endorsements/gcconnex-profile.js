@@ -658,19 +658,19 @@ function saveProfile(event) {
             var postalTest = $(".gcconnex-basic-postalcode").val();
             var phoneTest = $(".gcconnex-basic-phone").val();
             var mobileTest = $(".gcconnex-basic-mobile").val();
-            if(!/[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]/.test(postalTest)) {
+            if(postalTest && !/[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]/.test(postalTest)) {
                 errs = true;
                 $(".gcconnex-basic-postalcode").addClass('error');
             } else {
                 $(".gcconnex-basic-postalcode").removeClass('error');
             }
-            if (!/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(phoneTest)) {
+            if (phoneTest && !/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(phoneTest)) {
                 errs = true;
                 $(".gcconnex-basic-phone").addClass('error');
             } else {
                 $(".gcconnex-basic-phone").removeClass('error');
             }
-            if (!/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(mobileTest)) {
+            if (mobileTest && !/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(mobileTest)) {
                 errs = true;
                 $(".gcconnex-basic-mobile").addClass('error');
             } else {
