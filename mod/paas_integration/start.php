@@ -136,8 +136,9 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
 
     $result = get_data_row("SELECT pleio_guid FROM {$dbprefix}users_entity WHERE guid = $guid");
     if ($result->pleio_guid) {
-        $gcID = $result->pleio_guid;
+        return null;
     }
+    $gcID = $result->pleio_guid;
 
     $client = new Client($service_url);
 
