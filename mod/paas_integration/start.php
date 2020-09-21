@@ -128,3 +128,55 @@ function edit_profile_paas_mutation($hook, $entity_type, $returnvalue, $params) 
 
     return null;
   }
+
+  function waiting_on_approval($guid){
+
+    $dbprefix = elgg_get_config("dbprefix");
+    $service_url = elgg_get_plugin_setting("graphql_client", "paas_integration");
+
+    $result = get_data_row("SELECT pleio_guid FROM {$dbprefix}users_entity WHERE guid = $guid");
+    if ($result->pleio_guid) {
+        return null;
+    }
+    $gcID = $result->pleio_guid;
+
+    $client = new Client($service_url);
+
+    $headers = [];
+
+    $query = 'query getYourApproval($gcIDSubmitter: gcIDProfileInput!) {
+        approvals(
+          gcIDSubmitter: $gcIDSubmitter,
+          status: Pending,
+          changeType: Informational,
+        ) {
+            id
+            requestedChange {
+                titleEn
+                titleFr
+            }
+        }
+    }';
+
+
+    $variables = array(
+        'gcIDSubmitter' => array(
+            'gcID' => $gcID
+        ),
+    );
+    
+    // Send data to PaaS
+    $response = $client->response($query, $variables, $headers);
+
+    // Error check
+    if($response->errors()){
+        return null;
+    } else if(!$response->approvals[0]->requestedChange) {
+        return null;
+    }
+
+    return array(
+        "titleEn" => $response->approvals[0]->requestedChange->titleEn,
+        "titleFr" => $response->approvals[0]->requestedChange->titleFr
+    );
+  }

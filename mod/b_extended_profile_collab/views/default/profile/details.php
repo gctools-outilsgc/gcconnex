@@ -39,6 +39,22 @@ if ($user->canEdit()) {
     $fields_test = array('Name', 'Job', 'JobFr', 'Phone', 'Mobile');
     $new_address = array('streetAddress', 'city', 'province', 'postalcode', 'country');
 
+    // PaaS integration approvals
+    if(elgg_is_active_plugin('paas_integration')) {
+        $approvals = waiting_on_approval($user->guid);
+        if($approvals) {
+            echo '<div class="onboarding-cta-holder col-sm-12">';
+            echo '<p>'.elgg_echo('gcconnex_profile:approvals').'</p><ul>';
+            if($approvals['titleEn']){
+                echo '<li><a href="#job">'.elgg_echo('gcconnex_profile:basic:job').'</a></li>';
+            }
+            if($approvals['titleFr']){
+                echo '<li><a href="#jobfr">'.elgg_echo('gcconnex_profile:basic:jobfr').'</a></li>';
+            }
+            echo '</ul></div>';
+        }
+    }
+
     echo '<div class="row mrgn-bttm-md"><div class="col-sm-6"><h4 class="mrgn-tp-0">WIP DIRECTORY INFO</h4></div><div class="col-sm-6"><div class="pull-right"><span class="text-muted mrgn-rght-md">In sync with Directory </span><a href="#" role="button" class="btn btn-primary" target="_blank">Edit Profile in Directory</a></div></div></div>';
 
     $icon = elgg_view_entity_icon($user, $size, array(
