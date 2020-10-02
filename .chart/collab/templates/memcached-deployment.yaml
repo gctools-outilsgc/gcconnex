@@ -27,9 +27,6 @@ spec:
               containerPort: 11211
               protocol: TCP
           resources:
-            requests:
-              memory: "64Mi"
-              cpu: "0.1"
             limits:
               memory: "96Mi"
-              cpu: "0.4"
+              cpu: "0.1"
