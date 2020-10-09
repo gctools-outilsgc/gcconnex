@@ -56,6 +56,10 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		// do not persist a session for health probes
 		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'kube-probe') !== false && $_SERVER["REQUEST_URI"] == '/splash')
 			return true;
+		if ($_SERVER['HTTP_USER_AGENT'] == '-' && $_SERVER["REQUEST_URI"] == '/')
+			return true;
+		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false)
+			return true;
 
 		$query = "REPLACE INTO {$this->db->getTablePrefix()}users_sessions
 			(session, ts, data) VALUES
