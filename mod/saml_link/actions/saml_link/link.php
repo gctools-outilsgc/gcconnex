@@ -4,5 +4,5 @@
 	if (isset($_COOKIE['lang'])){
 		$lang = $_COOKIE['lang'];
 	}
-	forward(elgg_get_plugin_setting('gcpedia_url','saml_link')."saml/ucheck.php?username=".$loggedInUser."&lang=".$lang);
+	forward(elgg_get_plugin_setting('gcpedia_url','saml_link')."gcwiki/saml/ucheck.php?username=".$loggedInUser."&lang=".$lang);
 ?>
