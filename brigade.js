@@ -7,7 +7,7 @@ events.on("pull_request:reopened", setupReviewSites)
 events.on("pull_request:closed", cleanupResources)
 
 
-// build the new container and tag with git commit hash
+// build the new container from merge to master and tag with git commit hash
 function createBuildJob(commit, branch, p){
     var build = new Job("build", "docker:dind");
     build.privileged = true;
