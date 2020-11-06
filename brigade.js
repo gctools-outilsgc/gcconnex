@@ -160,7 +160,11 @@ events.on("pull_request:closed", cleanupResources)
       return updateChart.run()
     }).then( (result) => {
       end.env.CHECK_CONCLUSION = "success"
+<<<<<<< HEAD
       end.env.CHECK_SUMMARY = "updated review sites: GCconnex https://pr-"+prbranch+"-collab.test.phanoix.com/ and GCcollab https://pr-"+prbranch+"-connex.test.phanoix.com/"
+=======
+      end.env.CHECK_SUMMARY = "updated Review sites for: <br /> GCconnex https://pr-"+prbranch+"-collab.test.phanoix.com/ and <br /> GCcollab https://pr-"+prbranch+"-connex.test.phanoix.com/"
+>>>>>>> 501c03e74ebbc1402764a7942c04a607eee7e296
       end.env.CHECK_TEXT = result.toString()
       return end.run()
     }).catch( (err) => {
