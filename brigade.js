@@ -119,20 +119,20 @@ events.on("pull_request:closed", cleanupResources)
     const build = createBuildJob(prsha, prbranch, p)
   
     // This will update the review site
-    const installChart = new Job("install-chart", "lachlanevenson/k8s-helm")
-    installChart.tasks = [
+    const updateChart = new Job("install-chart", "lachlanevenson/k8s-helm")
+    updateChart.tasks = [
       'apk add --update coreutils git curl',
       'git clone https://github.com/gctools-outilsgc/gcconnex.git',
       'curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.0/bin/linux/amd64/kubectl \
        && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl',
       'helm upgrade test ./gcconnex/.chart/collab/ --namespace pr-${PR_BRANCH}-collab --reuse-values \
-       --set mariadb.auth.password=$(kubectl get secret --namespace pr-${PR_BRANCH} test-collab-env -o jsonpath="{.data.db-password}" | base64 --decode) \
+       --set mariadb.auth.password=$(kubectl get secret --namespace pr-${PR_BRANCH}-collab test-collab-env -o jsonpath="{.data.db-password}" | base64 --decode) \
        --set image.tag="${PR_SHA}"',
       'helm upgrade test ./gcconnex/.chart/collab/ --namespace pr-${PR_BRANCH}-connex --reuse-values \
        --set mariadb.auth.password=$(kubectl get secret --namespace pr-${PR_BRANCH}-connex test-collab-env -o jsonpath="{.data.db-password}" | base64 --decode) \
        --set image.tag="${PR_SHA}"'
     ]
-    installChart.env = {
+    updateChart.env = {
       PR_BRANCH: prbranch,
       PR_SHA: prsha
     }
@@ -157,10 +157,10 @@ events.on("pull_request:closed", cleanupResources)
       build.privileged = true;
       return build.run()
     }).then(() => {
-      return installChart.run()
+      return updateChart.run()
     }).then( (result) => {
       end.env.CHECK_CONCLUSION = "success"
-      end.env.CHECK_SUMMARY = "updated GCconnex pr-"+prbranch+"-collab.test.phanoix.com/ and GCcollab pr-"+prbranch+"-connex.test.phanoix.com/"
+      end.env.CHECK_SUMMARY = "updated GCconnex https://pr-"+prbranch+"-collab.test.phanoix.com/ and GCcollab https://pr-"+prbranch+"-connex.test.phanoix.com/"
       end.env.CHECK_TEXT = result.toString()
       return end.run()
     }).catch( (err) => {
