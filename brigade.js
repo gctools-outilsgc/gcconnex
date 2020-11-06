@@ -113,7 +113,7 @@ events.on("pull_request:closed", cleanupResources)
     const env = {
       CHECK_PAYLOAD: e.payload,
       CHECK_NAME: "Review Site",
-      CHECK_TITLE: "Testing https://pr-"+prbranch+".test.phanoix.com/",
+      CHECK_TITLE: "Updated https://pr-"+prbranch+"-collab.test.phanoix.com/",
     }
     
     const build = createBuildJob(prsha, prbranch, p)
@@ -160,7 +160,7 @@ events.on("pull_request:closed", cleanupResources)
       return installChart.run()
     }).then( (result) => {
       end.env.CHECK_CONCLUSION = "success"
-      end.env.CHECK_SUMMARY = "updated 'Testing https://pr-'+prbranch+'.test.phanoix.com/' and 'Testing https://pr-'+prbranch+'-connex.test.phanoix.com/'"
+      end.env.CHECK_SUMMARY = "updated GCconnex pr-"+prbranch+"-collab.test.phanoix.com/ and GCcollab pr-"+prbranch+"-connex.test.phanoix.com/"
       end.env.CHECK_TEXT = result.toString()
       return end.run()
     }).catch( (err) => {
