@@ -7,8 +7,8 @@ events.on("pull_request:reopened", setupReviewSites)
 events.on("pull_request:closed", cleanupResources)
 
 
-// build the new container from merge to master and tag with git commit hash
-function createBuildJob(commit, branch, p){
+  // build the new container from merge to master and tag with git commit hash
+  function createBuildJob(commit, branch, p){
     var build = new Job("build", "docker:dind");
     build.privileged = true;
     build.env.COMMIT = commit;
@@ -70,7 +70,7 @@ function createBuildJob(commit, branch, p){
 
 
 
-    // delete the namespace for the PR site
+  // delete the namespace for the PR site
   function cleanupResources(e, p) {
     var cleanup = new Job("cleanup", "lachlanevenson/k8s-kubectl")
     cleanup.tasks = [
@@ -86,7 +86,7 @@ function createBuildJob(commit, branch, p){
   }
   
 
-  // update review sites with newly built docker image tags
+  // update review sites with newly built docker images
   function updateReviewSites(e, p) {
     console.log("update requested")
     console.log(e.payload)
