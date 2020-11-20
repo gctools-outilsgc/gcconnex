@@ -40,7 +40,6 @@ $input['name2'] = htmlspecialchars(get_input('name2', '', true), ENT_QUOTES, 'UT
 $input['title'] = gc_implode_translation($input['name'], $input['name2']);
 $input['name'] = gc_implode_translation($input['name'], $input['name2']);
 $input['description'] = gc_implode_translation($input['description'], $input['description2']);
-$input['briefdescription'] = gc_implode_translation($input['briefdescription'], $input['briefdescription2']);
 
 $user = elgg_get_logged_in_user_entity();
 
@@ -76,7 +75,7 @@ if (sizeof($input) > 0) {
 				update_data($query);
 			}
 		}
-		if(($shortname != 'description2') && ($shortname != 'name2') && ($shortname != 'briefdescription2')){
+		if(($shortname != 'description2') && ($shortname != 'name2')){
 			$group->$shortname = $value;
 		}
 	}

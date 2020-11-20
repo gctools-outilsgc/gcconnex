@@ -42,7 +42,6 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 					"text" => elgg_echo('group:decline:invitation', array(gc_explode_translation($group->name,$lang))),
 					"class" => "elgg-button elgg-button-delete mlm",
 				));
-				$group_description = gc_explode_translation($group->briefdescription,$lang);
 				$body = "<div class='col-xs-9'><h2 style='border-bottom: none;'>$group_title</h2>";
 				$body .= "<p class='elgg-subtext'>$group_description</p></div>";
 

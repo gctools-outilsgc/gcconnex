@@ -45,8 +45,7 @@ if (!empty($groups)) {
 		$content .= '<div class="col-xs-2">'.elgg_view("output/url", array("text" => elgg_view_entity_icon($group, "small"), "href" => $group_url)).'</div>';
         $content .= '<div class="col-xs-10">';
         $content .= '<span class="pull-left">' .elgg_view("output/url", array("text" => $group->name, "href" => $group_url)).'</span></br>';     
-        $content .= '<div class=""><cite><i>'.$mem.' '.$num_members.' '.$members_string.'</i></cite></div>'; 
-		$content .= "<div class='mrgn-tp-sm'><p class='clearfix'>" . elgg_view("output/text", array("value" => $group->briefdescription)) . "</p></div>";  
+        $content .= '<div class=""><cite><i>'.$mem.' '.$num_members.' '.$members_string.'</i></cite></div>';  
 		$content .= "<div>" . elgg_view("output/url", array("text" => $join_text, "href" => $join_url, "is_action" => true, "class" => "elgg-button elgg-button-action")) . "</div>";
 		$content .= "</div></div></li>";
 	}
