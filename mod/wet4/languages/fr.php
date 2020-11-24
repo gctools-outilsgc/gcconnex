@@ -1639,8 +1639,6 @@ return array(
 	'blog:excerpt:en' => 'Extrait en anglais',
 	'groups:name' => 'Nom de groupe en anglais',
 	'groups:name2' => 'Nom de groupe en français',
-	'groups:briefdescription' => 'Description brève en anglais',
-	'groups:briefdescription2' => 'Description brève en français',
 	'groups:description' => 'Description longue en anglais',
 	'groups:description2'=> 'Description longue en français',
 	'groups:topicmessage' => 'Dernière discussion en anglais',
