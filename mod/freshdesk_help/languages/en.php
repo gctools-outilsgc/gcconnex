@@ -21,7 +21,7 @@ return array(
       'freshdesk:ticket:attachment' => "Attachment",
       'freshdesk:ticket:description' => "Description",
       'freshdesk:ticket:submit:confirmed' => "Your ticket has been submitted.",
-      'freshdesk:ticket:submit:denied' => "Something went wrong, please try again later.",
+      'freshdesk:ticket:submit:denied' => "Something went wrong, please try again later. Error Code: ",
 
       'freshdesk:ticket:basic:user_type' => "Occupation",
       'freshdesk:ticket:basic:federal' => 'Organization',
@@ -75,5 +75,40 @@ return array(
       'freshdesk:warning:body' => 'Knowledge base needs to be synced.',
 
       'freshdesk:ticket:information' => "Before submitting a ticket, search the help content for information on the most common questions. Can't find an answer? Submit a ticket using the form below. Please be clear when describing your issue and provide a screenshot, if possible. A help desk agent will get back to you within 2 business days.",
-      'freshdesk:ticket:information:note' => "<b>Note:</b> We are now using Freshdesk as a third-party tool to manage help desk activities. After submitting a ticket, you should receive a confirmation email with a link to your ticket."
+      'freshdesk:ticket:information:note' => "<b>Note:</b> We are now using Freshdesk as a third-party tool to manage help desk activities. After submitting a ticket, you should receive a confirmation email with a link to your ticket.",
+    
+      'freshdesk:paths:reason:label' => "What is your primary reason for submitting a ticket?",
+      'freshdesk:paths:reason:select' => "Please select a reason",
+      'freshdesk:paths:reason:account' => "I need assistance with my account / login",
+      'freshdesk:paths:reason:gcconnex' => "I need assistance using GCconnex",
+      'freshdesk:paths:reason:gcpedia' => "I need assistance using GCpedia",
+      'freshdesk:paths:reason:stats' => "I would like to request statistics on my page",
+      'freshdesk:paths:reason:other' => "Other (please specify)",
+
+      'freshdesk:paths:account:label' => "What is your account issue?",
+      'freshdesk:paths:account:new' => "I need help setting up a new account",
+      'freshdesk:paths:account:email' => "I need to update the email on my account",
+      'freshdesk:paths:account:password' => "I need to reset my password",
+    
+      'freshdesk:paths:assistance:label' => "Which section do you need assistance with?",
+      'freshdesk:paths:assistance:groups' => "Groups",
+      'freshdesk:paths:assistance:career' => "Career Marketplace",
+      'freshdesk:paths:assistance:files' => "Files",
+      'freshdesk:paths:assistance:profile' => "Profile",
+      
+      'freshdesk:paths:pageurl:label' => "Page URL",
+      
+      'freshdesk:paths:previousemail:label' => "Previous email",
+      
+      'freshdesk:paths:pwdreset:label' => "I have tried the <a href='#' target='_blank'>reset password</a> function",
+      'freshdesk:paths:opted:label' => "I have <a href='#' target='_blank'>opted in</a> to the Career marketplace. Opting in will allow you to search, post and apply to opportunities on the Career Marketplace.",
+      
+      'freshdesk:paths:data_ongoing:label' => "Make request ongoing",
+      'freshdesk:paths:data_date_to:label' => "End date",
+      'freshdesk:paths:data_date_from:label' => "Start date",
+      'freshdesk:paths:data_date_format:label' => "Format: yyyy-mm-dd",
+      'freshdesk:paths:data_report_to:label' => "Email report to",
+
+      'freshdesk:paths:other:alert' => "If you are experiencing an error, please include a screenshot or an error code.",
+      'freshdesk:paths:gcpedia:alert' => "If you are contacting help desk about coding assistance with your page, please refer to the coding resources documentation.",
     );

@@ -8,7 +8,7 @@ if($type == 'success'){
   system_message(elgg_echo('freshdesk:ticket:submit:confirmed', array(), $lang));
   elgg_clear_sticky_form('ticket-submit');
 } else {
-  register_error(elgg_echo('freshdesk:ticket:submit:denied'. ' : '.get_input('code'), array(), $lang));
+  register_error(elgg_echo('freshdesk:ticket:submit:denied', array(), $lang) . get_input('code'));
 }
 
 if(get_input('direct') == 'embed'){
