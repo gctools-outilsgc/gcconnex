@@ -6,7 +6,7 @@ if ($user) {
     $title = elgg_echo("pleio:change_settings");
     
     $link = elgg_view("output/url", [
-        "href" => $auth_url . "profile",
+        "href" => $auth_url,
         "text" => elgg_echo("gccollab_account"),
         "target" => "_blank"
     ]);
