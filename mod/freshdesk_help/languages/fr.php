@@ -72,8 +72,10 @@ return array(
   'freshdesk:paths:reason:label' => "Quelle est votre raison principale pour soumettre un billet?",
   'freshdesk:paths:reason:select' => "Veuillez sélectionner une raison",
   'freshdesk:paths:reason:account' => "J'ai besoin d'aide concernant mon compte ou l'ouverture d'une session",
-  'freshdesk:paths:reason:gcconnex' => "J'ai besoin d'aide avec GCconnex",
-  'freshdesk:paths:reason:gcpedia' => "J'ai besoin d'aide avec GCPedia",
+  'freshdesk:paths:reason:gcconnex:issue' => "Je rencontre un problème sur GCconnex",
+  'freshdesk:paths:reason:gcpedia:issue' => "Je rencontre un problème sur GCPedia",
+  'freshdesk:paths:reason:gcconnex:assist' => "J'ai besoin d'aide avec GCconnex",
+  'freshdesk:paths:reason:gcpedia:assist' => "J'ai besoin d'aide avec GCPedia",
   'freshdesk:paths:reason:stats' => "Je souhaite obtenir les statistiques de ma page",
   'freshdesk:paths:reason:other' => "Autre (veuillez préciser)",
 

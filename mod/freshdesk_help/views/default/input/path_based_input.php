@@ -7,8 +7,10 @@ $source = $vars['source'];
 $reasons = array();
 $reasons[''] = elgg_echo('freshdesk:paths:reason:select', array(), $lang);
 $reasons["I need assistance with my account / login | J'ai besoin d'aide concernant mon compte ou l'ouverture d'une session"] = elgg_echo('freshdesk:paths:reason:account', array(), $lang);
-$reasons["I need assistance using GCconnex | J'ai besoin d'aide avec GCconnex"] = elgg_echo('freshdesk:paths:reason:gcconnex', array(), $lang);
-$reasons["I need assistance using GCpedia | J'ai besoin d'aide avec GCPedia"] = elgg_echo('freshdesk:paths:reason:gcpedia', array(), $lang);
+$reasons["I am experiencing an issue on GCconnex | Je rencontre un problème sur GCconnex"] = elgg_echo('freshdesk:paths:reason:gcconnex:issue', array(), $lang);
+$reasons["I am experiencing an issue on GCpedia | Je rencontre un problème sur GCpedia"] = elgg_echo('freshdesk:paths:reason:gcpedia:issue', array(), $lang);
+$reasons["I need assistance using GCconnex | J'ai besoin d'aide avec GCconnex"] = elgg_echo('freshdesk:paths:reason:gcconnex:assist', array(), $lang);
+$reasons["I need assistance using GCpedia | J'ai besoin d'aide avec GCPedia"] = elgg_echo('freshdesk:paths:reason:gcpedia:assist', array(), $lang);
 $reasons["I would like to request statistics on my page | Je souhaite obtenir les statistiques de ma page"] = elgg_echo('freshdesk:paths:reason:stats', array(), $lang);
 $reasons["Other (please specify) | Autre (veuillez préciser)"] = elgg_echo('freshdesk:paths:reason:other', array(), $lang);
 
@@ -31,8 +33,10 @@ $assistance['Other (please specify) | Autre (veuillez préciser)'] = elgg_echo('
 
 // If product is GCpedia
 if($product_id == 2100000298){
+    unset($reasons["I am experiencing an issue on GCconnex | Je rencontre un problème sur GCconnex"]);
     unset($reasons["I need assistance using GCconnex | J'ai besoin d'aide avec GCconnex"]);
 } else {
+    unset($reasons["I am experiencing an issue on GCpedia | Je rencontre un problème sur GCpedia"]);
     unset($reasons["I need assistance using GCpedia | J'ai besoin d'aide avec GCPedia"]);
 }
 
@@ -177,9 +181,20 @@ $(document).ready(function(){
                 wipeTheBoard('all');
                 $('#account-fields').removeClass('hidden').find('select').attr('required', true);
             break;
+            case "I am experiencing an issue on GCconnex | Je rencontre un problème sur GCconnex":
+                wipeTheBoard('all');
+                $('#assistance-fields').removeClass('hidden');
+            break;
             case "I need assistance using GCconnex | J'ai besoin d'aide avec GCconnex":
                 wipeTheBoard('all');
                 $('#assistance-fields').removeClass('hidden');
+            break;
+            case "I am experiencing an issue on GCpedia | Je rencontre un problème sur GCpedia":
+                wipeTheBoard('all');
+                $('#url-field').removeClass('hidden');
+                $('#desc-file-fields').removeClass('hidden');
+                $('#gcpediaAlert').removeClass('hidden');
+                $('#ticketInfo').removeClass('hidden');
             break;
             case "I need assistance using GCpedia | J'ai besoin d'aide avec GCPedia":
                 wipeTheBoard('all');

@@ -80,8 +80,10 @@ return array(
       'freshdesk:paths:reason:label' => "What is your primary reason for submitting a ticket?",
       'freshdesk:paths:reason:select' => "Please select a reason",
       'freshdesk:paths:reason:account' => "I need assistance with my account / login",
-      'freshdesk:paths:reason:gcconnex' => "I need assistance using GCconnex",
-      'freshdesk:paths:reason:gcpedia' => "I need assistance using GCpedia",
+      'freshdesk:paths:reason:gcconnex:issue' => "I am experiencing an issue on GCconnex",
+      'freshdesk:paths:reason:gcpedia:issue' => "I am experiencing an issue on GCpedia",
+      'freshdesk:paths:reason:gcconnex:assist' => "I need assistance using GCconnex",
+      'freshdesk:paths:reason:gcpedia:assist' => "I need assistance using GCpedia",
       'freshdesk:paths:reason:stats' => "I would like to request statistics on my page",
       'freshdesk:paths:reason:other' => "Other (please specify)",
 

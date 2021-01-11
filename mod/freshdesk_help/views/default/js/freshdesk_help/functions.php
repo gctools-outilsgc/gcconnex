@@ -296,6 +296,7 @@ function submitTicket(form, lang, source, product){
         formdata.append('custom_fields[cf_password_reset]', $(form).find('#pwd_reset').is(":checked"));
       }
       break;
+    case "I am experiencing an issue on GCconnex | Je rencontre un problème sur GCconnex":
     case "I need assistance using GCconnex | J'ai besoin d'aide avec GCconnex":
       formdata.append('custom_fields[cf_reason_2]', $(form).find('#assistance').val());
       if($(form).find('#assistance').val() == 'Career Marketplace | Carrefour de carrière') {
@@ -303,6 +304,7 @@ function submitTicket(form, lang, source, product){
       }
       formdata.append('custom_fields[cf_page_url]', $(form).find('#pageurl').val());
     break;
+    case "I am experiencing an issue on GCpedia | Je rencontre un problème sur GCpedia":
     case "I need assistance using GCpedia | J'ai besoin d'aide avec GCPedia":
       formdata.append('custom_fields[cf_page_url]', $(form).find('#pageurl').val());
       break;
