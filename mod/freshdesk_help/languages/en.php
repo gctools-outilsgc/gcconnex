@@ -112,5 +112,5 @@ return array(
       'freshdesk:paths:data_report_to:label' => "Email report to",
 
       'freshdesk:paths:other:alert' => "If you are experiencing an error, please include a screenshot or an error code.",
-      'freshdesk:paths:gcpedia:alert' => "If you are contacting help desk about coding assistance with your page, please refer to the coding resources documentation.",
+      'freshdesk:paths:gcpedia:alert' => "If you are contacting help desk about coding assistance with your page, please refer to the <a href='https://www.gcpedia.gc.ca/wiki/Help:Coding_Resources'>coding resources documentation</a>.",
     );

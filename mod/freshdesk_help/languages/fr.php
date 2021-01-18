@@ -104,5 +104,5 @@ return array(
   'freshdesk:paths:data_report_to:label' => "Envoyer le rapport à",
 
   'freshdesk:paths:other:alert' => "Si une erreur se produit, veuillez ajouter une capture d'écran ou un code d'erreur.",
-  'freshdesk:paths:gcpedia:alert' => "Si vous communiquez avec le Service de dépannage pour obtenir de l’aide concernant le codage de votre page, veuillez consulter la documentation relative aux ressources de codage.",
+  'freshdesk:paths:gcpedia:alert' => "Si vous communiquez avec le Service de dépannage pour obtenir de l’aide concernant le codage de votre page, veuillez consulter la <a href='https://www.gcpedia.gc.ca/wiki/Aide:Ressources_de_codage'>documentation relative aux ressources de codage</a>.",
 );
