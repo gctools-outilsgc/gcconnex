@@ -3,30 +3,12 @@ $lang = (string) get_input('lang');
 $source = 'embed';
 $product_id  = (int) elgg_get_plugin_setting("embed_product_id", "freshdesk_help");
 
-$types = array();
-$types['None'] = elgg_echo('freshdesk:ticket:types:none', array(), $lang);
-$types['Account creation | Création de compte'] = elgg_echo('freshdesk:ticket:types:account', array(), $lang);
-$types['Log in credentials | Identifiants de connexions'] = elgg_echo('freshdesk:ticket:types:login', array(), $lang);
-$types['Bugs/Errors | Bogues/erreurs'] = elgg_echo('freshdesk:ticket:types:bugs', array(), $lang);
-$types['Group-related | Relatif aux groupes'] = elgg_echo('freshdesk:ticket:types:group', array(), $lang);
-$types['Data Request | Demande de données']  = elgg_echo('freshdesk:ticket:types:data', array(), $lang);
-$types['Training | Formation'] = elgg_echo('freshdesk:ticket:types:training', array(), $lang);
-$types["Jobs Marketplace | Carrefour d'emploi"] = elgg_echo('freshdesk:ticket:types:jobs', array(), $lang);
-$types['Enhancement | Amélioration'] = elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang);
-$types['Wiki coding | Codage wiki'] = elgg_echo('freshdesk:ticket:types:wiki', array(), $lang);
-$types['Flag content or behaviour | Signaler un contenu ou comportement'] = elgg_echo('freshdesk:ticket:types:flag', array(), $lang);
-$types['Other | Autres'] = elgg_echo('freshdesk:ticket:types:other', array(), $lang);
-
 if(!$lang){
   $lang = get_current_language();
   $source = 'base';
   $product_id  = (int) elgg_get_plugin_setting("product_id", "freshdesk_help");
-  unset($types['Wiki coding | Codage wiki']);
-} else {
-  unset($types['Group-related | Relatif aux groupes']);
-  unset($types["Jobs Marketplace | Carrefour d'emploi"]);
-  unset($types['Enhancement | Amélioration']);
 }
+
 //populate form with known information
 if(elgg_is_logged_in()){
   $email = elgg_get_logged_in_user_entity()->email;
@@ -38,13 +20,11 @@ if (elgg_is_sticky_form('ticket-submit')) {
 
   $email = $sticky_values['email'];
   $description = $sticky_values['description'];
-  $subject = $sticky_values['subject'];
   $type = $sticky_values['type'];
 
   elgg_clear_sticky_form('ticket-submit');
 }
  ?>
-
 
 <div class="panel-body">
 <h2><?php echo elgg_echo('freshdesk:ticket:title', array(), $lang); ?></h2>
@@ -55,78 +35,49 @@ if (elgg_is_sticky_form('ticket-submit')) {
 
 <fieldset class="user-info">
   <legend><?php echo elgg_echo('freshdesk:ticket:legend:yourinfo', array(), $lang); ?></legend>
-  <div>
-  <label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
-  <?php echo elgg_view('input/text', array(
-    'name' => 'email',
-    'id' => 'email',
-    'value' => $email,
-    'class' => 'mrgn-bttm-sm',
-    'required' => 'required'
-  ));
-  ?>
-  </div>
+<div>
+<label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
+<?php echo elgg_view('input/text', array(
+  'name' => 'email',
+  'id' => 'email',
+  'value' => $email,
+  'class' => 'mrgn-bttm-sm',
+  'required' => 'required'
+));
+?>
+</div>
 
+<?php echo elgg_view('input/path_based_input', array(
+  'lang' => $lang,
+  'product_id' => $product_id,
+  'source' => $source
+  )); ?>
+
+
+<div id="desc-file-fields" class="hidden">
   <div class="mrgn-tp-sm">
-    <?php
-    if(  $product_id == 2100000289 || $product_id == 2100000298){
-    	echo '<label for="department">'.elgg_echo('freshdesk:ticket:department').'</label>';
-    	echo elgg_view('input/department_field', array('lang' => $lang));
-    } else {
-      echo elgg_view('input/user_type_field', array('lang' => $lang));
-    }
+    <label for="description"><?php echo elgg_echo('freshdesk:ticket:description', array(), $lang); ?></label>
+    <?php echo elgg_view('input/longtext', array(
+      'name' => 'description',
+      'id' => 'description',
+      'class' => 'mrgn-bttm-sm validate-me',
+      'required' => 'required',
+      'value' => $description
+    ));
     ?>
   </div>
-</fieldset>
-
-<fieldset class="user-info">
-  <legend><?php echo elgg_echo('freshdesk:ticket:legend:ticketinfo', array(), $lang); ?></legend>
-  <div>
-  <label for="subject"><?php echo elgg_echo('freshdesk:ticket:subject', array(), $lang); ?></label>
-  <?php echo elgg_view('input/text', array(
-    'name' => 'subject',
-    'id' => 'subject',
-    'required' => 'required',
-    'value' => $subject,
-    'onkeyup' => 'matchArticles(this, "'.$lang.'")'
-  ));
-  ?>
-  <span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>
-  </div>
-
-  <div>
-  <label for="type"><?php echo elgg_echo('freshdesk:ticket:type', array(), $lang); ?></label>
-  <?php echo elgg_view('input/select', array(
-    'name' => 'type',
-    'id' => 'type',
-    'required' => 'required',
-    'value' => $type,
-    'options_values' => $types,
-  ));
-  ?>
-  </div>
 
   <div class="mrgn-tp-sm">
-  <label for="attachment"><?php echo elgg_echo('freshdesk:ticket:attachment', array(), $lang); ?></label>
-  <?php echo elgg_view('input/file', array('name' => 'attachment', 'id' => 'attachment', 'class' => 'mrgn-bttm-sm')); ?>
+    <label for="attachment"><?php echo elgg_echo('freshdesk:ticket:attachment', array(), $lang); ?></label>
+    <?php echo elgg_view('input/file', array('name' => 'attachment', 'id' => 'attachment', 'class' => 'mrgn-bttm-sm')); ?>
   </div>
-
-  <div class="mrgn-tp-sm">
-  <label for="description"><?php echo elgg_echo('freshdesk:ticket:description', array(), $lang); ?></label>
-  <?php echo elgg_view('input/longtext', array(
-    'name' => 'description',
-    'id' => 'description',
-    'class' => 'mrgn-bttm-sm validate-me',
-    'required' => 'required',
-    'value' => $description
-  ));
-  ?>
-  </div>
+</div>
 </fieldset>
 
 <?php echo elgg_view('input/hidden', array('name' => 'lang', 'value' => $lang)); ?>
 <?php echo elgg_view('input/submit', array('value' => elgg_echo('submit', array(), $lang), 'id' => 'sendTicket', 'class' => 'btn-primary btn-lg mrgn-tp-md'));?>
 </div>
+
 
 <script>
 
@@ -147,8 +98,8 @@ $(document).ready(function(){
     var description = form.find('textarea');
 
     //handle adding error labels amd classes on textarea
-    if($.trim($(description).val()) == '' && $(description).hasClass('error') != true){
-      $(description).addClass('error').parent().append('<label id="description-error" for="cke_'+$(description).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
+    if($.trim($(description).val()) == '' && $(description).hasClass('error') != true && !$('#desc-file-fields').hasClass("hidden")){
+      $(description).addClass('error').parent().append('<label id="description-error" for="cke_'+$(description).attr('name')+'" class="error" onclick="focusCorrection()">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
       $('#cke_'+$(description).attr('id')).attr('aria-labelledby', $(description).attr('id')+'-error');
     } else if($.trim($(description).val()) != ''){
       $(description).removeClass('error');
@@ -158,7 +109,7 @@ $(document).ready(function(){
     var selects = form.find('select:visible')
 
     selects.each(function(){
-      if($(this).val() == 'None' && $(this).hasClass('error') != true){
+      if($(this).val() == '' && $(this).hasClass('error') != true){
           $(this).addClass('error').parent().append('<label for="'+$(this).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
       }
     });
@@ -181,6 +132,17 @@ $(document).ready(function(){
       }
     });
 
+    var checkboxes = form.find('input[type="checkbox"]');
+
+    // loop through check boxes
+    checkboxes.each(function(){
+      if($(this).attr('name') != 'ongoing' && !$(this).parent().parent().hasClass('hidden')){
+        if($(this).prop('checked') == false && $(this).hasClass('error') != true){
+          $(this).addClass('error').parent().append('<div class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</div>');
+        }
+      }
+    });
+
     var errors = form.find('.error:visible');
 
     //handle focusing on top error
@@ -198,8 +160,17 @@ $(document).ready(function(){
     }
 
   });
+
+  $('input[type="checkbox"]').on("change", function(){
+    if($(this).hasClass("error")) {
+      $(this).removeClass("error").parent().find("div.error").remove();
+    }
+  });
 });
 
+function focusCorrection(){
+  CKEDITOR.instances['description'].focus();
+}
 
 </script>
 
@@ -218,7 +189,7 @@ $(document).ready(function(){
 
 fieldset.user-info {
   border: 1px solid #e5e5e5;
-  padding:5px 10px 10px;
+  padding:15px;
   margin-top:10px;
 }
 .user-info legend {
@@ -227,6 +198,39 @@ fieldset.user-info {
   float:none;
   width:auto;
   margin-bottom: 0;
+}
+
+div.error {
+  background: #f3e9e8;
+  border-left: 5px solid #d3080c;
+  padding: 2px 6px;
+  margin-top: 3px;
+  margin-bottom: 10px !important;
+}
+
+input.error {
+  margin-bottom: 0 !important;
+}
+
+label.error {
+  margin-bottom: 10px !important;
+}
+
+.date-section {
+  display: inline-block;
+  width: 50%;
+}
+
+.date-section input {
+  width: 100% !important;
+  max-width: 225px !important;
+  border-radius: 4px;
+}
+
+.date-helper {
+  margin-bottom: 5px;
+  margin-top: -4px;
+  font-size: 14px;
 }
 
 @media screen and (max-width: 600px) {

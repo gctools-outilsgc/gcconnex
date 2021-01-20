@@ -21,7 +21,7 @@ return array(
   'freshdesk:ticket:attachment' => "Pièce jointe",
   'freshdesk:ticket:description' => "Description",
   'freshdesk:ticket:submit:confirmed' => "Votre billet a été soumis.",
-  'freshdesk:ticket:submit:denied' => "Un problème est survenu; veuillez réessayer plus tard.",
+  'freshdesk:ticket:submit:denied' => "Un problème est survenu; veuillez réessayer plus tard. Code d'erreur: ",
 
   'freshdesk:ticket:basic:user_type' => "Occupation",
   'freshdesk:ticket:basic:federal' => 'Organisation',
@@ -67,5 +67,42 @@ return array(
   'freshdesk:valid:filetypes' => "Format de fichier non valide. Extensions de fichiers autorisées: txt, gif, jpg, jpeg and png.",
 
   'freshdesk:ticket:information' => "Avant de soumettre un billet, cherchez-le contenu d'aide pour trouver des informations sur les questions les plus courantes. Vous ne trouvez pas la réponse? Envoyez un billet en remplissant le formulaire ci-dessous. Veuillez décrire votre problème clairement et ajouter une capture d’écran, si possible. Un agent du bureau d’aide répondra à votre demande dans les 2 prochains jours ouvrables.",
-  'freshdesk:ticket:information:note' => "<b>Remarque:</b> Nous utilisons maintenant Freshdesk comme outil tiers pour gérer les activités du bureau d’aide. Après avoir créé votre billet, vous devriez recevoir un courriel de confirmation avec un lien vers votre billet."
-    );
+  'freshdesk:ticket:information:note' => "<b>Remarque:</b> Nous utilisons maintenant Freshdesk comme outil tiers pour gérer les activités du bureau d’aide. Après avoir créé votre billet, vous devriez recevoir un courriel de confirmation avec un lien vers votre billet.",
+  
+  'freshdesk:paths:reason:label' => "Quelle est votre raison principale pour soumettre un billet?",
+  'freshdesk:paths:reason:select' => "Veuillez sélectionner une raison",
+  'freshdesk:paths:reason:account' => "J'ai besoin d'aide concernant mon compte ou l'ouverture d'une session",
+  'freshdesk:paths:reason:gcconnex:issue' => "Je rencontre un problème sur GCconnex",
+  'freshdesk:paths:reason:gcpedia:issue' => "Je rencontre un problème sur GCPedia",
+  'freshdesk:paths:reason:gcconnex:assist' => "J'ai besoin d'aide avec GCconnex",
+  'freshdesk:paths:reason:gcpedia:assist' => "J'ai besoin d'aide avec GCPedia",
+  'freshdesk:paths:reason:stats' => "Je souhaite obtenir les statistiques de ma page",
+  'freshdesk:paths:reason:other' => "Autre (veuillez préciser)",
+
+  'freshdesk:paths:account:label' => "Quel est le problème avec votre compte?",
+  'freshdesk:paths:account:new' => "J'ai besoin d’aide pour me créer un nouveau compte",
+  'freshdesk:paths:account:email' => "Je dois mettre à jour l’adresse de courriel de mon compte",
+  'freshdesk:paths:account:password' => "Je dois réinitialiser mon mot de passe",
+
+  'freshdesk:paths:assistance:label' => "Quels sont les outils pour lesquels vous avez besoin d’aide?",
+  'freshdesk:paths:assistance:groups' => "Groupes",
+  'freshdesk:paths:assistance:career' => "Carrefour de carrière",
+  'freshdesk:paths:assistance:files' => "Fichiers",
+  'freshdesk:paths:assistance:profile' => "Profil",
+  
+  'freshdesk:paths:pageurl:label' => "Page URL",
+  
+  'freshdesk:paths:previousemail:label' => "Courriel ancien",
+  
+  'freshdesk:paths:pwdreset:label' => "J'ai essayé la fonction de <a href='#' target='_blank'>réinitialisation du mot de passe</a>",
+  'freshdesk:paths:opted:label' => "Je me suis <a href='#' target='_blank'>inscrit(e)</a> au Carrefour de carrière",
+  
+  'freshdesk:paths:data_ongoing:label' => "Présenter une demande ouverte",
+  'freshdesk:paths:data_date_to:label' => "Date de fin",
+  'freshdesk:paths:data_date_from:label' => "Date de début",
+  'freshdesk:paths:data_date_format:label' => "Format: yyyy-mm-dd",
+  'freshdesk:paths:data_report_to:label' => "Envoyer le rapport à",
+
+  'freshdesk:paths:other:alert' => "Si une erreur se produit, veuillez ajouter une capture d'écran ou un code d'erreur.",
+  'freshdesk:paths:gcpedia:alert' => "Si vous communiquez avec le Service de dépannage pour obtenir de l’aide concernant le codage de votre page, veuillez consulter la <a href='https://www.gcpedia.gc.ca/wiki/Aide:Ressources_de_codage'>documentation relative aux ressources de codage</a>.",
+);

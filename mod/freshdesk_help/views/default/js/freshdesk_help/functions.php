@@ -264,43 +264,60 @@ function submitTicket(form, lang, source, product){
   var api_key = details['api_key'];
   var formdata = new FormData();
 
-  //create organization field entry from the form
-  if(product == 2100000290 || product == 2100000516){
-    var user_type = $("#user_type").val();
+  var reason = $(form).find('#reason').val();
 
-    if (user_type == 'federal') {
-        var org = $('#'+user_type).val();
-    } else if (user_type == 'academic' || user_type == 'student') {
-
-        var institution = $('#institution').val();
-        var school = $('#' + institution).val();
-
-        var org = school+' - '+institution+' - '+user_type;
-    } else if (user_type == 'provincial') {
-        var province = $('#provincial').val();
-        var provinceOptions = $('#provincial').val();
-        provinceOptions = province.replace(/\s+/g, '-').toLowerCase();
-        var ministry = $('#' + provinceOptions+'-choices').val();
-
-        var org = ministry+' - '+province+' - '+user_type;
-    } else {
-        var org = $('#' + user_type).val()+' - '+ user_type;
-    }
-
+  if(lang == 'en') {
+    var split = reason.split(" | ");
+    var subject = split[0];
   } else {
-    var org = $(form).find('#department').val();
+    var split = reason.split(" | ");
+    var subject = split[1];
   }
 
   //gather inputs
   formdata.append('product_id', product);
   formdata.append('description', $(form).find('#description').val());
   formdata.append('email', $(form).find('#email').val());
-  formdata.append('subject', $(form).find('#subject').val());
-  formdata.append('custom_fields[cf_organization]', org);
-  formdata.append('type', $('#type').val());
+  formdata.append('custom_fields[cf_reason]', reason);
+  formdata.append('subject', subject);
+  // formdata.append('custom_fields[cf_organization]', org);
+  // formdata.append('type', $('#type').val());
   formdata.append('priority', '1');
   formdata.append('status', '2');
   formdata.append('source', '9');
+
+  // grab the needed form fields
+  switch(reason) {
+    case "I need assistance with my account / login | J'ai besoin d'aide concernant mon compte ou l'ouverture d'une session":
+      formdata.append('custom_fields[cf_reason_2]', $(form).find('#accountIssue').val());
+      if($(form).find('#accountIssue').val() == "I need to update the email on my account | Je dois mettre à jour l'adresse de courriel de mon compte") {
+        formdata.append('custom_fields[cf_previous_email]', $(form).find('#previousemail').val());
+      } else if($(form).find('#accountIssue').val() == "I need to reset my password | Je dois réinitialiser mon mot de passe") {
+        formdata.append('custom_fields[cf_password_reset]', $(form).find('#pwd_reset').is(":checked"));
+      }
+      break;
+    case "I am experiencing an issue on GCconnex | Je rencontre un problème sur GCconnex":
+    case "I need assistance using GCconnex | J'ai besoin d'aide avec GCconnex":
+      formdata.append('custom_fields[cf_reason_2]', $(form).find('#assistance').val());
+      if($(form).find('#assistance').val() == 'Career Marketplace | Carrefour de carrière') {
+        formdata.append('custom_fields[cf_opted_in]', $(form).find('#opted_in').is(":checked"));
+      }
+      formdata.append('custom_fields[cf_page_url]', $(form).find('#pageurl').val());
+    break;
+    case "I am experiencing an issue on GCpedia | Je rencontre un problème sur GCpedia":
+    case "I need assistance using GCpedia | J'ai besoin d'aide avec GCPedia":
+      formdata.append('custom_fields[cf_page_url]', $(form).find('#pageurl').val());
+      break;
+    case "I would like to request statistics on my page | Je souhaite obtenir les statistiques de ma page":
+      formdata.append('custom_fields[cf_page_url]', $(form).find('#pageurl').val());
+      formdata.append('custom_fields[cf_start_date]', $(form).find('#date_from').val());
+      formdata.append('custom_fields[cf_end_date]', $(form).find('#date_to').val());
+      formdata.append('custom_fields[cf_send_report_to]', $(form).find('#report_to').val());
+      formdata.append('custom_fields[cf_ongoing]', $(form).find('#ongoing').is(":checked"));
+      break;
+    case "Other (please specify) | Autre (veuillez préciser)":
+      break;
+  }
 
   //check if file is attached
   if($('#attachment')[0].files[0]){
@@ -319,10 +336,10 @@ function submitTicket(form, lang, source, product){
       },
       data: formdata,
       success: function(data, textStatus, jqXHR) {
-        elgg.action('ticket/feedback', { data: { language: lang, type: 'success', direct: source }, success: function (wrapper) { location.reload(); } });
+        elgg.action('ticket/feedback', { data: { language: lang, type: 'success', direct: source }, success: function (wrapper) { setTimeout(function(){ location.reload(); },3000); } });
       },
       error: function(jqXHR, tranStatus) {
-        elgg.action('ticket/feedback', { data: { language: lang, type: 'fail', direct: source, code: jqXHR.status }, success: function (wrapper) { location.reload(); } });
+        elgg.action('ticket/feedback', { data: { language: lang, type: 'fail', direct: source, code: jqXHR.status }, success: function (wrapper) { $(form).find('button').prop('disabled', false);  } });
       }
     }
   );
