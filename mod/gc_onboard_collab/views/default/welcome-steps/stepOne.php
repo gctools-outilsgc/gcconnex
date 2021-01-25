@@ -44,6 +44,7 @@ $user = elgg_get_logged_in_user_entity();
                             'student' => elgg_echo('gcRegister:occupation:student'),
                             'federal' => elgg_echo('gcRegister:occupation:federal'),
                             'provincial' => elgg_echo('gcRegister:occupation:provincial'),
+                            'first_nations' => elgg_echo('gcRegister:occupation:first_nations'),
                             'municipal' => elgg_echo('gcRegister:occupation:municipal'),
                             'international' => elgg_echo('gcRegister:occupation:international'),
                             'ngo' => elgg_echo('gcRegister:occupation:ngo'),
@@ -330,6 +331,21 @@ $user = elgg_get_logged_in_user_entity();
                             'id' => 'international',
                             'class' => 'form-control',
                             'value' => $user->international,
+                        ));
+                    ?>
+                </div>
+
+                <!-- First Nations -->
+                <div class="form-group occupation-choices" id="first_nations-wrapper" hidden>
+                    <label for="first_nations" class="required">
+                        <span class="field-name"><?php echo elgg_echo('gcRegister:department'); ?></span>
+                    </label>
+                    <?php
+                        echo elgg_view('input/text', array(
+                            'name' => 'first_nations',
+                            'id' => 'first_nations',
+                            'class' => 'form-control',
+                            'value' => $user->first_nations,
                         ));
                     ?>
                 </div>

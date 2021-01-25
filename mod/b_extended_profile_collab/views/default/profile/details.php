@@ -34,7 +34,7 @@ if ($user->canEdit()) {
     echo '<div class="panel-body overflow-body" style="padding-top: 15px; padding-bottom: 0;">';
     echo '<div class="basic-profile-standard-field-wrapper col-md-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
-    $fields = array('Name', 'user_type', 'Federal', 'Provincial', 'Institution', 'University', 'College', 'Highschool', 'Municipal', 'International', 'NGO', 'Community', 'Business', 'Media', 'Retired', 'Other', 'Job', 'Location', 'Phone', 'Mobile', 'Website');
+    $fields = array('Name', 'user_type', 'Federal', 'Provincial', 'First_Nations', 'Institution', 'University', 'College', 'Highschool', 'Municipal', 'International', 'NGO', 'Community', 'Business', 'Media', 'Retired', 'Other', 'Job', 'Location', 'Phone', 'Mobile', 'Website');
 
     foreach ($fields as $field) {
 
@@ -42,7 +42,7 @@ if ($user->canEdit()) {
         $field = strtolower($field);
         $value = htmlspecialchars_decode($user->get($field));
         
-        if(in_array($field, array("federal", "institution", "provincial", "municipal", "international", "ngo", "community", "business", "media", "retired", "other"))) {
+        if(in_array($field, array("federal", "institution", "provincial", "first_nations", "municipal", "international", "ngo", "community", "business", "media", "retired", "other"))) {
             echo "<div class='form-group col-xs-12 occupation-choices' id='{$field}-wrapper'>";
         } else if(in_array($field, array("university", "college", "highschool"))) {
             echo "<div class='form-group col-xs-12 occupation-choices student-choices' id='{$field}-wrapper'>";
@@ -65,6 +65,7 @@ if ($user->canEdit()) {
                     'student' => elgg_echo('gcconnex-profile-card:student'),
                     'federal' => elgg_echo('gcconnex-profile-card:federal'),
                     'provincial' => elgg_echo('gcconnex-profile-card:provincial'),
+                    'first_nations' => elgg_echo('gcconnex-profile-card:first_nations'),
                     'municipal' => elgg_echo('gcconnex-profile-card:municipal'),
                     'international' => elgg_echo('gcconnex-profile-card:international'),
                     'ngo' => elgg_echo('gcconnex-profile-card:ngo'),

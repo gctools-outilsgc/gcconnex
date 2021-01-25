@@ -9,6 +9,7 @@ $english = array(
 	'gcRegister:occupation:student' => "Student",
 	'gcRegister:occupation:federal' => "Federal Government",
 	'gcRegister:occupation:provincial' => "Provincial/Territorial Government",
+	'gcRegister:occupation:first_nations' => "First Nations",
 	'gcRegister:occupation:municipal' => "Municipal Government",
 	'gcRegister:occupation:international' => "International/Foreign Government",
 	'gcRegister:occupation:ngo' => "Non-Governmental Organization",
