@@ -667,6 +667,7 @@ function saveProfile(event) {
             profile.provincial = $(".gcconnex-basic-provincial").is(":visible") ? $(".gcconnex-basic-provincial").val() : "";
             profile.ministry = $(".gcconnex-basic-ministry").is(":visible") ? $(".gcconnex-basic-ministry:visible").val() : "";
 
+            profile.first_nations = $(".gcconnex-basic-first_nations").is(":visible") ? $(".gcconnex-basic-first_nations:visible").val() : "";
             profile.municipal = $(".gcconnex-basic-municipal").is(":visible") ? $(".gcconnex-basic-municipal:visible").val() : "";
             profile.international = $(".gcconnex-basic-international").is(":visible") ? $(".gcconnex-basic-international:visible").val() : "";
             profile.ngo = $(".gcconnex-basic-ngo").is(":visible") ? $(".gcconnex-basic-ngo:visible").val() : "";

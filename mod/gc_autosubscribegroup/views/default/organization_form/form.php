@@ -91,6 +91,9 @@
 			} else if ( $("#international").is(":visible") ){
 				organization = $.trim( $("#international").val() );
 				organizationObject[user_type] = organization;
+			} else if($("#first_nations").is(":visible")){
+				organization = $.trim( $("#first_nations").val() );
+				organizationObject[user_type] = organization;
 			} else if ( $("#ngo").is(":visible") ){
 				organization = $.trim( $("#ngo").val() );
 				organizationObject[user_type] = organization;
@@ -139,6 +142,7 @@
 		<option value="student"><?php echo elgg_echo('gcRegister:occupation:student'); ?></option>
 		<option value="federal"><?php echo elgg_echo('gcRegister:occupation:federal'); ?></option>
 		<option value="provincial"><?php echo elgg_echo('gcRegister:occupation:provincial'); ?></option>
+		<option value="first_nations"><?php echo elgg_echo('gcRegister:occupation:first_nations'); ?></option>
 		<option value="municipal"><?php echo elgg_echo('gcRegister:occupation:municipal'); ?></option>
 		<option value="international"><?php echo elgg_echo('gcRegister:occupation:international'); ?></option>
 		<option value="ngo"><?php echo elgg_echo('gcRegister:occupation:ngo'); ?></option>
@@ -347,6 +351,19 @@
 <div class="form-group occupation-choices" id="international-wrapper" hidden>
 	<label for="international" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:department'); ?></span></label>
 	<?php echo $international_choices; ?>
+</div>
+
+<?php
+	$first_nation_choices = elgg_view('input/text', array(
+		'name' => 'first_nations',
+		'id' => 'first_nations',
+        'class' => 'form-control',
+	));
+?>
+
+<div class="form-group occupation-choices" id="first_nations-wrapper" hidden>
+	<label for="first_nations" class="required"><span class="field-name"><?php echo elgg_echo('gcconnex_profile:basic:first_nations'); ?></span></label>
+	<?php echo $first_nation_choices; ?>
 </div>
 
 <?php
