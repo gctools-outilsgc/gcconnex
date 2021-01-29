@@ -338,7 +338,7 @@ $user = elgg_get_logged_in_user_entity();
                 <!-- First Nations -->
                 <div class="form-group occupation-choices" id="first_nations-wrapper" hidden>
                     <label for="first_nations" class="required">
-                        <span class="field-name"><?php echo elgg_echo('gcRegister:department'); ?></span>
+                        <span class="field-name"><?php echo elgg_echo('gcconnex_profile:basic:first_nations'); ?></span>
                     </label>
                     <?php
                         echo elgg_view('input/text', array(
@@ -576,6 +576,7 @@ $(document).ready(function () {
         profile.provincial = $("#provincial").is(":visible") ? $("#provincial").val() : "";
         profile.ministry = $("#ministry").is(":visible") ? $("#ministry:visible").val() : "";
 
+        profile.first_nations = $("#first_nations").is(":visible") ? $("#first_nations:visible").val() : "";
         profile.municipal = $("#municipal").is(":visible") ? $("#municipal:visible").val() : "";
         profile.international = $("#international").is(":visible") ? $("#international:visible").val() : "";
         profile.ngo = $("#ngo").is(":visible") ? $("#ngo:visible").val() : "";

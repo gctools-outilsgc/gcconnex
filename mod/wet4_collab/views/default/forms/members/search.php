@@ -19,6 +19,7 @@ $user_types = array(
 	'student' => elgg_echo('gcRegister:occupation:student'),
 	'federal' => elgg_echo('gcRegister:occupation:federal'),
 	'provincial' => elgg_echo('gcRegister:occupation:provincial'),
+	'first_nations' => elgg_echo('gcRegister:occupation:first_nations'),
 	'municipal' => elgg_echo('gcRegister:occupation:municipal'),
 	'international' => elgg_echo('gcRegister:occupation:international'),
 	'ngo' => elgg_echo('gcRegister:occupation:ngo'),
