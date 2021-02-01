@@ -102,8 +102,8 @@ return array(
       
       'freshdesk:paths:previousemail:label' => "Previous email",
       
-      'freshdesk:paths:pwdreset:label' => "I have tried the <a href='#' target='_blank'>reset password</a> function",
-      'freshdesk:paths:opted:label' => "I have <a href='#' target='_blank'>opted in</a> to the Career marketplace. Opting in will allow you to search, post and apply to opportunities on the Career Marketplace.",
+      'freshdesk:paths:pwdreset:label' => "I have tried the <a href='https://gcconnex.gc.ca/forgotpassword' target='_blank'>reset password</a> function",
+      'freshdesk:paths:opted:label' => "I have <a href='https://gcconnex.gc.ca/missions/main#optinPopup' target='_blank'>opted in</a> to the Career marketplace. Opting in will allow you to search, post and apply to opportunities on the Career Marketplace.",
       
       'freshdesk:paths:data_ongoing:label' => "Make request ongoing",
       'freshdesk:paths:data_date_to:label' => "End date",

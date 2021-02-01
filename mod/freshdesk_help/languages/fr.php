@@ -94,8 +94,8 @@ return array(
   
   'freshdesk:paths:previousemail:label' => "Courriel ancien",
   
-  'freshdesk:paths:pwdreset:label' => "J'ai essayé la fonction de <a href='#' target='_blank'>réinitialisation du mot de passe</a>",
-  'freshdesk:paths:opted:label' => "Je me suis <a href='#' target='_blank'>inscrit(e)</a> au Carrefour de carrière",
+  'freshdesk:paths:pwdreset:label' => "J'ai essayé la fonction de <a href='https://gcconnex.gc.ca/forgotpassword' target='_blank'>réinitialisation du mot de passe</a>",
+  'freshdesk:paths:opted:label' => "Je me suis <a href='https://gcconnex.gc.ca/missions/main#optinPopup' target='_blank'>inscrit(e)</a> au Carrefour de carrière",
   
   'freshdesk:paths:data_ongoing:label' => "Présenter une demande ouverte",
   'freshdesk:paths:data_date_to:label' => "Date de fin",
