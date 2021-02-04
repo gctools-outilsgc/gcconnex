@@ -97,13 +97,23 @@ echo "<div id='prevemail-field' class='hidden'>";
 echo '</div>';
 
 echo "<div id='pwdreset-cbox' class='hidden mrgn-bttm-md'>";
-    // Password reset cbox
-    echo elgg_view('input/checkbox', array(
-        'name'=>'pwd_reset',
-        'id'=>'pwd_reset',
-        'label'=> elgg_echo('freshdesk:paths:pwdreset:label', array(), $lang),
-        'value'=>'pwd_reset'
-    ));
+    if($product_id == 2100000298){
+        // Password reset cbox wiki
+        echo elgg_view('input/checkbox', array(
+            'name'=>'pwd_reset',
+            'id'=>'pwd_reset',
+            'label'=> elgg_echo('freshdesk:paths:pwdreset:label:wiki', array(), $lang),
+            'value'=>'pwd_reset'
+        ));
+    } else {
+        // Password reset cbox
+        echo elgg_view('input/checkbox', array(
+            'name'=>'pwd_reset',
+            'id'=>'pwd_reset',
+            'label'=> elgg_echo('freshdesk:paths:pwdreset:label', array(), $lang),
+            'value'=>'pwd_reset'
+        ));
+    }
 echo '</div>';
 
 echo "<div id='optedin-cbox' class='hidden mrgn-bttm-md'>";
