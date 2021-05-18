@@ -62,8 +62,6 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 			return true;
 		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'SimplePie') !== false)
 			return true;
-		if (strstr($_SERVER["REQUEST_URI"] == '/services/api/rest/xml/') !== false)
-			return true;
 
 		$query = "REPLACE INTO {$this->db->getTablePrefix()}users_sessions
 			(session, ts, data) VALUES
