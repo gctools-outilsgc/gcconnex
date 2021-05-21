@@ -52,6 +52,16 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		$id = sanitize_string($session_id);
 		$time = time();
 		$sess_data_sanitised = sanitize_string($session_data);
+		
+		// do not persist a session for health probes
+		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'kube-probe') !== false && $_SERVER["REQUEST_URI"] == '/splash')
+			return true;
+		if ($_SERVER["REQUEST_URI"] == '/')
+			return true;
+		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false)
+			return true;
+		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'SimplePie') !== false)
+			return true;
 
 		$query = "REPLACE INTO {$this->db->getTablePrefix()}users_sessions
 			(session, ts, data) VALUES
