@@ -1609,7 +1609,7 @@ return array(
 	'event_calendar:mine' => 'Mes événements',
 	'event_calendar:listing_title:user' => "Les événements de %s",
 	'event_calendar:submit' => 'Sauvegarder',
-	'event_calendar:personal_event_calendars_link' => 'Dans %s calendriers',
+	'event_calendar:personal_event_calendars_link' => 'Liste des participants',
 	'event_calendar:meeting' => 'Réunion en ligne et téléconférence',
 	'event_calendar:info' => 'Information(s) supplémentaire(s)',
 	'river:create:object:event_calendar' => "%s a ajouté l'événement' %s",
