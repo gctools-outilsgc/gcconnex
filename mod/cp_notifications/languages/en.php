@@ -224,7 +224,7 @@ $english = array(
 	'cp_notification:email_header_msg' => "",	
 
 	// add user to group section
-	'cp_notify:subject:group_add_user' => "You have been added the group '%s'",
+	'cp_notify:subject:group_add_user' => "You have been added to the group '%s'",
 	'cp_notify:body_group_add:title' => "You have been added to the group '%s'",
 	'cp_notify:body_group_add:description' => "You have been added to the group %s: <br/>%s",
 
