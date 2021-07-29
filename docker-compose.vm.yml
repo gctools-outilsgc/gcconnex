@@ -1,0 +1,25 @@
+version: '2'
+services:
+  gcconnex:
+    image: phanoix/gcconnex:latest
+    restart: always
+    ports:
+      - 80:8080
+    volumes:
+      - .:/var/www/html
+      - /sites/gccollab_data:/sites/gccollab_data
+      - /var/www/html/vendor
+      - /var/www/html/docker
+      - /var/www/html/mod/pleio/vendor
+    depends_on:
+      - gcconnex-db
+    environment:
+      - HOME=/var/www/html
+      - DATAROOT=/sites/gccollab_data
+      - WWWROOT=https://dev.gccollab.ca/
+      - SOLR_CRAWLER=solr-crawler-thing
+  	  - SOLR_CRAWLER_USER=1706376
+
+  memcached:
+    image: memcached
+    restart: always
