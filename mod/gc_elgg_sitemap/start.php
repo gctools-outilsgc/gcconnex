@@ -75,6 +75,50 @@ function gc_elgg_sitemap_init() {
 		elgg_register_plugin_hook_handler('view', 'b_extended_profile/skills', 'elgg_view_topbar_handler');
 
 	}
+
+	// simple page listing the latest objects created
+	elgg_register_page_handler('sitemap-latest', 'sitemap_latest_handler');
+	elgg_register_page_handler('sitemap-latest-users', 'sitemap_latest_users_handler');
+}
+
+function sitemap_latest_handler($page) {
+	echo "simple activity page <br />";
+	$activity = elgg_get_river();
+
+	foreach ($activity as $n => $item) {
+		$tmp = get_entity( $item->object_guid );
+		//echo $tmp->guid ."   ". $tmp->title;
+		if ( !($tmp instanceof \ElggEntity) )
+			continue;
+
+		echo "<br /> " . elgg_view('output/url', array(
+			'href' => $tmp->getURL(),
+			'text' => ($tmp->title ? $tmp->title : $tmp->name)
+		));
+	}
+
+	//$options['count'] = 10;
+	$options['items'] = $activity;
+	//echo elgg_view('page/components/list', $options);
+
+	return true;
+}
+
+function sitemap_latest_users_handler($page) {
+	echo "simple user list page <br />";
+	$users = elgg_get_entities( array('type' => 'user', 'full_view' => false) );
+
+	foreach ($users as $n => $item) {
+		if ( !($item instanceof \ElggEntity) )
+			continue;
+
+		echo "<br /> " . elgg_view('output/url', array(
+			'href' => $item->getURL(),
+			'text' => ($item->title ? $item->title : $item->name)
+		));
+	}
+
+	return true;
 }
 
 function elgg_display_comment_handler($hook, $type, $return, $params) {
