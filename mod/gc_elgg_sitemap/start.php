@@ -77,17 +77,18 @@ function gc_elgg_sitemap_init() {
 	}
 
 	// simple page listing the latest objects created
-	elgg_register_page_handler('sitemap-latest', 'sitemap_latest_handler');
+	elgg_register_page_handler('sitemap-latest-activity', 'sitemap_latest_handler');
 	elgg_register_page_handler('sitemap-latest-users', 'sitemap_latest_users_handler');
 }
 
 function sitemap_latest_handler($page) {
 	echo "simple activity page <br />";
-	$activity = elgg_get_river();
+	$options['limit'] = 1000;
+
+	$activity = elgg_get_river($options);
 
 	foreach ($activity as $n => $item) {
 		$tmp = get_entity( $item->object_guid );
-		//echo $tmp->guid ."   ". $tmp->title;
 		if ( !($tmp instanceof \ElggEntity) )
 			continue;
 
@@ -97,16 +98,12 @@ function sitemap_latest_handler($page) {
 		));
 	}
 
-	//$options['count'] = 10;
-	$options['items'] = $activity;
-	//echo elgg_view('page/components/list', $options);
-
 	return true;
 }
 
 function sitemap_latest_users_handler($page) {
 	echo "simple user list page <br />";
-	$users = elgg_get_entities( array('type' => 'user', 'full_view' => false) );
+	$users = elgg_get_entities( array('type' => 'user', 'full_view' => false, 'limit' => 1000) );
 
 	foreach ($users as $n => $item) {
 		if ( !($item instanceof \ElggEntity) )
