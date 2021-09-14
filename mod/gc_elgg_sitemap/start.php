@@ -104,6 +104,8 @@ function sitemap_latest_handler($page) {
 function sitemap_latest_users_handler($page) {
 	$offset = $page[0];
 	$limit = 500;
+	
+	qqecho '<meta name="robots" content="noindex, follow">';
 
 	echo "simple user list page <br />";
 	$users = elgg_get_entities( array('type' => 'user', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
@@ -114,14 +116,16 @@ function sitemap_latest_users_handler($page) {
 
 		echo "<br /> " . elgg_view('output/url', array(
 			'href' => $item->getURL(),
-			'text' => ($item->title ? $item->title : $item->name)
+			'text' => ($item->title ? $item->title : $item->name),
+			'rel' => false,
 		));
 	}
 
 	if( count( $users ) == $limit ){
 		echo "<br /> " . elgg_view('output/url', array(
 				'href' => "sitemap-latest-users/" . ($offset + 500),
-				'text' => "Next Page"
+				'text' => "Next Page",
+				'rel' => false,
 			));
 	}
 
