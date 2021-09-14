@@ -105,7 +105,7 @@ function sitemap_latest_users_handler($page) {
 	$offset = $page[0];
 	$limit = 500;
 	
-	qqecho '<meta name="robots" content="noindex, follow">';
+	echo '<meta name="robots" content="noindex, follow">';
 
 	echo "simple user list page <br />";
 	$users = elgg_get_entities( array('type' => 'user', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
