@@ -102,10 +102,24 @@ function sitemap_latest_handler($page) {
 }
 
 function sitemap_latest_users_handler($page) {
+	echo '<meta name="robots" content="noindex, follow">';
+
+	// list page
+	if ( $page[0] == "list" ) {
+		$users = elgg_get_entities( array('type' => 'user', 'full_view' => false, 'count' => true) );
+
+		for ($i=0; $i <= $users/500; $i++) { 
+			echo "<br /> " . elgg_view('output/url', array(
+				'href' => "sitemap-latest-users/" . (500 * $i),
+				'text' => "Offset " . (500 * $i),
+				'rel' => false,
+			));
+		}
+		return true;
+	}
+
 	$offset = $page[0];
 	$limit = 500;
-	
-	echo '<meta name="robots" content="noindex, follow">';
 
 	echo "simple user list page <br />";
 	$users = elgg_get_entities( array('type' => 'user', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
@@ -119,14 +133,6 @@ function sitemap_latest_users_handler($page) {
 			'text' => ($item->title ? $item->title : $item->name),
 			'rel' => false,
 		));
-	}
-
-	if( count( $users ) == $limit ){
-		echo "<br /> " . elgg_view('output/url', array(
-				'href' => "sitemap-latest-users/" . ($offset + 500),
-				'text' => "Next Page",
-				'rel' => false,
-			));
 	}
 
 	return true;
