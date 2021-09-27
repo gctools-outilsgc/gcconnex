@@ -75,6 +75,67 @@ function gc_elgg_sitemap_init() {
 		elgg_register_plugin_hook_handler('view', 'b_extended_profile/skills', 'elgg_view_topbar_handler');
 
 	}
+
+	// simple page listing the latest objects created
+#	elgg_register_page_handler('sitemap-latest-activity', 'sitemap_latest_handler');
+	elgg_register_page_handler('sitemap-latest-users', 'sitemap_latest_users_handler');
+}
+
+function sitemap_latest_handler($page) {
+	echo "simple activity page <br />";
+	$options['limit'] = 100;
+
+	$activity = elgg_get_river($options);
+
+	foreach ($activity as $n => $item) {
+		$tmp = get_entity( $item->object_guid );
+		if ( !($tmp instanceof \ElggEntity) )
+			continue;
+
+		echo "<br /> " . elgg_view('output/url', array(
+			'href' => $tmp->getURL(),
+			'text' => ($tmp->title ? $tmp->title : $tmp->name)
+		));
+	}
+
+	return true;
+}
+
+function sitemap_latest_users_handler($page) {
+	echo '<meta name="robots" content="noindex, follow">';
+
+	// list page
+	if ( $page[0] == "list" ) {
+		$users = elgg_get_entities( array('type' => 'user', 'full_view' => false, 'count' => true) );
+
+		for ($i=0; $i <= $users/500; $i++) { 
+			echo "<br /> " . elgg_view('output/url', array(
+				'href' => "sitemap-latest-users/" . (500 * $i),
+				'text' => "Offset " . (500 * $i),
+				'rel' => false,
+			));
+		}
+		return true;
+	}
+
+	$offset = $page[0];
+	$limit = 500;
+
+	echo "simple user list page <br />";
+	$users = elgg_get_entities( array('type' => 'user', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
+
+	foreach ($users as $n => $item) {
+		if ( !($item instanceof \ElggEntity) )
+			continue;
+
+		echo "<br /> " . elgg_view('output/url', array(
+			'href' => $item->getURL(),
+			'text' => ($item->title ? $item->title : $item->name),
+			'rel' => false,
+		));
+	}
+
+	return true;
 }
 
 function elgg_display_comment_handler($hook, $type, $return, $params) {
