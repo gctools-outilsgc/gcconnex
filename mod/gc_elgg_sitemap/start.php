@@ -81,6 +81,7 @@ function gc_elgg_sitemap_init() {
 	elgg_register_page_handler('sitemap-latest-groups', 'sitemap_latest_groups_handler');
 	elgg_register_page_handler('sitemap-latest-wire', 'sitemap_latest_wire_handler');
 	elgg_register_page_handler('sitemap-latest-blogs', 'sitemap_latest_blogs_handler');
+	elgg_register_page_handler('sitemap-latest-pages', 'sitemap_latest_pages_handler');
 }
 
 function sitemap_latest_users_handler($page) {
@@ -216,6 +217,43 @@ function sitemap_latest_blogs_handler($page) {
 
 	echo "simple blogs list page <br />";
 	$users = elgg_get_entities( array('type' => 'object', 'subtype' => 'blog', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
+
+	foreach ($users as $n => $item) {
+		if ( !($item instanceof \ElggEntity) )
+			continue;
+
+		echo "<br /> " . elgg_view('output/url', array(
+			'href' => $item->getURL(),
+			'text' => ($item->title ? $item->title : $item->name),
+			'rel' => false,
+		));
+	}
+
+	return true;
+}
+
+function sitemap_latest_pages_handler($page) {
+	echo '<meta name="robots" content="noindex, follow">';
+
+	// list page
+	if ( $page[0] == "list" ) {
+		$users = elgg_get_entities( array('type' => 'object', 'subtype' => 'page', 'full_view' => false, 'count' => true) );
+
+		for ($i=0; $i <= $users/500; $i++) { 
+			echo "<br /> " . elgg_view('output/url', array(
+				'href' => "sitemap-latest-pages/" . (500 * $i),
+				'text' => "Offset " . (500 * $i),
+				'rel' => false,
+			));
+		}
+		return true;
+	}
+
+	$offset = $page[0];
+	$limit = 500;
+
+	echo "simple page list page <br />";
+	$users = elgg_get_entities( array('type' => 'object', 'subtype' => 'page', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
 
 	foreach ($users as $n => $item) {
 		if ( !($item instanceof \ElggEntity) )
