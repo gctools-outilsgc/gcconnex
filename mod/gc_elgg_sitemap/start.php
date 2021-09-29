@@ -82,6 +82,7 @@ function gc_elgg_sitemap_init() {
 	elgg_register_page_handler('sitemap-latest-wire', 'sitemap_latest_wire_handler');
 	elgg_register_page_handler('sitemap-latest-blog', 'sitemap_latest_blog_handler');
 	elgg_register_page_handler('sitemap-latest-page_top', 'sitemap_latest_page_top_handler');
+	elgg_register_page_handler('sitemap-latest-page', 'sitemap_latest_page_handler');
 	elgg_register_page_handler('sitemap-latest-bookmarks', 'sitemap_latest_bookmarks_handler');
 	elgg_register_page_handler('sitemap-latest-event_calendar', 'sitemap_latest_event_calendar_handler');
 	elgg_register_page_handler('sitemap-latest-comment', 'sitemap_latest_comment_handler');
@@ -199,7 +200,7 @@ function sitemap_latest_groups_handler($page) {
 }
 
 function sitemap_latest_wire_handler($page) {
-	sitemap_list_subtype( "wire", $page[0] );
+	sitemap_list_subtype( "thewire", $page[0] );
 	return true;
 }
 
@@ -209,6 +210,10 @@ function sitemap_latest_blog_handler($page) {
 }
 function sitemap_latest_page_top_handler($page) {
 	sitemap_list_subtype( "page_top", $page[0] );
+	return true;
+}
+function sitemap_latest_page_handler($page) {
+	sitemap_list_subtype( "page", $page[0] );
 	return true;
 }
 function sitemap_latest_bookmarks_handler($page) {
