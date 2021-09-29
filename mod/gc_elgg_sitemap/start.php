@@ -79,7 +79,7 @@ function gc_elgg_sitemap_init() {
 	// simple page listing the latest objects created
 	elgg_register_page_handler('sitemap-latest-users', 'sitemap_latest_users_handler');
 	elgg_register_page_handler('sitemap-latest-groups', 'sitemap_latest_groups_handler');
-	elgg_register_page_handler('sitemap-latest-wire', 'sitemap_latest_wire_handler');
+	elgg_register_page_handler('sitemap-latest-thewire', 'sitemap_latest_thewire_handler');
 	elgg_register_page_handler('sitemap-latest-blog', 'sitemap_latest_blog_handler');
 	elgg_register_page_handler('sitemap-latest-page_top', 'sitemap_latest_page_top_handler');
 	elgg_register_page_handler('sitemap-latest-page', 'sitemap_latest_page_handler');
@@ -199,7 +199,7 @@ function sitemap_latest_groups_handler($page) {
 	return true;
 }
 
-function sitemap_latest_wire_handler($page) {
+function sitemap_latest_thewire_handler($page) {
 	sitemap_list_subtype( "thewire", $page[0] );
 	return true;
 }
