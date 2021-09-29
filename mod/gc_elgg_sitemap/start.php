@@ -82,6 +82,43 @@ function gc_elgg_sitemap_init() {
 	elgg_register_page_handler('sitemap-latest-wire', 'sitemap_latest_wire_handler');
 	elgg_register_page_handler('sitemap-latest-blogs', 'sitemap_latest_blogs_handler');
 	elgg_register_page_handler('sitemap-latest-pages', 'sitemap_latest_pages_handler');
+	// TODO: event calendar, bookmarks, Pages, Comments, ideas
+}
+
+function sitemap_list_subtype( $subtype, $offset ) {
+	echo '<meta name="robots" content="noindex, follow">';
+
+	// list page
+	if ( $offset == "list" ) {
+		$items_count = elgg_get_entities( array('type' => 'object', 'subtype' => $subtype, 'full_view' => false, 'count' => true) );
+
+		for ($i=0; $i <= $items_count/500; $i++) { 
+			echo "<br /> " . elgg_view('output/url', array(
+				'href' => "sitemap-latest-$subtype/" . (500 * $i),
+				'text' => "Offset " . (500 * $i),
+				'rel' => false,
+			));
+		}
+		return true;
+	}
+
+	$limit = 500;
+
+	echo "simple list page <br />";
+	$items = elgg_get_entities( array('type' => 'object', 'subtype' => $subtype, 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
+
+	foreach ($items as $n => $item) {
+		if ( !($item instanceof \ElggEntity) )
+			continue;
+
+		echo "<br /> " . elgg_view('output/url', array(
+			'href' => $item->getURL(),
+			'text' => ($item->title ? $item->title : $item->name),
+			'rel' => false,
+		));
+	}
+
+	return true;
 }
 
 function sitemap_latest_users_handler($page) {
@@ -126,9 +163,9 @@ function sitemap_latest_groups_handler($page) {
 
 	// list page
 	if ( $page[0] == "list" ) {
-		$users = elgg_get_entities( array('type' => 'group', 'full_view' => false, 'count' => true) );
+		$groups = elgg_get_entities( array('type' => 'group', 'full_view' => false, 'count' => true) );
 
-		for ($i=0; $i <= $users/500; $i++) { 
+		for ($i=0; $i <= $groups/500; $i++) { 
 			echo "<br /> " . elgg_view('output/url', array(
 				'href' => "sitemap-latest-groups/" . (500 * $i),
 				'text' => "Offset " . (500 * $i),
@@ -142,9 +179,9 @@ function sitemap_latest_groups_handler($page) {
 	$limit = 500;
 
 	echo "simple group list page <br />";
-	$users = elgg_get_entities( array('type' => 'group', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
+	$groups = elgg_get_entities( array('type' => 'group', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
 
-	foreach ($users as $n => $item) {
+	foreach ($groups as $n => $item) {
 		if ( !($item instanceof \ElggEntity) )
 			continue;
 
@@ -163,9 +200,9 @@ function sitemap_latest_wire_handler($page) {
 
 	// list page
 	if ( $page[0] == "list" ) {
-		$users = elgg_get_entities( array('type' => 'object', 'subtype' => 'thewire', 'full_view' => false, 'count' => true) );
+		$posts = elgg_get_entities( array('type' => 'object', 'subtype' => 'thewire', 'full_view' => false, 'count' => true) );
 
-		for ($i=0; $i <= $users/500; $i++) { 
+		for ($i=0; $i <= $posts/500; $i++) { 
 			echo "<br /> " . elgg_view('output/url', array(
 				'href' => "sitemap-latest-wire/" . (500 * $i),
 				'text' => "Offset " . (500 * $i),
@@ -179,9 +216,9 @@ function sitemap_latest_wire_handler($page) {
 	$limit = 500;
 
 	echo "simple wire list page <br />";
-	$users = elgg_get_entities( array('type' => 'object', 'subtype' => 'thewire', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
+	$posts = elgg_get_entities( array('type' => 'object', 'subtype' => 'thewire', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
 
-	foreach ($users as $n => $item) {
+	foreach ($posts as $n => $item) {
 		if ( !($item instanceof \ElggEntity) )
 			continue;
 
