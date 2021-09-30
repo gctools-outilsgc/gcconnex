@@ -1,0 +1,84 @@
+# First stage, install composer and its dependencies and fetch vendor files
+FROM alpine:3.7
+RUN apk --no-cache add \
+  php5 \
+  php5-dom \
+  php5-phar \
+  php5-gd \
+  php5-iconv \
+  php5-json \
+  php5-mysql \
+  php5-openssl \
+  php5-xml \
+  php5-zlib \
+  php5-curl \
+  curl
+RUN mkdir /app && mkdir /app/pleio && mkdir /app/paas_integration && curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
+RUN ln -s /usr/bin/php5 /usr/bin/php
+WORKDIR /app
+COPY composer.json composer.json /app/
+COPY mod/pleio/composer.json /app/pleio/
+COPY mod/paas_integration/composer.json /app/paas_integration/
+
+ARG COMPOSER_ALLOW_SUPERUSER=1
+ARG COMPOSER_NO_INTERACTION=1
+RUN composer install
+
+WORKDIR /app/pleio
+RUN composer install
+
+WORKDIR /app/paas_integration
+RUN composer install
+
+
+
+# Second stage, build usable container
+FROM ubuntu:18.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		apache2 \
+        curl \
+		software-properties-common \
+	&& apt-get clean \
+	&& rm -fr /var/lib/apt/lists/*
+
+RUN add-apt-repository ppa:ondrej/php
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+                libapache2-mod-php5.6 \
+                php5.6 \
+                php5.6-cli \
+                php5.6-gd \
+                php5.6-json \
+                php5.6-mysql \
+                php5.6-zip \
+                php5.6-xml \
+                php5.6-openssl \
+                php5.6-curl \
+                php-opcache \
+                php-memcache \
+                php-pear
+        && apt-get clean \
+        && rm -fr /var/lib/apt/lists/*
+
+RUN a2enmod rewrite
+
+
+COPY ./install/config/htaccess.dist /var/www/html/.htaccess
+COPY --from=0 /app/vendor/ /var/www/html/vendor/
+COPY . /var/www/html
+COPY --from=0 /app/pleio/vendor/ /var/www/html/mod/pleio/vendor/
+COPY --from=0 /app/paas_integration/vendor/ /var/www/html/mod/paas_integration/vendor/
+RUN chown apache:apache /var/www/html
+
+WORKDIR /var/www/html
+EXPOSE 80
+EXPOSE 443
+
+RUN chmod +x docker/start.sh
+
+# Start Apache in foreground mode
+RUN rm -f /run/apache2/httpd.pid
+ENTRYPOINT [ "docker/start.sh" ]
+CMD  ["/usr/sbin/httpd -D FOREGROUND"]
+
