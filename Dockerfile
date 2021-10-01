@@ -65,7 +65,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         && ln -sf /dev/stderr /var/log/apache2/error.log \
         && ln -sf /dev/stdout /var/log/apache2/access.log
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite headers
 
 RUN { \
   echo 'opcache.memory_consumption=128'; \
