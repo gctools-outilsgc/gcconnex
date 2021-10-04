@@ -87,6 +87,8 @@ function gc_elgg_sitemap_init() {
 	elgg_register_page_handler('sitemap-latest-event_calendar', 'sitemap_latest_event_calendar_handler');
 	elgg_register_page_handler('sitemap-latest-comment', 'sitemap_latest_comment_handler');
 	elgg_register_page_handler('sitemap-latest-idea', 'sitemap_latest_idea_handler');
+	elgg_register_page_handler('sitemap-latest-groupforumtopic', 'sitemap_latest_groupforumtopic_handler');
+	elgg_register_page_handler('sitemap-latest-discussion_reply', 'sitemap_latest_discussion_reply_handler');
 }
 
 function sitemap_list_subtype( $subtype, $offset ) {
@@ -230,6 +232,14 @@ function sitemap_latest_comment_handler($page) {
 }
 function sitemap_latest_idea_handler($page) {
 	sitemap_list_subtype( "idea", $page[0] );
+	return true;
+}
+function sitemap_latest_groupforumtopic_handler($page) {
+	sitemap_list_subtype( "groupforumtopic", $page[0] );
+	return true;
+}
+function sitemap_latest_discussion_reply_handler($page) {
+	sitemap_list_subtype( "discussion_reply", $page[0] );
 	return true;
 }
 
