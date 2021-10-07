@@ -77,24 +77,50 @@ function gc_elgg_sitemap_init() {
 	}
 
 	// simple page listing the latest objects created
-#	elgg_register_page_handler('sitemap-latest-activity', 'sitemap_latest_handler');
 	elgg_register_page_handler('sitemap-latest-users', 'sitemap_latest_users_handler');
+	elgg_register_page_handler('sitemap-latest-groups', 'sitemap_latest_groups_handler');
+	elgg_register_page_handler('sitemap-latest-thewire', 'sitemap_latest_thewire_handler');
+	elgg_register_page_handler('sitemap-latest-blog', 'sitemap_latest_blog_handler');
+	elgg_register_page_handler('sitemap-latest-page_top', 'sitemap_latest_page_top_handler');
+	elgg_register_page_handler('sitemap-latest-page', 'sitemap_latest_page_handler');
+	elgg_register_page_handler('sitemap-latest-bookmarks', 'sitemap_latest_bookmarks_handler');
+	elgg_register_page_handler('sitemap-latest-event_calendar', 'sitemap_latest_event_calendar_handler');
+	elgg_register_page_handler('sitemap-latest-comment', 'sitemap_latest_comment_handler');
+	elgg_register_page_handler('sitemap-latest-idea', 'sitemap_latest_idea_handler');
+	elgg_register_page_handler('sitemap-latest-groupforumtopic', 'sitemap_latest_groupforumtopic_handler');
+	elgg_register_page_handler('sitemap-latest-discussion_reply', 'sitemap_latest_discussion_reply_handler');
 }
 
-function sitemap_latest_handler($page) {
-	echo "simple activity page <br />";
-	$options['limit'] = 100;
+function sitemap_list_subtype( $subtype, $offset ) {
+	echo '<meta name="robots" content="noindex, follow">';
 
-	$activity = elgg_get_river($options);
+	// list page
+	if ( $offset == "list" ) {
+		$items_count = elgg_get_entities( array('type' => 'object', 'subtype' => $subtype, 'full_view' => false, 'count' => true) );
 
-	foreach ($activity as $n => $item) {
-		$tmp = get_entity( $item->object_guid );
-		if ( !($tmp instanceof \ElggEntity) )
+		for ($i=0; $i <= $items_count/500; $i++) { 
+			echo "<br /> " . elgg_view('output/url', array(
+				'href' => "sitemap-latest-$subtype/" . (500 * $i),
+				'text' => "Offset " . (500 * $i),
+				'rel' => false,
+			));
+		}
+		return true;
+	}
+
+	$limit = 500;
+
+	echo "simple list page <br />";
+	$items = elgg_get_entities( array('type' => 'object', 'subtype' => $subtype, 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
+
+	foreach ($items as $n => $item) {
+		if ( !($item instanceof \ElggEntity) )
 			continue;
 
 		echo "<br /> " . elgg_view('output/url', array(
-			'href' => $tmp->getURL(),
-			'text' => ($tmp->title ? $tmp->title : $tmp->name)
+			'href' => $item->getURL(),
+			'text' => ($item->title ? $item->title : $item->name),
+			'rel' => false,
 		));
 	}
 
@@ -135,6 +161,85 @@ function sitemap_latest_users_handler($page) {
 		));
 	}
 
+	return true;
+}
+
+function sitemap_latest_groups_handler($page) {
+	echo '<meta name="robots" content="noindex, follow">';
+
+	// list page
+	if ( $page[0] == "list" ) {
+		$groups = elgg_get_entities( array('type' => 'group', 'full_view' => false, 'count' => true) );
+
+		for ($i=0; $i <= $groups/500; $i++) { 
+			echo "<br /> " . elgg_view('output/url', array(
+				'href' => "sitemap-latest-groups/" . (500 * $i),
+				'text' => "Offset " . (500 * $i),
+				'rel' => false,
+			));
+		}
+		return true;
+	}
+
+	$offset = $page[0];
+	$limit = 500;
+
+	echo "simple group list page <br />";
+	$groups = elgg_get_entities( array('type' => 'group', 'full_view' => false, 'limit' => $limit, 'offset' => $offset) );
+
+	foreach ($groups as $n => $item) {
+		if ( !($item instanceof \ElggEntity) )
+			continue;
+
+		echo "<br /> " . elgg_view('output/url', array(
+			'href' => $item->getURL(),
+			'text' => ($item->title ? $item->title : $item->name),
+			'rel' => false,
+		));
+	}
+
+	return true;
+}
+
+function sitemap_latest_thewire_handler($page) {
+	sitemap_list_subtype( "thewire", $page[0] );
+	return true;
+}
+
+function sitemap_latest_blog_handler($page) {
+	sitemap_list_subtype( "blog", $page[0] );
+	return true;
+}
+function sitemap_latest_page_top_handler($page) {
+	sitemap_list_subtype( "page_top", $page[0] );
+	return true;
+}
+function sitemap_latest_page_handler($page) {
+	sitemap_list_subtype( "page", $page[0] );
+	return true;
+}
+function sitemap_latest_bookmarks_handler($page) {
+	sitemap_list_subtype( "bookmarks", $page[0] );
+	return true;
+}
+function sitemap_latest_event_calendar_handler($page) {
+	sitemap_list_subtype( "event_calendar", $page[0] );
+	return true;
+}
+function sitemap_latest_comment_handler($page) {
+	sitemap_list_subtype( "comment", $page[0] );
+	return true;
+}
+function sitemap_latest_idea_handler($page) {
+	sitemap_list_subtype( "idea", $page[0] );
+	return true;
+}
+function sitemap_latest_groupforumtopic_handler($page) {
+	sitemap_list_subtype( "groupforumtopic", $page[0] );
+	return true;
+}
+function sitemap_latest_discussion_reply_handler($page) {
+	sitemap_list_subtype( "discussion_reply", $page[0] );
 	return true;
 }
 
