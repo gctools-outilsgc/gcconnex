@@ -58,7 +58,7 @@ return array(
     "missions:time_commitment" =>"Période d'engagement",
     "missions:flexible" =>	"Flexible",
     "missions:specific" =>	"Spécifique",
-    "missions:work_remotely" =>	"Cette possibilité peut se faire  à distance",
+    "missions:work_remotely" =>	"Cette possibilité peut se faire à distance",
     "missions:opportunity_location" =>	"Lieu de la possibilité",
     "missions:security_level" =>	"Niveau de sécurité",
     "missions:language_requirements" =>	"Exigences linguistiques",
