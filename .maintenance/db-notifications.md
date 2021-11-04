@@ -1,7 +1,12 @@
 # Old site notification cleanup (GCconnex)
 With the way notifications currently work, every user stores a copy of every notification about anything they subscribe to which can cause them to eventually become by far the largest chunk of the database.
 I've had to do this once or twice so documenting it seems like a good idea.
+
 There doesn't seem to be much difference between these queries and equivalent ones using joins, but these are hopefully easier to read.
+
+## Why
+Disk space - old notifications can fairly quickly end up representing the majority of the disk space used by the DB and disk space for a database is not infinite
+Performance - old notifications will eventually become by far the largest chunks of entities, objects, and metadata tables which can eventually lead to issues, low disk space will also cause more noticable problems
 
 ## Create new tables
 `create table elggentities_tmp like elggentities;`
