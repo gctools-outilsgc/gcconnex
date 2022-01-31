@@ -30,42 +30,42 @@ RUN composer install
 WORKDIR /app/paas_integration
 RUN composer install
 
+
+
 # Second stage, build usable container
-FROM alpine:3.7
-LABEL maintainer="Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>, Ilia Salem"
-RUN \
-  apk --no-cache add \
-  apache2 \
-  php5 \
-  php5-apache2 \
-  php5-ctype \
-  php5-curl \
-  php5-dom \
-  php5-gd \
-  php5-iconv \
-  php5-json \
-  php5-mysql \
-  php5-xml \
-  php5-zip \
-  php5-openssl \
-  php5-curl \
-  curl \
-  php5-opcache \
-  libmemcached-libs \
-  && apk update \
-  && apk --no-cache add php5-mysqli \
-  && mkdir -p /var/www/html/vendor \
-  && mkdir -p /data \
-  && mkdir -p /run/apache2 \
-  && chown apache /data \
-  && ln -s /dev/stderr /var/log/apache2/error.log \
-  && ln -s /dev/stdout /var/log/apache2/access.log \
-  && sed -i '/#LoadModule rewrite_module modules\/mod_rewrite.so/c\LoadModule rewrite_module modules\/mod_rewrite.so' /etc/apache2/httpd.conf \
-  && sed -i '/DocumentRoot "\/var\/www\/localhost\/htdocs"/c\DocumentRoot "\/var\/www\/html"' /etc/apache2/httpd.conf \
-  && sed -i '/Options Indexes FollowSymLinks/c\\' /etc/apache2/httpd.conf \
-  && sed -i '/AllowOverride None/c\\' /etc/apache2/httpd.conf \
-  && sed -i '/Options Indexes FollowSymLinks/c\\' /etc/apache2/httpd.conf \
-  && sed -i '/<Directory "\/var\/www\/localhost\/htdocs">/c\<Directory "\/var\/www\/html">\nDirectoryIndex index.php\nOptions FollowSymLinks MultiViews\nAllowOverride All\nOrder allow,deny\nallow from all\n' /etc/apache2/httpd.conf
+FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		software-properties-common \
+	&& apt-get clean \
+	&& rm -fr /var/lib/apt/lists/*
+
+RUN add-apt-repository ppa:ondrej/php
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+            apache2 \
+            curl \
+            libapache2-mod-php5.6 \
+            php5.6 \
+            php5.6-gd \
+            php5.6-mbstring \
+            php5.6-json \
+            php5.6-mysql \
+            php5.6-zip \
+            php5.6-xml \
+            php5.6-curl \
+            php5.6-opcache \
+            php5.6-memcache \
+        && apt-get clean \
+        && rm -fr /var/lib/apt/lists/* \
+        && mkdir -p /var/www/html/vendor \
+        && mkdir -p /data \
+        && chown www-data /data \
+        && ln -sf /dev/stderr /var/log/apache2/error.log \
+        && ln -sf /dev/stdout /var/log/apache2/access.log
+
+RUN a2enmod rewrite headers
 
 RUN { \
   echo 'opcache.memory_consumption=128'; \
@@ -75,30 +75,15 @@ RUN { \
   echo 'opcache.fast_shutdown=1'; \
   echo 'opcache.enable_cli=1'; \
   echo 'opcache.enable_file_override=1'; \
-  } > /etc/php5/conf.d/opcache-recommended.ini
+  } > /etc/php/5.6/apache2/conf.d/opcache-recommended.ini
 
-# install memcached
-ENV PHPIZE_DEPS autoconf file g++ gcc libc-dev make pkgconf re2c php5-dev php5-pear \
-  zlib-dev libmemcached-dev cyrus-sasl-dev libevent-dev openssl-dev
-ENV PHP_PEAR_PHP_BIN /usr/bin/php5
-RUN set -xe \
-  && apk add --no-cache \
-  --virtual .phpize-deps \
-  $PHPIZE_DEPS \
-  && sed -i 's/^exec $PHP -C -n/exec $PHP -C/g' $(which pecl) \
-  && pecl install memcache-2.2.7 \
-  && mv $(INSTALL_ROOT)/usr/lib/php5/modules/memcache.so /usr/lib/php5/modules/memcache.so \
-  && echo "extension=memcache.so" > /etc/php5/conf.d/memcache.ini \
-  && rm -rf /usr/share/php \
-  && rm -rf /tmp/* \
-  && apk del .phpize-deps
-
+COPY ./docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
 COPY . /var/www/html
 COPY --from=0 /app/pleio/vendor/ /var/www/html/mod/pleio/vendor/
 COPY --from=0 /app/paas_integration/vendor/ /var/www/html/mod/paas_integration/vendor/
-RUN chown apache:apache /var/www/html
+RUN chown www-data:www-data /var/www/html
 
 WORKDIR /var/www/html
 EXPOSE 80
@@ -109,5 +94,4 @@ RUN chmod +x docker/start.sh
 # Start Apache in foreground mode
 RUN rm -f /run/apache2/httpd.pid
 ENTRYPOINT [ "docker/start.sh" ]
-CMD  ["/usr/sbin/httpd -D FOREGROUND"]
-
+CMD  ["apache2ctl -D FOREGROUND"]
