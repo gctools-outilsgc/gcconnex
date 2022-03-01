@@ -1691,6 +1691,30 @@ return array(
 		<p>Vous n’êtes pas encore prêt à joindre le groupe? Allez-y et affichez votre commentaire, mais n'oubliez pas de revenir vérifier ce fil pour voir les nouveaux commentaires affichés.</p> ",
 	'not_now' => 'Pas maintenant',
 
+/*gcx Messaging*/
+/*gcx Messaging Login */
+'gcx:messaging:login:intro' => 'Saviez-vous que <a href="https://www.gcx-gce.gc.ca/" target="_blank">GCéchange</a> est officiellement arrivé?',
+'gcx:messaging:login:list' => 'Il vous suffit d’ouvrir une séance pour :',
+'gcx:messaging:login:list1' => 'clavarder avec des collègues du gouvernement du Canada à l’aide de Microsoft Teams;',
+'gcx:messaging:login:list2' => 'corédiger des documents avec des fonctionnaires d’autres ministères;',
+'gcx:messaging:login:list3' => 'consulter les communications de votre ministère, mais aussi celles de l’ensemble du gouvernement du Canada; ',
+'gcx:messaging:login:list4' => 'accéder à un contenu personnalisé pour vous.',
+
+/*gcx Messaging Registration */
+'gcx:messaging:registration:intro' => 'Vous cherchez des moyens de communiquer et de collaborer avec vos collègues du gouvernement du Canada?',
+'gcx:messaging:registration:checkout' => 'Découvrez <a href="https://www.gcx-gce.gc.ca/" target="_blank">GCéchange</a>!',
+'gcx:messaging:registration:list' => 'Il vous suffit d’ouvrir une séance pour :',
+'gcx:messaging:registration:list1' => 'collaborer et clavarder avec des collègues de l’ensemble du gouvernement du Canada à l’aide de Microsoft Teams;',
+'gcx:messaging:registration:list2' => 'corédiger des documents avec des fonctionnaires d’autres ministères;',
+'gcx:messaging:registration:list3' => 'consulter les communications de votre ministère, mais aussi celles de l’ensemble du gouvernement du Canada; ',
+'gcx:messaging:registration:list4' => 'accéder à un contenu personnalisé pour vous. ',
+'gcx:messaging:registration:cta' => 'Des milliers d’employés du gouvernement du Canada se sont déjà inscrits. <a href="https://www.gcx-gce.gc.ca/" target="_blank">Activez votre compte dès aujourd’hui!</a>',
+
+/*gcx Messaging Group Edit */
+'gcx:messaging:group1' => 'Vous cherchez un espace collectif pour collaborer entre ministères?',
+'gcx:messaging:group2' => 'Saviez-vous que GCéchange vous offre quelque chose de plus?',
+'gcx:messaging:group3' => 'Profitez de fonctions telles que le clavardage et la corédaction de documents avec des collègues de l’ensemble du gouvernement du Canada. ',
+'gcx:messaging:group4' => '<a href="https://www.gcx-gce.gc.ca/" target="_blank">Activez votre compte GCéchange</a> dès aujourd’hui pour en faire l’expérience!',	
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

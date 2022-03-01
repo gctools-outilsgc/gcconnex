@@ -17,6 +17,19 @@ elgg_push_context("group-edit");
 
 // build the group profile fields
 echo "<div id='group-tools-group-edit-profile' class='group-tools-group-edit-section'>";
+echo "<div class='panel panel-default'>";
+echo "<div class='panel-body'><div class=''row>";
+echo "<div class='col-md-4'>img!</div>";
+echo "<div class='col-md-8'>";
+echo "<div>";
+echo "<div class='mrgn-bttm-md'>". elgg_echo('gcx:messaging:group1') ."</div>";
+echo "<div class='mrgn-bttm-md'>". elgg_echo('gcx:messaging:group2') ."</div>";
+echo "<div class='mrgn-bttm-md'>". elgg_echo('gcx:messaging:group3') ."</div>";
+echo "<div>". elgg_echo('gcx:messaging:group4') ."</div>";
+echo "</div>";
+echo "</div>";
+echo "</div></div>";
+echo "</div>";
 echo elgg_view("groups/edit/profile", $vars);
 echo elgg_view("groups/edit/access", $vars);
 echo "</div>";

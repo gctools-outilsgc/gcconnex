@@ -1843,6 +1843,32 @@ Please do not reply to this email.",
 /*Rotate content*/
 'rotate:image' => 'Rotate image',
 
+/*gcx Messaging*/
+/*gcx Messaging Login */
+'gcx:messaging:login:intro' => 'Hey! Did you know <a href="https://www.gcx-gce.gc.ca/" target="_blank">gcxchange</a> has officially arrived?',
+'gcx:messaging:login:list' => 'With one simple sign-on, you can:',
+'gcx:messaging:login:list1' => 'Chat with GC colleagues using Microsoft Teams',
+'gcx:messaging:login:list2' => 'Co-author documents with public servants from other departments',
+'gcx:messaging:login:list3' => 'View departmental and GC-wide communications',
+'gcx:messaging:login:list4' => 'Access content that is personalized for you',
+
+/*gcx Messaging Registration */
+'gcx:messaging:registration:intro' => 'Looking for ways to connect and collaborate with your GC colleagues?',
+'gcx:messaging:registration:checkout' => 'Check out <a href="https://www.gcx-gce.gc.ca/" target="_blank">gcxchange</a>!',
+'gcx:messaging:registration:list' => 'With one simple sign-on, you can:',
+'gcx:messaging:registration:list1' => 'Collaborate and chat with colleagues across the GC using Microsoft Teams',
+'gcx:messaging:registration:list2' => 'Co-author documents with public servants from other departments ',
+'gcx:messaging:registration:list3' => 'View departmental and GC-wide communications',
+'gcx:messaging:registration:list4' => 'Access content that is personalized for you',
+'gcx:messaging:registration:cta' => 'Thousands of GC employees have already signed up. <a href="https://www.gcx-gce.gc.ca/" target="_blank">Activate your account today!</a>',
+'gcx:messagin:registration:cta2' => 'Activate your account today!',
+
+/*gcx Messaging Group Edit */
+'gcx:messaging:group1' => 'Looking for a group space to collaborate across departments?',
+'gcx:messaging:group2' => 'Did you know gcxchange offers something more?',
+'gcx:messaging:group3' => 'Take advantage of features like chatting and co-authoring documents with colleagues across the GC. ',
+'gcx:messaging:group4' => '<a href="https://www.gcx-gce.gc.ca/" target="_blank">Activate your gcxchange account</a> today and check it out!',
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

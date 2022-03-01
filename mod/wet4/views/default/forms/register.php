@@ -84,8 +84,28 @@ $account_exist_message = elgg_echo('registration:userexists');
 </script>
 
 <!-- start of standard form -->
+<div class="row mrgn-bttm-lg panel panel-default">
+	<div class="col-md-4 panel-body">
+		img
+	</div>
+	<div class="col-md-8 panel-body">
+		<div class="mrgn-rght-md">
+			<p><?php echo elgg_echo('gcx:messaging:registration:intro'); ?></p>
+			<p class="mrgn-bttm-md mrgn-tp-md"><?php echo elgg_echo('gcx:messaging:registration:checkout'); ?></p>
+			<p><?php echo elgg_echo('gcx:messaging:registration:list'); ?></p>
+			<ul>
+				<li><?php echo elgg_echo('gcx:messaging:registration:list1'); ?></li>
+				<li><?php echo elgg_echo('gcx:messaging:registration:list2'); ?></li>
+				<li><?php echo elgg_echo('gcx:messaging:registration:list3'); ?></li>
+				<li><?php echo elgg_echo('gcx:messaging:registration:list4'); ?></li>
+			</ul>
+			<p><?php echo elgg_echo('gcx:messaging:registration:cta'); ?></p>
+		</div>
+	</div>
+</div>
 <div id="standard_version" class="row">
 	<section class="col-md-6">
+	
 		<?php
 			echo elgg_echo('gcRegister:email_notice') ;
 			$js_disabled = false;
@@ -93,6 +113,7 @@ $account_exist_message = elgg_echo('registration:userexists');
 	</section>
 
 	<section class="col-md-6">
+	
 		<div class="panel panel-default">
 			<header class="panel-heading">
 				<h3 class="panel-title"><?php echo elgg_echo('gcRegister:form'); ?></h3>

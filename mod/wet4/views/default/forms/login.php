@@ -23,7 +23,24 @@ if( _elgg_services()->session->get('language') == 'en') {//quick fix to display 
 }
 if(elgg_in_context('login')){ //Nick - only show the graphic and register text on the main login page
 ?>
-
+<div class="col-sm-12 clearfix mrgn-bttm-lg brdr-bttm">
+    <div class="col-sm-4 clearfix">
+        IMG
+    </div>
+    <div class="col-sm-8 clearfix mrgn-bttm-lg">
+        <div>
+            <p class="mrgn-bttm-md"><?php echo elgg_echo('gcx:messaging:login:intro'); ?></p>
+            <p><?php echo elgg_echo('gcx:messaging:login:list'); ?></p>
+            <ul>
+                <li><?php echo elgg_echo('gcx:messaging:login:list1'); ?></li>
+                <li><?php echo elgg_echo('gcx:messaging:login:list2'); ?></li>
+                <li><?php echo elgg_echo('gcx:messaging:login:list3'); ?></li>
+                <li><?php echo elgg_echo('gcx:messaging:login:list4'); ?></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br/>
 <div class="col-sm-6 clearfix">
    <div class="col-sm-4 clearfix ">
     <?php
