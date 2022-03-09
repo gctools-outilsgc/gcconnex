@@ -1715,6 +1715,7 @@ return array(
 'gcx:messaging:group2' => 'Saviez-vous que GCéchange vous offre quelque chose de plus?',
 'gcx:messaging:group3' => 'Profitez de fonctions telles que le clavardage et la corédaction de documents avec des collègues de l’ensemble du gouvernement du Canada. ',
 'gcx:messaging:group4' => '<a href="https://www.gcx-gce.gc.ca/" target="_blank">Activez votre compte GCéchange</a> dès aujourd’hui pour en faire l’expérience!',	
+'gcx:messaging:alt' => "une illustration d'animaux",
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

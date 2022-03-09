@@ -1868,7 +1868,7 @@ Please do not reply to this email.",
 'gcx:messaging:group2' => 'Did you know gcxchange offers something more?',
 'gcx:messaging:group3' => 'Take advantage of features like chatting and co-authoring documents with colleagues across the GC. ',
 'gcx:messaging:group4' => '<a href="https://www.gcx-gce.gc.ca/" target="_blank">Activate your gcxchange account</a> today and check it out!',
-
+'gcx:messaging:alt' => 'an illustration of animals',
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

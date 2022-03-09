@@ -2076,3 +2076,8 @@ figcaption{
     outline: 0;
     box-shadow: 0px 0px 8px 2px rgba(102,175,233,.6), 0 0 8px rgba(102,175,233,.6) !important;
 }
+
+.gcx-login-holder {
+    padding-top: 8px;
+    font-size: 18px;
+}
