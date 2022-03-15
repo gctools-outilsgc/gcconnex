@@ -18,7 +18,7 @@ elgg_push_context("group-edit");
 // build the group profile fields
 echo "<div id='group-tools-group-edit-profile' class='group-tools-group-edit-section'>";
 echo "<div class='panel panel-default'>";
-echo "<div class='panel-body'><div class=''row>";
+echo "<div class='panel-body'><div>";
 echo "<div class='col-md-4'><img src='".$site_url."/mod/wet4/graphics/gcx_deer_in_snow.png' alt='".elgg_echo('gcx:messaging:alt')."'/></div>";
 echo "<div class='col-md-8'>";
 echo "<div class='mrgn-lft-lg'>";
