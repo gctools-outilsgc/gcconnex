@@ -18,7 +18,7 @@ elgg_push_context("group-edit");
 // build the group profile fields
 echo "<div id='group-tools-group-edit-profile' class='group-tools-group-edit-section'>";
 echo "<div class='panel panel-default'>";
-echo "<div class='panel-body'><div>";
+echo "<div class='panel-body'>";
 echo "<div class='col-md-4'><img src='".$site_url."/mod/wet4/graphics/gcx_deer_in_snow.png' alt='".elgg_echo('gcx:messaging:alt')."'/></div>";
 echo "<div class='col-md-8'>";
 echo "<div class='mrgn-lft-lg'>";
@@ -26,7 +26,6 @@ echo "<div class='mrgn-bttm-md h3 mrgn-tp-0'>". elgg_echo('gcx:messaging:group1'
 echo "<div class='mrgn-bttm-md'>". elgg_echo('gcx:messaging:group2') ."</div>";
 echo "<div class='mrgn-bttm-md'>". elgg_echo('gcx:messaging:group3') ."</div>";
 echo "<div>". elgg_echo('gcx:messaging:group4') ."</div>";
-echo "</div>";
 echo "</div>";
 echo "</div></div>";
 echo "</div>";
