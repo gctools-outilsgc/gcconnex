@@ -22,6 +22,7 @@ COPY mod/paas_integration/composer.json /app/paas_integration/
 
 ARG COMPOSER_ALLOW_SUPERUSER=1
 ARG COMPOSER_NO_INTERACTION=1
+RUN composer config --no-plugins allow-plugins.composer/installers true
 RUN composer install
 
 WORKDIR /app/pleio
