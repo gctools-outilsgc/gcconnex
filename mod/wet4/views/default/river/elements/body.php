@@ -86,7 +86,14 @@ if($type == 'group') {
 }
 $count = elgg_view('river/object/likes/count', array('entity' => $object));
 
-$object_type_ribbon = $object->getSubtype() ? elgg_format_element('span', ['class' => 'river-ribbon'], elgg_echo($object->getSubtype())) : '';
+$subtype_string = elgg_echo($object->getSubtype());
+
+// If translation for subtype is not found use item:object:subtype
+if ($subtype_string == $object->getSubtype()) {
+	$subtype_string = elgg_echo("item:object:{$object->getSubtype()}");
+}
+
+$object_type_ribbon = $object->getSubtype() ? elgg_format_element('span', ['class' => 'river-ribbon'], $subtype_string) : '';
 // Have a different display for list view
 if(elgg_get_logged_in_user_entity()->newsfeedCard == 'list'){
 	$view_test = 'LIST VIEW';
