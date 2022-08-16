@@ -60,8 +60,11 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 			return true;
 		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') !== false)
 			return true;
-		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'SimplePie') !== false)
+		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'simplepie') !== false)
 			return true;
+		// do not persist sessions for message previews
+        if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'rocket.chat') !== false)
+        	return true;
 
 		$query = "REPLACE INTO {$this->db->getTablePrefix()}users_sessions
 			(session, ts, data) VALUES
