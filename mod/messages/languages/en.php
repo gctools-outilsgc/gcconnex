@@ -28,6 +28,7 @@ return array(
 	'messages:markread' => 'Mark read',
 	'messages:recipient' => 'Choose a recipient&hellip;',
 	'messages:to_user' => 'To: %s',
+	'messages:notificationsettings' => 'Notification settings',
 
 	'messages:new' => 'New message',
 

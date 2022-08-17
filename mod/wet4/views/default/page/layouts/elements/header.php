@@ -48,6 +48,13 @@ if ($title || $buttons) {
             'class' => 'list-inline mrgn-rght-sm',
             ));
         }
+        if($checkPage == 'messages') {
+            $notificationSettings = elgg_echo('messages:notificationsettings');
+
+            $notificationsSettingLink = "{$_SERVER['SERVER_NAME']}/settings/notifications/";
+            
+            $notificationSettingsBtn = "<ul class=\"elgg-menu elgg-menu-title list-inline pull-right elgg-menu-title-default\" style=\"padding-left: 5px\"><li class=\"elgg-menu-item-add\"><a href=\"http://{$notificationsSettingLink}\" class=\"elgg-menu-content btn btn-primary btn-md\">{$notificationSettings}</a></li></ul>";
+        }
         if(elgg_get_page_owner_entity()){
             if(elgg_get_page_owner_entity()->getType() == 'group'){
                     $buttons = elgg_view_menu('title', array(
@@ -64,6 +71,6 @@ if ($title || $buttons) {
             }
         }
         $format_title = elgg_view_title($vars['title'], array('class' => 'elgg-heading-main mrgn-lft-sm'));
-        echo elgg_format_element('div', ['class' => 'd-flex title-button-combo'], $format_title .'<div class="title-action-button d-flex">' . $buttons2 . $buttons . '</div>');
+        echo elgg_format_element('div', ['class' => 'd-flex title-button-combo'], $format_title .'<div class="title-action-button d-flex">' . $buttons2 . $buttons . $notificationSettingsBtn . '</div>');
     }
 }
