@@ -51,9 +51,12 @@ if ($title || $buttons) {
         if($checkPage == 'messages') {
             $notificationSettings = elgg_echo('cp_notifications:name');
 
-            $notificationsSettingLink = "{$_SERVER['SERVER_NAME']}/settings/notifications/";
+            $user_object = elgg_get_logged_in_user_entity();
+            $username = $user_object->username;
+
+            $notificationsSettingLink =  elgg_get_site_url() . "settings/notifications/{$username}";
             
-            $notificationSettingsBtn = "<ul class=\"elgg-menu elgg-menu-title list-inline pull-right elgg-menu-title-default\" style=\"padding-left: 5px\"><li class=\"elgg-menu-item-add\"><a href=\"http://{$notificationsSettingLink}\" class=\"elgg-menu-content btn btn-primary btn-md\">{$notificationSettings}</a></li></ul>";
+            $notificationSettingsBtn = "<ul class=\"elgg-menu elgg-menu-title list-inline pull-right elgg-menu-title-default\" style=\"padding-left: 5px\"><li class=\"elgg-menu-item-add\"><a href=\"{$notificationsSettingLink}\" class=\"elgg-menu-content btn btn-primary btn-md\">{$notificationSettings}</a></li></ul>";
         }
         if(elgg_get_page_owner_entity()){
             if(elgg_get_page_owner_entity()->getType() == 'group'){
