@@ -28,7 +28,6 @@ return array(
 	'messages:markread' => 'Marquer comme lu',
 	'messages:recipient' => 'Choisissez un destinataire&hellip;',
 	'messages:to_user' => 'À : %s',
-	'messages:notificationsettings' => 'Paramètres de notification',
 
 	'messages:new' => 'Nouveau message',
 

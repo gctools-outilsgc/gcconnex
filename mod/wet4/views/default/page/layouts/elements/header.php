@@ -49,7 +49,7 @@ if ($title || $buttons) {
             ));
         }
         if($checkPage == 'messages') {
-            $notificationSettings = elgg_echo('messages:notificationsettings');
+            $notificationSettings = elgg_echo('cp_notifications:name');
 
             $notificationsSettingLink = "{$_SERVER['SERVER_NAME']}/settings/notifications/";
             

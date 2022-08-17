@@ -20,7 +20,7 @@ $english = array(
 	'minor_save:description' => "Posting new content will send out notifications to those who are subscribed. As the group owner or operator, you can decide not to send out notifications about the new content you post in the group. To do so, select the option “Do not send a notification” below.",
 	'minor_save:checkbox_label' => " Do not send a notification",
 
-	'cp_notifications:name' => "Notification Email",
+	'cp_notifications:name' => "Notification settings",
 	'cp_notification:save:success' => "Settings have been saved successfully",
 	'cp_notification:save:failed' => "Settings did not save successfully",
 
