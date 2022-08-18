@@ -48,15 +48,23 @@ if ($title || $buttons) {
             'class' => 'list-inline mrgn-rght-sm',
             ));
         }
+        if($checkPage == 'messages') {
+            $notificationSettings = elgg_echo('cp_notifications:name');
+
+            $user_object = elgg_get_logged_in_user_entity();
+            $username = $user_object->username;
+
+            $notificationsSettingLink =  elgg_get_site_url() . "settings/notifications/{$username}";
+            
+            $notificationSettingsBtn = "<ul class=\"elgg-menu elgg-menu-title list-inline pull-right elgg-menu-title-default\" style=\"padding-left: 5px\"><li class=\"elgg-menu-item-add\"><a href=\"{$notificationsSettingLink}\" class=\"elgg-menu-content btn btn-default btn-md\">{$notificationSettings}</a></li></ul>";
+        }
         if(elgg_get_page_owner_entity()){
             if(elgg_get_page_owner_entity()->getType() == 'group'){
-                    $buttons = elgg_view_menu('title', array(
-                    'sort_by' => 'priority',
-                    'class' => 'list-inline',
-                    ));
+                $buttons = elgg_view_menu('title', array(
+                'sort_by' => 'priority',
+                'class' => 'list-inline',
+                ));
 
-    
-        
                 echo elgg_view('groups/profile/summaryBlock', $vars);
                 elgg_push_context('groupSubPage');
                 echo elgg_view('groups/profile/tab_menu');
@@ -64,6 +72,6 @@ if ($title || $buttons) {
             }
         }
         $format_title = elgg_view_title($vars['title'], array('class' => 'elgg-heading-main mrgn-lft-sm'));
-        echo elgg_format_element('div', ['class' => 'd-flex title-button-combo'], $format_title .'<div class="title-action-button d-flex">' . $buttons2 . $buttons . '</div>');
+        echo elgg_format_element('div', ['class' => 'd-flex title-button-combo'], $format_title .'<div class="title-action-button d-flex">' . $buttons2 . $buttons . $notificationSettingsBtn . '</div>');
     }
 }
