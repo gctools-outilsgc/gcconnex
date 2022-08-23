@@ -143,6 +143,16 @@ if( $type == 'GPmod'){
         $header = elgg_format_element('h2', ['class' => 'panel-title'], $title);
     }
 
+    // CL 23082022 - Coll
+    $owner = elgg_get_page_owner_entity()->username;
+    if ($title === 'Colleagues') {
+        $header = elgg_format_element('h2', ['class' => 'panel-title'], "$owner's $title");
+    }
+    if ($title === 'collègues') {
+        $header = elgg_format_element('h2', ['class' => 'panel-title'], "$title à $owner");
+    }
+    
+
     if ($header !== null) {
         $header = elgg_format_element('header', ['class' => 'panel-heading'], $header);
     }

@@ -8,7 +8,7 @@ return array(
     'PUBLIC' => "All public servants",
     'access:friends:label' => "My Colleagues on GCcollab only",
 
-	'friends' => "My Colleagues", //Friends
+	'friends' => "Colleagues", //Friends
     'friend:river' => "Colleague", //Friends
     'friends:yours' => "Your colleagues",
 	'friends:owned' => "%s's colleagues",
