@@ -25,9 +25,9 @@
 <?php
 
     $context = elgg_get_context();
-
+    
     /// forums will take up the whole width of the screen, while others will take up only a portion
-    echo ($context === 'gcforums') ? '<section class="col-md-12 mrgn-bttm-md" id="wb-cont">' : '<section class="col-md-8 mrgn-bttm-md" id="wb-cont">';
+    echo ($context === 'gcforums') ? '<section class="col-md-12 mrgn-bttm-md" id="wb-cont">' : ($context === 'discussion' ? '<section class="col-md-8 mrgn-bttm-md" style="width: 100%" id="wb-cont">' : '<section class="col-md-8 mrgn-bttm-md" id="wb-cont">');
 
 	echo elgg_view('page/layouts/elements/header', $vars);
 
@@ -47,11 +47,15 @@
     echo elgg_view('page/layouts/elements/footer', $vars);
 ?>
     </section>
-
+<?php
+    if ($context == 'discussion') {
+        return;
+    }
+?>
     <section class="col-md-4 pull-right">
 
 <?php // On smaller screens, blocks are stacked in left to right order: content, sidebar.
-   echo elgg_view('page/elements/sidebar', $vars);
+    echo elgg_view('page/elements/sidebar', $vars);
 ?>
 
 	</section>
