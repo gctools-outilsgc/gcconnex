@@ -226,9 +226,9 @@ function pages_icon_url_override($hook, $type, $returnvalue, $params) {
  */
 function pages_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "pages/owner/{$params['entity']->username}";
-		$item = new ElggMenuItem('pages', elgg_echo('pages'), $url);
-		$return[] = $item;
+		// $url = "pages/owner/{$params['entity']->username}";
+		// $item = new ElggMenuItem('pages', elgg_echo('pages'), $url);
+		// $return[] = $item;
 	} else {
 		if ($params['entity']->pages_enable != "no") {
 			$url = "pages/group/{$params['entity']->guid}/all";

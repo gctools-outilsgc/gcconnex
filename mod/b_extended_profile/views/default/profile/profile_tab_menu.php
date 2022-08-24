@@ -71,14 +71,14 @@ if(elgg_get_context() == 'groupSubPage'){
     }
 
 
-    elgg_register_menu_item('owner_block', array(
-    'name' => 'portfolio',
-    'href' => '#portfolio',
-    'text' => elgg_echo('gcconnex_profile:portfolio'),
-    'data-toggle' => 'tab',
-    'class' => '',
-    'priority' => '0',
-    ));
+    // elgg_register_menu_item('owner_block', array(
+    // 'name' => 'portfolio',
+    // 'href' => '#portfolio',
+    // 'text' => elgg_echo('gcconnex_profile:portfolio'),
+    // 'data-toggle' => 'tab',
+    // 'class' => '',
+    // 'priority' => '0',
+    // ));
 
 	if ($owner->orgStruct){
     	elgg_register_menu_item('owner_block', array(
@@ -92,27 +92,25 @@ if(elgg_get_context() == 'groupSubPage'){
   	}
 
      if ($pg == 'splashboard'){
-    elgg_register_menu_item('owner_block', array(
-    'name' => 'widgets',
-    'href' => '#splashboard',
-    'text' => elgg_echo('gcconnex_profile:widgets'),
-    'data-toggle' => 'tab',
-    'item_class' => 'active',
-    'class' => '',
-    'priority' => '0',
-    ));
+        elgg_register_menu_item('owner_block', array(
+        'name' => 'widgets',
+        'href' => '#splashboard',
+        'text' => elgg_echo('gcconnex_profile:widgets'),
+        'data-toggle' => 'tab',
+        'item_class' => 'active',
+        'class' => '',
+        'priority' => '0',
+        ));
     }else{
-
-          elgg_register_menu_item('owner_block', array(
-    'name' => 'widgets',
-    'href' => '#splashboard',
-    'text' => elgg_echo('gcconnex_profile:widgets'),
-    'data-toggle' => 'tab',
-    'class' => '',
-    'priority' => '0',
-    ));
+        // elgg_register_menu_item('owner_block', array(
+        // 'name' => 'widgets',
+        // 'href' => '#splashboard',
+        // 'text' => elgg_echo('gcconnex_profile:widgets'),
+        // 'data-toggle' => 'tab',
+        // 'class' => '',
+        // 'priority' => '0',
+        // ));
     }
-
 }
 
 if(elgg_in_context('group_profile')){

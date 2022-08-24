@@ -133,9 +133,9 @@ function event_calendar_owner_block_menu($hook, $type, $return, $params) {
 			$return[] = $item;
 		}
 	} else if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "event_calendar/owner/{$params['entity']->username}";
-		$item = new ElggMenuItem('event_calendar', elgg_echo('event_calendar:widget_title'), $url);
-		$return[] = $item;
+		// $url = "event_calendar/owner/{$params['entity']->username}";
+		// $item = new ElggMenuItem('event_calendar', elgg_echo('event_calendar:widget_title'), $url);
+		// $return[] = $item;
 	}
 
 	return $return;
