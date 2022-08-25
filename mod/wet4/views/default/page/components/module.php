@@ -143,6 +143,17 @@ if( $type == 'GPmod'){
         $header = elgg_format_element('h2', ['class' => 'panel-title'], $title);
     }
 
+    // CL 23082022 - component determines if the h2 title is Colleagues or collegues. Appends the pager owner 
+    $owner = elgg_get_page_owner_entity()->name;
+    if ($title === 'Colleagues') {
+        $header = elgg_format_element('h2', ['class' => 'panel-title'], ucfirst($owner)."'s ". ucfirst($title));
+    }
+    if ($title === 'collègues') {
+        
+        $header = elgg_format_element('h2', ['class' => 'panel-title'], ucfirst($title)." à ".ucfirst($owner));
+    }
+    
+
     if ($header !== null) {
         $header = elgg_format_element('header', ['class' => 'panel-heading'], $header);
     }
