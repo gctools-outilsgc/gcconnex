@@ -63,7 +63,7 @@ Unfortunately the site administrator of %s decided to decline your membership re
     "pleio:users_import:step1:error" => "There was an error while uploading the CSV file. Please check the file and try again.",
     "pleio:users_import:sample" => "sample",
     "profile:gender" => "Gender",
-    "gccollab_account" => "GCcollab Account"
+    "gccollab_account" => "GCaccount"
 );
 
 add_translation("en", $en);
