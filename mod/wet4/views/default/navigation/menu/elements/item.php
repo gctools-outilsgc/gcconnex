@@ -32,7 +32,15 @@ $item_class = $item->getItemClass();
 if ($item->getSelected()) {
     //finds the active tab in the menu and gives it the active class
 	$item_class = "$item_class elgg-state-selected active";
+
+	//CL 20220907 - Checks to see if the active menu item is My Groups and sets a hidden H2
+	//CL 20220907 - for smoother screen reading navigation
+	if(strpos($item_class, 'yours') == true){
+		$title = elgg_echo('groups:yours');
+		echo "<h2 class=\"wb-inv\">".$title."</h2>";
+	}
 }
+
 if (isset($vars['item_class']) && $vars['item_class']) {
 	$item_class .= ' ' . $vars['item_class'];
 }
@@ -52,3 +60,5 @@ if ($children) {
 	));
 }
 echo '</li>';
+
+

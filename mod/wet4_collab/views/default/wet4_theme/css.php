@@ -5669,6 +5669,9 @@ caption {
   position: absolute;
   width: 1px; }
 
+/* CL - 20220907 - Remove default styles from elements so they inherit styles from their parents */
+.wb-unset {all: unset;}
+
 .wb-show-onfocus:focus, .wb-sl:focus, .wb-disable .wb-slc .wb-sl {
   clip: rect(auto, auto, auto, auto);
   height: inherit;
