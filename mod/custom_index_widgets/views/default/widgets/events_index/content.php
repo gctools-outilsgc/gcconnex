@@ -19,7 +19,7 @@ if( get_current_language() == 'fr' ){
 }
 
 echo "<div style='overflow-y:auto; height:200px;'>";
-echo '<h4 class="mtm">'.elgg_echo('index_widget:event:today',array($today)).'</h4>';
+echo '<h3 class="mtm">'.elgg_echo('index_widget:event:today',array($today)).'</h3>';
 
 foreach ($event_list as $event) {
 
