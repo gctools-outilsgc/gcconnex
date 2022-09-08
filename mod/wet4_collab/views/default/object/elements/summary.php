@@ -75,7 +75,9 @@ if ($title_link) {
     		echo "<div class=\"h3 mrgn-bttm-0 summary-title\">$title_link</div>";
     	}
     }else{
-       echo "<div class=\"h2 mrgn-bttm-0 summary-title\">$title_link</div>";
+		//CL 20220907 - Wraps the activity summary for each activity card in an h3 for smoother 
+		//CL 20220907 - screen reader navigation
+       echo "<div class=\"h2 mrgn-bttm-0 summary-title\"><h3 class=\"wb-unset\">$title_link</h3></div>";
     }
 
 	// identify available content

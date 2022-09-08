@@ -104,12 +104,13 @@ if(elgg_get_logged_in_user_entity()->newsfeedCard == 'list'){
 	$count = '';
 }
 
+// CL 20220907 - Wrapped the group summary card in an h3 for smoother screen reader navigation
 echo <<<RIVER
 <div>
 $object_type_ribbon
 <div class="elgg-river-summary clearfix mb-3">
-$image $summary $group_string 
-<div class="elgg-river-timestamp">$timestamp</div>
+<h3 class="wb-unset">$image $summary $group_string
+<div class="elgg-river-timestamp">$timestamp</div></h3>
 </div>
 $message
 $attachments
