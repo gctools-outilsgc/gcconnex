@@ -14,20 +14,22 @@
  * @subpackage Configuration
  */
 
+// defaults mainly focused on less hastle in local dev environments
+$defaults = [
+	"DBUSER" => "elgg",
+	"DBPASS" => "gcconnex",
+	"DBNAME" => "elgg",
+	"DBHOST" => "gcconnex-db",
+	"DBPREFIX" => "d_elgg_",
+	"MEMCACHE_HOST" => "127.0.0.1",
+	"SESSION_NAME" => "Elgg",
+	"REMEMBERME_NAME" => "elggperm"
+]
+
 global $CONFIG;
 if (!isset($CONFIG)) {
 	$CONFIG = new \stdClass;
 }
-
-/*
- * Standard configuration
- *
- * You will use the same database connection for reads and writes.
- * This is the easiest configuration, and will suit 99.99% of setups. However, if you're
- * running a really popular site, you'll probably want to spread out your database connections
- * and implement database replication.  That's beyond the scope of this configuration file
- * to explain, but if you know you need it, skip past this section.
- */
 
 /**
  * The database username
@@ -53,18 +55,12 @@ $CONFIG->dbname = getenv('DBNAME');
 /**
  * The database host.
  *
- * For most installations, this is 'localhost'
- *
  * @global string $CONFIG->dbhost
  */
 $CONFIG->dbhost = getenv('DBHOST');
 
 /**
  * The database prefix
- *
- * This prefix will be appended to all Elgg tables.  If you're sharing
- * a database with other applications, use a database prefix to namespace tables
- * in order to avoid table name collisions.
  *
  * @global string $CONFIG->dbprefix
  */
@@ -97,13 +93,6 @@ $CONFIG->dbprefix = getenv('DBPREFIX');
 /**
  * Memcache setup (optional)
  * This is where you may optionally set up memcache.
- *
- * Requirements:
- * 	1) One or more memcache servers (http://www.danga.com/memcached/)
- *  2) PHP memcache wrapper (http://php.net/manual/en/memcache.setup.php)
- *
- * Note: Multiple server support is only available on server 1.2.1
- * or higher with PECL library > 2.0.0
  */
 $CONFIG->memcache = true;
 $CONFIG->memcache_servers = array (
