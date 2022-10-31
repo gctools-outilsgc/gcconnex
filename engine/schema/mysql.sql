@@ -7,7 +7,7 @@ CREATE TABLE `prefix_access_collection_membership` (
   `user_guid` int(11) NOT NULL,
   `access_collection_id` int(11) NOT NULL,
   PRIMARY KEY (`user_guid`,`access_collection_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- define an access collection
 CREATE TABLE `prefix_access_collections` (
@@ -18,7 +18,7 @@ CREATE TABLE `prefix_access_collections` (
   PRIMARY KEY (`id`),
   KEY `owner_guid` (`owner_guid`),
   KEY `site_guid` (`site_guid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- store an annotation on an entity
 CREATE TABLE `prefix_annotations` (
@@ -37,7 +37,7 @@ CREATE TABLE `prefix_annotations` (
   KEY `value_id` (`value_id`),
   KEY `owner_guid` (`owner_guid`),
   KEY `access_id` (`access_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- api keys for old web services
 CREATE TABLE `prefix_api_users` (
@@ -48,7 +48,7 @@ CREATE TABLE `prefix_api_users` (
   `active` int(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `api_key` (`api_key`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- site specific configuration
 CREATE TABLE `prefix_config` (
@@ -56,14 +56,14 @@ CREATE TABLE `prefix_config` (
   `value` text NOT NULL,
   `site_guid` int(11) NOT NULL,
   PRIMARY KEY (`name`,`site_guid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- application specific configuration
 CREATE TABLE `prefix_datalists` (
   `name` varchar(255) NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- primary entity table
 CREATE TABLE `prefix_entities` (
@@ -88,7 +88,7 @@ CREATE TABLE `prefix_entities` (
   KEY `access_id` (`access_id`),
   KEY `time_created` (`time_created`),
   KEY `time_updated` (`time_updated`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- relationships between entities
 CREATE TABLE `prefix_entity_relationships` (
@@ -101,7 +101,7 @@ CREATE TABLE `prefix_entity_relationships` (
   UNIQUE KEY `guid_one` (`guid_one`,`relationship`,`guid_two`),
   KEY `relationship` (`relationship`),
   KEY `guid_two` (`guid_two`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- entity type/subtype pairs
 CREATE TABLE `prefix_entity_subtypes` (
@@ -111,7 +111,7 @@ CREATE TABLE `prefix_entity_subtypes` (
   `class` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`,`subtype`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- cache lookups of latitude and longitude for place names
 CREATE TABLE `prefix_geocode_cache` (
@@ -132,7 +132,7 @@ CREATE TABLE `prefix_groups_entity` (
   KEY `name` (`name`(50)),
   KEY `description` (`description`(50)),
   FULLTEXT KEY `name_2` (`name`,`description`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- cache for hmac signatures for old web services
 CREATE TABLE `prefix_hmac_cache` (
@@ -159,7 +159,7 @@ CREATE TABLE `prefix_metadata` (
   KEY `value_id` (`value_id`),
   KEY `owner_guid` (`owner_guid`),
   KEY `access_id` (`access_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- string normalization table for metadata and annotations
 CREATE TABLE `prefix_metastrings` (
@@ -167,7 +167,7 @@ CREATE TABLE `prefix_metastrings` (
   `string` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `string` (`string`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- secondary table for object entities
 CREATE TABLE `prefix_objects_entity` (
@@ -176,7 +176,7 @@ CREATE TABLE `prefix_objects_entity` (
   `description` text NOT NULL,
   PRIMARY KEY (`guid`),
   FULLTEXT KEY `title` (`title`,`description`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- settings for an entity
 CREATE TABLE `prefix_private_settings` (
@@ -188,7 +188,7 @@ CREATE TABLE `prefix_private_settings` (
   UNIQUE KEY `entity_guid` (`entity_guid`,`name`),
   KEY `name` (`name`),
   KEY `value` (`value`(50))
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- queue for asynchronous operations
 CREATE TABLE `prefix_queue` (
@@ -200,7 +200,7 @@ CREATE TABLE `prefix_queue` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `retrieve` (`timestamp`,`worker`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- activity stream
 CREATE TABLE `prefix_river` (
@@ -225,7 +225,7 @@ CREATE TABLE `prefix_river` (
   KEY `target_guid` (`target_guid`),
   KEY `annotation_id` (`annotation_id`),
   KEY `posted` (`posted`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- secondary table for site entities
 CREATE TABLE `prefix_sites_entity` (
@@ -236,7 +236,7 @@ CREATE TABLE `prefix_sites_entity` (
   PRIMARY KEY (`guid`),
   UNIQUE KEY `url` (`url`),
   FULLTEXT KEY `name` (`name`,`description`,`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- log activity for the admin
 CREATE TABLE `prefix_system_log` (
@@ -262,7 +262,7 @@ CREATE TABLE `prefix_system_log` (
   KEY `access_id` (`access_id`),
   KEY `time_created` (`time_created`),
   KEY `river_key` (`object_type`,`object_subtype`,`event`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- session table for old web services
 CREATE TABLE `prefix_users_apisessions` (
@@ -302,7 +302,7 @@ CREATE TABLE `prefix_users_entity` (
   KEY `admin` (`admin`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY `name_2` (`name`,`username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- user remember me cookies
 CREATE TABLE `prefix_users_remember_me_cookies` (
@@ -311,7 +311,7 @@ CREATE TABLE `prefix_users_remember_me_cookies` (
   `timestamp` int(11) unsigned NOT NULL,
   PRIMARY KEY (`code`),
   KEY `timestamp` (`timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 -- user sessions
 CREATE TABLE `prefix_users_sessions` (
@@ -320,4 +320,4 @@ CREATE TABLE `prefix_users_sessions` (
   `data` mediumblob,
   PRIMARY KEY (`session`),
   KEY `ts` (`ts`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
