@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `prefix_apiadmin_log` (
   KEY `handler` (`handler`),
   KEY `request` (`request`),
   KEY `method` (`method`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
