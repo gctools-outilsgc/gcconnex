@@ -77,18 +77,6 @@ RUN { \
   echo 'opcache.enable_cli=1'; \
   echo 'opcache.enable_file_override=1'; \
   } > /etc/php/5.6/apache2/conf.d/opcache-recommended.ini
-  
-RUN { \
-   echo '<FilesMatch "\.(?i:ph([[p]?[0-9]*|tm[l]?))$">'; \
-   echo '   SetHandler application/x-httpd-php'; \
-   echo '</FilesMatch>'; \
-   echo '<DirectoryMatch "^/.*/\.git/">'; \
-   echo '   Order deny,allow'; \
-   echo '   Deny from all'; \
-   echo '</DirectoryMatch>'; \
-   echo 'EnableMMAP Off'; \
-   echo 'EnableSendfile Off'; \
-} >> /etc/apache2/apache2.conf
 
 COPY ./docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
