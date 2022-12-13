@@ -13,6 +13,12 @@
  * Author: GCTools Team
  */
 
+ // CL 20221213 - Get the current user and the base url
+ // CL 20221213 - re: https://github.com/gctools-outilsgc/gcconnex/issues/2474
+$user = elgg_get_logged_in_user_entity();
+$username = $user->username;
+$url = elgg_get_site_url();
+
 $item = $vars['item'];
 $item_role = elgg_extract('item-role', $vars, '');
 $link_class = 'elgg-menu-closed';
@@ -49,6 +55,14 @@ if($item_role){
 	$roles = "role=\"$item_role\" ";
 }
 
+// CL 20221213 - Get the menu title, if matches Network or Réseau change the url to friend/$username instead of /members
+// CL 20221213 - re: https://github.com/gctools-outilsgc/gcconnex/issues/2474
+if($item->getText() == 'Network' || $item->getText() == "Réseau"){
+	$item->setHref($url."friends/$username");
+	
+	
+}
+
 echo "<li $roles class=\"$item_class\">";
 echo elgg_view_menu_item($item);
 if ($children) {
@@ -60,5 +74,7 @@ if ($children) {
 	));
 }
 echo '</li>';
+
+
 
 

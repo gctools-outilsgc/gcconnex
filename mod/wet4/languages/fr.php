@@ -1174,7 +1174,7 @@ return array(
 	'revert' => 'Restaurer',
 	'site' => 'Site',
 	'activity' => 'Activité',
-	'members' => 'Membres',
+	'members' => 'Réseau',
 	'menu' => 'Menu',
 	'up' => 'Monter',
 	'down' => 'Descendre',
