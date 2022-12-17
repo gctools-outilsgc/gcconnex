@@ -35,9 +35,6 @@ if (strpos($mime, "image/") !== false || $mime == "application/pdf") {
 }
 header("Content-Length: {$file->getSize()}");
 
-while (ob_get_level()) {
-    ob_end_clean();
-}
 flush();
 readfile($file->getFilenameOnFilestore());
 exit;
