@@ -38,7 +38,7 @@ services:
     environment:
       - VIRTUAL_HOST=gcconnex.local
       - DOCKER=1
-      - INIT=gcconnex     # gcconnex or gccollab: initial install to replicate one of those. 0 (or anything else really): no initial install
+      - INIT=gccollab     # gcconnex or gccollab: initial install to replicate one of those. 0 (or anything else really): no initial install
       - HOME=/var/www/html
       - DBHOST=gcconnex-db
       - DATAROOT=/data/
@@ -74,3 +74,11 @@ services:
       - MYSQL_DATABASE=elgg
       - MYSQL_USER=elgg
       - MYSQL_PASSWORD=gcconnex
+
+  gcconnex-solr:
+    ports:
+      - 8983:8983
+    image: library/solr:6
+    command: solr-precreate dev
+    volumes:
+      - ./data/solr/dev:/opt/solr/server/solr/mycores/dev
