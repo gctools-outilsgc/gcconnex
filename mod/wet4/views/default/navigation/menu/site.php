@@ -13,7 +13,7 @@
 $default_items = elgg_extract('default', $vars['menu'], array());
 $more_items = elgg_extract('more', $vars['menu'], array());
 
-echo '<ul class=" list-inline menu">';
+echo '<ul class="list-inline menu col-md-6">';
 
 foreach ($default_items as $menu_item) {
 	echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item, 'item-role' => 'none'));
@@ -32,4 +32,10 @@ if ($more_items) {
 	));
 	echo '</li>';
 }
+
+echo '</ul>';
+
+echo '<ul class="list-inline menu" role="menubar">';
+	//echo elgg_view('page/elements/topbar', $vars);
+	echo elgg_view('page/elements/user_menu', $vars);
 echo '</ul>';

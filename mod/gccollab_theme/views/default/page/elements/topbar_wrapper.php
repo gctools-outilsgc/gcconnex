@@ -29,16 +29,4 @@ if (!elgg_is_logged_in()) {
     echo '</nav>';
     
 	//return true;
-} else {
-?>
-
-
-<ul role="list-inline menu" class="text-right col-md-12 user-z-index">
-    <h2 class="wb-invisible"><?php echo elgg_echo('wet:usermenu:helpertext'); ?></h2>
-    <?php
-        //echo elgg_view('page/elements/topbar', $vars);
-		echo elgg_view('page/elements/user_menu', $vars);
-		?>
-</ul>
-
-<?php }?>
+} 
