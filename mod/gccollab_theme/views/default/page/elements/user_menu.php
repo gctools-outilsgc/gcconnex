@@ -99,7 +99,6 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
                 ));
             ?>
         </li>
-        <!-- CL 20221213 - Removed Friends Nav button re: https://github.com/gctools-outilsgc/gcconnex/issues/2474 -->
         <li class="elgg-menu-item-notifications messagesLabel close-notif-dd">
             <?php
                 // notifications
