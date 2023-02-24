@@ -99,14 +99,6 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
                 ));
             ?>
         </li>
-        <li class="elgg-menu-item-colleagues">
-            <?php
-                // colleagues
-                echo '<a href="/friends/'.$username.'" title="'.elgg_echo("userMenu:colleagues").'" class="elgg-menu-content">
-                    <span class="fa fa-users fa-lg"><span class="wb-invisible">'.elgg_echo("userMenu:colleagues").'</span></span>'.$friend_badge.'
-                </a>';
-            ?>
-        </li>
         <li class="elgg-menu-item-notifications messagesLabel close-notif-dd">
             <?php
                 // notifications
