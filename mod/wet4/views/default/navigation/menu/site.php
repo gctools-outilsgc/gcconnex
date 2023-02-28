@@ -35,7 +35,7 @@ if ($more_items) {
 
 echo '</ul>';
 
-echo '<ul class="list-inline menu" role="menubar">';
+echo '<ul class="list-inline menu col-md-4 col-md-offset-4" role="menubar">';
 	//echo elgg_view('page/elements/topbar', $vars);
 	echo elgg_view('page/elements/user_menu', $vars);
 echo '</ul>';
