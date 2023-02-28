@@ -22,7 +22,7 @@
  */
 
 if (!elgg_is_logged_in()) {
-    echo '<ul role="list-inline menu" class="text-right col-md-12 mrgn-tp-sm user-z-index">';
+    echo '<ul nav="navigation" class="text-right col-md-12 mrgn-tp-sm user-z-index">';
         
     echo elgg_view('page/elements/login_menu', $vars);
 

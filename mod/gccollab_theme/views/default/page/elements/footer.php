@@ -124,7 +124,7 @@ $feedbackText= elgg_echo('wet:feedbackText');
                 </div> 
                 <div class="pull-left list-unstyled mrgn-lft-md hover-underline-animation" style="font-weight:bold;">
                     <a href="https://wiki.gccollab.ca" style="color:#6b5088;">
-                        <img style="width:40px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt=""></span>GCwiki
+                        <img style="width:40px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt="mini-wiki-logo"></span>GCwiki
                     </a>
                 </div>  
             </div> 
