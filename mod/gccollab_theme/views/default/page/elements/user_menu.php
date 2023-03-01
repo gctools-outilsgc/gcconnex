@@ -83,17 +83,19 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             ?> 
         </li> 
         <li class="elgg-menu-item-search">
-        <?php
+            <span class="glyphicon-search glyphicon" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+            </span>
+        <?php 
 
             //echo '<label for="tagSearch" class="wb-inv">'.elgg_echo('wet:searchHead').'</label>';
             //echo elgg_view('input/text', array(
             //    'id' => 'tagSearch',
             //    'name' => 'tag',
             //    'class' => 'elgg-input-search mbm',
-            //    'placeholder' => elgg_echo('wet:searchgctools'),
+            //   'placeholder' => elgg_echo('wet:searchgctools'),
             //    'required' => true
             //));
-            echo elgg_view('input/submit', array('value' => '<span class="glyphicon-search glyphicon"></span> ' . elgg_echo(' '))); 
+            //echo elgg_view('input/submit', array('value' => '<span class="glyphicon-search glyphicon"></span> ' . elgg_echo(' '))); 
         ?>
         </li>
         <?php if(elgg_is_admin_logged_in()) {

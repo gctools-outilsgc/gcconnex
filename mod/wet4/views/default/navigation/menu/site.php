@@ -35,7 +35,19 @@ if ($more_items) {
 
 echo '</ul>';
 
-echo '<ul class="list-inline menu col-md-4 col-md-offset-4" role="menubar">';
+echo '<ul class="list-inline menu col-md-4" role="menubar">';
 	//echo elgg_view('page/elements/topbar', $vars);
 	echo elgg_view('page/elements/user_menu', $vars);
 echo '</ul>';
+
+
+echo '<div class="collapse " id="collapseSearch"> <div class="well">'; 
+	echo elgg_view('input/text', array(
+        'id' => 'tagSearch',
+    	'name' => 'tag',
+        'class' => 'elgg-input-search mbm',
+    	'placeholder' => elgg_echo('wet:searchgctools'),
+        'required' => true
+    ));
+	echo '</div>';
+echo '</div>';
