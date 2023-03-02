@@ -107,7 +107,7 @@ resource app_vnet 'Microsoft.Web/sites/networkConfig@2020-06-01' = {
 /*
 **** DB ****
 */
-module db '../modules/db_existing_server.bicep' = {
+module db './modules/db_existing_server.bicep' = {
   name: 'collab_instance_db'
   scope: resourceGroup(dbServerRG)
   params: {
