@@ -7,7 +7,6 @@ pr:  # Trigger the pipeline only for PRs targeting master branch
 
 variables:
   imageRepository: 'collab'
-  imageTag: 'PR-$(System.PullRequest.PullRequestNumber)-$(Build.SourceVersion)'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -23,3 +22,4 @@ steps:
     tags: $(imageTag)
   env:
     acrName: $(acrName)
+    imageTag: 'PR-$(System.PullRequest.PullRequestNumber)-$(Build.SourceVersion)'
