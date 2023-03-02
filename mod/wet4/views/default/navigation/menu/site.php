@@ -35,10 +35,18 @@ if ($more_items) {
 
 echo '</ul>';
 
-echo '<ul class="list-inline menu col-md-4" role="menubar">';
-	//echo elgg_view('page/elements/topbar', $vars);
-	echo elgg_view('page/elements/user_menu', $vars);
-echo '</ul>';
+if (!elgg_is_logged_in()) {
+    echo '<ul nav="navigation" class="text-right col-md-12 mrgn-tp-sm user-z-index">';
+        
+    echo elgg_view('page/elements/login_menu', $vars);
+
+    echo '</nav>';
+} else{
+	echo '<ul class="list-inline menu col-md-4" role="menubar">';
+		//echo elgg_view('page/elements/topbar', $vars);
+		echo elgg_view('page/elements/user_menu', $vars);
+	echo '</ul>';
+}
 
 
 echo '<div class="collapse " id="collapseSearch"> <div class="well">'; 
