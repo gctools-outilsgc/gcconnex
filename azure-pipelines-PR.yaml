@@ -22,5 +22,5 @@ steps:
     tags: 'PR-$(PR_NUMBER)-$(VERSION)'
   env:
     acrName: $(acrName)
-	VERSION: $(Build.SourceVersion)
+    VERSION: $(Build.SourceVersion)
     PR_NUMBER: $(System.PullRequest.PullRequestNumber)
