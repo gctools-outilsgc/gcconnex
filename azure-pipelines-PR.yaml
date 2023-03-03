@@ -20,7 +20,6 @@ steps:
     containerRegistry: $(acrName)
     repository: $(imageRepository)
     tags: |
-      'PR-$(System.PullRequest.PullRequestNumber)'
       'PR-$(System.PullRequest.PullRequestNumber)-$(Build.SourceVersion)'
   env:
     acrName: $(acrName)
