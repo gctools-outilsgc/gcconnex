@@ -19,7 +19,6 @@ steps:
     command: 'buildAndPush'
     containerRegistry: $(acrName)
     repository: $(imageRepository)
-    tags: |
-      'PR-$(System.PullRequest.PullRequestNumber)-$(Build.SourceVersion)'
+    tags: 'PR-$(System.PullRequest.PullRequestNumber)-$(Build.SourceVersion)'
   env:
     acrName: $(acrName)
