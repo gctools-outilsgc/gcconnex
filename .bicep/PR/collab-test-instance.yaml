@@ -11,17 +11,19 @@ param dbServerRG string
 param dbServerName string
 param dbServerPass string
 
+param prName string = 'latest'
 param containerTag string = 'latest'
 param containerSHA string = ''
 
+param acrName string = 'collabtestacr'
 
 var DATAROOT = '/collab_data_test_mount/'
 
-var linuxFxVersion = empty(containerSHA) ? 'DOCKER|phanoix/gcconnex:${containerTag}' : 'DOCKER|phanoix/gcconnex@sha256:${containerSHA}'
+var linuxFxVersion = empty(containerSHA) ? 'DOCKER|${acrName}.azurecr.io/collab:${containerTag}' : 'DOCKER|${acrName}.azurecr.io/collab@sha256:${containerSHA}'
 
-var appName = 'gccollab-dev-${containerTag}'
-var dbName = 'gccollab-dev-db-${containerTag}'
-var nodash_nounderscore_tag = replace(replace(containerTag, '-', ''), '_', '')
+var appName = 'gccollab-dev-${prName}'
+var dbName = 'gccollab-dev-db-${prName}'
+var nodash_nounderscore_tag = replace(replace(prName, '-', ''), '_', '')
 var storagePrefix  = (length(nodash_nounderscore_tag)) > 12 ? substring('devgcccollab${nodash_nounderscore_tag}', 0, 24) : 'devgcccollab${nodash_nounderscore_tag}'
 
 
@@ -32,10 +34,14 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
   name: appName
   location: location
   kind: 'app,linux,container'
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     serverFarmId: empty(planID) ? servicePlan.id : planID
     siteConfig: {
       linuxFxVersion: linuxFxVersion
+      acrUseManagedIdentityCreds: true
       appSettings: [
         {
           name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
@@ -43,7 +49,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'DOCKER_REGISTRY_SERVER_URL'
-          value: 'https://index.docker.io'
+          value: 'https://${acrName}.azurecr.io'
         }
         {
           name: 'DOCKER'
@@ -67,7 +73,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'DBNAME'
-          value: containerTag
+          value: prName
         }
         {
           name: 'DATAROOT'
@@ -92,6 +98,14 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
+module acrPullRole './modules/acr_pull_role.bicep' = {
+  name: 'acr_pull'
+  scope: resourceGroup(dbServerRG)
+  params: {
+    acrName: acrName
+    appPrincipalId: webApp.identity.principalId
+  }
+}
 
 // vnet connection
 resource app_vnet 'Microsoft.Web/sites/networkConfig@2020-06-01' = {
@@ -112,7 +126,7 @@ module db './modules/db_existing_server.bicep' = {
   scope: resourceGroup(dbServerRG)
   params: {
     dbServerName: dbServerName
-    dbName: containerTag
+    dbName: prName
   }
 }
 
