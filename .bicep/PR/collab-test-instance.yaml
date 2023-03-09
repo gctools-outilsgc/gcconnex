@@ -19,7 +19,7 @@ param acrName string = 'collabtestacr'
 
 var DATAROOT = '/collab_data_test_mount/'
 
-var linuxFxVersion = empty(containerSHA) ? 'DOCKER|${acrName}.azurecr.io/collab:${containerTag}' : 'DOCKER|${acrName}.azurecr.io/collab@sha256:${containerSHA}'
+var linuxFxVersion = empty(containerSHA) ? 'DOCKER|${acrName}.azurecr.io/collab_${prName}:${containerTag}' : 'DOCKER|${acrName}.azurecr.io/collab_${prName}@sha256:${containerSHA}'
 
 var appName = 'gccollab-dev-${prName}'
 var dbName = 'gccollab-dev-db-${prName}'
