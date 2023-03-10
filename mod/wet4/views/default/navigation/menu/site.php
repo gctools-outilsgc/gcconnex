@@ -21,17 +21,17 @@ foreach ($default_items as $menu_item) {
 
 // Wet 4 more menu items - You can un-comment this code below to add the more menu back in
 
-if ($more_items) {
-  echo '<li role="none"><a href="#moreCont" class="item">'.elgg_echo('wet:more').'<span class="expicon glyphicon glyphicon-chevron-down"></span></a>';	
-	echo elgg_view('navigation/menu/elements/section', array(
-		'class' => ' sm list-unstyled ',
-		'id' => 'moreCont',
-		'role' => 'menu',
-		'item-role' => 'none',
-		'items' => $more_items,
-	));
-	echo '</li>';
-}
+//if ($more_items) {
+//  echo '<li role="none"><a href="#moreCont" class="item">'.elgg_echo('wet:more').'<span class="expicon glyphicon glyphicon-chevron-down"></span></a>';	
+//	echo elgg_view('navigation/menu/elements/section', array(
+//		'class' => ' sm list-unstyled ',
+//		'id' => 'moreCont',
+//		'role' => 'menu',
+//		'item-role' => 'none',
+//		'items' => $more_items,
+//	));
+//	echo '</li>';
+//}
 
 echo '</ul>';
 
@@ -49,7 +49,7 @@ if (!elgg_is_logged_in()) {
 }
 
 
-echo '<div class="collapse " id="collapseSearch"> <div class="well">'; 
+echo '<div class="collapse " id="collapseSearch"> <div class="well" aria-label="Search GCcollab">'; 
 	echo elgg_view('input/text', array(
         'id' => 'tagSearch',
     	'name' => 'tag',
