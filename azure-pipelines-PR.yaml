@@ -23,12 +23,12 @@ steps:
   env:
     acrName: $(acrName)
 
-- script: |
+- bash: |
     curl -H "Authorization: token $(SYSTEM_ACCESSTOKEN)" \
          -X POST \
          -d '{"body": "Test comment from Azure Pipelines"}' \
-         "https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$(PR_ID)/comments"
+         "https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$(System.PullRequest.PullRequestNumber)/comments"
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-    PR_ID: $(System.PullRequest.PullRequestId)
+  condition: succeeded()
   displayName: 'Post a comment to PR'
