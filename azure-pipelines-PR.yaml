@@ -23,8 +23,6 @@ steps:
   env:
     acrName: $(acrName)
 
-
-steps:
 - script: |
     curl -H "Authorization: token $(System.AccessToken)" \
          -X POST \
