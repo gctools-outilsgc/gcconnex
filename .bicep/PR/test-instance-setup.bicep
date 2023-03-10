@@ -5,7 +5,7 @@ param containerTag string = 'latest'
 param dbServerRG string
 param dbServerName string
 param subnetID string
-param dbServerName string
+param planID string
 
 param location string = 'Canada Central'
 
@@ -21,7 +21,7 @@ module collab './collab-test-instance.yaml' = {
     containerTag: containerTag
     prName: 'PR_${prNumber}'
     subnetID: subnetID
-    planID: subnetID
+    planID: planID
     dbServerRG: dbServerRG
     dbServerName: dbServerName
   }
