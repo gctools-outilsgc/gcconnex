@@ -1,6 +1,6 @@
 targetScope = 'subscription'
 
-param prBranch string = 'latest'
+param prNumber string = 'latest'
 param containerTag string = 'latest'
 param dbServerRG string
 param dbServerName string
@@ -19,7 +19,7 @@ module collab './collab-test-instance.yaml' = {
   scope: resourceGroup(testRG.name)
   params: {
     containerTag: containerTag
-    prBranch: prBranch
+    prName: 'PR_${prNumber}'
     subnetID: subnetID
     planID: subnetID
     dbServerRG: dbServerRG
