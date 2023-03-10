@@ -30,6 +30,6 @@ steps:
          "https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR_NUMBER/comments"
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-	PR_NUMBER: $(System.PullRequest.PullRequestNumber)
+    PR_NUMBER: $(System.PullRequest.PullRequestNumber)
   condition: succeeded()
   displayName: 'Post a comment to PR'
