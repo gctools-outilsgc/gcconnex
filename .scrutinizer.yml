@@ -5,8 +5,7 @@ filter:
         - '*/tests/*'
         - '*/vendor/*'
 tools:
-    external_code_coverage: true
-        timeout: '1200'
+    external_code_coverage: false
     js_hint:
         filter:
             excluded_paths: ['vendors/*','*/vendors/*','*/tests/*','*/vendor/*']
