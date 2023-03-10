@@ -27,5 +27,5 @@ steps:
     curl -H "Authorization: token $(System.AccessToken)" \
          -X POST \
          -d '{"body": "Test comment from Azure Pipelines"}' \
-         "https://api.github.com/repos/OWNER/REPO/issues/$(System.PullRequest.PullRequestId)/comments"
+         "https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$(System.PullRequest.PullRequestId)/comments"
   displayName: 'Post a comment to PR'
