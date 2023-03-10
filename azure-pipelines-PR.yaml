@@ -34,11 +34,11 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       az deployment sub create --location $(location) --template-file $(RGtemplateFile) \
-	    --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG \
+        --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG \
 		subnetID=$SUBNET_ID planID=$PLAN_ID
   env:
     DBRG: "DEV"
-    DBSERVERNAME: "testdev-collab-db"
+    DBSERVERNAME: ${review_db_server_name}
     TAG: $(Build.SourceVersion)
 	PR: $(System.PullRequest.PullRequestNumber)
 	SUBNET_ID: ${review_subnet_ID}
