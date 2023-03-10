@@ -7,6 +7,8 @@ pr:  # Trigger the pipeline only for PRs targeting master branch
 
 variables:
   imageRepository: 'collab'
+  location: 'canadacentral'
+  RGtemplateFile: '.bicep/PR/test-instance-setup.bicep'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -23,13 +25,32 @@ steps:
   env:
     acrName: $(acrName)
 
+- task: AzureCLI@2
+  displayName: set up review / test instance
+  condition: succeeded()
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise (a7b5a8d0-c8df-4fb1-8f6b-9080e188ef57)'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az deployment sub create --location $(location) --template-file $(RGtemplateFile) \
+	    --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG \
+		subnetID=$SUBNET_ID planID=$PLAN_ID
+  env:
+    DBRG: "DEV"
+    DBSERVERNAME: "testdev-collab-db"
+    TAG: $(Build.SourceVersion)
+	PR: $(System.PullRequest.PullRequestNumber)
+	SUBNET_ID: ${review_subnet_ID}
+	PLAN_ID: ${review_plan_ID}
+
 - bash: |
     curl -L \
       -X POST \
       -H "Accept: application/vnd.github+json" \
       -H "Authorization: Bearer $SYSTEM_ACCESSTOKEN"\
       -H "X-GitHub-Api-Version: 2022-11-28" \
-      -d '{"body": "Test comment from Azure Pipelines"}' \
+      -d '{"body": "The review site is up at https://gccollab-dev-PR_$PR_NUMBER.azurewebsites.net"}' \
       "https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR_NUMBER/comments"
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
