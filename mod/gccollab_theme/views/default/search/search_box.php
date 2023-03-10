@@ -10,7 +10,7 @@ $placeholder = elgg_echo('wet:searchgctools');
 ?>
 
 <!-- Basically just moved the search to this file to output the section -->
-<section id="wb-srch" class="text-right visible-md visible-lg">
+<!-- <section id="wb-srch" class="text-right visible-md visible-lg">
     <h2> <?php echo elgg_echo('wet:searchHead'); ?> </h2>
     <form action="<?php echo elgg_get_site_url(); ?>search" name="cse-search-box" class="form-inline">
         <div class='form-group'>
@@ -22,11 +22,11 @@ $placeholder = elgg_echo('wet:searchgctools');
             <input type="hidden" id="chk4" name="chk4"  value="on">
         </div>
         <div class="form-group submit">
-            <!-- search button -->
+    
             <button type="submit" class="btn btn-primary btn-small" name="wb-srch-sub">
                 <span class="glyphicon-search glyphicon"></span>
                 <span class="wb-inv"> <?php echo elgg_echo('wet:searchHead'); ?> </span>
-            </button>
+            </button> 
         </div>
     </form>
-</section>
+</section> -->

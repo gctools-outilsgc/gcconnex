@@ -75,12 +75,28 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
         
         <li>
             <?php 
-                echo elgg_view('output/url', array(
-                    'text' => elgg_echo('invite'),
-                    'href' => '/invite/' .$username,
-                    'class' => 'btn btn-primary invite-btn'
-                ));
-            ?>
+                // echo elgg_view('output/url', array(
+                    // 'text' => elgg_echo('invite'),
+                    // 'href' => '/invite/' .$username,
+                    // 'class' => 'btn btn-primary invite-btn'
+                // ));
+            ?> 
+        </li> 
+        <li class="elgg-menu-item-search">
+            <span class="glyphicon-search glyphicon" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch" aria-pressed="false">
+            </span>
+        <?php 
+
+            //echo '<label for="tagSearch" class="wb-inv">'.elgg_echo('wet:searchHead').'</label>';
+            //echo elgg_view('input/text', array(
+            //    'id' => 'tagSearch',
+            //    'name' => 'tag',
+            //    'class' => 'elgg-input-search mbm',
+            //   'placeholder' => elgg_echo('wet:searchgctools'),
+            //    'required' => true
+            //));
+            //echo elgg_view('input/submit', array('value' => '<span class="glyphicon-search glyphicon"></span> ' . elgg_echo(' '))); 
+        ?>
         </li>
         <?php if(elgg_is_admin_logged_in()) {
             // admin

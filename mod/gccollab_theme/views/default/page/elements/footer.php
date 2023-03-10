@@ -8,6 +8,17 @@
 $site_url = elgg_get_site_url();
 $user = elgg_get_logged_in_user_entity();
 
+//check lang of current user and change Canada graphic based on language
+if( _elgg_services()->session->get('language') == 'fr'){
+    $graphic_lang = 'fr';
+    $account_text = 'GCcompte';
+    $pilot = 'Pilote';
+} else {
+    $graphic_lang = 'en';
+    $account_text = 'GCaccount';
+    $pilot = 'Pilot';
+}
+
 $stats = "{$site_url}stats";
 if ( strcmp(_elgg_services()->session->get('language'),'en') == 0 ) {
     // english links (under about)
@@ -102,10 +113,22 @@ $feedbackText= elgg_echo('wet:feedbackText');
 <div class="brand">
     <div class="container">
         <div class="row">
-            <div class="col-xs-6 visible-sm visible-xs tofpg">
+            <!-- <div class="col-xs-6 visible-sm visible-xs tofpg">
                 <a href="#wb-cont"><?php echo elgg_echo('top:of:page');?><span class="glyphicon glyphicon-chevron-up"></span></a>
-            </div>
-            <div class="col-xs-6 col-md-12 text-right">
+            </div> -->
+            <div class="hidden-sm hidden-xs col-sm-7 col-md-6 col-lg-6"> 
+                <div class="pull-left list-unstyled mrgn-lft-0 hover-underline-animation" style="font-weight:bold;">
+                    <a href="https://account-compte.gccollab.ca" style="color:#6b5088;">
+                        <img style="width:40px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt=""></span><?php echo $account_text; ?>
+                    </a> 
+                </div> 
+                <div class="pull-left list-unstyled mrgn-lft-md hover-underline-animation" style="font-weight:bold;">
+                    <a href="https://wiki.gccollab.ca" style="color:#6b5088;">
+                        <img style="width:40px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt="mini-wiki-logo"></span>GCwiki
+                    </a>
+                </div>  
+            </div> 
+            <div class="text-right">
                 <object type="image/svg+xml" tabindex="-1" role="img" data="<?php echo $site_url; ?>/mod/gccollab_theme/graphics/wmms-blk.svg" aria-label="<?php echo elgg_echo('canada:symbol');?>"></object>
             </div>
         </div>
