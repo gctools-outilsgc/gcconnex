@@ -36,7 +36,7 @@ steps:
     inlineScript: |
       az bicep version
       az bicep upgrade
-      az upgrade
+      az upgrade --yes
       az bicep version
       bicep build $(RGtemplateFileName).bicep
       az deployment sub create --location $(location) --template-file $(RGtemplateFileName).bicep \
