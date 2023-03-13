@@ -4,13 +4,14 @@ param prNumber string = 'latest'
 param containerTag string = 'latest'
 param dbServerRG string
 param dbServerName string
+param dbServerPass string
 param subnetID string
 param planID string
 
 param location string = 'Canada Central'
 
 resource testRG 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: 'collab_review_${prBranch}'
+  name: 'collab_review_${prNumber}'
   location: location
 }
 
@@ -24,5 +25,6 @@ module collab './collab-test-instance.yaml' = {
     planID: planID
     dbServerRG: dbServerRG
     dbServerName: dbServerName
+    dbServerPass: dbServerPass
   }
 }
