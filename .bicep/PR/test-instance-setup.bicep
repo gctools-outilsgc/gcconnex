@@ -15,7 +15,7 @@ resource testRG 'Microsoft.Resources/resourceGroups@2021-01-01' = {
   location: location
 }
 
-module collab './collab-test-instance.yaml' = {
+module collab './collab-test-instance.bicep' = {
   name: 'collab-test-infra'
   scope: resourceGroup(testRG.name)
   params: {
