@@ -19,12 +19,13 @@ param acrName string = 'collabtestacr'
 
 var DATAROOT = '/collab_data_test_mount/'
 
-var linuxFxVersion = empty(containerSHA) ? 'DOCKER|${acrName}.azurecr.io/collab_${prName}:${containerTag}' : 'DOCKER|${acrName}.azurecr.io/collab_${prName}@sha256:${containerSHA}'
+var imageRepoName = toLower('collab_${prName}')
+var linuxFxVersion = empty(containerSHA) ? 'DOCKER|${acrName}.azurecr.io/${imageRepoName}:${containerTag}' : 'DOCKER|${acrName}.azurecr.io/${imageRepoName}@sha256:${containerSHA}'
 
 var appName = 'gccollab-dev-${prName}'
 var dbName = 'gccollab-dev-db-${prName}'
 var nodash_nounderscore_tag = replace(replace(prName, '-', ''), '_', '')
-var storagePrefix  = (length(nodash_nounderscore_tag)) > 12 ? substring('devgcccollab${nodash_nounderscore_tag}', 0, 24) : 'devgcccollab${nodash_nounderscore_tag}'
+var storagePrefix = toLower( (length(nodash_nounderscore_tag)) > 12 ? substring('devgcccollab${nodash_nounderscore_tag}', 0, 24) : 'devgcccollab${nodash_nounderscore_tag}' )
 
 
 /*
@@ -135,7 +136,7 @@ module db './modules/db_existing_server.bicep' = {
 **** files + config ****
 */
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
-    name: toLower(storagePrefix)
+    name: storagePrefix
     location: location
     kind: 'StorageV2'
 
