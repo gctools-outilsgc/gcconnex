@@ -36,9 +36,10 @@ steps:
     inlineScript: |
       az bicep version
       az bicep upgrade
+      az upgrade
       az bicep version
       bicep build $(RGtemplateFileName).bicep
-      az deployment sub create --location $(location) --template-file $(RGtemplateFileName).json \
+      az deployment sub create --location $(location) --template-file $(RGtemplateFileName).bicep \
         --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=DB_SERVER_PASS \
         subnetID=$SUBNET_ID planID=$PLAN_ID
   env:
