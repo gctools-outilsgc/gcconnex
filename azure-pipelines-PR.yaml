@@ -29,7 +29,7 @@ steps:
   displayName: set up review / test instance
   condition: succeeded()
   inputs:
-    azureSubscription: 'Visual Studio Enterprise (a7b5a8d0-c8df-4fb1-8f6b-9080e188ef57)'
+    azureSubscription: 'gccollab_review'
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
