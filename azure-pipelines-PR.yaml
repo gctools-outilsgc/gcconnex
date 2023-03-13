@@ -33,6 +33,10 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
+      az bicep version
+      az deployment sub what-if --location $(location) --template-file $(RGtemplateFile) \
+        --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=DB_SERVER_PASS \
+        subnetID=$SUBNET_ID planID=$PLAN_ID
       az deployment sub create --location $(location) --template-file $(RGtemplateFile) \
         --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=DB_SERVER_PASS \
         subnetID=$SUBNET_ID planID=$PLAN_ID
