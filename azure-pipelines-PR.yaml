@@ -9,6 +9,7 @@ variables:
   imageRepository: 'collab'
   location: 'canadacentral'
   RGtemplateFile: '.bicep/PR/test-instance-setup.bicep'
+  RGtemplateFileName: '.bicep/PR/test-instance-setup'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -36,10 +37,8 @@ steps:
       az bicep version
       az bicep upgrade
       az bicep version
-      az deployment sub what-if --location $(location) --template-file $(RGtemplateFile) \
-        --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=DB_SERVER_PASS \
-        subnetID=$SUBNET_ID planID=$PLAN_ID
-      az deployment sub create --location $(location) --template-file $(RGtemplateFile) \
+      bicep build $(RGtemplateFileName).bicep
+      az deployment sub create --location $(location) --template-file $(RGtemplateFileName).json \
         --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=DB_SERVER_PASS \
         subnetID=$SUBNET_ID planID=$PLAN_ID
   env:
