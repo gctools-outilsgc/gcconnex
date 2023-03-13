@@ -20,7 +20,7 @@ module collab './collab-test-instance.bicep' = {
   scope: resourceGroup(testRG.name)
   params: {
     containerTag: containerTag
-    prName: 'PR_${prNumber}'
+    prName: 'PR-${prNumber}'
     subnetID: subnetID
     planID: planID
     dbServerRG: dbServerRG

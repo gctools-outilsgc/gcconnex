@@ -20,7 +20,7 @@ steps:
   inputs:
     command: 'buildAndPush'
     containerRegistry: $(acrName)
-    repository: '$(imageRepository)_pr_$(System.PullRequest.PullRequestNumber)'
+    repository: '$(imageRepository)_pr-$(System.PullRequest.PullRequestNumber)'
     tags: '$(Build.SourceVersion)'
   env:
     acrName: $(acrName)
