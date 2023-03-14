@@ -48,7 +48,7 @@ steps:
 
 - task: GitHubComment@0
   inputs:
-    gitHubConnection: # string. Required. GitHub connection (OAuth or PAT). 
+    gitHubConnection: 'gctools-outilsgc'
     repositoryName: '$(Build.Repository.Name)'
     #id: $(System.PullRequest.PullRequestId)
     #comment: "TEST FROM PIPELINE"
