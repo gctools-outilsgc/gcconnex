@@ -35,6 +35,7 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       az bicep version
+      echo "sID: $SUBNET_ID"
       az deployment sub create --location $LOCATION --template-file $TEMPLATE_FILE \
         --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=DB_SERVER_PASS \
         subnetID=$SUBNET_ID planID=$PLAN_ID
