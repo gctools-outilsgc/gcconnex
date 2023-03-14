@@ -51,6 +51,6 @@ steps:
     gitHubConnection: 'gctools-outilsgc'
     repositoryName: '$(Build.Repository.Name)'
     id: '$(System.PullRequest.PullRequestNumber)'
-    comment: 'TEST FROM PIPELINE'
+    comment: 'Test instance up at: https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
   condition: succeeded()
   displayName: 'Post a comment to PR'
