@@ -50,7 +50,7 @@ steps:
   inputs:
     gitHubConnection: 'gctools-outilsgc'
     repositoryName: '$(Build.Repository.Name)'
-    #id: $(System.PullRequest.PullRequestId)
-    #comment: "TEST FROM PIPELINE"
+    id: $(System.PullRequest.PullRequestId)
+    comment: "TEST FROM PIPELINE"
   condition: succeeded()
   displayName: 'Post a comment to PR'
