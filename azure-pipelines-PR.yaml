@@ -38,8 +38,8 @@ steps:
       az bicep upgrade
       az upgrade --yes
       az bicep version
-      bicep build $(RGtemplateFileName).bicep
-      az deployment sub create --location $(location) --template-file $(RGtemplateFileName).bicep \
+      /home/vsts/work/_temp/.azclitask/bin/bicep build $(RGtemplateFileName).bicep
+      az deployment sub create --location $(location) --template-file $(RGtemplateFileName).json \
         --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=DB_SERVER_PASS \
         subnetID=$SUBNET_ID planID=$PLAN_ID
   env:
