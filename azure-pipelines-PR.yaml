@@ -41,12 +41,12 @@ steps:
         subnetID=$SUBNET_ID planID=$PLAN_ID
   env:
     DBRG: "DEV"
-    DBSERVERNAME: ${review_db_server_name}
-    DB_SERVER_PASS: ${review_db_server_pass}
+    DBSERVERNAME: $(review_db_server_name)
+    DB_SERVER_PASS: $(review_db_server_pass)
     TAG: $(Build.SourceVersion)
     PR: $(System.PullRequest.PullRequestNumber)
-    SUBNET_ID: ${review_subnet_ID}
-    PLAN_ID: ${review_plan_ID}
+    SUBNET_ID: $(review_subnet_ID)
+    PLAN_ID: $(review_plan_ID)
     LOCATION: $(location)
     TEMPLATE_FILE: $(RGtemplateFile)
 
