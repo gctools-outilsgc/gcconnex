@@ -40,7 +40,7 @@ steps:
   env:
     DBRG: "DEV"
     DBSERVERNAME: $(review_db_server_name)
-    DB_SERVER_PASS: $(review_db_server_pass)
+    DB_SERVER_PASS: ${review_db_server_pass}
     TAG: $(Build.SourceVersion)
     PR: $(System.PullRequest.PullRequestNumber)
     SUBNET_ID: $(review_subnet_ID)
