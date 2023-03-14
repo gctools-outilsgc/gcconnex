@@ -35,11 +35,7 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       az bicep version
-      az bicep upgrade
-      az upgrade --yes
-      az bicep version
-      bicep build $(RGtemplateFileName).bicep
-      az deployment sub create --location $(location) --template-file $(RGtemplateFileName).bicep \
+      az deployment sub create --location $LOCATION --template-file $TEMPLATE_FILE \
         --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=DB_SERVER_PASS \
         subnetID=$SUBNET_ID planID=$PLAN_ID
   env:
@@ -50,6 +46,8 @@ steps:
     PR: $(System.PullRequest.PullRequestNumber)
     SUBNET_ID: ${review_subnet_ID}
     PLAN_ID: ${review_plan_ID}
+    LOCATION: $(location)
+    TEMPLATE_FILE: $(RGtemplateFile)
 
 - bash: |
     curl -L \
