@@ -48,11 +48,8 @@ steps:
     TEMPLATE_FILE: $(RGtemplateFile)
 
 - bash: |
-    curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep ${{ variables.commentString }} && TEST="foo"
-    if [ $TEST ]
-      then
-        echo "##vso[task.setvariable variable=commentExists]yes"
-    fi
+    TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c ${{ variables.commentString }})
+    echo "##vso[task.setvariable variable=commentExists]$TEST"
   displayName: 'Check for comment in PR'
   env:
     PR: $(System.PullRequest.PullRequestNumber)
@@ -63,5 +60,5 @@ steps:
     repositoryName: '$(Build.Repository.Name)'
     id: '$(System.PullRequest.PullRequestNumber)'
     comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
-  condition: and(succeeded(), ne(variables['commentExists'], 'yes'))
+  condition: and(succeeded(), eq(variables['commentExists'], '0'))
   displayName: 'Post a comment to PR'
