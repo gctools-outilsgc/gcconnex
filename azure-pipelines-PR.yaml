@@ -9,6 +9,7 @@ variables:
   imageRepository: 'collab'
   location: 'canadacentral'
   RGtemplateFile: '.bicep/PR/test-instance-setup.bicep'
+  commentString: 'Test instance up at:'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -46,11 +47,21 @@ steps:
     LOCATION: $(location)
     TEMPLATE_FILE: $(RGtemplateFile)
 
+- bash: |
+    curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep ${{ variables.commentString }} && TEST="foo"
+    if [ $TEST ]
+      then
+        echo "##vso[task.setvariable variable=commentExists]yes"
+    fi
+  displayName: 'Check for comment in PR'
+  env:
+    PR: $(System.PullRequest.PullRequestNumber)
+
 - task: GitHubComment@0
   inputs:
     gitHubConnection: 'gctools-outilsgc'
     repositoryName: '$(Build.Repository.Name)'
     id: '$(System.PullRequest.PullRequestNumber)'
-    comment: 'Test instance up at: https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
-  condition: succeeded()
+    comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
+  condition: and(succeeded(), ne(variables['commentExists'], 'yes'))
   displayName: 'Post a comment to PR'
