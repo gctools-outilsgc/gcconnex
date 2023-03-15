@@ -48,7 +48,7 @@ steps:
     TEMPLATE_FILE: $(RGtemplateFile)
 
 - bash: |
-    TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c ${{ variables.commentString }})
+    TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentString }}")
     echo "##vso[task.setvariable variable=commentExists]$TEST"
   displayName: 'Check for comment in PR'
   env:
