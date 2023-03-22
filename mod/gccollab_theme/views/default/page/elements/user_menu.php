@@ -87,6 +87,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             </span>
         <?php 
 
+            //search tag label in the user menu 
             //echo '<label for="tagSearch" class="wb-inv">'.elgg_echo('wet:searchHead').'</label>';
             //echo elgg_view('input/text', array(
             //    'id' => 'tagSearch',

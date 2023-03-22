@@ -21,6 +21,7 @@ foreach ($default_items as $menu_item) {
 
 // Wet 4 more menu items - You can un-comment this code below to add the more menu back in
 
+//The following code turns off the more dropwdown to prevent overflow in the menu bar
 //if ($more_items) {
 //  echo '<li role="none"><a href="#moreCont" class="item">'.elgg_echo('wet:more').'<span class="expicon glyphicon glyphicon-chevron-down"></span></a>';	
 //	echo elgg_view('navigation/menu/elements/section', array(
