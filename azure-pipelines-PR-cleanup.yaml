@@ -42,5 +42,5 @@ steps:
   env:
     DBRG: $(db_resource_group)
     DBSERVERNAME: $(review_db_server_name)
-	ACR_NAME: $(acrName)
+    ACR_NAME: $(acrName)
     LOCATION: $(location)
