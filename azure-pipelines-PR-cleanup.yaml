@@ -1,0 +1,45 @@
+
+trigger:  # Trigger the pipeline only when a PR is merged into master branch
+- master
+
+pr:
+- none
+
+
+variables:
+  imageRepository: 'collab'
+
+pool:
+  vmImage: 'ubuntu-latest'
+  
+ 
+steps:
+- task: AzureCLI@2
+  displayName: PR environment cleanup
+  inputs:
+    azureSubscription: 'gccollab_review'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      ACR_IMAGES=$(az acr repository list -n collabTestACR | grep collab)
+      OPEN_PRS=$(curl -L   -H "X-GitHub-Api-Version: 2022-11-28"   https://api.github.com/repos/gctools-outilsgc/gcconnex/pulls | grep \"number\")
+      echo $ACR_IMAGES
+      echo $OPEN_PRS
+
+      for image in $ACR_IMAGES; do
+          pr_number=$(echo $image | grep -o "[0-9]\+")
+          echo $pr_number
+          is_open=$(echo $OPEN_PRS | grep -c ": $pr_number,")
+          echo $is_open
+
+          if [ $is_open = 0 ]; then
+              echo "$pr_number cleanup"
+              az group delete --name collab_review_$pr_number --yes
+              az mariadb db delete -g $DBRG -s $DBSERVERNAME --name pr-$pr_number --yes
+              az acr repository delete --name collab_pr-$pr_number --yes
+          fi
+      done
+  env:
+    DBRG: $(db_resource_group)
+    DBSERVERNAME: $(review_db_server_name)
+    LOCATION: $(location)
