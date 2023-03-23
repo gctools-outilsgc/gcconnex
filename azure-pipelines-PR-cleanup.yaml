@@ -36,10 +36,11 @@ steps:
               echo "$pr_number cleanup"
               echo "az group delete --name collab_review_$pr_number --yes"
               echo "az mariadb db delete -g $DBRG -s $DBSERVERNAME --name pr-$pr_number --yes"
-              echo "az acr repository delete --name collab_pr-$pr_number --yes"
+              echo "az acr repository delete --name $ACR_NAME --repository collab_pr-$pr_number --yes"
           fi
       done
   env:
     DBRG: $(db_resource_group)
     DBSERVERNAME: $(review_db_server_name)
+	ACR_NAME: $(acrName)
     LOCATION: $(location)
