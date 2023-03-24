@@ -1175,6 +1175,7 @@ return array(
 	'site' => 'Site',
 	'activity' => 'Activité',
 	'members' => 'Membres',
+	'network' => 'Réseau',
 	'menu' => 'Menu',
 	'up' => 'Monter',
 	'down' => 'Descendre',

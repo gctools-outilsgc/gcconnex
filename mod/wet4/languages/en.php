@@ -1246,6 +1246,7 @@ These changes will only affect new users on the site.',
 	'site' => 'Site',
 	'activity' => 'Activity',
 	'members' => 'Members',
+	'network' => 'Network',
 	'menu' => 'Menu',
 
 	'up' => 'Up',

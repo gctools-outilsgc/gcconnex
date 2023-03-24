@@ -255,7 +255,8 @@ function wet4_theme_init()
 	elgg_register_plugin_hook_handler('register', 'menu:site', 'remove_menu_item_handler');
 
 	// Removing the "All site pages" from the main menu
-	elgg_unregister_menu_item('site', 'file');
+	elgg_unregister_menu_item('site', 'file'); 
+	elgg_unregister_menu_item('site', 'members');
 	elgg_unregister_menu_item('site', 'polls');
 	elgg_unregister_menu_item('site', 'event_calendar');
 	elgg_unregister_menu_item('site', 'photos');
@@ -539,14 +540,14 @@ function wet4_theme_pagesetup()
 		$params = array(
 			"name" => "Colleagues",
 			"href" => "friends/" . $user->username,
-			"text" => '<span class="fa fa-users fa-lg"></span><span class="hidden-xs wb-invisible">' . elgg_echo("userMenu:colleagues") . '</span>',
+			"text" => elgg_echo("network"),
 			"title" => elgg_echo('userMenu:colleagues'),
 			"class" => '',
 			'item_class' => '',
 			'priority' => '1'
 		);
 
-		elgg_register_menu_item("user_menu", $params);
+		elgg_register_menu_item("site", $params);
 	}
 
 

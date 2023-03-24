@@ -1,0 +1,65 @@
+trigger:  # don't trigger outside PRs
+- none
+
+pr:  # Trigger the pipeline only for PRs targeting master branch
+- master
+
+
+variables:
+  imageRepository: 'collab'
+  location: 'canadacentral'
+  RGtemplateFile: '.bicep/PR/test-instance-setup.bicep'
+  commentString: 'Test instance up at:'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+
+steps:
+- task: Docker@2
+  displayName: Build and Push Container image to ACR
+  inputs:
+    command: 'buildAndPush'
+    containerRegistry: $(acrName)
+    repository: '$(imageRepository)_pr-$(System.PullRequest.PullRequestNumber)'
+    tags: '$(Build.SourceVersion)'
+  env:
+    acrName: $(acrName)
+
+- task: AzureCLI@2
+  displayName: set up review / test instance
+  condition: succeeded()
+  inputs:
+    azureSubscription: 'gccollab_review'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az deployment sub create --location $LOCATION --template-file $TEMPLATE_FILE \
+        --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=$(REVIEW_DB_SERVER_PASS) \
+        subnetID=$SUBNET_ID planID=$PLAN_ID
+  env:
+    DBRG: $(db_resource_group)
+    DBSERVERNAME: $(review_db_server_name)
+    TAG: $(Build.SourceVersion)
+    PR: $(System.PullRequest.PullRequestNumber)
+    SUBNET_ID: $(review_subnet_ID)
+    PLAN_ID: $(review_plan_ID)
+    LOCATION: $(location)
+    TEMPLATE_FILE: $(RGtemplateFile)
+
+- bash: |
+    TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentString }}")
+    echo "##vso[task.setvariable variable=commentExists]$TEST"
+    echo "Comments found about the test instance already in the PR: $TEST"
+  displayName: 'Check for comment in PR'
+  env:
+    PR: $(System.PullRequest.PullRequestNumber)
+
+- task: GitHubComment@0
+  inputs:
+    gitHubConnection: 'gctools-outilsgc'
+    repositoryName: '$(Build.Repository.Name)'
+    id: '$(System.PullRequest.PullRequestNumber)'
+    comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
+  condition: and(succeeded(), eq(variables['commentExists'], '0'))
+  displayName: 'Post a comment to PR'
