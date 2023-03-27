@@ -23,8 +23,6 @@ steps:
     containerRegistry: $(acrServiceConnection)
     repository: '$(imageRepository)_pr-$(System.PullRequest.PullRequestNumber)'
     tags: '$(Build.SourceVersion)'
-  env:
-    acrServiceConnection: $(acrName)
 
 - task: AzureCLI@2
   displayName: set up review / test instance
