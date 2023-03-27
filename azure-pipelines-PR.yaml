@@ -20,11 +20,11 @@ steps:
   displayName: Build and Push Container image to ACR
   inputs:
     command: 'buildAndPush'
-    containerRegistry: $(acrName)
+    containerRegistry: $(acrServiceConnection)
     repository: '$(imageRepository)_pr-$(System.PullRequest.PullRequestNumber)'
     tags: '$(Build.SourceVersion)'
   env:
-    acrName: $(acrName)
+    acrServiceConnection: $(acrName)
 
 - task: AzureCLI@2
   displayName: set up review / test instance
