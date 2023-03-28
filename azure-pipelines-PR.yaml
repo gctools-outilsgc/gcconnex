@@ -15,49 +15,52 @@ pool:
   vmImage: 'ubuntu-latest'
 
 
-steps:
-- task: Docker@2
-  displayName: Build and Push Container image to ACR
-  inputs:
-    command: 'buildAndPush'
-    containerRegistry: $(acrServiceConnection)
-    repository: '$(imageRepository)_pr-$(System.PullRequest.PullRequestNumber)' # per-PR repos for easier cleanup
-    tags: '$(Build.SourceVersion)'
+jobs:
+- job: setup
+  displayName: build and set up review site
+  steps:
+  - task: Docker@2
+    displayName: Build and Push Container image to ACR
+    inputs:
+      command: 'buildAndPush'
+      containerRegistry: $(acrServiceConnection)
+      repository: '$(imageRepository)_pr-$(System.PullRequest.PullRequestNumber)' # per-PR repos for easier cleanup
+      tags: '$(Build.SourceVersion)'
 
-- task: AzureCLI@2
-  displayName: set up review / test instance using bicep
-  condition: succeeded()
-  inputs:
-    azureSubscription: 'gccollab_review'
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      az deployment sub create --location $LOCATION --template-file $TEMPLATE_FILE \
-        --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=$(REVIEW_DB_SERVER_PASS) \
-        subnetID=$SUBNET_ID planID=$PLAN_ID
-  env:
-    DBRG: $(db_resource_group)
-    DBSERVERNAME: $(review_db_server_name)
-    TAG: $(Build.SourceVersion)
-    PR: $(System.PullRequest.PullRequestNumber)
-    SUBNET_ID: $(review_subnet_ID)
-    PLAN_ID: $(review_plan_ID)
-    LOCATION: $(location)
-    TEMPLATE_FILE: $(RGtemplateFile)
+  - task: AzureCLI@2
+    displayName: set up review / test instance using bicep
+    condition: succeeded()
+    inputs:
+      azureSubscription: 'gccollab_review'
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az deployment sub create --location $LOCATION --template-file $TEMPLATE_FILE \
+          --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=$(REVIEW_DB_SERVER_PASS) \
+          subnetID=$SUBNET_ID planID=$PLAN_ID
+    env:
+      DBRG: $(db_resource_group)
+      DBSERVERNAME: $(review_db_server_name)
+      TAG: $(Build.SourceVersion)
+      PR: $(System.PullRequest.PullRequestNumber)
+      SUBNET_ID: $(review_subnet_ID)
+      PLAN_ID: $(review_plan_ID)
+      LOCATION: $(location)
+      TEMPLATE_FILE: $(RGtemplateFile)
 
-- bash: |
-    TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentString }}")
-    echo "##vso[task.setvariable variable=commentExists]$TEST"
-    echo "Comments found about the test instance already in the PR: $TEST"
-  displayName: 'Check for comment in PR'
-  env:
-    PR: $(System.PullRequest.PullRequestNumber)
+  - bash: |
+      TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentString }}")
+      echo "##vso[task.setvariable variable=commentExists]$TEST"
+      echo "Comments found about the test instance already in the PR: $TEST"
+    displayName: 'Check for comment in PR'
+    env:
+      PR: $(System.PullRequest.PullRequestNumber)
 
-- task: GitHubComment@0
-  inputs:
-    gitHubConnection: 'gctools-outilsgc'
-    repositoryName: 'gctools-outilsgc/gcconnex'
-    id: '$(System.PullRequest.PullRequestNumber)'
-    comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
-  condition: and(succeeded(), eq(variables['commentExists'], '0'))
-  displayName: 'Post a comment to PR with url to review site'
+  - task: GitHubComment@0
+    inputs:
+      gitHubConnection: 'gctools-outilsgc'
+      repositoryName: 'gctools-outilsgc/gcconnex'
+      id: '$(System.PullRequest.PullRequestNumber)'
+      comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
+    condition: and(succeeded(), eq(variables['commentExists'], '0'))
+    displayName: 'Post a comment to PR with url to review site'
