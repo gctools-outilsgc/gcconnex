@@ -59,7 +59,7 @@ jobs:
   - task: GitHubComment@0
     inputs:
       gitHubConnection: 'gctools-outilsgc'
-      repositoryName: 'gctools-outilsgc/gcconnex'
+      repositoryName: 'gcconnex'
       id: '$(System.PullRequest.PullRequestNumber)'
       comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
     condition: and(succeeded(), eq(variables['commentExists'], '0'))
