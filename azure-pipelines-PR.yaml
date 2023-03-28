@@ -52,15 +52,19 @@ jobs:
       TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentString }}")
       echo "##vso[task.setvariable variable=commentExists]$TEST"
       echo "Comments found about the test instance already in the PR: $TEST"
-    displayName: 'Check for comment in PR'
+      echo $TEST1
+      echo $TEST2
+    displayName: Check for comment in PR
     env:
       PR: $(System.PullRequest.PullRequestNumber)
+      TEST1: $(Build.Repository.Name)
+      TEST2: $(System.PullRequest.PullRequestNumber)
 
   - task: GitHubComment@0
     inputs:
       gitHubConnection: 'gctools-outilsgc'
-      repositoryName: 'gcconnex'
+      repositoryName: 'gctools-outilsgc/gcconnex'
       id: '$(System.PullRequest.PullRequestNumber)'
       comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
     condition: and(succeeded(), eq(variables['commentExists'], '0'))
-    displayName: 'Post a comment to PR with url to review site'
+    displayName: Post a comment to PR with url to review site
