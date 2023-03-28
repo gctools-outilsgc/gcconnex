@@ -9,7 +9,7 @@ variables:
   imageRepository: 'collab'
   location: 'canadacentral'
   RGtemplateFile: '.bicep/PR/test-instance-setup.bicep'
-  commentString: 'Test instance up at:'
+  commentString: 'Test instance up at:'  # String used for comment posted to provide link to review site
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -20,14 +20,12 @@ steps:
   displayName: Build and Push Container image to ACR
   inputs:
     command: 'buildAndPush'
-    containerRegistry: $(acrName)
-    repository: '$(imageRepository)_pr-$(System.PullRequest.PullRequestNumber)'
+    containerRegistry: $(acrServiceConnection)
+    repository: '$(imageRepository)_pr-$(System.PullRequest.PullRequestNumber)' # per-PR repos for easier cleanup
     tags: '$(Build.SourceVersion)'
-  env:
-    acrName: $(acrName)
 
 - task: AzureCLI@2
-  displayName: set up review / test instance
+  displayName: set up review / test instance using bicep
   condition: succeeded()
   inputs:
     azureSubscription: 'gccollab_review'
@@ -58,8 +56,8 @@ steps:
 - task: GitHubComment@0
   inputs:
     gitHubConnection: 'gctools-outilsgc'
-    repositoryName: '$(Build.Repository.Name)'
+    repositoryName: 'gctools-outilsgc/gcconnex'
     id: '$(System.PullRequest.PullRequestNumber)'
     comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
   condition: and(succeeded(), eq(variables['commentExists'], '0'))
-  displayName: 'Post a comment to PR'
+  displayName: 'Post a comment to PR with url to review site'
