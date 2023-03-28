@@ -31,11 +31,11 @@ $tabs = array(
 		"href" => "/groups/all?filter=yours",
 		"priority" => 250,
 	),
-	"popular" => array(
-		"text" => elgg_echo("sort:popular"),
-		"href" => "groups/all?filter=popular",
-		"priority" => 300,
-	),
+	//"popular" => array(
+	//	"text" => elgg_echo("sort:popular"),
+	//	"href" => "groups/all?filter=popular",
+	//	"priority" => 300,
+	//),
 	"discussion" => array(
 		"text" => elgg_echo("groups:latestdiscussion"),
 		"href" => "groups/all?filter=discussion",
