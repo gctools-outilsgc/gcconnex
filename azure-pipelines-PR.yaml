@@ -60,7 +60,7 @@ jobs:
     inputs:
       gitHubConnection: 'gctools-outilsgc'
       #repositoryName: $(Build.Repository.Name)
-      #id: $(System.PullRequest.PullRequestNumber)
+      id: $(System.PullRequest.PullRequestNumber)
       comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
     condition: and(succeeded(), eq(variables['commentExists'], '0'))
     displayName: Post a comment to PR with url to review site
