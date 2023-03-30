@@ -7,6 +7,7 @@ param dbServerName string
 param dbServerPass string
 param subnetID string
 param planID string
+param acrName string = 'collabtestacr'
 
 param location string = 'Canada Central'
 
@@ -26,5 +27,6 @@ module collab './collab-test-instance.bicep' = {
     dbServerRG: dbServerRG
     dbServerName: dbServerName
     dbServerPass: dbServerPass
+    acrName: acrName
   }
 }
