@@ -33,11 +33,11 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                 </div>
                 <section class="hidden-sm hidden-xs col-sm-7 col-md-6 col-lg-6">
                     <ul id="" class="pull-left list-unstyled mrgn-bttm-0" style="font-weight:bold;">
-                        <li class="pull-left tool-link">
+                        <!-- <li class="pull-left tool-link">
                         <a href="https://message.gccollab.ca" style="color:#6b5088;">
                             <img style="width:25px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/message_icon_pilot.png" alt=""></span>GCmessage (<?php echo $pilot; ?>)
                         </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </section>
             

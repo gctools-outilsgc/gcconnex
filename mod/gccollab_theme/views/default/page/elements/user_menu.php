@@ -75,16 +75,23 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
         
         <li>
             <?php 
+                // invite button removed 
                 // echo elgg_view('output/url', array(
                     // 'text' => elgg_echo('invite'),
                     // 'href' => '/invite/' .$username,
                     // 'class' => 'btn btn-primary invite-btn'
                 // ));
             ?> 
-        </li> 
+        </li>
+        <li class="elgg-menu-item-gcmessages">
+            <a href="https://message.gccollab.ca" style="color:#6b5088;" title="GCMessage" tabindex="0">
+                <img style="width:25px; display:inline-block; margin-right:3px;" src="http://gcconnex.local//mod/gccollab_theme/graphics/message_icon_pilot.png" alt="GCMessages">
+            </a>
+        </li>
+
         <li class="elgg-menu-item-search">
-            <button type="button" class="btn btn-link" href="/search" title="Search"> 
-                <span class="glyphicon-search glyphicon" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"></span>
+            <button type="button" class="btn btn-link" href="/search" title="Search" tabindex="0"> 
+                <span class="glyphicon-search glyphicon" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch" style="color:#36013f"></span>
             </button> 
         <?php 
 
@@ -103,15 +110,16 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
         <?php if(elgg_is_admin_logged_in()) {
             // admin
             echo '<li class="elgg-menu-item-admin">
-                <a href="/admin" title="Admin" class="elgg-menu-content">
+                <a href="/admin" title="Admin" class="elgg-menu-content" tabindex="0">
                     <span class="fa fa-wrench fa-lg mrgn-rght-sm"></span>
                 </a>
             </li>';
         } ?>
         <li>
             <?php 
+            // bookmarks
                 echo elgg_view('output/url', array(
-                    'text' => '<span class="fa fa-bookmark fa-lg"><span class="wb-invisible">'.elgg_echo('bookmarks').'</span></span>',
+                    'text' => '<span class="fa fa-bookmark fa-lg" tabindex="0"><span class="wb-invisible">'.elgg_echo('bookmarks').'</span></span>',
                     'href' => '/bookmarks/owner/' .$username,
                     'title' => elgg_echo('bookmarks')
                 ));
@@ -120,7 +128,7 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
         <li class="elgg-menu-item-notifications messagesLabel close-notif-dd">
             <?php
                 // notifications
-                echo '<a href="/messages/notifications/'.$username.'" title="'.elgg_echo('notifications:subscriptions:changesettings').'" data-dd-type="notif_dd" class="elgg-menu-content">
+                echo '<a href="/messages/notifications/'.$username.'" title="'.elgg_echo('notifications:subscriptions:changesettings').'" data-dd-type="notif_dd" class="elgg-menu-content" tabindex="0">
                     <span class="fa fa-bell fa-lg"><span class="wb-inv">'.elgg_echo('notifications:subscriptions:changesettings').'</span></span>'.$notification_badge.'   
                 </a>';
             ?>

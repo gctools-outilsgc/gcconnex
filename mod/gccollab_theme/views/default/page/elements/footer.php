@@ -118,13 +118,13 @@ $feedbackText= elgg_echo('wet:feedbackText');
             </div> -->
             <div class="hidden-sm hidden-xs col-sm-7 col-md-6 col-lg-6"> 
                 <div class="pull-left list-unstyled mrgn-lft-0 hover-underline-animation" style="font-weight:bold;">
-                    <a href="https://account-compte.gccollab.ca" style="color:#6b5088;">
-                        <img style="width:40px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt=""></span><?php echo $account_text; ?>
+                    <a href="https://account-compte.gccollab.ca" style="color:#6b5088; font-size:15px;">
+                        <img style="width:30px; height: 30px;px; display:inline-block; margin-right:3px; margin-top:10px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt=""></span><?php echo $account_text; ?>
                     </a> 
                 </div> 
                 <div class="pull-left list-unstyled mrgn-lft-md hover-underline-animation" style="font-weight:bold;">
-                    <a href="https://wiki.gccollab.ca" style="color:#6b5088;">
-                        <img style="width:40px; display:inline-block; margin-right:3px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt="mini-wiki-logo"></span>GCwiki
+                    <a href="https://wiki.gccollab.ca" style="color:#6b5088; font-size:15px;">
+                        <img style="width:30px; height:30px; display:inline-block; margin-right:3px; margin-top:10px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt="mini-wiki-logo"></span>GCwiki
                     </a>
                 </div>  
             </div> 
