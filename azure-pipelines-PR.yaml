@@ -31,7 +31,7 @@ jobs:
     displayName: set up review / test instance using bicep
     condition: succeeded()
     inputs:
-      azureSubscription: 'gccollab_review'
+      azureSubscription: $(azSubServiceConnection)
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
