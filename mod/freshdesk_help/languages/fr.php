@@ -1,7 +1,7 @@
 <?php
 return array(
 
-  'freshdesk:page:title' => "Aide / Contactez-nous",
+  'freshdesk:page:title' => "Contactez-nous",
 
   //search knowledge base
   'freshdesk:knowledge:title' => "Contenu d’aide",
