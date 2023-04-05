@@ -37,7 +37,7 @@ jobs:
       inlineScript: |
         az deployment sub create --location $LOCATION --template-file $TEMPLATE_FILE \
           --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=$(REVIEW_DB_SERVER_PASS) \
-          subnetID=$SUBNET_ID planID=$PLAN_ID
+          subnetID=$SUBNET_ID planID=$PLAN_ID acrName=$ACR_NAME
     env:
       DBRG: $(db_resource_group)
       DBSERVERNAME: $(review_db_server_name)
@@ -47,6 +47,7 @@ jobs:
       PLAN_ID: $(review_plan_ID)
       LOCATION: $(location)
       TEMPLATE_FILE: $(RGtemplateFile)
+	  ACR_NAME: $(acrName)
 
   - bash: |
       TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentString }}")
