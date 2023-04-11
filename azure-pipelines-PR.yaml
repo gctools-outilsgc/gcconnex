@@ -9,7 +9,7 @@ variables:
   imageRepository: 'collab'
   location: 'canadacentral'
   RGtemplateFile: '.bicep/PR/test-instance-setup.bicep'
-  commentString: 'Test instance up at:'  # String used for comment posted to provide link to review site
+  commentString: 'Test instance up at:'  # String used for PR comment to provide link to review site
 
 pool:
   vmImage: 'ubuntu-latest'
