@@ -59,7 +59,7 @@ jobs:
 
   - task: GitHubComment@0
     inputs:
-      gitHubConnection: 'gctools-outilsgc'
+      gitHubConnection: $(github_connection)
       repositoryName: $(Build.Repository.Name)
       id: $(System.PullRequest.PullRequestNumber)
       comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
