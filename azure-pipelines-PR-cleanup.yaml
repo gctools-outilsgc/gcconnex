@@ -17,11 +17,11 @@ steps:
 - task: AzureCLI@2
   displayName: PR environment cleanup
   inputs:
-    azureSubscription: 'gccollab_review'
+    azureSubscription: $(   )
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      ACR_IMAGES=$(az acr repository list -n collabTestACR | grep collab)
+      ACR_IMAGES=$(az acr repository list -n $ACR_NAME | grep collab)
       OPEN_PRS=$(curl -L   -H "X-GitHub-Api-Version: 2022-11-28"   https://api.github.com/repos/gctools-outilsgc/gcconnex/pulls | grep \"number\")
       echo $ACR_IMAGES
       echo $OPEN_PRS
