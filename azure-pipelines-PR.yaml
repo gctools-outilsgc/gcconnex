@@ -9,7 +9,7 @@ variables:
   imageRepository: 'collab'
   location: 'canadacentral'
   RGtemplateFile: '.bicep/PR/test-instance-setup.bicep'
-  commentString: 'Test instance up at:'  # String used for comment posted to provide link to review site
+  commentString: 'Test instance up at:'  # String used for PR comment to provide link to review site
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -47,7 +47,7 @@ jobs:
       PLAN_ID: $(review_plan_ID)
       LOCATION: $(location)
       TEMPLATE_FILE: $(RGtemplateFile)
-	  ACR_NAME: $(acrName)
+      ACR_NAME: $(acrName)
 
   - bash: |
       TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentString }}")
@@ -59,7 +59,7 @@ jobs:
 
   - task: GitHubComment@0
     inputs:
-      gitHubConnection: 'gctools-outilsgc'
+      gitHubConnection: $(github_connection)
       repositoryName: $(Build.Repository.Name)
       id: $(System.PullRequest.PullRequestNumber)
       comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
