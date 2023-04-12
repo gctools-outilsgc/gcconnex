@@ -63,6 +63,11 @@ if (getenv('WWWROOT') != '')
 else
 	$wwwroot = 'http://localhost:8080/';
 
+if (getenv('E2E_TEST_INIT') != '')
+	$e2e_test_init = getenv('E2E_TEST_INIT') == 'true';
+else
+	$e2e_test_init = false;
+
 // none of the following may be empty
 $params = array(
 	// database parameters
@@ -112,6 +117,13 @@ echo "Elgg CLI install successful. wwwroot: " . elgg_get_config('wwwroot') . "\n
 init_mods( $type );
 
 echo "Elgg CLI plugin install successful. \n";
+
+if ($e2e_test_init){
+	echo "preparing for e2e tests  \n";
+	require_once("docker_install_additions/e2e_test_init.php");
+	e2e_init();
+	echo "e2e setup completed.  \n";
+}
 
 
 function init_mods( $type ){
