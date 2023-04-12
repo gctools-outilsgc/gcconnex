@@ -17,7 +17,7 @@ steps:
 - task: AzureCLI@2
   displayName: PR environment cleanup
   inputs:
-    azureSubscription: $(   )
+    azureSubscription: $(azSubServiceConnection)
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
