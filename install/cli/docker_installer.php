@@ -64,7 +64,7 @@ else
 	$wwwroot = 'http://localhost:8080/';
 
 if (getenv('E2E_TEST_INIT') != '')
-	$e2e_test_init = getenv('E2E_TEST_INIT') == 'true';
+	$e2e_test_init = getenv('E2E_TEST_INIT') == 'true' || getenv('E2E_TEST_INIT') === true;
 else
 	$e2e_test_init = false;
 
