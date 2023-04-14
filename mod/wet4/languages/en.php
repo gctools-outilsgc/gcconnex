@@ -321,7 +321,7 @@ return array(
     'userMenu:profile' => "My Profile",
     'userMenu:account' => "Account Settings",
     'userMenu:messages' => "My Messages",
-    'userMenu:colleagues' => "My Colleagues",
+    'userMenu:colleagues' => "Network",
     'userMenu:usermenuTitle' =>'Click here for links to your profile, account settings and logout',
     'wet:usermenu:helpertext' => "User Menu. Contains Links to Notifications, Profile and Logout",
     /*NEW*/

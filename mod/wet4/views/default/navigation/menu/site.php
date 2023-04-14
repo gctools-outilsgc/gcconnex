@@ -28,7 +28,7 @@ if (!elgg_is_logged_in()) {
 
     echo '</nav>';
 } else{
-	echo '<ul class="list-inline menu col-md-4" role="menubar">';
+	echo '<ul class="list-inline menu col-md-4" role="menubar" align="right">';
 		//echo elgg_view('page/elements/topbar', $vars);
 		echo elgg_view('page/elements/user_menu', $vars);
 	echo '</ul>';

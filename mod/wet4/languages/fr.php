@@ -338,7 +338,7 @@ return array(
 	'userMenu:profile' => "Mon profil",
 	'userMenu:account' => "Paramètres",
 	'userMenu:messages' => "Mes messages",
-	'userMenu:colleagues' => "Mes collègues",
+	'userMenu:colleagues' => "Réseau",
 	'userMenu:usermenuTitle' => 'Cliquez ici pour des liens vers votre profil, les paramètres de compte et la déconnexion',
 	'wet:usermenu:helpertext' => "Menu Utilisateur. Liens vers Notifications, Profil et Déconnexion",
 	'wet:dd:expand'=>"Open drop down of most recent messages(fr)",

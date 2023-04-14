@@ -9966,7 +9966,8 @@ a.shr-opn, a.shr-opn:hover {
         #wb-sm .menu .active a {
           color: #636363;
           background: #EBEBEB !important;
-          text-shadow: none; }
+          text-shadow: none; 
+          text-decoration: underline; }
   #wb-sm .sm.open {
     background: #ccc;
     border-bottom: 5px solid #46246A; }

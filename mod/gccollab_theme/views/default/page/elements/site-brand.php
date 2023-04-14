@@ -40,7 +40,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                         </li> -->
                     </ul>
                 </section>
-            
+
                 <div class="col-sm-3 col-md-2 col-lg-2">
                     <?php echo elgg_view('page/elements/chng-lang', $vars); ?>
                 </div>
@@ -78,9 +78,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                         <h2><?php echo elgg_echo('wet:topicmenu');?></h2>
                         <div class="row">
                             <?php echo elgg_view_menu('site'); ?>
-                            <?php echo elgg_view('page/elements/topbar_wrapper', $vars);?>
                         </div>
-                        
                     </div>
                 </nav>
             </div>
