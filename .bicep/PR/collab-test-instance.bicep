@@ -84,6 +84,10 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
           name: 'WWWROOT'
           value: 'https://${appName}.azurewebsites.net'
         }
+        {
+          name: 'E2E_TEST_INIT'
+          value: 'true'
+        }
       ]
 
       azureStorageAccounts: {
