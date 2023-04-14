@@ -9,6 +9,7 @@
 function init_mods_config(){
     echo "initializing mode config...";
     init_site_menu();
+    elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");
 }
 
 function init_site_menu(){
