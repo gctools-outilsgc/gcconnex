@@ -82,13 +82,8 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
                     // 'class' => 'btn btn-primary invite-btn'
                 // ));
             ?> 
-        </li>
-        <li class="elgg-menu-item-gcmessages">
-            <a href="https://message.gccollab.ca" style="color:#6b5088;" title="GCMessage" tabindex="0">
-                <img style="width:25px; display:inline-block; margin-right:3px;" src="http://gcconnex.local//mod/gccollab_theme/graphics/message_icon_pilot.png" alt="GCMessages">
-            </a>
-        </li>
 
+        </li>
         <li class="elgg-menu-item-search">
             <button type="button" class="btn btn-link" href="/search" title="Search" tabindex="0"> 
                 <span class="glyphicon-search glyphicon" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch" style="color:#36013f"></span>
@@ -107,6 +102,13 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
             //echo elgg_view('input/submit', array('value' => '<span class="glyphicon-search glyphicon"></span> ' . elgg_echo(' '))); 
         ?>
         </li>
+        
+        <li class="elgg-menu-item-gcmessages">
+            <a href="https://message.gccollab.ca" style="color:#6b5088;" title="GCMessage" tabindex="0">
+                <img style="width:25px; display:inline-block; margin-right:3px;" src="/mod/gccollab_theme/graphics/message_icon_pilot.png" alt="GCMessages">
+            </a>
+        </li>
+
         <?php if(elgg_is_admin_logged_in()) {
             // admin
             echo '<li class="elgg-menu-item-admin">
