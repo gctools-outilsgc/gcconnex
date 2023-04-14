@@ -7,13 +7,12 @@
 
 
 function init_mods_config(){
-    echo "initializing mode config...";
     init_site_menu();
     elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");
 }
 
 function init_site_menu(){
-    $featured_names = array(0 => "newsfeed", 1 => "career", 2 => "Colleagues", 4 => "Help");
+    $featured_names = array(0 => "newsfeed", 1 => "career", 2 => "Colleagues", 3 => "groups", 4 => "Help");
     elgg_save_config('site_featured_menu_names', $featured_names);
 }
 
