@@ -8,12 +8,37 @@
 
 function init_mods_config(){
     init_site_menu();
+    init_newsfeed_page_widgets();
     elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");
 }
 
 function init_site_menu(){
     $featured_names = array(0 => "newsfeed", 1 => "career", 2 => "Colleagues", 3 => "groups", 4 => "Help");
     elgg_save_config('site_featured_menu_names', $featured_names);
+}
+
+function init_newsfeed_page_widgets(){
+    // set newsfeed layout to the same one as prod - 2 columns, [Big]-[Medium,Small]
+    elgg_set_plugin_setting("ciw_layout", "index_2rbms", "custom_index_widgets");
+
+    $newsfeed_widget = new ElggWidget();
+    $newsfeed_widget->access_id = 1;
+    $newsfeed_widget->handler = "stream_newsfeed_index";
+    $newsfeed_widget->context = "custom_index_widgets";
+    $newsfeed_widget->audience = "";
+    $newsfeed_widget->column = 1;
+    $newsfeed_widget->order = 0;
+    $newsfeed_widget_guid = $newsfeed_widget->save();
+
+    if (!$newsfeed_widget_guid){
+        echo "error setting up newsfeed widget \n";
+        return false;
+    }
+
+	// elgg refuses to update owner_guid and container_guid any other way here, so went with a direct update query
+	$db_prefix = elgg_get_config('dbprefix');
+	update_data("UPDATE {$db_prefix}entities SET owner_guid = 1, container_guid = 1, enabled = 'yes' where guid = '$newsfeed_widget_guid'");
+
 }
 
 function init_mods( $type ){
