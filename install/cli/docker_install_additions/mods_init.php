@@ -9,10 +9,11 @@
 function init_mods_config(){
     init_site_menu();
     init_newsfeed_page_widgets();
-    elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");
+    elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");  // this effectively changes the contact us link in the footer and site menu
 }
 
 function init_site_menu(){
+    // this is the order that the menu items will appear in, 0 to 5, for 6 items max in total
     $featured_names = array(0 => "newsfeed", 1 => "career", 2 => "Colleagues", 3 => "groups", 4 => "Help");
     elgg_save_config('site_featured_menu_names', $featured_names);
 }
@@ -21,6 +22,7 @@ function init_newsfeed_page_widgets(){
     // set newsfeed layout to the same one as prod - 2 columns, [Big]-[Medium,Small]
     elgg_set_plugin_setting("ciw_layout", "index_2rbms", "custom_index_widgets");
 
+    // create newsfeed widget instance and put it on the home page
     $newsfeed_widget = new ElggWidget();
     $newsfeed_widget->access_id = 1;
     $newsfeed_widget->handler = "stream_newsfeed_index";
@@ -35,9 +37,10 @@ function init_newsfeed_page_widgets(){
         return false;
     }
 
-	// elgg refuses to update owner_guid and container_guid any other way here, so went with a direct update query
-	$db_prefix = elgg_get_config('dbprefix');
-	update_data("UPDATE {$db_prefix}entities SET owner_guid = 1, container_guid = 1, enabled = 'yes' where guid = '$newsfeed_widget_guid'");
+	// elgg refuses to update owner_guid and container_guid any other way in this context, so went with a direct update query
+    $db_prefix = elgg_get_config('dbprefix');
+    $site_guid = elgg_get_site_entity()->guid;
+    update_data("UPDATE {$db_prefix}entities SET owner_guid = {$site_guid}, container_guid = {$site_guid}, enabled = 'yes' where guid = '$newsfeed_widget_guid'");
 
 }
 
