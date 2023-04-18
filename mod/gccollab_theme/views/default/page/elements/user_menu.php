@@ -85,8 +85,8 @@ if ( strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ||
 
         </li>
         <li class="elgg-menu-item-search">
-            <button type="button" class="btn btn-link" href="/search" title="Search" tabindex="0"> 
-                <span class="glyphicon-search glyphicon" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch" style="color:#36013f"></span>
+            <button type="button" class="btn btn-link" href="/search" title="Search" tabindex="0" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"> 
+                <span class="glyphicon-search glyphicon" style="color:#36013f"></span>
             </button> 
         <?php 
 
