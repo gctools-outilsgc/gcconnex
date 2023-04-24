@@ -76,10 +76,10 @@ services:
       - MYSQL_PASSWORD=gcconnex
 
 # this setup doesn't persist the index, you will need to run a re-index when restarting the container from http://gcconnex.local/admin/administer_utilities/solr_index
-  gcconnex-solr:
-    ports:
-      - 8983:8983
-    image: library/solr:6
-    command: solr-precreate dev /dev-config
-    volumes:
-      - ./.solr-config:/dev-config/conf
+#  gcconnex-solr:
+#    ports:
+#      - 8983:8983
+#    image: library/solr:6
+#    command: solr-precreate dev /dev-config
+#    volumes:
+#      - ./.solr-config:/dev-config/conf
