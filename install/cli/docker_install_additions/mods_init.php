@@ -10,12 +10,21 @@ function init_mods_config(){
     init_site_menu();
     init_newsfeed_page_widgets();
     elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");  // this effectively changes the contact us link in the footer and site menu
+
+    init_elgg_solr();
 }
 
 function init_site_menu(){
     // this is the order that the menu items will appear in, 0 to 5, for 6 items max in total
     $featured_names = array(0 => "newsfeed", 1 => "career", 2 => "Colleagues", 3 => "groups", 4 => "Help");
     elgg_save_config('site_featured_menu_names', $featured_names);
+}
+
+function init_elgg_solr(){
+    elgg_set_plugin_setting("host", "gcconnex-solr", "elgg_solr");
+    elgg_set_plugin_setting("port", "8983", "elgg_solr");
+    elgg_set_plugin_setting("solr_path", "/solr/", "elgg_solr");
+    elgg_set_plugin_setting("solr_core", "dev", "elgg_solr");
 }
 
 function init_newsfeed_page_widgets(){
