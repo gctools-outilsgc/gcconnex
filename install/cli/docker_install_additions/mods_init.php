@@ -26,6 +26,8 @@ function init_elgg_solr(){
     elgg_set_plugin_setting("port", "8983", "elgg_solr");
     elgg_set_plugin_setting("solr_path", "/solr/", "elgg_solr");
     elgg_set_plugin_setting("solr_core", "dev", "elgg_solr");
+    elgg_set_plugin_setting("show_score", "yes", "elgg_solr");
+    elgg_set_plugin_setting("use_solr", "yes", "elgg_solr");
 }
 
 function init_file_tools(){
