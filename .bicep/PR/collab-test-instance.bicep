@@ -94,7 +94,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         collabtestdata: {
           type: 'AzureFiles'
           accountName: storagePrefix
-          accessKey: listKeys(storageAccount.id, '2022-05-01').keys[0].value
+          accessKey: storageAccount.listKeys().keys[0].value
           shareName: 'c-test-files'
           mountPath: DATAROOT
         }
