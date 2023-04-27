@@ -11,6 +11,7 @@ function init_mods_config(){
     init_newsfeed_page_widgets();
     elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");  // this effectively changes the contact us link in the footer and site menu
 
+    init_file_tools();
     init_elgg_solr();
 }
 
@@ -25,6 +26,13 @@ function init_elgg_solr(){
     elgg_set_plugin_setting("port", "8983", "elgg_solr");
     elgg_set_plugin_setting("solr_path", "/solr/", "elgg_solr");
     elgg_set_plugin_setting("solr_core", "dev", "elgg_solr");
+}
+
+function init_file_tools(){
+    // this is the list of allowed extentions in prod
+    // the setting is empty by default on install and will prevent any file uploads until it's set to something
+    $allowed_extensions = "txt, jpg, jpeg, png, bmp, gif, pdf, doc, docx, xls, xlsx, ppt, pptx, odt, ods, odp, accdb, mdb, m4a, mp4, grd, map, rar, gdb, dwg, zip, mp3, ppsx, mid, mov, xlsm, ai, xd, svg, indd, vsd, vsdx, mpp, mppx, potx, dotx, .dotx, sas7bdat, dta, oft";
+    elgg_set_plugin_setting("allowed_extensions", $allowed_extensions, "file_tools");
 }
 
 function init_newsfeed_page_widgets(){
