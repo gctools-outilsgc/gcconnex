@@ -34,7 +34,12 @@ if (!elgg_is_logged_in()) {
 	echo '</ul>';
 }
 
+?>
 
+<form action="<?php echo elgg_get_site_url(); ?>search" name="cse-search-box" class="">
+        <div class=''>
+            <label for="wb-srch-q" class="wb-inv"> <?php echo elgg_echo('wet:searchweb'); ?> </label>
+<?php
 echo '<div class="collapse " id="collapseSearch"> <div class="well" aria-label="Search GCcollab">'; 
 	echo elgg_view('input/text', array(
         'id' => 'tagSearch',
@@ -45,3 +50,10 @@ echo '<div class="collapse " id="collapseSearch"> <div class="well" aria-label="
     ));
 	echo '</div>';
 echo '</div>';
+?>
+
+			<input type="hidden" id="a" name="a"  value="s">
+            <input type="hidden" id="s" name="s"  value="3">
+            <input type="hidden" id="chk4" name="chk4"  value="on">
+        </div>
+	</form>
