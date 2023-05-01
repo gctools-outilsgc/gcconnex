@@ -14,7 +14,7 @@ function init_mods_config(){
 
 function init_site_menu(){
     // this is the order that the menu items will appear in, 0 to 5, for 6 items max in total
-    $featured_names = array(0 => "newsfeed", 1 => "career", 2 => "Colleagues", 3 => "groups", 4 => "Help");
+    $featured_names = array(0 => "newsfeed", 1 => "Colleagues", 2 => groups"", 3 => "career", 4 => "Help");
     elgg_save_config('site_featured_menu_names', $featured_names);
 }
 
