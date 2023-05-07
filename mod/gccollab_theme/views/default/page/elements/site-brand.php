@@ -73,7 +73,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                         </a>
                     </div>
                 </section>
-                <nav role="navigation" id="wb-sm"  data-trgt="mb-pnl" class="wb-menu hidden-sm hidden-xs" typeof="SiteNavigationElement">
+                <nav role="navigation" id="wb-sm"  data-trgt="mb-pnl" class="wb-menu hidden-sm hidden-xs col-md-6" typeof="SiteNavigationElement">
                     <div class="container nvbar"> <!-- container for screen reader text and list -->
                         <h2><?php echo elgg_echo('wet:topicmenu');?></h2>
                         <div class="row">
@@ -81,6 +81,15 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                         </div>
                     </div>
                 </nav>
+                <nav role="navigation" class="wb-menu hidden-sm hidden-xs col-md-4" typeof="SiteNavigationElement">
+                    <div class="container nvbar"> <!-- container for screen reader text and list -->
+                        <h2 class="wb-invisible"><?php echo elgg_echo('wet:topicmenu');?></h2>
+                        <ul nav="navigation" class="text-right col-md-4">
+                            <?php echo (elgg_is_logged_in()) ? elgg_view('page/elements/user_menu', $vars) : elgg_view('page/elements/login_menu', $vars); ?>
+                        </ul>
+                    </div>
+                </nav>
+                <?php echo elgg_view('search/search_box', $vars); ?>
             </div>
         </div>
     </div>
