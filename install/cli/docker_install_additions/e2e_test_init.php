@@ -21,6 +21,11 @@ function create_test_user($username, $name, $password){
 	$user->owner_guid = 0;
 	$user->container_guid = 0;
 
+	// user type and organization
+	$user->user_type = 'academic';
+	$user->institution = 'university';
+	$user->university = 'Haibun';
+
 	$user_guid = $user->save();
 	if (!$user_guid) {
 		echo "error creating user $username";
