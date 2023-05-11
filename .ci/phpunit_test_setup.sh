@@ -22,4 +22,4 @@ git clone https://github.com/gctools-outilsgc/gcconnex.git && cd gcconnex
 composer config --no-plugins allow-plugins.composer/installers true
 composer install
 
-cd mod && ../vendor/bin/phpunit
+cd mod && ../vendor/bin/phpunit --log-junit /tmp/results.xml
