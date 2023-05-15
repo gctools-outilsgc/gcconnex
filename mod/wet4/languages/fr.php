@@ -1867,4 +1867,10 @@ return array(
 	"za" => "Zhuang",
 	"zh" => "Chinois",
 	"zu" => "Zoulou",
+
+// Alt text tags
+	'newsfeed:alttext' => 'Accueil',
+	'missions:alttext' => 'Carrière',
+	'contactform:alttext' => 'Contactez-Nous',
+	'groups:alttext' => 'Groupes',
 );

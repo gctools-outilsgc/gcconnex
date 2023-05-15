@@ -23,10 +23,11 @@ function freshdesk_help_init() {
     }
 
     elgg_register_menu_item('site', array(
-  		'name' => 'Help',
-      'href' => $help_link,
-      'text' => elgg_echo('freshdesk:page:title'),
-      'priority' => 1000,
+    'name' => 'Help',
+    'href' => $help_link,
+    'text' => elgg_echo('freshdesk:page:title'),
+    'priority' => 1000,
+    'title' => elgg_echo('contactform:alttext'), 
   	));
 
 }

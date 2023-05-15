@@ -20,6 +20,7 @@ function gccollab_theme_init() {
         'text' => elgg_echo('wet:jobs:link'),
         'href' => elgg_echo('wet:jobs:href'),
         'target' => '_blank',
+        'title' => elgg_echo('missions:alttext'),
     ));
     
     //menu item for Jobs Marketplace
@@ -33,7 +34,8 @@ function gccollab_theme_init() {
     elgg_register_menu_item('site', array(
 		'name' => 'career',
 		'href' => '#career_menu',
-		'text' => elgg_echo('career') . '<span class="expicon glyphicon glyphicon-chevron-down"></span>'
+		'text' => elgg_echo('career') . '<span class="expicon glyphicon glyphicon-chevron-down"></span>',
+        'title' => elgg_echo('missions:alttext'),
     ));
 
     elgg_register_page_handler('about', 'expages_collab_page_handler');        

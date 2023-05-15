@@ -2019,4 +2019,10 @@ Please do not reply to this email.",
 	"za" => "Zuang",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
+
+// Alt text tags
+	'newsfeed:alttext' => 'Home',
+	'missions:alttext' => 'Career',
+	'contactform:alttext' => 'Contact Us',
+	'groups:alttext' => 'Groups',
 );
