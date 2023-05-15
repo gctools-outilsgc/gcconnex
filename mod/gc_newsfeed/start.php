@@ -40,6 +40,7 @@ function newsfeed_init(){
         'name'=>'newsfeed',
         'href'=>elgg_get_site_url().'newsfeed',
         'text'=>elgg_echo("newsfeed:menu"),
+        'title' =>elgg_echo('newsfeed:alttext'),
         ));
 
     //Register newsfeed filter form

@@ -8948,7 +8948,7 @@ aside.features {
 header {
   position: relative; }
   header .brand {
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     padding-bottom: 10px;
     padding-top: 10px; }
     header .brand a {
@@ -9410,7 +9410,7 @@ a.shr-opn, a.shr-opn:hover {
     #wb-sm .menu .selected,
     #wb-sm .menu .wb-navcurr {
       /*background: #047177 !important;*/
-      background: #EBEBEB !important;
+      background: #F5F5F5 !important;
       color: #636363 !important; }
     #wb-sm .menu > li {
       border-left: 1px solid transparent;
@@ -9424,9 +9424,10 @@ a.shr-opn, a.shr-opn:hover {
         #wb-sm .menu > li a:focus,
         #wb-sm .menu .active a {
           color: #636363;
-          background: #EBEBEB !important;
+          background: #F5F5F5 !important;
           text-shadow: none;           
-          text-decoration: underline; }
+          text-decoration: underline; 
+          font-weight: bold; }
   #wb-sm .sm.open {
     background: #ccc;
     border-bottom: 5px solid #137991; }
