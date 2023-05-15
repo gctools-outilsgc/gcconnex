@@ -22,7 +22,7 @@ function groups_init() {
 
 	// Set up the menu
 	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/featured');
-	$item->setTooltip('Groups');
+	$item->setTooltip(elgg_echo('groups:alttext'));
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
