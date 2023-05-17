@@ -15,6 +15,18 @@ pool:
   vmImage: 'ubuntu-latest'
 
 
+
+jobs:
+- job: unittests
+  displayName: run phpunit tests
+  container: phanoix/collab-pipeline:latest
+  steps:
+  - script: |
+      php --version
+      ls -l
+      composer install
+      vendor/bin/phpunit
+
 jobs:
 - job: setup
   displayName: build and set up review site
