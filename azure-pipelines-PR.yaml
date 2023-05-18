@@ -22,7 +22,7 @@ jobs:
   container: phanoix/collab-pipeline:latest
   steps:
   - script: |
-      php --version
+      rm composer.lock
       ls -l
       composer install
       vendor/bin/phpunit
