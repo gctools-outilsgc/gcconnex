@@ -27,7 +27,6 @@ jobs:
       composer install
       vendor/bin/phpunit
 
-jobs:
 - job: setup
   displayName: build and set up review site
   steps:
