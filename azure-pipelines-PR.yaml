@@ -27,8 +27,14 @@ jobs:
       composer install
       ls -l
       ls -l ./vendor/bin/
-      cd mod && ../vendor/bin/phpunit --log-junit /tmp/results.xml
+      cd mod && ../vendor/bin/phpunit --log-junit ../PHPunit_results.xml
 
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/PHPunit_results.xml'
+      testRunTitle: phpunit tests
+	
 - job: setup
   displayName: build and set up review site
   steps:
