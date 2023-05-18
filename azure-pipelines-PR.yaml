@@ -27,7 +27,7 @@ jobs:
       composer install
       ls -l
       ls -l ./vendor/bin/
-      ./vendor/bin/phpunit
+      cd mod && ../vendor/bin/phpunit --log-junit /tmp/results.xml
 
 - job: setup
   displayName: build and set up review site
