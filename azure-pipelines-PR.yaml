@@ -34,7 +34,7 @@ jobs:
       testResultsFormat: 'JUnit'
       testResultsFiles: '**/PHPunit_results.xml'
       testRunTitle: phpunit tests
-	
+
 - job: setup
   displayName: build and set up review site
   steps:
