@@ -1,5 +1,5 @@
-trigger:  # don't trigger outside PRs
-- none
+trigger:
+- '*'
 
 pr:  # Trigger the pipeline only for PRs targeting master branch
 - master
@@ -37,6 +37,7 @@ jobs:
 
 - job: setup
   displayName: build and set up review site
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))  # don't trigger outside PRs
   steps:
   - task: Docker@2
     displayName: Build and Push Container image to ACR
