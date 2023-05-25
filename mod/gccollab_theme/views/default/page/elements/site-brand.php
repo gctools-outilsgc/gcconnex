@@ -81,7 +81,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                         </div>
                     </div>
                 </nav>
-                <nav role="navigation" class="wb-menu hidden-sm hidden-xs col-md-4" typeof="SiteNavigationElement">
+                <nav role="navigation" class="wb-menu hidden-sm hidden-xs col-md-4" typeof="SiteNavigationElement" style="margin-top: 6px;">
                     <div class="nvbar"> <!-- container for screen reader text and list -->
                         <h2 class="wb-invisible"><?php echo elgg_echo('wet:topicmenu');?></h2>
                         <ul nav="navigation" class="text-right col-md-12">
