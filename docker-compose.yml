@@ -46,6 +46,7 @@ services:
       - SOLR_CRAWLER=solr-crawler-thing
 #	  - SOLR_CRAWLER_USER=1
       - E2E_TEST_INIT=true # if true, generates some content and use account for use in running tests, but may be useful for general dev too
+      - DEV_SOLR_HOST=gcconnex-solr
 
   # ###########################################################################
   # The GCConnex cron container.  This container is responsible for executing

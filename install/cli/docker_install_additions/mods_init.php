@@ -6,13 +6,15 @@
  */
 
 
-function init_mods_config(){
+function init_mods_config($solr_host=''){
     init_site_menu();
     init_newsfeed_page_widgets();
     elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");  // this effectively changes the contact us link in the footer and site menu
 
     init_file_tools();
-    init_elgg_solr();
+
+    if ($solr_host != '')
+        init_elgg_solr($solr_host);
 }
 
 function init_site_menu(){
@@ -21,8 +23,10 @@ function init_site_menu(){
     elgg_save_config('site_featured_menu_names', $featured_names);
 }
 
-function init_elgg_solr(){
-    elgg_set_plugin_setting("host", "gcconnex-solr", "elgg_solr");
+function init_elgg_solr($solr_host){
+    if ($solr_host == "")
+        return false;
+    elgg_set_plugin_setting("host", $solr_host, "elgg_solr");
     elgg_set_plugin_setting("port", "8983", "elgg_solr");
     elgg_set_plugin_setting("solr_path", "/solr/", "elgg_solr");
     elgg_set_plugin_setting("solr_core", "dev", "elgg_solr");
