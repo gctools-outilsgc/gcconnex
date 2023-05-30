@@ -6,16 +6,39 @@
  */
 
 
-function init_mods_config(){
+function init_mods_config($solr_host=''){
     init_site_menu();
     init_newsfeed_page_widgets();
     elgg_set_plugin_setting("custom_domain_url", "https://support.gccollab.ca", "freshdesk_help");  // this effectively changes the contact us link in the footer and site menu
+
+    init_file_tools();
+
+    if ($solr_host != '')
+        init_elgg_solr($solr_host);
 }
 
 function init_site_menu(){
     // this is the order that the menu items will appear in, 0 to 5, for 6 items max in total
     $featured_names = array(0 => "newsfeed", 1 => "Colleagues", 2 => "groups", 3 => "career", 4 => "Help");
     elgg_save_config('site_featured_menu_names', $featured_names);
+}
+
+function init_elgg_solr($solr_host){
+    if ($solr_host == "")
+        return false;
+    elgg_set_plugin_setting("host", $solr_host, "elgg_solr");
+    elgg_set_plugin_setting("port", "8983", "elgg_solr");
+    elgg_set_plugin_setting("solr_path", "/solr/", "elgg_solr");
+    elgg_set_plugin_setting("solr_core", "dev", "elgg_solr");
+    elgg_set_plugin_setting("show_score", "yes", "elgg_solr");
+    elgg_set_plugin_setting("use_solr", "yes", "elgg_solr");
+}
+
+function init_file_tools(){
+    // this is the list of allowed extentions in prod
+    // the setting is empty by default on install and will prevent any file uploads until it's set to something
+    $allowed_extensions = "txt, jpg, jpeg, png, bmp, gif, pdf, doc, docx, xls, xlsx, ppt, pptx, odt, ods, odp, accdb, mdb, m4a, mp4, grd, map, rar, gdb, dwg, zip, mp3, ppsx, mid, mov, xlsm, ai, xd, svg, indd, vsd, vsdx, mpp, mppx, potx, dotx, .dotx, sas7bdat, dta, oft";
+    elgg_set_plugin_setting("allowed_extensions", $allowed_extensions, "file_tools");
 }
 
 function init_newsfeed_page_widgets(){

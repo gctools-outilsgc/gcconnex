@@ -117,8 +117,10 @@ echo "Elgg CLI install successful. wwwroot: " . elgg_get_config('wwwroot') . "\n
 
 // arrange and activate mods
 init_mods( $type );
+
 // some mods require some configuration to work as expected, do that now
-init_mods_config();
+$solr_host = (getenv('DEV_SOLR_HOST') ? getenv('DEV_SOLR_HOST') : '');
+init_mods_config($solr_host);
 
 echo "Elgg CLI plugin install successful. \n";
 
