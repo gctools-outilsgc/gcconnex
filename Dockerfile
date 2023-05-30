@@ -47,6 +47,7 @@ RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update && apt-get install -y --no-install-recommends \
             apache2 \
             curl \
+            memcached \
             libapache2-mod-php5.6 \
             php5.6 \
             php5.6-gd \
