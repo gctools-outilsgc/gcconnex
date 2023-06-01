@@ -7,6 +7,8 @@ then
 	php /var/www/html/install/cli/docker_installer.php
 fi
 
-# Start server - depending on the image, one of these will work
+echo "starting memcached service"
+service memcached start
+
 echo "Starting server"
 $@
