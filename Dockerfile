@@ -96,4 +96,4 @@ RUN chmod +x docker/start.sh
 # Start Apache in foreground mode
 RUN rm -f /run/apache2/httpd.pid
 ENTRYPOINT [ "docker/start.sh" ]
-CMD  ["apache2ctl -D FOREGROUND"]
+CMD  ["./docker/wrapper_script.sh"]
