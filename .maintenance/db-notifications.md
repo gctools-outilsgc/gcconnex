@@ -16,9 +16,9 @@ Performance - old notifications will eventually become by far the largest chunks
 `create table elggobjects_entity_tmp like elggobjects_entity;`
 
 ## copy over the entities that will be kept
-### anything that's not an internal message (subtype 4 in gcconnex denotes messages)
+### anything that's not an internal message (subtype 4 in gcconnex denotes messages, it's different in gccollab an likely for most other elgg installs)
 `insert into elggentities_tmp select * from elggentities where subtype <> 4;`
-### messages that are not notifications 
+### messages that are not notifications - those from users (1287 is the metastring ID for 'fromID' in gcconnex, it will be different for other elgg installs)
 `insert into elggentities_tmp select * from elggentities where subtype = 4 and guid in (select entity_guid from elggmetadata where name_id = 1287 and value_id in ( select id from elggmetastrings where string in (select guid from elggusers_entity) ) and entity_guid IN (select guid from elggentities where subtype = 4) );`
 ### recent notifications (more recent than provided timestamp)
 `insert into elggentities_tmp select * from elggentities where subtype = 4 and time_created > 1626791818 and guid not in (select guid from elggentities_tmp);`
