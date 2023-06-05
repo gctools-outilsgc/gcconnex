@@ -80,7 +80,6 @@ RUN { \
   } > /etc/php/5.6/apache2/conf.d/opcache-recommended.ini
 
 COPY ./docker/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
 COPY . /var/www/html
 COPY --from=0 /app/pleio/vendor/ /var/www/html/mod/pleio/vendor/

@@ -1,7 +1,6 @@
 # ignore Elgg configuration
 /engine/settings.php
 /engine/settings-*.php
-/.htaccess
 /cometchat/*
 /composer.phar
 /cache
