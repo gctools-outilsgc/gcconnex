@@ -138,4 +138,3 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?__elgg_uri=$1 [QSA,L]
 
 </IfModule>
-
