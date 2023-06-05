@@ -139,6 +139,3 @@ RewriteRule ^(.*)$ index.php?__elgg_uri=$1 [QSA,L]
 
 </IfModule>
 
-
-EnableSendfile On
-EnableMMAP Off
