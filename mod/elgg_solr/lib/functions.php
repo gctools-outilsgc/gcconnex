@@ -514,10 +514,6 @@ function elgg_solr_get_default_fq($params) {
 		$fq['access'] = $access_query;
 	}
 
-	if (!access_get_show_hidden_status()) {
-		$fq['enabled'] = 'enabled:"yes"';
-	}
-
 	return $fq;
 }
 
