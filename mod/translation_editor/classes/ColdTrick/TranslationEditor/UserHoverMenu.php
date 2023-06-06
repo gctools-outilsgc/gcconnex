@@ -21,7 +21,7 @@ class UserHoverMenu {
 	 * @return \ElggMenuItem[]
 	 */
 	public static function register($hook, $type, $return, $params) {
-		
+		return $return; //remove this if you want Make/Remove Translator in hover menu
 		if (empty($params) || !is_array($params)) {
 			// invalid input
 			return $return;
