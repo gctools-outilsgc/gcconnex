@@ -80,6 +80,7 @@ COPY ./docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
 COPY . /var/www/html
 COPY --from=0 /app/pleio/vendor/ /var/www/html/mod/pleio/vendor/
+COPY ./docker/settings.env.php /var/www/html/engine/settings.php
 RUN chown www-data:www-data /var/www/html
 
 WORKDIR /var/www/html

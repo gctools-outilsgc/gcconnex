@@ -41,6 +41,10 @@ services:
       - INIT=gccollab  # gcconnex or gccollab: initial install to replicate one of those. 0 (or anything else really): no initial install
       - HOME=/var/www/html
       - DBHOST=gcconnex-db
+      - DBUSER=elgg
+      - DBPASS=gcconnex
+      - DBNAME=elgg
+      - DBPREFIX=d_elgg_
       - DATAROOT=/data/
       - WWWROOT=http://gcconnex.local/
       - SOLR_CRAWLER=solr-crawler-thing

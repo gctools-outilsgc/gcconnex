@@ -24,7 +24,7 @@ $defaults = [
 	"MEMCACHE_HOST" => "127.0.0.1",
 	"SESSION_NAME" => "Elgg",
 	"REMEMBERME_NAME" => "elggperm"
-]
+];
 
 global $CONFIG;
 if (!isset($CONFIG)) {
