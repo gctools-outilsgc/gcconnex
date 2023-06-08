@@ -28,9 +28,6 @@ RUN composer install
 WORKDIR /app/pleio
 RUN composer install
 
-WORKDIR /app/paas_integration
-RUN composer install
-
 
 
 # Second stage, build usable container
@@ -83,7 +80,6 @@ COPY ./docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
 COPY . /var/www/html
 COPY --from=0 /app/pleio/vendor/ /var/www/html/mod/pleio/vendor/
-COPY --from=0 /app/paas_integration/vendor/ /var/www/html/mod/paas_integration/vendor/
 RUN chown www-data:www-data /var/www/html
 
 WORKDIR /var/www/html
