@@ -15,13 +15,15 @@ Performance - old notifications will eventually become by far the largest chunks
 
 `create table elggobjects_entity_tmp like elggobjects_entity;`
 
+
 ## copy over the entities that will be kept
-### anything that's not an internal message (subtype 4 in gcconnex denotes messages)
+### anything that's not an internal message (subtype 4 in gcconnex denotes messages, it's different in gccollab an likely for most other elgg installs)
 `insert into elggentities_tmp select * from elggentities where subtype <> 4;`
-### messages that are not notifications 
+### messages that are not notifications - those from users (1287 is the metastring ID for 'fromID' in gcconnex, it will be different for other elgg installs)
 `insert into elggentities_tmp select * from elggentities where subtype = 4 and guid in (select entity_guid from elggmetadata where name_id = 1287 and value_id in ( select id from elggmetastrings where string in (select guid from elggusers_entity) ) and entity_guid IN (select guid from elggentities where subtype = 4) );`
-### recent notifications (more recent than provided timestamp)
+### recent notifications (more recent than provided unix timestamp, replace 1626791818 with the actual cut-off time)
 `insert into elggentities_tmp select * from elggentities where subtype = 4 and time_created > 1626791818 and guid not in (select guid from elggentities_tmp);`
+
 
 ## copy over the metadata of the entities to be kept
 `insert into elggmetadata_tmp select * from elggmetadata where entity_guid in (select guid from elggentities_tmp);`
@@ -29,12 +31,14 @@ Performance - old notifications will eventually become by far the largest chunks
 ## copy over the objects entries of the entities be kept
 `insert into elggobjects_entity_tmp select * from elggobjects_entity where guid in (select guid from elggentities_tmp);`
 
+
 ## swap in the new tables for the old ones
 `RENAME TABLE elggentities TO elggentities_old, elggentities_tmp TO elggentities;`
 
 `RENAME TABLE elggmetadata TO elggmetadata_old, elggmetadata_tmp TO elggmetadata;`
 
 `RENAME TABLE elggobjects_entity TO elggobjects_entity_old, elggobjects_entity_tmp TO elggobjects_entity;`
+
 
 ## with this you can verify that everything still works and nothing unexpected was lost with an easy roll-back and backup available
 
