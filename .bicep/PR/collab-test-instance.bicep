@@ -86,7 +86,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'MEMCACHE_HOST'
-          value: '127.0.0.1'
+          value: 'localhost'
         }
         {
           name: 'E2E_TEST_INIT'
