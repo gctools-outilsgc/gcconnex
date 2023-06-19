@@ -85,6 +85,10 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
           value: 'https://${appName}.azurewebsites.net'
         }
         {
+          name: 'MEMCACHE_HOST'
+          value: '127.0.0.1'
+        }
+        {
           name: 'E2E_TEST_INIT'
           value: 'true'
         }
