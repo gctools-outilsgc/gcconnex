@@ -255,7 +255,7 @@ function mm_validate_time($day, $input_array)
  		$err .= elgg_echo('missions:error:opportunity_type_needs_input') . "\n";
  	}
 
- 	$date_type_array = array('start_date', 'completion_date', 'deadline');
+ 	$date_type_array = array('start_date', 'completion_date'); //Adi - 'deadline' is removed since the requirement to check for the Application Deadline on page 2 
  	foreach($date_type_array as $date_type) {
  		if (trim($input_array[$date_type]) == '' && $date_type != 'completion_date') {
  			$err .= elgg_echo('missions:error:' . $date_type . '_needs_input') . "\n";
@@ -280,18 +280,19 @@ function mm_validate_time($day, $input_array)
  	// Checks to see if the completion date comes before the end date.
  	$date_start = strtotime($input_array['start_date']);
  	$date_end = strtotime($input_array['completion_date']);
- 	$date_dead = strtotime($input_array['deadline']);
+ 	//$date_dead = strtotime($input_array['deadline']); Adi - The requirement to check for the Application Deadline on page 2 
 
  	if(trim($date_end) != '') {
 	 	if ($date_end < $date_start) {
 	 		$err .= elgg_echo('missions:error:start_after_end') . "\n";
 	 	}
 
-	 	if ($date_end < $date_dead) {
-	 		$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
-	 	}
+	 	//if ($date_end < $date_dead) {
+	 	//	$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
+	 	//} 
+		// Adi - The requirement to check for the Application Deadline on page 2 
  	}
- 	//Nick - Increasing limit from 2k to 5k as per JIRA 239
+ 	// Nick - Increasing limit from 2k to 5k as per JIRA 239
  	$description_limit = 12000;
  	if(strlen($input_array['description']) > $description_limit) {
  		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:opportunity_description'), $description_limit)) . "\n";
