@@ -280,17 +280,16 @@ function mm_validate_time($day, $input_array)
  	// Checks to see if the completion date comes before the end date.
  	$date_start = strtotime($input_array['start_date']);
  	$date_end = strtotime($input_array['completion_date']);
- 	//$date_dead = strtotime($input_array['deadline']); Adi - The requirement to check for the Application Deadline on page 2 
+ 	$date_dead = strtotime($input_array['deadline']); 
 
  	if(trim($date_end) != '') {
 	 	if ($date_end < $date_start) {
 	 		$err .= elgg_echo('missions:error:start_after_end') . "\n";
 	 	}
 
-	 	//if ($date_end < $date_dead) {
-	 	//	$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
-	 	//} 
-		// Adi - The requirement to check for the Application Deadline on page 2 
+	 	if ($date_end < $date_dead) {
+	 		$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
+	 	} 
  	}
  	// Nick - Increasing limit from 2k to 5k as per JIRA 239
  	$description_limit = 12000;
