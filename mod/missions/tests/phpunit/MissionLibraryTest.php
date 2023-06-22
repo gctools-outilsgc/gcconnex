@@ -268,13 +268,14 @@ class MissionLibraryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($expected_output, mm_second_post_error_check($test_input));
 	}
 	
-	if (!function_exists("elgg_echo")) {
-		function elgg_echo($string) {
-			return $string;
-		}
-	}
-	
 }
+
+if (!function_exists("elgg_echo")) {
+	function elgg_echo($string) {
+		return $string;
+	}
+}
+
 
 
 
