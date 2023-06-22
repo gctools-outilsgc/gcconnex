@@ -255,13 +255,13 @@ class MissionLibraryTest extends \PHPUnit_Framework_TestCase {
 
 	public function test_mm_second_post_error_check_deadline_not_required() {
 		$test_input = [
-			'job_title' => '',
-			'role_type' => '',
-			'job_type' => '',
-			'start_date' => '',
-			'completion_date' => '',
+			'job_title' => 'developer',
+			'role_type' => 'dev',
+			'job_type' => 'dev',
+			'start_date' => '2023-06-21',
+			'completion_date' => '2023-06-22',
 			'deadline' => '',
-			'description' => ''
+			'description' => 'NA'
 		];
 	
 		$expected_output = "";
