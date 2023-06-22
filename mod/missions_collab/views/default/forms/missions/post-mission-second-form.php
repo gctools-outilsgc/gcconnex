@@ -191,8 +191,11 @@ $input_gl_group = elgg_view('input/dropdown', array(
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-type-dropdown-input' class="col-sm-3 text-right">
+	<label for='post-mission-type-dropdown-input' class="col-sm-3 required text-right" aria-required="true">
 		<?php echo elgg_echo('missions:opportunity_type') . ':'; ?>
+		<strong class="required" aria-required="true"> 
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong> 
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_type; ?>
