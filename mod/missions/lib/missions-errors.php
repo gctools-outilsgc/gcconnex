@@ -255,9 +255,9 @@ function mm_validate_time($day, $input_array)
  		$err .= elgg_echo('missions:error:opportunity_type_needs_input') . "\n";
  	}
 
- 	$date_type_array = array('start_date', 'completion_date'); //Adi - 'deadline' is removed since the requirement to check for the Application Deadline on page 2 
+ 	$date_type_array = array('start_date', 'completion_date', 'deadline'); 
  	foreach($date_type_array as $date_type) {
- 		if (trim($input_array[$date_type]) == '' && $date_type != 'completion_date') {
+ 		if (trim($input_array[$date_type]) == '' && $date_type != 'completion_date' && $date_type != 'deadline') {
  			$err .= elgg_echo('missions:error:' . $date_type . '_needs_input') . "\n";
  		}
  		else {
