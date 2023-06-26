@@ -421,11 +421,8 @@ $button_set = mm_create_button_set_full($mission);
 			<div class="fa fa-calendar fa-lg"></div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3 required" for="edit-mission-deadline-date-input" style="text-align:right;" aria-required="true">
+			<label class="col-sm-3" for="edit-mission-deadline-date-input" style="text-align:right;" aria-required="false">
 				<?php echo elgg_echo('missions:deadline');?>
-			<strong class="required" aria-required="true">
-				<?php echo elgg_echo('missions:required'); ?>
-			</strong>
 			:
 			</label>
 			<div class="col-sm-3">

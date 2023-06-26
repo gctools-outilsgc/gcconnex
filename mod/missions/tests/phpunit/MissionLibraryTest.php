@@ -252,6 +252,30 @@ class MissionLibraryTest extends \PHPUnit_Framework_TestCase {
 		);
 		$this->assertFalse(mm_first_post_error_check($input_array));
 	}*/
+
+	public function test_mm_second_post_error_check_deadline_not_required() {
+		$test_input = [
+			'job_title' => 'developer',
+			'role_type' => 'dev',
+			'job_type' => 'dev',
+			'start_date' => '2023-06-21',
+			'completion_date' => '2023-06-22',
+			'deadline' => '',
+			'description' => 'NA'
+		];
+	
+		$expected_output = "";
+		$this->assertSame($expected_output, mm_second_post_error_check($test_input));
+	}
+	
 }
+
+if (!function_exists("elgg_echo")) {
+	function elgg_echo($string) {
+		return $string;
+	}
+}
+
+
 
 

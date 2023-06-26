@@ -135,7 +135,7 @@ $input_deadline = elgg_view('input/date', array(
 	    'value' => $deadline,
 	    'id' => 'post-mission-deadline-date-input',
 		'placeholder' => 'yyyy-mm-dd',
-		'required' => true
+		'required' => false
 ));
 
 $input_description = elgg_view('input/longtext', array(
@@ -290,9 +290,9 @@ $input_gl_group = elgg_view('input/dropdown', array(
 	<div class="fa fa-calendar fa-lg"></div>
 </div>
 <div class="form-group">
-	<label for='post-mission-deadline-date-input' class="col-sm-3 required text-right">
+	<label for='post-mission-deadline-date-input' class="col-sm-3 text-right">
 		<?php echo elgg_echo('missions:deadline');?>
-		<strong class="required">
+		<strong>
 			<?php echo elgg_echo('missions:required'); ?>
 		</strong>
 		:
