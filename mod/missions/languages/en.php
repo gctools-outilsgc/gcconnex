@@ -83,7 +83,7 @@ return array(
     "missions:error:end_date_needs_input" =>    "Please enter an ideal completion date.",
     "missions:error:deadline_needs_input" =>    "Please enter an application deadline.",
     "missions:error:start_after_end" => "Your start date is after your end date.",
-    "missions:error:deadline_after_end" =>"Your end date is after your deadline.", 
+    "missions:error:deadline_after_end" =>"Your end date is before your deadline.", 
     "missions:error:location_needs_input" =>    "Please enter a location for this opportunity.",
     "missions:error:time_commitment_needs_input" => "Please enter a time commitment for this opportunity.",
     "missions:find_opportunity" =>  "Find Opportunity",
