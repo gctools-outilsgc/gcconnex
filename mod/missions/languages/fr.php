@@ -83,7 +83,7 @@ return array(
     "missions:error:end_date_needs_input" =>	"Veuillez entrer une date d'achèvement idéale.",
     "missions:error:deadline_needs_input" =>	"Veuillez entrer une date limite d'inscription.",
     "missions:error:start_after_end" =>	"Votre date de début est après votre date de fin.",
-    "missions:error:deadline_after_end" =>	"Votre date de début est après votre date limite.",
+    "missions:error:deadline_after_end" =>	"Votre date de fin est avant votre date limite.", 
     "missions:error:location_needs_input" =>	"Veuillez entrer un emplacement pour cette possibilité.",
 	"missions:error:time_commitment_needs_input" =>	"Veuillez entrer une période d'engagement pour cette possibilité.",
     "missions:find_opportunity" =>"Trouver une possibilité",
