@@ -41,7 +41,6 @@ return array(
     "missions:opportunity_role:seeking" => "Offrire mes services pour une possibilité (recherche)",
     "missions:offering" => "Offre",
     "missions:seeking" => "Recherche",
-    //"missons:time_role" => "Hours per week",
     "missions:time_role:fulltime" => "Temps plein (37,5 heures par semaine)",
     "missions:time_role:parttime" => "Temps partiel (moins de 37,5 heures par semaine)",
     "missions:fulltime" => "Temps plein",

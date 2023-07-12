@@ -41,7 +41,6 @@ return array(
     "missions:opportunity_role:seeking" => "Offer myself for an opportunity (seeking)",
     "missions:offering" => "Offering",
     "missions:seeking" => "Seeking",
-    //"missions:time_role" => "Hours per week",
     "missions:time_role:fulltime" => "Full time (37.5 hours per week)",
     "missions:time_role:parttime" => "Part time (less than 37.5 hours per week)",
     "missions:fulltime" => "Full time",
