@@ -83,11 +83,18 @@ $input_timezone = elgg_view('input/dropdown', array(
 	    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('timezone_string', 'missions')),
 	    'id' => 'post-mission-timezone-dropdown-input'
 ));
-$input_time_commit = elgg_view('input/text', array(
+$input_time_commit_full = elgg_view('input/text', array(
 		'name' => 'time_commitment',
-		'value' => $time_commitment,
-		'id' => 'post-mission-time-commitment-text-input',
-		'style' => 'display:inline-block;max-width:75px;'
+		'value' => '37.5',
+		'id' => 'post-mission-time-commitment-text-input_full',
+		'style' => 'display:inline-block;max-width:75px;',
+		'disabled' => 'disabled'
+	));
+$input_time_commit_part = elgg_view('input/text', array(
+	'name' => 'time_commitment',
+	'value' => $input_time_commit_part,
+	'id' => 'post-mission-time-commitment-text-input_part',
+	'style' => 'display:inline-block;max-width:75px;'
 ));
 $input_time_interval = elgg_view('input/dropdown', array(
 		'name' => 'time_interval',
@@ -178,8 +185,11 @@ if($skill_match_override) {
 	<div class="col-sm-4">
 		<?php echo $input_role; ?>
 	</div>
-	<div class="col-sm-1" id="post-mission-time-commitment-text-input" style="display: none;">
-		<?php echo $input_time_commit; ?>
+	<div class="col-sm-1" id="post-mission-time-commitment-text-input_full" style="display: none;">
+		<?php echo $input_time_commit_full; ?>
+	</div>
+	<div class="col-sm-1" id="post-mission-time-commitment-text-input_part" style="display: none;">
+		<?php echo $input_time_commit_part; ?>
 	</div>
 	<div class="col-sm-2" id="post-mission-time-interval-input" style="display: none;">
 		<?php echo $input_time_interval; ?>
@@ -188,15 +198,18 @@ if($skill_match_override) {
 
 <script>
 	function toggleTimeInputs(element) {
-    var timeCommitInput = document.getElementById('post-mission-time-commitment-text-input');
+    var timeCommitInputFull = document.getElementById('post-mission-time-commitment-text-input_full');
+	var timeCommitInputPart = document.getElementById('post-mission-time-commitment-text-input_part');
     var timeIntervalInput = document.getElementById('post-mission-time-interval-input');
 
-    if (element.value === 'missions:parttime') {
-        timeCommitInput.style.display = 'block';
+    if (element.value === 'missions:fulltime') {
+        timeCommitInputFull.style.display = 'block';
+		timeCommitInputPart.style.display = 'none';
         timeIntervalInput.style.display = 'block';
-    } else {
-        timeCommitInput.style.display = 'none';
-        timeIntervalInput.style.display = 'none';
+    } else if (element.value === 'missions:parttime') {
+        timeCommitInputPart.style.display = 'block';
+		timeCommitInputFull.style.display = 'none';
+        timeIntervalInput.style.display = 'block';
     }
 }
 </script>
