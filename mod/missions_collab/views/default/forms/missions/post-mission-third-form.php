@@ -96,6 +96,18 @@ $input_time_interval = elgg_view('input/dropdown', array(
 		'id' => 'post-mission-time-interval-dropdown-input',
 		'style' => 'display:inline-block;margin-left:4px;'
 ));
+$input_role = elgg_view('input/radio', array(
+	'name' => 'role_type',
+	'id' => 'post-mission-role-radio-input',
+	'value' => $role_type,
+	'options' => array(
+		'<span style="font-weight:normal;"> '.elgg_echo('missions:time_role:fulltime').'</span>' => 'missions:fulltime',
+		'<span style="font-weight:normal;"> '.elgg_echo('missions:time_role:parttime').'</span>' => 'missions:parttime'
+		),
+		'onclick' => 'toggleTimeInputs(this)',
+	 )
+);
+
 
 $languages = elgg_view('page/elements/language-dropdown', $vars);
 $language_field = elgg_view('page/elements/hidden-field', array(
@@ -163,13 +175,36 @@ if($skill_match_override) {
 		</strong>
 		:
 	</label>
-	<div class="col-sm-1">
+	<div class="col-sm-4">
+ 		<?php echo $input_role; ?>
+ 	</div>
+ 	<div class="col-sm-1" id="post-mission-time-commitment-text-input-block" style="display: none;">
 		<?php echo $input_time_commit; ?>
 	</div>
-	<div class="col-sm-2">
+	<div class="col-sm-2" id="post-mission-time-interval-input-block" style="display: none;">
 		<?php echo $input_time_interval; ?>
 	</div>
 </div>
+
+<script>
+ 	function toggleTimeInputs(element) {
+     var timeCommitInput = document.getElementById('post-mission-time-commitment-text-input');
+     var timeIntervalInput = document.getElementById('post-mission-time-interval-dropdown-input');
+	 var timeCommitInputBlock = document.getElementById('post-mission-time-commitment-text-input-block');
+	 var timeIntervalInputBlock = document.getElementById('post-mission-time-interval-input-block');
+
+     if (element.value === 'missions:parttime') {
+         timeCommitInputBlock.style.display = 'block';
+         timeIntervalInputBlock.style.display = 'block';		 
+     } else {
+         timeCommitInputBlock.style.display = 'none';
+         timeIntervalInputBlock.style.display = 'none';
+		 timeCommitInput.value = '37.5';
+		 timeIntervalInput.value ='missions:per_week';
+     }
+ }
+ </script>
+
 <div class="form-group">
 	<?php echo $time_field; ?>
 </div>
