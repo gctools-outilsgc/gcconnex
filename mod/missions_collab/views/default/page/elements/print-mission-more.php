@@ -37,6 +37,7 @@ $clean_timezone = elgg_echo('missions:none_given');
 $clean_remotely = elgg_echo('missions:no');
 $clean_openess = elgg_echo('missions:no');
 $clean_completion_date = elgg_echo('missions:unknown');
+$clean_currently = elgg_echo('missions:no');
 if(!empty($mission->phone)) {
     $clean_phone = $mission->phone;
 }
@@ -51,6 +52,9 @@ if(!empty($mission->timezone)) {
 }
 if(!empty($mission->remotely)) {
 	$clean_remotely = elgg_echo('missions:yes');
+}
+if(!empty($mission->currently)) {
+    $clean_currently = elgg_echo('missions:yes');
 }
 if(!empty($mission->openess)) {
 	$clean_openess = elgg_echo('missions:yes');
@@ -226,6 +230,10 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 		<div class="clearfix">
                 <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:work_remotely') . ':';?></h4>
 			<span name="mission-remotely"><?php echo $clean_remotely;?></span>
+		</div>
+        <div class="clearfix">
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:work_currently') . ':';?></h4>
+			<span name="mission-currently"><?php echo $clean_currently;?></span>
 		</div>
     <?php if( $mission->job_type !== "missions:mentoring" ): ?>
 		<div class="clearfix">

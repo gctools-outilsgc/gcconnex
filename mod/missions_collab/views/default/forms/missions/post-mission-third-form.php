@@ -16,6 +16,7 @@ $security = get_input('ts');
 $time_commitment = get_input('ttc');
 $time_interval = get_input('tti');
 $key_skills = get_input('tks');
+$currently = get_input('tlc');
 
 $secondfill = elgg_get_sticky_values('secondfill');
 
@@ -40,6 +41,14 @@ else {
 	$remotely = false;
 }
 
+//Determines whether the job is available to current employees or not. 
+if($currently == 'on') {
+	$currently = true;
+}
+else {
+	$currently = false;
+}
+
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
 if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_third']) {
 	$key_skills = $duplicating_entity->key_skills;
@@ -49,6 +58,7 @@ if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION[
 	$security = $duplicating_entity->security;
 	$location = $duplicating_entity->location;
 	$timezone = $duplicating_entity->timezone;
+	$currently = $duplicating_entity->currently;
 	
 	$unpacked = mm_unpack_mission($duplicating_entity);
 	$vars['mission_metadata'] = $unpacked;
@@ -64,6 +74,11 @@ $input_remotely = elgg_view('input/checkbox', array(
 	    'name' => 'remotely',
 	    'checked' => $remotely,
 	    'id' => 'post-mission-remotely-checkbox-input'
+));
+$input_currently = elgg_view('input/checkbox', array(
+		'name' => 'currently',
+		'checked' => $currently,
+		'id' => 'post-mission-currently-checkbox-input'
 ));
 $input_location = elgg_view('input/dropdown', array(
 	    'name' => 'location',
@@ -216,6 +231,7 @@ if($skill_match_override) {
 		<?php echo $input_remotely; ?>
 	</div>
 </div>
+
 <div class="form-group">
 	<label for='post-mission-location-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
 		<?php echo elgg_echo('missions:location');?>
@@ -228,6 +244,15 @@ if($skill_match_override) {
 		<?php echo $input_location; ?>
 	</div>
 </div>
+
+<div class="form-group">
+	<label for='post-mission-currently-checkbox-input' class="col-sm-3" style="text=align:right;">
+		<?php echo elgg_echo('missions:work_currently') . ':';?>
+	</label> 
+	<div class="col-sm-3">
+		<?php echo $input_currently; ?>
+	</div>
+</div>  
 
 <?php if( $secondfill['job_type'] !== "missions:mentoring" ): ?>
 <div class="form-group">

@@ -63,6 +63,7 @@ return array(
     "missions:flexible" =>  "Flexible",
     "missions:specific" =>  "Specific",
     "missions:work_remotely" => "The opportunity can be completed virtually",
+    "missions:work_currently" => "The opportunity is only available to current Government of Canada employees", 
     "missions:opportunity_location" =>  "Location of opportunity",
     "missions:security_level" =>    "Security level",
     "missions:language_requirements" => "Language requirements",

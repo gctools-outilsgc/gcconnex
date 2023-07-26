@@ -84,6 +84,7 @@ if ($err != '') {
     $mission->timezone = $edit_form['timezone'];
     $mission->time_commitment = $edit_form['time_commitment'];
     $mission->time_interval = $edit_form['time_interval'];
+	$mission->currently = $edit_form['currently'];
 
     // Stores the multiple skill fields in a comma separated string.
     $count = 0;
