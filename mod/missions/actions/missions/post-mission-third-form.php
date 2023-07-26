@@ -111,6 +111,7 @@ if ($err != '') {
 		}
 
     $mission->remotely = $third_form['remotely'];
+    $mission->currently = $third_form['currently'];
     //$mission->flexibility = $third_form['flexibility'];
     $mission->security = $third_form['security'];
     $mission->location = $third_form['location'];
