@@ -30,6 +30,10 @@ $remotely = false;
 if($mission->remotely == 'on') {
 	$remotely = true;
 }
+$currently = false;
+if($mission->currently == 'on') {
+	$currently = true;
+}
 $openess = false;
 if($mission->openess == 'on') {
 	$openess = true;
@@ -183,6 +187,12 @@ $input_remotely = elgg_view('input/checkbox', array(
 		'name' => 'remotely',
 		'checked' => $remotely,
 		'id' => 'edit-mission-remotely-checkbox-input'
+));
+
+$input_currently = elgg_view('input/checkbox', array(
+	'name' => 'currently',
+	'checked' => $currently,
+	'id' => 'edit-mission-currently-checkbox-input'
 ));
 
 $input_location = elgg_view('input/dropdown', array(
@@ -438,6 +448,14 @@ $button_set = mm_create_button_set_full($mission);
 				<?php echo $input_remotely;?>
 			</div>
 		</div>
+		<div class="form-group">
+			<label for='edit-mission-currently-checkbox-input' class="col-sm-3" style="text=align:right;">
+				<?php echo elgg_echo('missions:work_currently') . ':';?>
+			</label> 
+			<div class="col-sm-3">
+				<?php echo $input_currently; ?>
+			</div>
+		</div>  
 
 	<?php /* MW - Changed for GCcollab version of Opp Platform
 		<div class="form-group">

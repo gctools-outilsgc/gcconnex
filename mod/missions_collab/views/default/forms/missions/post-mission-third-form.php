@@ -75,7 +75,7 @@ $input_remotely = elgg_view('input/checkbox', array(
 	    'checked' => $remotely,
 	    'id' => 'post-mission-remotely-checkbox-input'
 ));
-$input_current_employees = elgg_view('input/checkbox', array(
+$input_currently = elgg_view('input/checkbox', array(
 		'name' => 'currently',
 		'checked' => $currently,
 		'id' => 'post-mission-currently-checkbox-input'
@@ -215,7 +215,7 @@ if($skill_match_override) {
 		<?php echo elgg_echo('missions:work_currently') . ':';?>
 	</label> 
 	<div class="col-sm-3">
-		<?php echo $input_current_employees; ?>
+		<?php echo $input_currently; ?>
 	</div>
 </div>  
 
