@@ -196,8 +196,12 @@ if($skill_match_override) {
 
 <?php if( $secondfill['job_type'] !== "missions:mentoring" ): ?>
 <div class="form-group">
-	<label for='post-mission-security-dropdown-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:security_level') . ':';?>
+	<label for='post-mission-security-dropdown-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:security_level');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?> 
+		</strong>
+		:
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_security; ?>
