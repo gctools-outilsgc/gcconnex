@@ -312,6 +312,11 @@ function mm_validate_time($day, $input_array)
  		$err .= elgg_echo('missions:error:location_needs_input') . "\n";
  	}
 
+	// Checks to see if security is empty. 
+	if (empty($input_array['security'])) {
+		$err .= elgg_echo('missions:error:security_needs_input') . "\n";
+	}
+
  	// Checks to see if time commitment is empty.
  	if (trim($input_array['time_commitment']) == '') {
  		$err .= elgg_echo('missions:error:time_commitment_needs_input') . "\n";

@@ -483,8 +483,11 @@ $button_set = mm_create_button_set_full($mission);
 		
 	<?php if( $mission->job_type !== "missions:mentoring" ): ?>
 		<div class="form-group">
-			<label class="col-sm-3" for="edit-mission-security-dropdown-input" style="text-align:right;">
+			<label class="col-sm-3 required" for="edit-mission-security-dropdown-input" style="text-align:right;" aria-required="true">
 				<?php echo elgg_echo('missions:security_level') . ':';?>
+				<strong class="required" aria-required="true">
+					<?php echo elgg_echo('missions:required'); ?> 
+				</strong>
 			</label>
 			<div class="col-sm-3">
 				<?php echo $input_security;?>

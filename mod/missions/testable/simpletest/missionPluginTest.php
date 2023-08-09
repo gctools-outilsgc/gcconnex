@@ -141,7 +141,7 @@ class MissionPluginTest extends ElggCoreUnitTest {
 	}
 
 	public function testSecurityStringsMustBeLoaded() {
-		$expected = ",missions:reliability,missions:enhanced_reliability,missions:secret,missions:top_secret";
+		$expected = ",missions:reliability,missions:enhanced_reliability,missions:secret,missions:top_secret,missions:none_security";
 		$actual = elgg_get_plugin_setting('security_string', 'missions');
 		$this->assertIdentical($expected, $actual);
 	}
