@@ -71,7 +71,7 @@ return array(
     "missions:secret" =>	"Secret",
     "missions:top_secret" =>	"Très secret",
     "missions:helloworld" =>	"Bonjour le monde!",
-    "missions:none_security" => "Aucune",
+    "missions:none_security" =>     "Aucune",
     "missions:error:name_needs_input" =>	"Veuillez entrer un nom.",
     "missions:error:name_no_numbers" =>	"Nom invalide (aucun caractère numérique n'est permis).",
     "missions:error:department_needs_input" =>	"Veuillez entrer un ministère.",

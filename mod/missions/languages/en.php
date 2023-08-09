@@ -71,7 +71,7 @@ return array(
     "missions:secret" =>    "Secret",
     "missions:top_secret" =>    "Top Secret",
     "missions:helloworld" =>    "Hello World!",
-    "missions:none_security" => "None",
+    "missions:none_security" =>     "None",
     "missions:error:name_needs_input" =>    "Please enter a name.",
     "missions:error:name_no_numbers" => "Invalid name (no numbers allowed).",
     "missions:error:department_needs_input" =>  "Please enter a department.",
