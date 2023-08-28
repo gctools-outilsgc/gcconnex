@@ -437,7 +437,7 @@ return array(
 "missions:policy" =>	"Politique",
 "missions:client_service" =>"Service à la clientèle",
 "missions:program_area" =>	"Secteur de programme",
-"missions:openess_sentence" =>	"Cette possibilité est-elle seulement disponible dans %s?",
+"missions:openess_sentence" =>	"Cette opportunité ne peut être complétée que par les employés actuels du gouvernement du Canada: ",
 "missions:only_within_organization" =>	"Seulement dans l'organisation",
 "missions:search_limit" =>	"Limite de la recherche",
 "missions:or" =>	"ou",
