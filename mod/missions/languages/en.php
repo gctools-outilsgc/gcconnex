@@ -436,7 +436,7 @@ return array(
 "missions:policy" =>    "Policy",
 "missions:client_service" =>    "Client Service",
 "missions:program_area" =>  "Program area",
-"missions:openess_sentence" =>  "The opportunity can only be completed by current Government of Canada employees: ",
+"missions:openess_sentence" =>  "Is this opportunity only available within %s?",
 "missions:only_within_organization" =>  "Only within organization",
 "missions:search_limit" =>  "Search limit",
 "missions:or" =>    "or",
