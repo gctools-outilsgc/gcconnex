@@ -248,7 +248,7 @@ $french = array(
 	'cp_notify:subject:group_invite_email' => "%s vous a invité à joindre le groupe '%s'",
 	'cp_notify:subject:group_invite_user_by_email' => "%s vous a invité à joindre le groupe %s",
 	'cp_notify:body_group_invite_email:title' => "<a href='%s'>%s</a> vous a invité à joindre le groupe <a href='%s'>%s</a>  sur GCconnex. <br>",
-	'cp_notify:body_group_invite_email:description' => "<a href='%s'>Inscrivez-vous maintenant</a> et vous serez automatiquement ajouté au groupe.<br/><br/>
+	'cp_notify:body_group_invite_email:description' => "<a href='%s&language=fr&foo=/view'>Inscrivez-vous maintenant</a> et vous serez automatiquement ajouté au groupe.<br/><br/>
 
 	Si vous désirez vous inscrire à une date ultérieure en utilisant le <a href='https://gcconnex.gc.ca/register'>formulaire d’inscription</a> sur GCconnex, vous pouvez vous joindre au groupe en utilisant le code suivant sur votre page d'<a href='%s'>invitation de groupe</a> : %s .<br/><br/>
 
