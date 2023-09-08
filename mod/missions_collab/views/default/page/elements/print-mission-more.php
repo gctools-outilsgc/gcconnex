@@ -278,10 +278,12 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 				<?php echo elgg_echo($mission->time_interval); ?>
 			</span>
 		</div>
-		<div class="col-sm-offset-1">
-			<h5><?php echo elgg_echo('missions:timezone') . ':';?></h5>
-			<span name="mission-time-zone"><?php echo $clean_timezone;?></span>
-		</div>
+        <?php if(!empty($mission->timezone)) : ?> 
+            <div class="col-sm-offset-1">
+                <h5><?php echo elgg_echo('missions:timezone') . ':';?></h5>
+                    <span name="mission-time-zone"><?php echo $clean_timezone;?></span>
+            </div> 
+        <?php endif; ?>
 		<div class="col-sm-offset-1">
 			<?php echo $unpacked_time; ?>
 		</div>
