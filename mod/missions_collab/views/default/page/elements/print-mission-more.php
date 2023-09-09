@@ -282,9 +282,11 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 			<h5><?php echo elgg_echo('missions:timezone') . ':';?></h5>
 			<span name="mission-time-zone"><?php echo $clean_timezone;?></span>
 		</div>
-		<div class="col-sm-offset-1">
-			<?php echo $unpacked_time; ?>
-		</div>
+        <?php if((!empty($mission->mon_start)) && (!empty($mission->tue_start)) && (!empty($mission->wed_start)) && (!empty($mission->thu_start)) && (!empty($mission->fri_start)) && (!empty($mission->sat_start)) && (!empty($mission->sun_start))) : ?> 
+            <div class="col-sm-offset-1">
+                <?php echo $unpacked_time; ?>
+            </div>
+        <?php endif; ?>
 	</div>
 	<div>
 		<?php
