@@ -219,14 +219,18 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
                 <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:ideal_start_date') . ':';?></h4>
 			<span name="mission-start-date"><?php echo $mission->start_date;?></span>
 		</div>
-		<div class="clearfix">
-                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:ideal_completion_date') . ':';?></h4>
-			<span name="mission-completion-date"><?php echo $clean_completion_date;?></span>
-		</div>
-		<div class="clearfix">
-                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:deadline') . ':';?></h4>
-			<span name="mission-deadline"><?php echo $mission->deadline;?></span>
-		</div>
+        <?php if(!empty($mission->completion_date)) : ?>
+            <div class="clearfix">
+                    <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:ideal_completion_date') . ':';?></h4>
+                <span name="mission-completion-date"><?php echo $clean_completion_date;?></span>
+            </div>
+        <?php endif; ?>
+        <?php if(!empty($mission->deadline)) : ?>
+            <div class="clearfix">
+                    <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:deadline') . ':';?></h4>
+                <span name="mission-deadline"><?php echo $mission->deadline;?></span>
+            </div>
+        <?php endif; ?>
 		<div class="clearfix">
                 <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:work_remotely') . ':';?></h4>
 			<span name="mission-remotely"><?php echo $clean_remotely;?></span>
