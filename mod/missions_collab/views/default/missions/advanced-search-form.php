@@ -23,7 +23,7 @@ if ($form_name == 'candidate') {
 		elgg_echo('missions:experience'),
 		elgg_echo('missions:skill'),
 		elgg_echo('missions:portfolio'),
-		elgg_echo('missions:user_department'),
+		//elgg_echo('missions:user_department'),
 		elgg_echo('missions:opt_in')
 	);
   
