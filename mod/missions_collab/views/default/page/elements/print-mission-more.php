@@ -288,9 +288,11 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
                     <span name="mission-time-zone"><?php echo $clean_timezone;?></span>
             </div> 
         <?php endif; ?>
-		<div class="col-sm-offset-1">
-			<?php echo $unpacked_time; ?>
-		</div>
+        <?php if((!empty($mission->mon_start)) || (!empty($mission->tue_start)) || (!empty($mission->wed_start)) || (!empty($mission->thu_start)) || (!empty($mission->fri_start)) || (!empty($mission->sat_start)) || (!empty($mission->sun_start))) : ?> 
+            <div class="col-sm-offset-1">
+                <?php echo $unpacked_time; ?>
+            </div>
+        <?php endif; ?>
 	</div>
 	<div>
 		<?php
