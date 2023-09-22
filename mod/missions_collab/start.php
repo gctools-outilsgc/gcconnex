@@ -25,6 +25,9 @@ function missions_collab_init()
     // Register our action files found in missions/action/
     elgg_register_action("missions/post-mission-skill-match", elgg_get_plugins_path() . "missions_collab/actions/missions/post-mission-skill-match.php");
     elgg_register_action("missions/opt-in-splash", elgg_get_plugins_path() . "missions_collab/actions/missions/opt-in-splash.php");
+
+    // Register an ajax view for adding a group input field.
+    elgg_register_ajax_view('missions/add-group');
 }
 
 /*
