@@ -60,6 +60,12 @@ if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION[
 	$deadline = false;
 }
 
+$group_set = '';
+$group_array = explode(', ', $key_groups);
+foreach($group_array as $group) {
+	$group_set .= elgg_view('missions/add-group', array('value' => $group));
+}
+
 $input_title = elgg_view('input/text', array(
 	    'name' => 'job_title',
 	    'value' => $job_title,
@@ -146,6 +152,13 @@ $input_openess = elgg_view('input/checkbox', array(
 	    'id' => 'post-mission-openess-checkbox-input'
 ));
 
+$add_group_button = elgg_view('output/url', array(
+	'text' => ' ' . elgg_echo('missions:add'),
+	'class' => 'elgg-button btn fa fa-plus-circle',
+	'id' => 'add-group-button',
+	'onclick' => 'add_group_field()'
+));
+
 if($department_abbr) {
 	$openess_string = elgg_echo('missions:openess_sentence', array(strtoupper($department_abbr)));
 }
@@ -228,6 +241,9 @@ $input_gl_group = elgg_view('input/dropdown', array(
 		<div class="col-sm-6">
 			<label for="numeric1"><?php echo elgg_echo('missions:gl:level'); ?></label>
 			<input class="form-control" id="numeric1" name="level" type="number" data-rule-digits="true" min="1" max="10" step="1" disabled/>
+		</div>
+		<div>
+			<?php echo $add_group_button; ?>
 		</div>
 	</div>
 	<script>
@@ -326,3 +342,13 @@ $input_gl_group = elgg_view('input/dropdown', array(
 		));
 	?>
 </div>
+
+<script>
+	function add_group_field() {
+		elgg.get('ajax/view/missions/add-group', {
+			success: function(result, success, xhr) {
+				$("#mission-group-container").append(result);
+			}
+		});
+	}
+</script>
