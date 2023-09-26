@@ -232,7 +232,7 @@ $input_gl_group = elgg_view('input/dropdown', array(
 	<label for='post-mission-gl-group' class="col-sm-3 text-right">
 		<?php echo elgg_echo('missions:groupandlevel') . ':'; ?>
 	</label>
-	<div class="col-sm-3">
+	<div class="col-sm-3" id="missions-group-container">
 		<div class="col-sm-6">
 			<label for="post-mission-gl-group"><?php echo elgg_echo('missions:gl:group'); ?></label>
 			<?php echo $input_gl_group;

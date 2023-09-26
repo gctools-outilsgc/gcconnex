@@ -29,7 +29,7 @@ if(!$no_delete) {
 	));
 }
 	
-echo '<div id="missions-groups-division-' . $numerator . '">' . $add_group_field . $delete_group_button . '</div>';
+echo '<div id="missions-groups-divison-' . $numerator . '">' . $add_group_field . $delete_group_button . '</div>';
 
 $_SESSION['mission_group_input_number'] = $numerator + 1;
 ?>
