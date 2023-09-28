@@ -29,7 +29,7 @@ if(!$no_delete) {
 	));
 }
 	
-echo '<div id="missions-groups-divison-' . $numerator . '">' . $add_group_field . $delete_group_button . '</div>';
+echo '<div id="missions-groups-division-' . $numerator . '">' . $add_group_field . $delete_group_button . '</div>';
 
 $_SESSION['mission_group_input_number'] = $numerator + 1;
 ?>
@@ -39,7 +39,7 @@ $_SESSION['mission_group_input_number'] = $numerator + 1;
 		var numerator = <?php echo $numerator ?>;
 		var ident = '#mission-groups-text-input-' + numerator;
 		
-		var newgroup = new Bloodhound({
+		var newGroup = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {

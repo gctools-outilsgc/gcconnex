@@ -7,6 +7,10 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+$key_groups = get_input('key_groups'); // Retrieve key_groups 
+$_SESSION['mission_group_input_number'] = 0;
+elgg_load_js('typeahead');
+
 $department_string = $_SESSION['missions_pass_department_to_second_form'];
 $ancestor_array = mo_get_all_ancestors($department_string);
 $progenitor = get_entity($ancestor_array[0]);
@@ -232,7 +236,7 @@ $input_gl_group = elgg_view('input/dropdown', array(
 	<label for='post-mission-gl-group' class="col-sm-3 text-right">
 		<?php echo elgg_echo('missions:groupandlevel') . ':'; ?>
 	</label>
-	<div class="col-sm-3" id="missions-group-container">
+	<div class="col-sm-3" id="mission-group-container">
 		<div class="col-sm-6">
 			<label for="post-mission-gl-group"><?php echo elgg_echo('missions:gl:group'); ?></label>
 			<?php echo $input_gl_group;
