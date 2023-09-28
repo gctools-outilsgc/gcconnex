@@ -116,12 +116,8 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-sm-3 required text-right" aria-required="true">
+	<label class="col-sm-3 text-right" aria-required="true">
 		<?php echo elgg_echo('missions:your_department');?>
-		<strong class="required" aria-required="true">
-			<?php echo elgg_echo('missions:required'); ?>
-		</strong>
-		:
 	</label>
 	<div class="col-sm-4">
 		<?php echo $input_department; ?>
