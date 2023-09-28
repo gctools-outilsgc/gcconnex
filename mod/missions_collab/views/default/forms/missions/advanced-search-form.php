@@ -64,9 +64,7 @@ $input_advanced_limit = elgg_view('input/dropdown', array(
 
 $number_of_rows = elgg_get_plugin_setting('advanced_element_limit', 'missions');
 $content = '<div class="form-group">';
-//$content .= '<label for="mission-emphasis-extra col-sm-3" class="required text-right" aria-required="true">'
 $content .= '<div class="mission-emphasis-extra col-sm-offset-1 col-sm-4">' . elgg_echo('missions:field') . '</div>';
-//$content .= '<strong class="required" aria-required="true">' . elgg_echo('missions:required') . '</strong>';
 $content .= '<div class="mission-emphasis-extra col-sm-4">' . elgg_echo('missions:value') . '</div></div>';
 
 // Generates the rows of the form according to the settings.
