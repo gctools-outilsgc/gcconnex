@@ -167,7 +167,7 @@ if ($advanced_form) {
 	for ($i = 0; $i < $number_of_rows; $i ++) {
 
 		if ($i === 0) {
-			$content .= '<label for="mission-emphasis-extra col-sm-offset-1 col-sm-4" class="required" aria-required="true">' . elgg_echo('missions:select');
+			$content .= '<label for="mission-emphasis-extra col-sm-offset-1 col-sm-4" class="required" aria-required="true">' . elgg_echo('missions:select_an_item');
 			$content .= '<strong class="required" aria-required="true">' . elgg_echo('missions:required') . '</strong>';
 		}
 		else {

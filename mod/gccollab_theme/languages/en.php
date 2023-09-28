@@ -228,6 +228,6 @@ Hope to chat more soon!",
   'c_sensitive_info_msg:friendly_reminder' => '<section class="alert alert-info"><h3 class="h3">Friendly reminder:</h3>As per the <a href="/terms">Terms and Conditions of use of GCcollab</a>, sensitive or confidential content is not to be posted on GCcollab. This means that only unclassified documents should be posted. The <a href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=1245">Policy on Access to Information</a> applies to all information posted on GCcollab.</section>',
   'comment_notif_description' => "<p>You are not a member of this group. Join the group to be notified when new content is added and to follow this thread. Note: You can adjust your notification preferences in your GCcollab account settings.</p><p>Don’t want to join the group yet? Go ahead and post your comment, but remember to check back to see any new comments posted in this thread.</p>",
   'missions:openess_sentence' => "The opportunity can only be completed by current Government of Canada employees: ",
-  'missions:select' => "Select an Item",
+  'missions:select_an_item' => "Select an Item",
   'missions:select_error' => "Please select an item"
 );
