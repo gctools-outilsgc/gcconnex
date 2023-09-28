@@ -246,9 +246,9 @@ $input_gl_group = elgg_view('input/dropdown', array(
 			<label for="numeric1"><?php echo elgg_echo('missions:gl:level'); ?></label>
 			<input class="form-control" id="numeric1" name="level" type="number" data-rule-digits="true" min="1" max="10" step="1" disabled/>
 		</div>
-		<div>
-			<?php echo $add_group_button; ?>
-		</div>
+	</div>
+	<div>
+		<?php echo $add_group_button; ?>
 	</div>
 	<script>
         $('#post-mission-type-dropdown-input').change(function () {
