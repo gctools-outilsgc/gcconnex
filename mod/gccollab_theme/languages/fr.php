@@ -217,5 +217,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'description:ideas:en' => 'Description de l\'idée en anglais',
   'description:ideas:fr' => 'Description de l\'idée en français',
   'comment_notif_description' => "<p>Vous n'êtes pas membre de ce groupe. Joignez-vous au groupe pour être informé lorsque du nouveau contenu est ajouté et pour suivre ce fil. Remarque: Vous pouvez ajuster vos préférences de notification dans vos paramètres de compte de GCcollab.</p><p>Vous n’êtes pas encore prêt à joindre le groupe? Allez-y et affichez votre commentaire, mais n'oubliez pas de revenir vérifier ce fil pour voir les nouveaux commentaires affichés.</p>",
-  'missions:openess_sentence' => "Cette opportunité ne peut être complétée que par les employés actuels du gouvernement du Canada: "
+  'missions:openess_sentence' => "Cette opportunité ne peut être complétée que par les employés actuels du gouvernement du Canada: ",
+  'missions:select' => "Sélectionnez un élément",
+  'missions:select_error' => "Veuillez sélectionner un article"
 );

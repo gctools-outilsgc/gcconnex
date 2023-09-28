@@ -165,8 +165,17 @@ if ($advanced_form) {
 	}
 } else {
 	for ($i = 0; $i < $number_of_rows; $i ++) {
-		$content .= '<div class="form-group">';
+
+		if ($i === 0) {
+			$content .= '<label for="mission-emphasis-extra col-sm-offset-1 col-sm-4" class="required" aria-required="true">' . elgg_echo('missions:select');
+			$content .= '<strong class="required" aria-required="true">' . elgg_echo('missions:required') . '</strong>';
+		}
+		else {
+			$content .= '<label for="mission-emphasis-extra col-sm-offset-1 col-sm-4">' . elgg_echo('missions:select');
+		}
+
 		// Dropdown with a name that is numbered according to its row.
+		$content .= '<div class="form-group">';
 		$content .= '<div class="mission-emphasis-extra col-sm-offset-1 col-sm-4">';
 		$content .= elgg_view('input/dropdown', array(
 			'name' => $form_name.'_'.$i,
