@@ -171,7 +171,7 @@ if ($advanced_form) {
 			$content .= '<strong class="required" aria-required="true">' . elgg_echo('missions:required') . '</strong>';
 		}
 		else {
-			$content .= '<label for="mission-emphasis-extra col-sm-offset-1 col-sm-4">' . elgg_echo('missions:select');
+			$content .= '<label for="mission-emphasis-extra col-sm-offset-1 col-sm-4">' . elgg_echo('missions:select_an_item');
 		}
 
 		// Dropdown with a name that is numbered according to its row.
