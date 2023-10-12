@@ -23,7 +23,7 @@ var imageRepoName = toLower('collab_${prName}')
 var linuxFxVersion = empty(containerSHA) ? 'DOCKER|${acrName}.azurecr.io/${imageRepoName}:${containerTag}' : 'DOCKER|${acrName}.azurecr.io/${imageRepoName}@sha256:${containerSHA}'
 
 var appName = 'gccollab-dev-${prName}'
-var dbName = 'gccollab-dev-db-${prName}'
+var dbName = 'gccollab-${prName}'
 var nodash_nounderscore_tag = replace(replace(prName, '-', ''), '_', '')
 var storagePrefix = toLower( (length(nodash_nounderscore_tag)) > 12 ? substring('devgcccollab${nodash_nounderscore_tag}', 0, 24) : 'devgcccollab${nodash_nounderscore_tag}' )
 
@@ -74,7 +74,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'DBNAME'
-          value: prName
+          value: dbName
         }
         {
           name: 'DATAROOT'
@@ -131,7 +131,7 @@ module db './modules/db_existing_server.bicep' = {
   scope: resourceGroup(dbServerRG)
   params: {
     dbServerName: dbServerName
-    dbName: prName
+    dbName: dbName
   }
 }
 
