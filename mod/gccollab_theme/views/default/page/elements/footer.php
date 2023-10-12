@@ -88,7 +88,7 @@ $feedbackText= elgg_echo('wet:feedbackText');
                     <li><a href="https://twitter.com/TBS_Canada">Twitter</a></li>
                 <?php endif; ?>
                     <!-- <li><a href="https://twitter.com/GCcollab">Twitter</a></li> -->
-                    <li><a href="https://github.com/gctools-outilsgc/GCcollab">GitHub</a></li>
+                    <li><a href="https://github.com/gctools-outilsgc/gcconnex">GitHub</a></li>
                 </ul>
             </section>
 
