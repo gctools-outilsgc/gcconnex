@@ -36,6 +36,7 @@ steps:
               echo "$pr_number cleanup"
               az group delete --name collab_review_$pr_number --yes
               az mariadb db delete -g $DBRG -s $DBSERVERNAME --name pr-$pr_number --yes
+              az mariadb db delete -g $DBRG -s $DBSERVERNAME --name gccollab-pr-$pr_number --yes
               az acr repository delete --name $ACR_NAME --repository collab_pr-$pr_number --yes
           fi
       done
