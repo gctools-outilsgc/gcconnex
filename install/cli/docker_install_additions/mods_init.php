@@ -280,6 +280,7 @@ function init_mods( $type ){
     'gc_tags',
     'gc_elgg_sitemap',
     'thewire_images',
+    'merge_users',
     );
     $plugins_off_collab = array(
     'developers',
@@ -311,7 +312,6 @@ function init_mods( $type ){
     'enhanced_user_search',
     'plugin_loader',
     'member_selfdelete',
-    'merge_users',
     'gc_lang_url_handler',
     'solr_api',
     'talent_cloud_invite_api',
