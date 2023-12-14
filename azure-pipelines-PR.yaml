@@ -1,3 +1,6 @@
+# will not trigger automatially for PR from forks
+# to trigger builds in those cases, comment with /azurepipelines run
+
 trigger:  # don't trigger outside PRs
 - none
 
