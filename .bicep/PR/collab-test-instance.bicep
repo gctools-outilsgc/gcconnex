@@ -62,11 +62,11 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'DBHOST'
-          value: '${dbServerName}.mariadb.database.azure.com' 
+          value: '${dbServerName}.mysql.database.azure.com' 
         }
         {
           name: 'DBUSER'
-          value: 'elgg@${dbServerName}' 
+          value: 'wiki' 
         }
         {
           name: 'DBPASS'
