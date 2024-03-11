@@ -24,7 +24,7 @@ $defaults = [
 	"MEMCACHE_HOST" => "127.0.0.1",
 	"SESSION_NAME" => "Elgg",
 	"REMEMBERME_NAME" => "elggperm"
-]
+];
 
 global $CONFIG;
 if (!isset($CONFIG)) {
@@ -36,35 +36,35 @@ if (!isset($CONFIG)) {
  *
  * @global string $CONFIG->dbuser
  */
-$CONFIG->dbuser = getenv('DBUSER');
+$CONFIG->dbuser = getenv('DBUSER') ? getenv('DBUSER') : $defaults['DBUSER'];
 
 /**
  * The database password
  *
  * @global string $CONFIG->dbpass
  */
-$CONFIG->dbpass = getenv('DBPASS');
+$CONFIG->dbpass = getenv('DBPASS') ? getenv('DBPASS') : $defaults['DBPASS'];
 
 /**
  * The database name
  *
  * @global string $CONFIG->dbname
  */
-$CONFIG->dbname = getenv('DBNAME');
+$CONFIG->dbname = getenv('DBNAME') ? getenv('DBNAME') : $defaults['DBNAME'];
 
 /**
  * The database host.
  *
  * @global string $CONFIG->dbhost
  */
-$CONFIG->dbhost = getenv('DBHOST');
+$CONFIG->dbhost = getenv('DBHOST') ? getenv('DBHOST') : $defaults['DBHOST'];
 
 /**
  * The database prefix
  *
  * @global string $CONFIG->dbprefix
  */
-$CONFIG->dbprefix = getenv('DBPREFIX');
+$CONFIG->dbprefix = getenv('DBPREFIX') ? getenv('DBPREFIX') : $defaults['DBPREFIX'];
 
 /**
  * Multiple database connections
@@ -94,7 +94,7 @@ $CONFIG->dbprefix = getenv('DBPREFIX');
  * Memcache setup (optional)
  * This is where you may optionally set up memcache.
  */
-$CONFIG->memcache = true;
+$CONFIG->memcache = getenv('MEMCACHE_HOST');
 $CONFIG->memcache_servers = array (
 	array(getenv('MEMCACHE_HOST'), 11211),
 );
@@ -131,7 +131,7 @@ $CONFIG->memcache_servers = array (
  */
 // get the default parameters from php.ini
 //$CONFIG->cookies['session'] = session_get_cookie_params();
-$CONFIG->cookies['session']['name'] = getenv('SESSION_NAME');
+$CONFIG->cookies['session']['name'] = getenv('SESSION_NAME') ? getenv('SESSION_NAME') : $defaults['SESSION_NAME'];
 // optionally overwrite the defaults from php.ini below
 //$CONFIG->cookies['session']['path'] = "/";
 //$CONFIG->cookies['session']['domain'] = "";
@@ -140,7 +140,7 @@ $CONFIG->cookies['session']['name'] = getenv('SESSION_NAME');
 
 // extended session cookie
 //$CONFIG->cookies['remember_me'] = session_get_cookie_params();
-$CONFIG->cookies['remember_me']['name'] = getenv('REMEMBERME_NAME');
+$CONFIG->cookies['remember_me']['name'] = getenv('REMEMBERME_NAME') ? getenv('REMEMBERME_NAME') : $defaults['REMEMBERME_NAME'];
 //$CONFIG->cookies['remember_me']['expire'] = strtotime("+30 days");
 // optionally overwrite the defaults from php.ini below
 //$CONFIG->cookies['remember_me']['path'] = "/";
