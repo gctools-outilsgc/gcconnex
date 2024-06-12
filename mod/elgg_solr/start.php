@@ -36,8 +36,10 @@ function elgg_solr_init() {
 		elgg_register_plugin_hook_handler('search', 'object', 'elgg_solr_object_search');
 		elgg_register_plugin_hook_handler('search', 'user', 'elgg_solr_user_search');
 		elgg_register_plugin_hook_handler('search', 'group', 'elgg_solr_group_search');
-		elgg_register_plugin_hook_handler('search', 'tags', 'elgg_solr_tag_search');
+		//elgg_register_plugin_hook_handler('search', 'tags', 'elgg_solr_tag_search');
 
+
+		//elgg_register_plugin_hook_handler('search', );
 
 		if ($is_elgg18) {
 			// this is elgg 1.8 need to handle comments as annotations
