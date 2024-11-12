@@ -24,7 +24,7 @@ if( _elgg_services()->session->get('language') == 'en') {//quick fix to display 
 if(elgg_in_context('login')){ //Nick - only show the graphic and register text on the main login page
 ?>
 <div class="col-sm-12 clearfix mrgn-bttm-lg brdr-bttm">
-    <div class="col-sm-4 clearfix" style="padding-top:75px">
+    <div class="col-sm-4 clearfix" style="padding-top:75px" aria-label="GCconnex Decommission Image">
         <img class="mrgn-bttm-lg" src="<?php echo $site_url .'mod/wet4/graphics/GCConnex_Decommission_Banner_Image.png'?>" style="max-width:100%" alt="<?php echo elgg_echo('gcx:messaging:alt'); ?>" />
     </div>
     <div class="col-sm-8 clearfix mrgn-bttm-lg">
