@@ -1846,12 +1846,17 @@ Please do not reply to this email.",
 
 /*gcx Messaging*/
 /*gcx Messaging Login */
-'gcx:messaging:login:intro' => 'Hey! Did you know <a href="https://www.gcx-gce.gc.ca/" target="_blank">gcxchange</a> has officially arrived?',
-'gcx:messaging:login:list' => 'With one simple sign-on, you can:',
+'gcx:messaging:login:intro' => 'Major updates are coming!',
+'gcx:messaging:login:list' => 'On April 1, 2025, GCXchange will officially replace GCConnex as the Government of Canada’s new and improved collaboration space. With one simple sign on you can experience:',
 'gcx:messaging:login:list1' => 'Chat with GC colleagues using Microsoft Teams',
 'gcx:messaging:login:list2' => 'Co-author documents with public servants from other departments',
 'gcx:messaging:login:list3' => 'View departmental and GC-wide communications',
-'gcx:messaging:login:list4' => 'Access content that is personalized for you',
+'gcx:messaging:login:decomlist1' => 'real-time collaboration on documents;',
+'gcx:messaging:login:decomlist2' => 'a free, secure and user-friendly collaborative space designed exclusively for public servants;',
+'gcx:messaging:login:decomlist3' => 'unparalleled reach and security, without the hassle of complex logins.',
+'gcx:messaging:login:decom' => '<b> GCConnex will no longer be available after April 1, 2025, so please move your GCConnex content to a GCXchange community before that date. </b> Elevate your collaboration efforts—migrate to GCXchange today and be at the forefront of government innovation!',
+'gcx:messaging:login:creategcx' => '<a href="https://gcxgce.sharepoint.com/sites/Communities/SitePages/Create-a-community.aspx" target="_blank">Create your GCXchange community now</a>.',
+'gcx:messaging:login:registergcx' => 'Not registered to GCXchange yet? <a href="https://www.gcx-gce.gc.ca/" target="_blank">Complete your simple, password-free registration</a>.',
 
 /*gcx Messaging Registration */
 'gcx:messaging:registration:intro' => 'Looking for ways to connect and collaborate with your GC colleagues?',

@@ -38,7 +38,7 @@ services:
     environment:
       - VIRTUAL_HOST=gcconnex.local
       - DOCKER=1
-      - INIT=gccollab  # gcconnex or gccollab: initial install to replicate one of those. 0 (or anything else really): no initial install
+      - INIT=gcconnex  # gcconnex or gccollab: initial install to replicate one of those. 0 (or anything else really): no initial install
       - HOME=/var/www/html
       - DBHOST=gcconnex-db
       - DBUSER=elgg
