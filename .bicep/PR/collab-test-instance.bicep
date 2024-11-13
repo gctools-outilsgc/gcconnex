@@ -17,6 +17,8 @@ param containerSHA string = ''
 
 param acrName string = 'collabtestacr'
 
+param init string = 'gccollab'
+
 var DATAROOT = '/collab_data_test_mount/'
 
 var imageRepoName = toLower('collab_${prName}')
@@ -58,7 +60,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'INIT'
-          value: 'gccollab'
+          value: init
         }
         {
           name: 'DBHOST'
