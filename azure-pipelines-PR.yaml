@@ -9,7 +9,8 @@ variables:
   imageRepository: 'collab'
   location: 'canadacentral'
   RGtemplateFile: '.bicep/PR/test-instance-setup.bicep'
-  commentString: 'Test instance up at:'  # String used for PR comment to provide link to review site
+  commentStringGCcollab: 'GCcollab test instance up at:'  # String used for PR comment to provide link to review site
+  commentStringGCconnex: 'GCconnex test instance up at:' 
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -37,7 +38,10 @@ jobs:
       inlineScript: |
         az deployment sub create --location $LOCATION --template-file $TEMPLATE_FILE \
           --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=$(REVIEW_DB_SERVER_PASS) \
-          subnetID=$SUBNET_ID planID=$PLAN_ID acrName=$ACR_NAME
+          subnetID=$SUBNET_ID planID=$PLAN_ID acrName=$ACR_NAME siteType=gccollab
+        az deployment sub create --location $LOCATION --template-file $TEMPLATE_FILE \
+          --parameters prNumber=$PR dbServerName=$DBSERVERNAME dbServerRG=$DBRG containerTag=$TAG dbServerPass=$(REVIEW_DB_SERVER_PASS) \
+          subnetID=$SUBNET_ID planID=$PLAN_ID acrName=$ACR_NAME siteType=gcconnex
     env:
       DBRG: $(db_resource_group)
       DBSERVERNAME: $(review_db_server_name)
@@ -50,7 +54,7 @@ jobs:
       ACR_NAME: $(acrName)
 
   - bash: |
-      TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentString }}")
+      TEST=$(curl -L https://api.github.com/repos/gctools-outilsgc/gcconnex/issues/$PR/comments | grep -c "${{ variables.commentStringGCcollab }}")
       echo "##vso[task.setvariable variable=commentExists]$TEST"
       echo "Comments found about the test instance already in the PR: $TEST"
     displayName: Check for comment in PR
@@ -62,6 +66,7 @@ jobs:
       gitHubConnection: $(github_connection)
       repositoryName: $(Build.Repository.Name)
       id: $(System.PullRequest.PullRequestNumber)
-      comment: '$(commentString) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/'
+      comment: '$(commentStringGCcollab) https://gccollab-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/ <br />
+                $(commentStringGCconnex) https://gcconnex-dev-pr-$(System.PullRequest.PullRequestNumber).azurewebsites.net/ '
     condition: and(succeeded(), eq(variables['commentExists'], '0'))
     displayName: Post a comment to PR with link to review site
