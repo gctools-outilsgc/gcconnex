@@ -17,15 +17,16 @@ param containerSHA string = ''
 
 param acrName string = 'collabtestacr'
 
-param init string = 'gccollab'
+param siteType string = 'gccollab'
 
 var DATAROOT = '/collab_data_test_mount/'
 
 var imageRepoName = toLower('collab_${prName}')
 var linuxFxVersion = empty(containerSHA) ? 'DOCKER|${acrName}.azurecr.io/${imageRepoName}:${containerTag}' : 'DOCKER|${acrName}.azurecr.io/${imageRepoName}@sha256:${containerSHA}'
 
-var appName = '${init}-dev-${prName}'
-var dbName = '${init}-${prName}'
+var appName = '${siteType}-dev-${prName}'
+var dbName = '${siteType}-${prName}'
+var fileShareName = (siteType == 'gccollab') ? 'c-test-files' : 'x-test-files'
 var nodash_nounderscore_tag = replace(replace(prName, '-', ''), '_', '')
 var storagePrefix = toLower( (length(nodash_nounderscore_tag)) > 12 ? substring('devgcccollab${nodash_nounderscore_tag}', 0, 24) : 'devgcccollab${nodash_nounderscore_tag}' )
 
@@ -60,7 +61,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'INIT'
-          value: init
+          value: siteType
         }
         {
           name: 'DBHOST'
@@ -101,7 +102,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
           type: 'AzureFiles'
           accountName: storagePrefix
           accessKey: storageAccount.listKeys().keys[0].value
-          shareName: 'c-test-files'
+          shareName: fileShareName
           mountPath: DATAROOT
         }
       }
@@ -186,7 +187,7 @@ resource storageAccountFiles 'Microsoft.Storage/storageAccounts/fileServices@202
 
 resource file_share 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-05-01' = {
   parent: storageAccountFiles
-  name: 'c-test-files'
+  name: fileShareName
   properties: {
     accessTier: 'TransactionOptimized'
     shareQuota: 5120

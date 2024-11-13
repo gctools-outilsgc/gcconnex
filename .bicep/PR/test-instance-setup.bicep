@@ -8,7 +8,7 @@ param dbServerPass string
 param subnetID string
 param planID string
 param acrName string = 'collabtestacr'
-param init string = 'gccollab'
+param siteType string = 'gccollab'
 
 param location string = 'Canada Central'
 
@@ -29,6 +29,6 @@ module collab './collab-test-instance.bicep' = {
     dbServerName: dbServerName
     dbServerPass: dbServerPass
     acrName: acrName
-    init: init
+    siteType: siteType
   }
 }
