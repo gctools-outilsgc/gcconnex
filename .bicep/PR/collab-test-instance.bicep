@@ -24,8 +24,8 @@ var DATAROOT = '/collab_data_test_mount/'
 var imageRepoName = toLower('collab_${prName}')
 var linuxFxVersion = empty(containerSHA) ? 'DOCKER|${acrName}.azurecr.io/${imageRepoName}:${containerTag}' : 'DOCKER|${acrName}.azurecr.io/${imageRepoName}@sha256:${containerSHA}'
 
-var appName = 'gccollab-dev-${prName}'
-var dbName = 'gccollab-${prName}'
+var appName = '${init}-dev-${prName}'
+var dbName = '${init}-${prName}'
 var nodash_nounderscore_tag = replace(replace(prName, '-', ''), '_', '')
 var storagePrefix = toLower( (length(nodash_nounderscore_tag)) > 12 ? substring('devgcccollab${nodash_nounderscore_tag}', 0, 24) : 'devgcccollab${nodash_nounderscore_tag}' )
 
