@@ -1703,7 +1703,7 @@ return array(
 'gcx:messaging:login:decomlist2' => 'un espace de collaboration gratuit, sécurisé et convivial, conçu exclusivement pour les fonctionnaires;',
 'gcx:messaging:login:decomlist3' => 'un accès et une sécurité inégalés, et ce, sans avoir à ouvrir plusieurs sessions.',
 'gcx:messaging:login:decom' => '<b> Veuillez transférer votre contenu GCConnex vers une collectivité GCÉchange avant le 1er avril 2025. </b> Soyez à l’avant-garde de l’innovation gouvernementale et optimisez vos efforts de collaboration en passant à GCÉchange dès aujourd’hui!',
-'gcx:messaging:login:creategcx' => '<a href="https://gcxgce.sharepoint.com/sites/Communities/SitePages/Create-a-community.aspx" target="_blank">Créez votre collectivité GCÉchange dès maintenant</a>.',
+'gcx:messaging:login:creategcx' => '<a href="https://gcxgce.sharepoint.com/sites/Communities/SitePages/fr/Create-a-community.aspx" target="_blank">Créez votre collectivité GCÉchange dès maintenant</a>.',
 'gcx:messaging:login:registergcx' => 'Vous n’êtes pas encore inscrit à GCÉchange? <a href="https://www.gcx-gce.gc.ca/" target="_blank">Inscrivez-vous facilement et sans mot de passe</a>.',
 
 /*gcx Messaging Registration */
