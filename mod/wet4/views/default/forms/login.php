@@ -24,20 +24,24 @@ if( _elgg_services()->session->get('language') == 'en') {//quick fix to display 
 if(elgg_in_context('login')){ //Nick - only show the graphic and register text on the main login page
 ?>
 <div class="col-sm-12 clearfix mrgn-bttm-lg brdr-bttm">
-    <div class="col-sm-4 clearfix">
-        <img class="mrgn-bttm-lg" src="<?php echo $site_url .'mod/wet4/graphics/gcx_floating_beaver.png' ?>" alt="<?php echo elgg_echo('gcx:messaging:alt'); ?>" />
+    <div class="col-sm-4 clearfix" style="padding-top:75px" aria-label="GCconnex Decommission Image">
+        <img class="mrgn-bttm-lg" src="<?php echo $site_url .'mod/wet4/graphics/GCConnex_Decommission_Banner_Image.png'?>" style="max-width:100%" alt="<?php echo elgg_echo('gcx:messaging:alt'); ?>" />
     </div>
     <div class="col-sm-8 clearfix mrgn-bttm-lg">
         <div class="mrgn-tp-lg gcx-login-holder">
             <h2 class="mrgn-bttm-md mrgn-tp-md"><?php echo elgg_echo('gcx:messaging:login:intro'); ?></h2>
             <p><?php echo elgg_echo('gcx:messaging:login:list'); ?></p>
+            <br />
             <ul>
-                <li><?php echo elgg_echo('gcx:messaging:login:list1'); ?></li>
-                <li><?php echo elgg_echo('gcx:messaging:login:list2'); ?></li>
-                <li><?php echo elgg_echo('gcx:messaging:login:list3'); ?></li>
-                <li><?php echo elgg_echo('gcx:messaging:login:list4'); ?></li>
+                <li><?php echo elgg_echo('gcx:messaging:login:decomlist1'); ?></li>
+                <li><?php echo elgg_echo('gcx:messaging:login:decomlist2'); ?></li>
+                <li><?php echo elgg_echo('gcx:messaging:login:decomlist3'); ?></li>
             </ul>
-            <p><?php echo elgg_echo('gcx:messaging:registration:cta'); ?></p>
+            <br />
+            <p><?php echo elgg_echo('gcx:messaging:login:decom'); ?></p>
+            <br />
+            <p><?php echo elgg_echo('gcx:messaging:login:creategcx'); ?></p>
+            <p><?php echo elgg_echo('gcx:messaging:login:registergcx'); ?></p>
         </div>
     </div>
 </div>

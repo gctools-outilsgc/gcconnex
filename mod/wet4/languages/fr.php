@@ -1694,12 +1694,17 @@ return array(
 
 /*gcx Messaging*/
 /*gcx Messaging Login */
-'gcx:messaging:login:intro' => 'Saviez-vous que <a href="https://www.gcx-gce.gc.ca/" target="_blank">GCéchange</a> est officiellement arrivé?',
-'gcx:messaging:login:list' => 'Il vous suffit d’ouvrir une séance pour :',
+'gcx:messaging:login:intro' => 'Importantes mises à jour à venir!',
+'gcx:messaging:login:list' => 'Le 1er avril 2025, GCÉchange succédera officiellement à GCConnex en tant que nouvel espace de collaboration amélioré du gouvernement du Canada. Grâce à sa solution d’authentification unique, il vous suffira d’ouvrir une seule session pour bénéficier des avantages suivants:',
 'gcx:messaging:login:list1' => 'clavarder avec des collègues du gouvernement du Canada à l’aide de Microsoft Teams;',
 'gcx:messaging:login:list2' => 'corédiger des documents avec des fonctionnaires d’autres ministères;',
 'gcx:messaging:login:list3' => 'consulter les communications de votre ministère, mais aussi celles de l’ensemble du gouvernement du Canada; ',
-'gcx:messaging:login:list4' => 'accéder à un contenu personnalisé pour vous.',
+'gcx:messaging:login:decomlist1' => 'une collaboration en temps réel sur des documents;',
+'gcx:messaging:login:decomlist2' => 'un espace de collaboration gratuit, sécurisé et convivial, conçu exclusivement pour les fonctionnaires;',
+'gcx:messaging:login:decomlist3' => 'un accès et une sécurité inégalés, et ce, sans avoir à ouvrir plusieurs sessions.',
+'gcx:messaging:login:decom' => '<b> Veuillez transférer votre contenu GCConnex vers une collectivité GCÉchange avant le 1er avril 2025. </b> Soyez à l’avant-garde de l’innovation gouvernementale et optimisez vos efforts de collaboration en passant à GCÉchange dès aujourd’hui!',
+'gcx:messaging:login:creategcx' => '<a href="https://gcxgce.sharepoint.com/sites/Communities/SitePages/fr/Create-a-community.aspx" target="_blank">Créez votre collectivité GCÉchange dès maintenant</a>.',
+'gcx:messaging:login:registergcx' => 'Vous n’êtes pas encore inscrit à GCÉchange? <a href="https://www.gcx-gce.gc.ca/" target="_blank">Inscrivez-vous facilement et sans mot de passe</a>.',
 
 /*gcx Messaging Registration */
 'gcx:messaging:registration:intro' => 'Vous cherchez des moyens de communiquer et de collaborer avec vos collègues du gouvernement du Canada?',
