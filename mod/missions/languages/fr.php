@@ -669,9 +669,11 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:settings:analytics_on" =>   "Afficher l'onglet des analytiques?",
 "missions:cannot_cancel_mission_with_participants" =>     "Veuillez supprimer tout participant actif et tout participant auxquels vous avez envoyé une offre avant la désactivation de cette possibilité.",
 "missions:required" =>    "(requis)",
-"missions:placeholder_a" =>   "Bienvenue de Carrefour de carrière! Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés. On encourage les employés à s'inscrire aux types de possibilité de perfectionnement professionnel et de mobilité au même niveau dans leur profil afin de pleinement profiter de cet outil. <a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation</a>.
-</br></br>
-Joignez le groupe du <a href='https://gcconnex.gc.ca/groups/profile/7617072'>Carrefour de carrière</a> pour avoir accès aux lignes directrices, définitions, tutoriels et mises à jour!",
+"missions:placeholder_a" =>   "<b>Le Carrefour de carrière déménage!</b> En effet, il sera migré le 1er avril 2025 vers GCÉchange, la nouvelle plateforme de collaboration pangouvernementale. 
+D’ici là, le Carrefour de carrière demeurera accessible dans GCConnex. Vous pourrez toujours y découvrir les possibilités de perfectionnement professionnel, communiquer avec des mentors et consulter les offres d’emploi du gouvernement du Canada.
+<br>
+<br>
+Merci de prendre part à cette transition prometteuse. Pour toute question, écrivez-nous à <b><a href='support-soutien@gcx-gce.gc.ca'>support-soutien@gcx-gce.gc.ca</a></b>",
 
 /*Notifictaions*/
         "missions:new_micromission_notification"=>"Une nouvelle opportunité a été créée dans la Carrefour de carrière",

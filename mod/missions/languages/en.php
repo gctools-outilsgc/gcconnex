@@ -674,11 +674,12 @@ Should you no longer be available to participate in this opportunity, please wit
 "missions:settings:analytics_on" =>  "Display analytics tab?",
 "missions:cannot_cancel_mission_with_participants" => "Please remove all active participants and all applicants to whom you have sent an offer before deactivating this opportunity.",
 "missions:required" =>    "(required)",
-"missions:placeholder_a" =>   "Welcome to the Career Marketplace! This is a tool that quickly matches at-level mobility (i.e. micro-missions and job swapping) and development (i.e. mentoring and job shadowing) opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles.
-Employees are encouraged to opt in to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
-<a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Please click here for more information, tutorials and guidance materials</a>.
-</br></br>
-Join the <a href='https://gcconnex.gc.ca/groups/profile/7617072'>Career Marketplace group</a> for guidelines, definitions, tutorials and updates!",
+"missions:placeholder_a" =>   "<b>The Career Marketplace is moving!</b> The Career Marketplace is moving to GCXchange, the new government-wide collaboration platform. 
+The Career Marketplace will continue to be available on GCConnex until it launches on GCXchange by April 1, 2025. 
+There will be no interruptions! You can continue to explore career development opportunities, connect with mentors, and browse postings from across the GC.
+<br>
+<br>
+Thank you for being part of this exciting transition. If you have questions, reach out to us at <b><a href='support-soutien@gcx-gce.gc.ca'>support-soutien@gcx-gce.gc.ca</a></b>",
 "missions:placeholder_d2" =>  " ",
 
 "missions:per_day" => "per day",
