@@ -5,6 +5,7 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
+	'cp_newsletter:NO_notent_notifications' => "Les notifications des contenus nouveaux sont désactivées, utilisez le résumé ou le fil des nouvelle",
 
 	'cp_notification:group_invite' => "<p>%s</p><p>Cliquez le lien suivant pour consulter votre invitation (vous devez être connecté pour voir cette page) : %s</p>
 	<p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un groupe</a> » ou <a href='%s'>contactez-nous</a></p>",

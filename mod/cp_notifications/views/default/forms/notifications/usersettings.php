@@ -20,6 +20,7 @@ $title = elgg_echo('cp_notifications:heading:page_title');
 
 
 $content .= "<input type='text' style='visibility:hidden' name='user_guid' value='".$user->getGUID()."'> ";
+$content .= "<div class='warning alert-warning col-sm-12'><p>".elgg_echo('cp_newsletter:NO_content_notifications')."</p></div>";
 
 /// DIGEST OPTION FOR USER NOTIFICATIONS
 $enable_digest = elgg_get_plugin_setting('cp_notifications_enable_bulk','cp_notifications');
