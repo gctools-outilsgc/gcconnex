@@ -182,6 +182,8 @@ function download_full_discussion($page){
 	$guid = $page[0];
 	$topic = get_entity($guid);
 	$title = gc_explode_translation($topic->title, 'en') . " | " . gc_explode_translation($topic->title, 'fr');
+	$OP = get_entity($topic->owner_guid);
+	$topic_timestamp = date('c', $topic->time_created);
 	$replies = elgg_get_entities(array(
 		"type" => "object",
 		"subtype" => "discussion_reply",
@@ -194,6 +196,7 @@ function download_full_discussion($page){
 	$file = "";
 
 	$file .= "discussion #: $guid \n";
+	$file .= "{$OP->username}  -  $topic_timestamp\n";
 	$file .= "Title | Titre: $title \n";
 	$file .= "EN:\n {$description['en']} \n";
 	$file .= "FR:\n {$description['fr']} \n";
@@ -201,7 +204,8 @@ function download_full_discussion($page){
 
 	foreach ($replies as $reply) {
 		$user = get_entity($reply->owner_guid);
-		$file .= "{$user->username}:\n {$reply->description} \n---\n";
+		$reply_timestamp = date('c', $reply->time_created);
+		$file .= "{$user->username} - $reply_timestamp:\n {$reply->description} \n---\n";
 	}
 
 	$mime = "application/octet-stream";
