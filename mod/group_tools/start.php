@@ -175,6 +175,42 @@ function group_tools_init() {
 	elgg_register_action("group_tools/order_groups", dirname(__FILE__) . "/actions/order_groups.php", "admin");
 	
 	elgg_register_action("discussion/toggle_status", dirname(__FILE__) . "/actions/discussion/toggle_status.php");
+	elgg_register_page_handler('download_full_discussion', 'download_full_discussion');
+}
+
+function download_full_discussion($page){
+	$guid = $page[0];
+	$topic = get_entity($guid);
+	$title = gc_explode_translation($topic->title, 'en');
+	$replies = elgg_get_entities(array(
+		"type" => "object",
+		"subtype" => "discussion_reply",
+		"container_guid" => $topic->getGUID(),
+		"count" => false,
+	));
+
+	$file = "";
+
+	$file .= "discussion ID: $guid \n";
+	$file .= "Title: $title \n";
+	$file .= gc_explode_translation($topic->description, 'en') . "\n";
+	$file .= "------\n";
+
+	foreach ($replies as $reply) {
+		$user = get_entity($reply->owner_guid);
+		$file .= "{$user->username}:\n {$reply->description} \n---\n";
+	}
+
+	$mime = "application/octet-stream";
+	header("Pragma: public");
+
+	header("Content-type: $mime");
+	header("Content-Disposition: attachment; filename=\"$title.txt\"");
+	flush();
+	echo $file;
+	exit;
+
+	return 1;
 }
 
 /**
