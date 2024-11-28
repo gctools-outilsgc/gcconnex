@@ -181,19 +181,22 @@ function group_tools_init() {
 function download_full_discussion($page){
 	$guid = $page[0];
 	$topic = get_entity($guid);
-	$title = gc_explode_translation($topic->title, 'en');
+	$title = gc_explode_translation($topic->title, 'en') . " | " . gc_explode_translation($topic->title, 'fr');
 	$replies = elgg_get_entities(array(
 		"type" => "object",
 		"subtype" => "discussion_reply",
 		"container_guid" => $topic->getGUID(),
 		"count" => false,
 	));
+	$description["en"] = gc_explode_translation($topic->description, 'en');
+	$description["fr"] = gc_explode_translation($topic->description, 'fr');
 
 	$file = "";
 
-	$file .= "discussion ID: $guid \n";
-	$file .= "Title: $title \n";
-	$file .= gc_explode_translation($topic->description, 'en') . "\n";
+	$file .= "discussion #: $guid \n";
+	$file .= "Title | Titre: $title \n";
+	$file .= "EN:\n {$description['en']} \n";
+	$file .= "FR:\n {$description['fr']} \n";
 	$file .= "------\n";
 
 	foreach ($replies as $reply) {
@@ -205,7 +208,7 @@ function download_full_discussion($page){
 	header("Pragma: public");
 
 	header("Content-type: $mime");
-	header("Content-Disposition: attachment; filename=\"$title.txt\"");
+	header("Content-Disposition: attachment; filename=\"$guid.txt\"");
 	flush();
 	echo $file;
 	exit;
