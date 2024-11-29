@@ -188,7 +188,11 @@ function download_full_discussion($page){
 		"type" => "object",
 		"subtype" => "discussion_reply",
 		"container_guid" => $topic->getGUID(),
+		"preload_owners" => true,
 		"count" => false,
+		"offset" => 0,
+		"limit" => 0,
+
 	));
 	$description["en"] = html_entity_decode(gc_explode_translation($topic->description, 'en'));
 	$description["fr"] = html_entity_decode(gc_explode_translation($topic->description, 'fr'));
