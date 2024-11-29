@@ -181,7 +181,7 @@ function group_tools_init() {
 function download_full_discussion($page){
 	$guid = $page[0];
 	$topic = get_entity($guid);
-	$title = gc_explode_translation($topic->title, 'en') . " | " . gc_explode_translation($topic->title, 'fr');
+	$title = html_entity_decode(gc_explode_translation($topic->title, 'en')) . " | " . html_entity_decode(gc_explode_translation($topic->title, 'fr'));
 	$OP = get_entity($topic->owner_guid);
 	$topic_timestamp = date('c', $topic->time_created);
 	$replies = elgg_get_entities(array(
@@ -190,8 +190,8 @@ function download_full_discussion($page){
 		"container_guid" => $topic->getGUID(),
 		"count" => false,
 	));
-	$description["en"] = gc_explode_translation($topic->description, 'en');
-	$description["fr"] = gc_explode_translation($topic->description, 'fr');
+	$description["en"] = html_entity_decode(gc_explode_translation($topic->description, 'en'));
+	$description["fr"] = html_entity_decode(gc_explode_translation($topic->description, 'fr'));
 
 	$file = "";
 
@@ -205,7 +205,8 @@ function download_full_discussion($page){
 	foreach ($replies as $reply) {
 		$user = get_entity($reply->owner_guid);
 		$reply_timestamp = date('c', $reply->time_created);
-		$file .= "{$user->username} - $reply_timestamp:\n {$reply->description} \n---\n";
+		$reply_text = html_entity_decode($reply->description);
+		$file .= "{$user->username} - $reply_timestamp:\n $reply_text \n---\n";
 	}
 
 	$mime = "application/octet-stream";
