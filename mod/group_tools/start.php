@@ -217,7 +217,7 @@ function download_full_discussion($page){
 	header("Pragma: public");
 
 	header("Content-type: $mime");
-	header("Content-Disposition: attachment; filename=\"$guid.txt\"");
+	header("Content-Disposition: attachment; filename=\"$guid.html\"");
 	flush();
 	echo $file;
 	exit;
