@@ -34,25 +34,6 @@
 		<priority>after</priority>
 	</requires>
 
-	<requires>
-		<type>plugin</type>
-		<name>comment</name>
-	</requires>
-	<requires>
-		<type>priority</type>
-		<plugin>comment</plugin>
-		<priority>after</priority>
-	</requires>
-
-	<requires>
-		<type>plugin</type>
-		<name>discussion</name>
-	</requires>
-	<requires>
-		<type>priority</type>
-		<plugin>discussion</plugin>
-		<priority>after</priority>
-	</requires>
 
 	<requires>
 		<type>plugin</type>
@@ -101,6 +82,16 @@
 	<requires>
 		<type>priority</type>
 		<plugin>polls</plugin>
+		<priority>after</priority>
+	</requires>
+
+	<requires>
+		<type>plugin</type>
+		<name>questions</name>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<plugin>questions</plugin>
 		<priority>after</priority>
 	</requires>
 
