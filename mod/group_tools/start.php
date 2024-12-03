@@ -199,18 +199,18 @@ function download_full_discussion($page){
 
 	$file = "";
 
-	$file .= "discussion #: $guid \n";
-	$file .= "{$OP->username}  -  $topic_timestamp\n";
-	$file .= "Title | Titre: $title \n";
-	$file .= "EN:\n {$description['en']} \n";
-	$file .= "FR:\n {$description['fr']} \n";
-	$file .= "------\n";
+	$file .= "discussion #: $guid <br />\n";
+	$file .= "{$OP->username}  -  $topic_timestamp<br />\n";
+	$file .= "Title | Titre: $title <br />\n";
+	$file .= "EN:\n {$description['en']} <br />\n";
+	$file .= "FR:\n {$description['fr']} <br />\n";
+	$file .= "<hr /><hr /><br />\n";
 
 	foreach ($replies as $reply) {
 		$user = get_entity($reply->owner_guid);
 		$reply_timestamp = date('c', $reply->time_created);
 		$reply_text = html_entity_decode($reply->description);
-		$file .= "{$user->username} - $reply_timestamp:\n $reply_text \n---\n";
+		$file .= "{$user->username} - $reply_timestamp:<br />\n $reply_text \n<hr /><br />";
 	}
 
 	$mime = "application/octet-stream";
