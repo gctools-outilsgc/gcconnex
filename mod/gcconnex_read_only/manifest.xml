@@ -96,16 +96,6 @@
 	</requires>
 
 	<requires>
-		<type>plugin</type>
-		<name>b_extended_profile</name>
-	</requires>
-	<requires>
-		<type>priority</type>
-		<plugin>b_extended_profile</plugin>
-		<priority>after</priority>
-	</requires>
-
-	<requires>
 		<type>priority</type>
 		<plugin>wet4</plugin>
 		<priority>after</priority>
