@@ -5,6 +5,7 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/?utm_source=notification_digest&utm_medium=email";
 
 $english = array(
+	'cp_newsletter:NO_content_notifications' => "New content notifications is disabled, use the digest or newsfeed",
 
 	'cp_notification:group_invite' => "<p>%s</p><p>Click the following link to view your invitation (you must be logged in to view this page): %s</p>
 	<p>Need help? See the article '<a href='%s'>How to join a group?</a>' or <a href='%s'>contact us</a></p>",

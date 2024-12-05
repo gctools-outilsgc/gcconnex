@@ -1441,7 +1441,7 @@ function cp_create_notification($event, $type, $object) {
 					if (strcmp($user_setting, "set_digest_yes") == 0) {
 						create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
 				
-					} else {
+					} else if ( elgg_get_plugin_setting( 'cp_notifications_disable_content_notifications', 'cp_notifications' ) != 'yes' || $switch_case == 'mission' ) {
 				
 						$template = elgg_view('cp_notifications/email_template', $message);
 				
@@ -1457,7 +1457,7 @@ function cp_create_notification($event, $type, $object) {
 	}
 
 	/// send site notifications
-	if (is_array($to_recipients_site)) {
+	if (is_array($to_recipients_site) && (elgg_get_plugin_setting( 'cp_notifications_disable_content_notifications', 'cp_notifications' )  != 'yes' || $switch_case == 'mission') ) {
 		
 		foreach ($to_recipients_site as $to_recipient) {
 			$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');

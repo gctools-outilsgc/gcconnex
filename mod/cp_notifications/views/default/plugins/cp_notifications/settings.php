@@ -23,6 +23,9 @@ if (!isset($vars['entity']->cp_notifications_sidebar))
 if (!isset($vars['entity']->cp_enable_minor_edit))
 	$vars['entity']->cp_enable_minor_edit = 'no';
 
+if (!isset($vars['entity']->cp_notifications_disable_content_notifications))
+	$vars['entity']->cp_notifications_disable_content_notifications = 'no';
+
 
 $body = "<br/>";
 
@@ -87,6 +90,16 @@ $body .=  elgg_view('input/select', array(
 	'name' => 'params[cp_enable_minor_edit]',
 	'options_values' => array( 'no' => elgg_echo('option:no'), 'yes' => elgg_echo('option:yes') ),
 	'value' => $vars['entity']->cp_enable_minor_edit,
+));
+
+$body .= "<br/><br/>";
+
+// disable new content notifications
+$body .= "<label> DISABLE all new content notifications, excluding careers marketplace </label>";
+$body .= elgg_view('input/select', array(
+	'name' => 'params[cp_notifications_disable_content_notifications]',
+	'options_values' => array( 'no' => elgg_echo('option:no'), 'yes' => elgg_echo('option:yes')	),
+	'value' => $vars['entity']->cp_notifications_disable_content_notifications,
 ));
 
 $body .= "<br/><br/>";
