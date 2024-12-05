@@ -117,11 +117,11 @@
 
 	<requires>
 		<type>plugin</type>
-		<name>photos</name>
+		<name>tidypics</name>
 	</requires>
 	<requires>
 		<type>priority</type>
-		<plugin>photos</plugin>
+		<plugin>tidypics</plugin>
 		<priority>after</priority>
 	</requires>
 
