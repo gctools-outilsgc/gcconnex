@@ -2,6 +2,9 @@
 
 return array(
 
+// connex decommission
+'decommission:discussion:export' => 'Export the Discussion',
+
 // general
 'group_tools:decline' => "Decline",
 'group_tools:revoke' => "Revoke",
