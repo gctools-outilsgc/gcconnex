@@ -175,6 +175,54 @@ function group_tools_init() {
 	elgg_register_action("group_tools/order_groups", dirname(__FILE__) . "/actions/order_groups.php", "admin");
 	
 	elgg_register_action("discussion/toggle_status", dirname(__FILE__) . "/actions/discussion/toggle_status.php");
+	elgg_register_page_handler('download_full_discussion', 'download_full_discussion');
+}
+
+function download_full_discussion($page){
+	$guid = $page[0];
+	$topic = get_entity($guid);
+	$title = html_entity_decode(gc_explode_translation($topic->title, 'en')) . " | " . html_entity_decode(gc_explode_translation($topic->title, 'fr'));
+	$OP = get_entity($topic->owner_guid);
+	$topic_timestamp = date('c', $topic->time_created);
+	$replies = elgg_get_entities(array(
+		"type" => "object",
+		"subtype" => "discussion_reply",
+		"container_guid" => $topic->getGUID(),
+		"preload_owners" => true,
+		"count" => false,
+		"offset" => 0,
+		"limit" => 0,
+
+	));
+	$description["en"] = html_entity_decode(gc_explode_translation($topic->description, 'en'));
+	$description["fr"] = html_entity_decode(gc_explode_translation($topic->description, 'fr'));
+
+	$file = "";
+
+	$file .= "discussion #: $guid <br />\n";
+	$file .= "{$OP->username}  -  $topic_timestamp<br />\n";
+	$file .= "Title | Titre: $title <br />\n";
+	$file .= "EN:\n {$description['en']} <br />\n";
+	$file .= "FR:\n {$description['fr']} <br />\n";
+	$file .= "<hr /><hr /><br />\n";
+
+	foreach ($replies as $reply) {
+		$user = get_entity($reply->owner_guid);
+		$reply_timestamp = date('c', $reply->time_created);
+		$reply_text = html_entity_decode($reply->description);
+		$file .= "{$user->username} - $reply_timestamp:<br />\n $reply_text \n<hr /><br />";
+	}
+
+	$mime = "application/octet-stream";
+	header("Pragma: public");
+
+	header("Content-type: $mime");
+	header("Content-Disposition: attachment; filename=\"$guid.html\"");
+	flush();
+	echo $file;
+	exit;
+
+	return 1;
 }
 
 /**
