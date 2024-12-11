@@ -447,10 +447,10 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 			));
 			$result[] = ElggMenuItem::factory(array(
 				"name" => "download_full_discussion",
-				"text" => '<span class="fa fa-download fa-lg icon-unsel" style="color:blue;"><span class="wb-inv">Export</span></span>',
+				"text" => '<span class="fa fa-download fa-lg icon-unsel" style="color:#137991;"><span class="wb-inv">Export</span></span>',
 				"href" => "download_full_discussion/" . $entity->getGUID(),
 				"title" => elgg_echo("decommission:discussion:export"),
-				"priority" => 202
+				"priority" => 10
 			));
 			$result[] = ElggMenuItem::factory(array(
 				"name" => "status_change_close",
