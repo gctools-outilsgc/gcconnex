@@ -19,7 +19,7 @@ return array(
 	'wet:youarehere'=>"You are here:",
 	'wet:errmess' => "<h3 class='h3'>The form could not be submitted because errors were found.</h3>",
 
-	'wet:footAbout' => 'About GCconnex',
+	'wet:footAbout' => 'GCconnex is Moving',
 	'wet:footTerms' => 'Terms and Conditions of Use',
 	'wet:footPrivacy' => 'Privacy Policy',
 	'wet:footTitleAbout' => 'About',

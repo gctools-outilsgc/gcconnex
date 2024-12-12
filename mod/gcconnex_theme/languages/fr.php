@@ -21,7 +21,7 @@ return array(
     'wet:youarehere' => "Vous êtes ici :",
     'wet:errmess' => "<h3 class='h3'>Le formulaire n'a pu être soumis, car une ou des erreurs ont été trouvées.</h3>",
 
-    'wet:footAbout' => 'Au sujet de GCconnex',
+    'wet:footAbout' => 'GCConnex Déménage',
     'wet:footTerms' => 'Modalités',
     'wet:footPrivacy'	 => 'Politique de confidentialité',
     'wet:footTitleAbout' => 'Infos',
