@@ -182,6 +182,8 @@ function download_full_discussion($page){
 	$guid = $page[0];
 	$topic = get_entity($guid);
 	$title = html_entity_decode(gc_explode_translation($topic->title, 'en')) . " | " . html_entity_decode(gc_explode_translation($topic->title, 'fr'));
+	if ( html_entity_decode(gc_explode_translation($topic->title, 'en')) == html_entity_decode(gc_explode_translation($topic->title, 'fr')) )
+		$title = html_entity_decode(gc_explode_translation($topic->title, 'en'));
 	$OP = get_entity($topic->owner_guid);
 	$topic_timestamp = date('c', $topic->time_created);
 	$replies = elgg_get_entities(array(
@@ -203,8 +205,14 @@ function download_full_discussion($page){
 	$file .= "<h2>Discussion Number | Numéro de discussion</h2> $guid <br />\n";
 	$file .= "<h2>Posted by | Publiér par</h2> {$OP->username}, {$OP->email} - $topic_timestamp <br />\n";
 	$file .= "<hr /><h2>Post| Publication</h2>\n";
-	$file .= "<h3>English</h3>\n <div style='border-bottom: dashed 2px'>{$description['en']}</div><br />\n";
-	$file .= "<h3>Français</h3>\n {$description['fr']} <br />\n";
+
+	if ( $description['en'] == $description['fr'] )
+		$file .= "{$description['en']}<br />\n";
+	else {
+		$file .= "<h3>English</h3>\n <div style='border-bottom: dashed 2px'>{$description['en']}</div><br />\n";
+		$file .= "<h3>Français</h3>\n {$description['fr']} <br />\n";
+	}
+
 	$file .= "<hr /><h2>Replies | Réponses</h2>\n";
 
 	foreach ($replies as $reply) {
