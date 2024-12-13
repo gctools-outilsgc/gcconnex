@@ -26,8 +26,8 @@ for (var i = 0; i < cookie_var.length; i++) {
  * termes, qfp, confidentialite, a_propos
  */
 
-var en_list = ["decomm-en"];
-var fr_list = ["decomm-fr"];
+var en_list = ["gcconnex_is_moving"];
+var fr_list = ["gcconnex_demenage"];
 var pathname = (window.location.pathname).replace(/\//g, "");
 
 // if english is selected
