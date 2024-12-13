@@ -32,9 +32,7 @@ var pathname = (window.location.pathname).replace(/\//g, "");
 
 // if english is selected
 if (selected_language == 'en') {
-	if (en_list.indexOf(pathname) > -1) {
-		// do nothing
-	} else {
+	if (en_list.indexOf(pathname) < 0 && fr_list.indexOf(pathname) > -1) {
 		var fr_index = fr_list.indexOf(pathname);
 		var site_root = elgg.config.wwwroot;
 		window.location.href = site_root + en_list[fr_index];
@@ -42,10 +40,7 @@ if (selected_language == 'en') {
 
 // if french is selected
 } else if (selected_language == 'fr') {
-
-	if (fr_list.indexOf(pathname) > -1) {
-		// do nothing
-	} else {
+	if (fr_list.indexOf(pathname) < 0 && en_list.indexOf(pathname) > -1) {
 		var en_index = en_list.indexOf(pathname);
 		var site_root = elgg.config.wwwroot;
 		window.location.href = site_root + fr_list[en_index];
@@ -53,9 +48,7 @@ if (selected_language == 'en') {
 
 // if undefined, default to english
 } else {
-	if (en_list.indexOf(pathname) > -1) {
-		// do nothing
-	} else {
+	if (en_list.indexOf(pathname) < 0 && fr_list.indexOf(pathname) > -1) {
 		var fr_index = fr_list.indexOf(pathname);
 		var site_root = elgg.config.wwwroot;
 		window.location.href = site_root + en_list[fr_index];
