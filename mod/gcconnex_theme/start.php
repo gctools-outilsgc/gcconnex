@@ -12,8 +12,8 @@ elgg_register_event_handler('init', 'system', 'gcconnex_theme_init');
 
 function gcconnex_theme_init()
 {
-    elgg_register_page_handler('decomm-en', 'expages_page_handler');
-    elgg_register_page_handler('decomm-fr', 'expages_page_handler');
+    elgg_register_page_handler('gcconnex_is_moving', 'expages_page_handler');
+    elgg_register_page_handler('gcconnex_demenage', 'expages_page_handler');
 
 	elgg_register_page_handler('hello', 'gcconnex_theme_page_handler');
 	elgg_register_plugin_hook_handler('register', 'menu:site', 'career_menu_hander');
