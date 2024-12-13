@@ -192,25 +192,26 @@ function download_full_discussion($page){
 		"count" => false,
 		"offset" => 0,
 		"limit" => 0,
-
+		"reverse_order_by" => true,
 	));
 	$description["en"] = html_entity_decode(gc_explode_translation($topic->description, 'en'));
 	$description["fr"] = html_entity_decode(gc_explode_translation($topic->description, 'fr'));
 
-	$file = "";
+	$file = "<h1>Discussion Posts and All Replies | Message de discussion et toutes les réponses</h1>";
 
-	$file .= "discussion #: $guid <br />\n";
-	$file .= "{$OP->username}  -  $topic_timestamp<br />\n";
-	$file .= "Title | Titre: $title <br />\n";
-	$file .= "EN:\n {$description['en']} <br />\n";
-	$file .= "FR:\n {$description['fr']} <br />\n";
-	$file .= "<hr /><hr /><br />\n";
+	$file .= "<h2>Discussion Title | Titre de la discussion</h2> $title <br />\n";
+	$file .= "<h2>Discussion Number | Numéro de discussion</h2> $guid <br />\n";
+	$file .= "<h2>Posted by | Publiér par</h2> {$OP->username}, {$OP->email} - $topic_timestamp <br />\n";
+	$file .= "<hr /><h2>Post| Publication</h2>\n";
+	$file .= "<h3>English</h3>\n <div style='border-bottom: dashed 2px'>{$description['en']}</div><br />\n";
+	$file .= "<h3>Français</h3>\n {$description['fr']} <br />\n";
+	$file .= "<hr /><h2>Replies | Réponses</h2>\n";
 
 	foreach ($replies as $reply) {
 		$user = get_entity($reply->owner_guid);
 		$reply_timestamp = date('c', $reply->time_created);
 		$reply_text = html_entity_decode($reply->description);
-		$file .= "{$user->username} - $reply_timestamp:<br />\n $reply_text \n<hr /><br />";
+		$file .= "<h3>{$user->username}, {$user->email} - $reply_timestamp</h3> <div style='border-bottom: dashed 2px'> $reply_text </div><br />\n";
 	}
 
 	$mime = "application/octet-stream";
