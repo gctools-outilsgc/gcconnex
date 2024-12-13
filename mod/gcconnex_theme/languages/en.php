@@ -50,6 +50,12 @@ return array(
 	'wet:jobs:link' => 'GC Jobs <span class="fa fa-external-link mrgn-lft-sm"></span>',
 	'wet:jobs:href' => "https://www.canada.ca/en/public-service-commission/jobs/services/gc-jobs.html",
 
+	/**
+	 * Decommission
+	 */
+	'wet:footDecomm' => 'GCconnex is Moving', 
+	'expages:decomm-en' => 'GCconnex is Moving to GCXchange!', 
+
 	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/
 	'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations across Canada",
 	'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions happening right now",

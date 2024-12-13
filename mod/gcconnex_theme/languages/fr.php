@@ -53,6 +53,12 @@ return array(
 
     "wet:messagedd:no_results"=>"Vous êtes tous à jour!",
 
+	/**
+	 * Decommission
+	 */
+	'wet:footDecomm' => 'GCconnex Déménage', 
+	'expages:decomm-fr' => 'GCconnex passe à GCÉchange!', 
+
     'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations de toutes les regions du Canada",
     'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions qui se passent à l’instant",
     'img:desc:fr' => 'Description de l\'image en français',
