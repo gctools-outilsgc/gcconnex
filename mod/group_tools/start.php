@@ -204,7 +204,7 @@ function download_full_discussion($page){
 	$file .= "<h2>Discussion Title | Titre de la discussion</h2> $title <br />\n";
 	$file .= "<h2>Discussion Number | Numéro de discussion</h2> $guid <br />\n";
 	$file .= "<h2>Posted by | Publiér par</h2> {$OP->username}, {$OP->email} - $topic_timestamp <br />\n";
-	$file .= "<hr /><h2>Post| Publication</h2>\n";
+	$file .= "<hr /><h2>Post | Publication</h2>\n";
 
 	if ( $description['en'] == $description['fr'] )
 		$file .= "{$description['en']}<br />\n";
