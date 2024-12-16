@@ -7,6 +7,7 @@
 // footer
 
 $site_url = elgg_get_site_url();
+$decomm = $site_url .'gcconnex_is_moving';
 $about = $site_url .'about-a_propos';
 $terms = $site_url .'terms';
 $priv = $site_url .'privacy-confidentialite';
@@ -16,6 +17,7 @@ if (_elgg_services()->session->get('language') == 'en') {
 	$graphic_lang = 'en';
 } else {
 	$graphic_lang = 'fr';
+	$decomm = $site_url .'gcconnex_demenage';
 }
 
 if(elgg_get_plugin_setting("custom_domain_url", "freshdesk_help")){
@@ -38,11 +40,15 @@ $feedbackText= elgg_echo('wet:feedbackText');
 				</h3>
 				<ul class="list-unstyled">
 					<li>
+						<a href="<?php echo $decomm;?>">
+							<?php echo elgg_echo('wet:footDecomm');?>
+						</a>
+					</li>
+					<li>
 						<a href="<?php echo $about;?>">
 							<?php echo elgg_echo('wet:footAbout');?>
 						</a>
 					</li>
-
 					<li>
 						<a href="<?php echo $priv;?>">
 							<?php echo elgg_echo('wet:footPrivacy');?>
