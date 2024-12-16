@@ -47,6 +47,7 @@ $feedbackText= elgg_echo('wet:feedbackText');
 					<li>
 						<a href="<?php echo $about;?>">
 							<?php echo elgg_echo('wet:footAbout');?>
+						</a>
 					</li>
 					<li>
 						<a href="<?php echo $priv;?>">
