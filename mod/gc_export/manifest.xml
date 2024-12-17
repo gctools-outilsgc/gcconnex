@@ -19,11 +19,6 @@
 		<type>plugin</type>
 		<name>group_tools</name>
 	</requires>
-	<requires>
-		<type>priority</type>
-		<plugin>group_tools</plugin>
-		<priority>after</priority>
-	</requires>
 
 	<category>decommission</category>
 </plugin_manifest>
