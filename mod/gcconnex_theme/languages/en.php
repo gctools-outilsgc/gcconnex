@@ -54,7 +54,7 @@ return array(
 	 * Decommission
 	 */
 	'wet:footDecomm' => 'GCconnex is Moving', 
-	'expages:gcconnex_is_moving' => 'GCconnex is Moving to GCXchange!', 
+	'expages:gcconnex_is_moving' => 'GCConnex is Moving to GCXchange! | GCConnex passe à GCÉchange!', 
 
 	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/
 	'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations across Canada",
