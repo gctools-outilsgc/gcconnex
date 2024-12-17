@@ -446,13 +446,6 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 				"item_class" => ($entity->status == "closed") ? "" : "hidden"
 			));
 			$result[] = ElggMenuItem::factory(array(
-				"name" => "download_full_discussion",
-				"text" => '<span class="fa fa-download fa-lg icon-unsel" style="color:#137991;"><span class="wb-inv">Export</span></span>',
-				"href" => "download_full_discussion/" . $entity->getGUID(),
-				"title" => elgg_echo("decommission:discussion:export"),
-				"priority" => 10
-			));
-			$result[] = ElggMenuItem::factory(array(
 				"name" => "status_change_close",
 				"text" => '<span class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">Close</span></span>', //elgg_echo("close");,
 				"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
