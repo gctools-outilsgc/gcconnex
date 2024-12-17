@@ -54,6 +54,7 @@ return array(
 	 * Decommission
 	 */
 	'wet:footDecomm' => 'GCconnex is Moving', 
+	'expages:gcconnex_is_moving' => 'GCConnex is Moving to GCXchange! | GCConnex passe à GCÉchange!',
 	'expages:gcconnex_demenage' => 'GCConnex is Moving to GCXchange! | GCConnex passe à GCÉchange!', 
 
 	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/
