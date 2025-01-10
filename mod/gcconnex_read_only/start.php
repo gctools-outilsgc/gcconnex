@@ -21,6 +21,7 @@ function remove_add_buttons(){
     }
 }
 
+function decommission_message(){
     $site_url = elgg_get_site_url();
     echo "<div class='panel panel-default'>";
     echo "<div class='panel-body'>";
