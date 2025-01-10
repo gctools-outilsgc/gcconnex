@@ -17,7 +17,7 @@ function read_only_mode(){
 function decommission_message(){
     echo "<div class='panel panel-default'>";
     echo "<div class='panel-body'>";
-    echo "<div class='col-md-4'><img src='".$site_url."/mod/wet4/graphics/gcx_deer_in_snow.png' alt='".elgg_echo('readonly:message')."'/></div>";
+    echo "<div class='col-md-4'><img src='".$site_url."/mod/wet4/graphics/GCconnex_Decom_Final_Banner.png' alt='".elgg_echo('readonly:message')."' /></div>";
     echo "<div class='col-md-8'>";
     echo "<div class='mrgn-lft-lg'>";
     echo "<div class='mrgn-bttm-md h3 mrgn-tp-0'>". elgg_echo('readonly:message') ."</div>";
