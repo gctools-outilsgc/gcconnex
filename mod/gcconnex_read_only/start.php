@@ -23,7 +23,8 @@ function decommission_message(){
     echo "<div class='mrgn-bttm-md h3 mrgn-tp-0'>". elgg_echo('readonly:message') ."</div>";
     echo "<div class='mrgn-bttm-md'>". elgg_echo('readonly:message:1') ."</div>";
     echo "<div class='mrgn-bttm-md'>". elgg_echo('readonly:message:2') ."</div>";
-    echo "<div>". elgg_echo('readonly:message:3') ."</div>";
+    echo "<div class='mrgn-bttm-md'>". elgg_echo('readonly:message:3') ."</div>";
+    echo "<div>". elgg_echo('readonly:message:4') ."</div>";
     echo "</div>";
     echo "</div></div>";
     echo "</div>";
