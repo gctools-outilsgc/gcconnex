@@ -12,6 +12,12 @@ elgg_register_event_handler('init', 'system', 'read_only_mode');
 
 function read_only_mode(){
     elgg_register_event_handler('pagesetup', 'system', 'remove_add_buttons');
+
+    elgg_unregister_page_handler('photos');
+    elgg_register_page_handler('photos', 'tidypics_read_only');
+
+    elgg_unregister_page_handler('file');
+    elgg_register_page_handler('file', 'file_read_only_handler');
 }
 
 function remove_add_buttons(){
@@ -20,6 +26,7 @@ function remove_add_buttons(){
         elgg_unregister_menu_item('title', 'add');
     }
 }
+
 
 function decommission_message(){
     $site_url = elgg_get_site_url();
