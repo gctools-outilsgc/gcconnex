@@ -35,8 +35,8 @@ if (!$user) {
 if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) {
     if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 
-        $iconimg = '<div class="avatar-hover-edit">' . elgg_echo('gcconnex_profile:profile:edit_avatar') . '</div><img src="';
-        $iconimg .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive ">';
+        $iconimg = '<div class="avatar-hover-edit">' . elgg_echo('gcconnex_profile:profile:edit_avatar') . '</div>';
+        $iconimg .= '<img src="' . $user->getIcon('large') . '" class="avatar-profile-page img-responsive " alt="'. elgg_echo('gcconnex_profile:profile:avatar_alt') . '">';
         $size = 'medium';
 
         //Ew - change icon display to show badge if they have one

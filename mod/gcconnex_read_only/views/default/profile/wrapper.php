@@ -35,7 +35,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             );
         $latest_wire = elgg_get_entities($params);
         if ($latest_wire && count($latest_wire) > 0) {
-            //echo '<img class="profile-icons double-quotes" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/double-quotes.png">';
+            //echo '<img class="profile-icons double-quotes" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/double-quotes.png" alt="'>';
             //echo elgg_view("profile/status", array("entity" => $user));
         } ?>
 
