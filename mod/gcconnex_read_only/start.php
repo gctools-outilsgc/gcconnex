@@ -27,6 +27,37 @@ function remove_add_buttons(){
     }
 }
 
+function init_ajax_block_no_edit($title, $section, $user) {
+
+    switch($section){
+        case 'about-me':
+            $field = elgg_echo('gcconnex_profile:about_me');
+            break;
+        case 'education':
+            $field = elgg_echo('gcconnex_profile:education');
+            break;
+        case 'work-experience':
+            $field = elgg_echo('gcconnex_profile:experience');
+            break;
+        case 'skills':
+            $field = elgg_echo('gcconnex_profile:gc_skills');
+            break;
+        case 'languages':
+            $field = elgg_echo('gcconnex_profile:langs');
+            break;
+        case 'portfolio':
+            $field = elgg_echo('gcconnex_profile:portfolio');
+            break;
+    }
+
+    echo '<div class="panel">';
+    echo'<div class="panel-body profile-title">';
+    echo '<h2 class="pull-left">' . $title . '</h2>'; // create the profile section title
+
+    echo '</div>';
+     // create the profile section wrapper div for css styling
+    echo '<div id="edit-' . $section . '" tabindex="-1" class="gcconnex-profile-section-wrapper panel-body gcconnex-' . $section . '">';
+}
 
 function decommission_message(){
     $site_url = elgg_get_site_url();
