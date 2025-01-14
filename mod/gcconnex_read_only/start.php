@@ -59,18 +59,22 @@ function init_ajax_block_no_edit($title, $section, $user) {
     echo '<div id="edit-' . $section . '" tabindex="-1" class="gcconnex-profile-section-wrapper panel-body gcconnex-' . $section . '">';
 }
 
-function decommission_message(){
-    $site_url = elgg_get_site_url();
-    echo "<div class='panel panel-default'>";
-    echo "<div class='panel-body'>";
-    echo "<div class='col-md-4'><img src='" . $site_url . "mod/wet4/graphics/gcx_deer_in_snow.png' alt='" . elgg_echo('readonly:message') . "'/></div>";
-    echo "<div class='col-md-8'>";
-    echo "<div class='mrgn-lft-lg'>";
-    echo "<div class='mrgn-bttm-md h3 mrgn-tp-0'>" . elgg_echo('readonly:message') . "</div>";
-    echo "<div class='mrgn-bttm-md'>" . elgg_echo('readonly:message:1') . "</div>";
-    echo "<div class='mrgn-bttm-md'>" . elgg_echo('readonly:message:2') . "</div>";
-    echo "<div>" . elgg_echo('readonly:message:3') . "</div>";
-    echo "</div>";
-    echo "</div></div>";
-    echo "</div>";
+function decommission_message() {
+
+    echo "<div class='panel panel-default'>
+            <div class='panel-body'>
+            <div class='col-md-4'>
+                <img src='" . $site_url . "/mod/gcconnex_read_only/graphics/GCconnex_Decom_Final_Banner.png' alt='" . elgg_echo('readonly:message') . "' />
+            </div>
+            <div class='col-md-8'>
+            <div class='mrgn-lft-lg'>
+                <div class='mrgn-bttm-md h3 mrgn-tp-0'>" . elgg_echo('readonly:message') . "</div>
+                <div class='mrgn-bttm-md'>" . elgg_echo('readonly:message:1') . "</div>
+                <div class='mrgn-bttm-md'>" . elgg_echo('readonly:message:2') . "</div>
+                <div class='mrgn-bttm-md'>" . elgg_echo('readonly:message:3') . "</div>
+                <div>" . elgg_echo('readonly:message:4') . "</div>
+            </div>
+        </div>
+    </div>
+</div>";
 }
