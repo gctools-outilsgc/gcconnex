@@ -337,7 +337,7 @@ function file_read_only_handler($page) {
 			break;
 		case 'group':
 			file_register_toggle();
-			include "$file_dir/owner.php";
+			include "$file_dir_readonly/owner.php";
 			break;
 		case 'all':
 			file_register_toggle();
