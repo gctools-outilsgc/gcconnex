@@ -25,23 +25,18 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 ?>
 <div class="col-sm-12 clearfix mrgn-bttm-lg brdr-bttm">
     <div class="col-sm-4 clearfix" style="padding-top:75px" aria-label="GCconnex Decommission Image">
-        <img class="mrgn-bttm-lg" src="<?php echo $site_url .'mod/wet4/graphics/GCConnex_Decommission_Banner_Image.png'?>" style="max-width:100%" alt="<?php echo elgg_echo('gcx:messaging:alt'); ?>" />
+        <img class="mrgn-bttm-lg" src="<?php echo $site_url .'mod/gcconnex_read_only/graphics/GCConnex_Decom_Final_Banner.png'?>" style="width: 100%; height: auto; padding-right: 20px; margin-top: -25px;" alt="<?php echo elgg_echo('gcx:messaging:alt'); ?>" />
     </div>
     <div class="col-sm-8 clearfix mrgn-bttm-lg">
         <div class="mrgn-tp-lg gcx-login-holder">
             <h2 class="mrgn-bttm-md mrgn-tp-md"><?php echo elgg_echo('gcx:messaging:login:intro'); ?></h2>
-            <p><?php echo elgg_echo('gcx:messaging:login:list'); ?></p>
+            <p><?php echo elgg_echo('gcx:messaging:login:list1:decom'); ?></p>
             <br />
-            <ul>
-                <li><?php echo elgg_echo('gcx:messaging:login:decomlist1'); ?></li>
-                <li><?php echo elgg_echo('gcx:messaging:login:decomlist2'); ?></li>
-                <li><?php echo elgg_echo('gcx:messaging:login:decomlist3'); ?></li>
-            </ul>
+            <p><?php echo elgg_echo('gcx:messaging:login:list2:decom'); ?></p>
             <br />
-            <p><?php echo elgg_echo('gcx:messaging:login:decom'); ?></p>
+            <p><?php echo elgg_echo('gcx:messaging:login:list3:decom'); ?></p>
             <br />
-            <p><?php echo elgg_echo('gcx:messaging:login:creategcx'); ?></p>
-            <p><?php echo elgg_echo('gcx:messaging:login:registergcx'); ?></p>
+            <p><?php echo elgg_echo('gcx:messaging:login:list4:decom'); ?></p>
         </div>
     </div>
 </div>

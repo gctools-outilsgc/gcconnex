@@ -1694,7 +1694,7 @@ return array(
 
 /*gcx Messaging*/
 /*gcx Messaging Login */
-'gcx:messaging:login:intro' => 'Importantes mises à jour à venir!',
+'gcx:messaging:login:intro' => 'GCConnex est en mode lecture seule',
 'gcx:messaging:login:list' => 'Le 1er avril 2025, GCÉchange succédera officiellement à GCConnex en tant que nouvel espace de collaboration amélioré du gouvernement du Canada. Grâce à sa solution d’authentification unique, il vous suffira d’ouvrir une seule session pour bénéficier des avantages suivants:',
 'gcx:messaging:login:list1' => 'clavarder avec des collègues du gouvernement du Canada à l’aide de Microsoft Teams;',
 'gcx:messaging:login:list2' => 'corédiger des documents avec des fonctionnaires d’autres ministères;',
@@ -1705,6 +1705,11 @@ return array(
 'gcx:messaging:login:decom' => '<b> Veuillez transférer votre contenu GCConnex vers une collectivité GCÉchange avant le 1er avril 2025. </b> Soyez à l’avant-garde de l’innovation gouvernementale et optimisez vos efforts de collaboration en passant à GCÉchange dès aujourd’hui!',
 'gcx:messaging:login:creategcx' => '<a href="https://gcxgce.sharepoint.com/sites/Communities/SitePages/fr/Create-a-community.aspx" target="_blank">Créez votre collectivité GCÉchange dès maintenant</a>.',
 'gcx:messaging:login:registergcx' => 'Vous n’êtes pas encore inscrit à GCÉchange? <a href="https://www.gcx-gce.gc.ca/" target="_blank">Inscrivez-vous facilement et sans mot de passe</a>.',
+/*gcconnex decommission messaging*/
+'gcx:messaging:login:list1:decom' => 'Désormais, vous ne pouvez plus publier de messages ni créer de contenu dans GCConnex, à l’exception du <a href="https://www.gcconnex.gc.ca/missions/main" target="_blank">Carrefour de carrière</a>. Vous pouvez toutefois exporter et sauvegarder votre contenu existant jusqu’au <b>1er avril 2025</b>, date où GCConnex sera mis hors service.',
+'gcx:messaging:login:list2:decom' => '<a href="https://www.gcconnex.gc.ca/gcconnex_demenage" target="_blank">Directives sur l’exportation et le stockage de votre contenu GCConnex.</a>',
+'gcx:messaging:login:list3:decom' => 'Nous invitons les utilisateurs de GCConnex à migrer vers GCÉchange. La plupart des ministères ont automatiquement créé des comptes GCÉchange pour leurs employés. <a href="https://www.gcxgce.sharepoint.com/SitePages/fr/Home.aspx" target="_blank">Cliquez ici</a> pour découvrir la page d’accueil de GCÉchange.',
+'gcx:messaging:login:list4:decom' => 'Si le lien ci-dessus ne fonctionne pas, c’est peut-être parce que vous n’avez pas encore de compte. <a href="https://www.gcx-gce.gc.ca" target="_blank">Inscrivez-vous à GCÉchange dès aujourd’hui.</a>',
 
 /*gcx Messaging Registration */
 'gcx:messaging:registration:intro' => 'Vous cherchez des moyens de communiquer et de collaborer avec vos collègues du gouvernement du Canada?',

@@ -1846,7 +1846,7 @@ Please do not reply to this email.",
 
 /*gcx Messaging*/
 /*gcx Messaging Login */
-'gcx:messaging:login:intro' => 'Major updates are coming!',
+'gcx:messaging:login:intro' => 'GCConnex is in Read-Only Mode',
 'gcx:messaging:login:list' => 'On April 1, 2025, GCXchange will officially replace GCConnex as the Government of Canada’s new and improved collaboration space. With one simple sign on you can experience:',
 'gcx:messaging:login:list1' => 'Chat with GC colleagues using Microsoft Teams',
 'gcx:messaging:login:list2' => 'Co-author documents with public servants from other departments',
@@ -1857,6 +1857,11 @@ Please do not reply to this email.",
 'gcx:messaging:login:decom' => '<b> GCConnex will no longer be available after April 1, 2025, so please move your GCConnex content to a GCXchange community before that date. </b> Elevate your collaboration efforts—migrate to GCXchange today and be at the forefront of government innovation!',
 'gcx:messaging:login:creategcx' => '<a href="https://gcxgce.sharepoint.com/sites/Communities/SitePages/Create-a-community.aspx" target="_blank">Create your GCXchange community now</a>.',
 'gcx:messaging:login:registergcx' => 'Not registered to GCXchange yet? <a href="https://www.gcx-gce.gc.ca/" target="_blank">Complete your simple, password-free registration</a>.',
+/*gcconnex decom message */
+'gcx:messaging:login:list1:decom'=> 'You can no longer make new posts or create new content anywhere on GCConnex except for the <a href="https://www.gcconnex.gc.ca/missions/main" target="_blank">Career Marketplace</a>. You can export and save your existing content up until the decommission date on <b>April 1, 2025.</b>', 
+'gcx:messaging:login:list2:decom'=> '<a href="https://www.gcconnex.gc.ca/gcconnex_is_moving" target="_blank">Learn how to export and store your GCConnex content.</a>', 
+'gcx:messaging:login:list3:decom'=> 'We are encouraging all GCConnex users to move to GCXchange. Most departments have automatically created GCXchange accounts for their employees. <a href="https://www.gcxgce.sharepoint.com/SitePages/Home.aspx" target="_blank">Visit GCXchange</a> to explore the homepage.', 
+'gcx:messaging:login:list4:decom'=> 'If the GCXchange link didn’t work, you might not have a GCXchange account yet. <a href="https://www.gcx-gce.gc.ca" target="_blank">Register for an account today.</a>', 
 
 /*gcx Messaging Registration */
 'gcx:messaging:registration:intro' => 'Looking for ways to connect and collaborate with your GC colleagues?',
