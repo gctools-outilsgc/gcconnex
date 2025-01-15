@@ -38,6 +38,8 @@ if (elgg_is_logged_in()) {
 	));
 }
 
+elgg_unregister_menu_item('title', 'addphotos');
+
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
 	'content' => $content,

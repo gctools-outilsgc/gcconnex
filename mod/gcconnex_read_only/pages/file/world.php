@@ -7,7 +7,7 @@
 
 elgg_push_breadcrumb(elgg_echo('file'));
 
-$title = elgg_echo('file:all')
+$title = elgg_echo('file:all');
 
 $content = elgg_list_entities(array(
 	'type' => 'object',
@@ -21,6 +21,8 @@ $content = elgg_list_entities(array(
 
 $sidebar = file_get_type_cloud();
 $sidebar .= elgg_view('file/sidebar');
+
+elgg_unregister_menu_item('title2', 'new_folder');
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',

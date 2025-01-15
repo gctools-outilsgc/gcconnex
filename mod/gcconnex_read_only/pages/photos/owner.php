@@ -78,6 +78,8 @@ if ($owner->getGUID() != elgg_get_logged_in_user_guid()) {
 	$params['filter_context'] = '';
 }
 
+elgg_unregister_menu_item('title', 'addphotos');
+
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);

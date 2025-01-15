@@ -50,6 +50,8 @@ $params['content'] = $content;
 $params['title'] = $title;
 $params['sidebar'] = $sidebar;
 
+elgg_unregister_menu_item('title2', 'new_folder');
+
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);

@@ -55,6 +55,8 @@ elgg_register_menu_item('title', array(
 	'link_class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-primary btn-md'
 ));
 
+elgg_unregister_menu_item('title', 'addphotos');
+
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'friends',
 	'content' => $area2,
