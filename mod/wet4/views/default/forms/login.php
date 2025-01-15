@@ -25,7 +25,7 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 ?>
 <div class="col-sm-12 clearfix mrgn-bttm-lg brdr-bttm">
     <div class="col-sm-4 clearfix" style="padding-top:75px" aria-label="GCconnex Decommission Image">
-        <img class="mrgn-bttm-lg" src="<?php echo $site_url .'mod/gcconnex_read_only/graphics/GCConnex_Decom_Final_Banner.png'?>" style="width: 100%; height: auto; padding-right: 20px; margin-top: -25px;" alt="<?php echo elgg_echo('gcx:messaging:alt'); ?>" />
+        <img class="mrgn-bttm-lg" src="<?php echo $site_url .'mod/gcconnex_read_only/graphics/GCConnex_Decom_Final_Banner.png'?>" style="width: 100%; height: auto; padding-right: 20px; margin-top: -25px;" alt="GCConnex Decommissioning Final Banner"<?php echo elgg_echo('gcx:messaging:alt'); ?>" />
     </div>
     <div class="col-sm-8 clearfix mrgn-bttm-lg">
         <div class="mrgn-tp-lg gcx-login-holder">
