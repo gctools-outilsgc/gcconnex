@@ -358,7 +358,7 @@ function decommission_message() {
     echo "<div class='panel panel-default'>
         <div class='panel-body'>
             <div class='col-md-4'>
-                <img src='" . $site_url . "/mod/gcconnex_read_only/graphics/GCconnex_Decom_Final_Banner.png' alt='GCConnex is in Read Only Mode' />
+                <img src='" . $site_url . "/mod/gcconnex_read_only/graphics/GCconnex_Decom_Final_Banner.png' alt='" . elgg_echo('readonly:message') . "' />
             </div>
             <div class='col-md-8'>
                 <div class='mrgn-lft-lg'>
