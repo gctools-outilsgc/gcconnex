@@ -53,9 +53,9 @@ $tabs = elgg_view('navigation/tabs', array(
 $break_url = explode('/',$current_url);
 $current_path = array_pop($break_url);
 
-// if($current_path == "analytics"){ //Nick - Are we on analytics? don't show create button
-//    $create_button = ''; 
-// }else{
+if($current_path == "analytics"){ //Nick - Are we on analytics? don't show create button
+   $create_button = ''; 
+}else{
 //   $create_button = elgg_view('output/url', array(
 //         'href' => elgg_get_site_url() . 'action/missions/pre-create-opportunity',
 //         'text' => elgg_echo('missions:create_opportunity'),
@@ -64,7 +64,7 @@ $current_path = array_pop($break_url);
 //         'style' => 'float:right;',
 //         'id' => 'mission-create-opportunity-button'
 // )) . '</br>';  
-// } Decommisisoned. 
+}
 
 
 
