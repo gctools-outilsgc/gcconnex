@@ -72,25 +72,25 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
 
         if ( has_content($user, 'description') ) {
             init_ajax_block_no_edit_CM(elgg_echo('gcconnex_profile:about_me'), 'about-me', $user);
-            //echo elgg_view('b_extended_profile/about-me');
+            echo elgg_view('b_extended_profile/about-me');
             finit_ajax_block('about-me');
         }
 
         if ( has_content($user, 'education') ) {
             init_ajax_block_no_edit_CM(elgg_echo('gcconnex_profile:education'), 'education', $user);
-            //echo elgg_view('b_extended_profile/education');
+            echo elgg_view('b_extended_profile/education');
             finit_ajax_block('education');
         }
 
         if ( has_content($user, 'work') ) {
             init_ajax_block_no_edit_CM(elgg_echo('gcconnex_profile:experience'), 'work-experience', $user);
-            //echo elgg_view('b_extended_profile/work-experience');
+            echo elgg_view('b_extended_profile/work-experience');
             finit_ajax_block('work-experience');
         }
 
         if ( has_content($user, 'gc_skills') && (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'solr-crawler') === false) ) {
             init_ajax_block_no_edit_CM(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
-            //echo elgg_view('b_extended_profile/skills');
+            echo elgg_view('b_extended_profile/skills');
             finit_ajax_block('skills');
         }
 
