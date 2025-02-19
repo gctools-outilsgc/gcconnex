@@ -100,6 +100,18 @@ foreach ($applicant_relationships as $applicant_relation) {
 		$applicants_none_accepted = false;
 		$participant_count++;
 	}
+	// Candidates which have been sent an invitation to the mission.
+	if ($applicant_relation->relationship == 'mission_applied' || $applicant_relation->relationship == 'mission_offered') {
+		if($mission->state == 'posted') {
+			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account 
+					|| elgg_get_logged_in_user_guid() == $applicant_relation->guid_two || elgg_is_admin_logged_in()) {
+				$tentative .= '<div class="col-sm-12" style="display:inline-block;" name="mission-applicant" id="mission-applicant-' . $applicant_relation->guid_two . '">' . elgg_view_entity(get_user($applicant_relation->guid_two)) . '</div>';
+						
+				$applicants_none_tentative = false;
+			}
+			$applicant_count++;
+		}
+	}
 }
 // Display something if there are no applicants.
 if($applicants_none_accepted) {
