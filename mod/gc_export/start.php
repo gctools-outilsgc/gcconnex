@@ -79,17 +79,15 @@ function download_full_discussion($page){
 function group_email_list_setup_menu() {
 	$page_owner = elgg_get_page_owner_entity();
 
-	if (elgg_in_context('groups')) {
-		if ($page_owner instanceof ElggGroup) {
-			if (elgg_is_logged_in() && $page_owner->canEdit()) {
-				$url = elgg_get_site_url() . "download_group_emails/{$page_owner->getGUID()}";
-				elgg_register_menu_item('group_ddb', array(
-					'name' => 'email_export',
-					'text' => elgg_echo('decommission:email_list'),
-					'href' => $url,
-					"priority" => 500,
-				));
-			}
+	if ($page_owner instanceof ElggGroup) {
+		if (elgg_is_logged_in() && $page_owner->canEdit()) {
+			$url = elgg_get_site_url() . "download_group_emails/{$page_owner->getGUID()}";
+			elgg_register_menu_item('group_ddb', array(
+				'name' => 'email_export',
+				'text' => elgg_echo('decommission:email_list'),
+				'href' => $url,
+				"priority" => 500,
+			));
 		}
 	}
 }
@@ -99,7 +97,12 @@ function download_group_emails($page){
 		return 0;
 	gatekeeper();
 
-	if (!get_entity($page[0])->canEdit()) {
+	$entity = get_entity($page[0]);
+	if (!($entity instanceof ElggGroup)) {
+		register_error(elgg_echo('decommission:notgroup'));
+		forward(REFERER);
+	}
+	if (!$entity->canEdit()) {
 		register_error(elgg_echo('decommission:notgroupadmin'));
 		forward(REFERER);
 	}
