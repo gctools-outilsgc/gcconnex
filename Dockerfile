@@ -32,7 +32,7 @@ RUN composer install
 
 # Second stage, build usable container
 FROM ubuntu:22.04
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		software-properties-common gpg-agent \
