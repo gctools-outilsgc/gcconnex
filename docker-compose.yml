@@ -90,3 +90,4 @@ services:
     command: solr-precreate dev /dev-config
     volumes:
       - ./.solr-config:/dev-config/conf
+      - ./data/solr:/opt/solr/server/solr/mycores
