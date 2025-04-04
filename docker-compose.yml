@@ -91,3 +91,4 @@ services:
     volumes:
       - ./.solr-config:/dev-config/conf
       - ./data/solr:/opt/solr/server/solr/mycores
+      - ./.solr-config:/opt/solr/server/solr/mycores/dev/conf
