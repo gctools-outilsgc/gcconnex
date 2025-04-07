@@ -31,11 +31,11 @@ RUN composer install
 
 
 # Second stage, build usable container
-FROM ubuntu:20.04
-ENV DEBIAN_FRONTEND noninteractive
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-		software-properties-common \
+		software-properties-common gpg-agent \
 	&& apt-get clean \
 	&& rm -fr /var/lib/apt/lists/*
 
