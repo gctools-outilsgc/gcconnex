@@ -1,5 +1,5 @@
-trigger:  # don't trigger outside PRs
-- none
+trigger:
+- '*'
 
 pr:  # Trigger the pipeline only for PRs targeting master branch
 - master
@@ -16,9 +16,29 @@ pool:
   vmImage: 'ubuntu-latest'
 
 
+
 jobs:
+- job: unittests
+  displayName: run phpunit tests
+  container: phanoix/collab-pipeline:latest
+  steps:
+  - script: |
+      rm composer.lock
+      composer config --no-plugins allow-plugins.composer/installers true
+      composer install
+      ls -l
+      ls -l ./vendor/bin/
+      cd mod && ../vendor/bin/phpunit --log-junit ../PHPunit_results.xml
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/PHPunit_results.xml'
+      testRunTitle: phpunit tests
+
 - job: setup
   displayName: build and set up review site
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))  # don't trigger outside PRs
   steps:
   - task: Docker@2
     displayName: Build and Push Container image to ACR
