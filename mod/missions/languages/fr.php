@@ -669,8 +669,10 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:settings:analytics_on" =>   "Afficher l'onglet des analytiques?",
 "missions:cannot_cancel_mission_with_participants" =>     "Veuillez supprimer tout participant actif et tout participant auxquels vous avez envoyé une offre avant la désactivation de cette possibilité.",
 "missions:required" =>    "(requis)",
-"missions:placeholder_a" =>   "<b>Le Carrefour de carrière déménage!</b> En effet, il sera migré le 1er mai 2025 vers GCÉchange, la nouvelle plateforme de collaboration pangouvernementale. 
-D’ici là, le Carrefour de carrière demeurera accessible dans GCConnex. Vous pourrez toujours y découvrir les possibilités de perfectionnement professionnel, communiquer avec des mentors et consulter les offres d’emploi du gouvernement du Canada.
+"missions:placeholder_a" =>   "<b>Le Carrefour carrière passera à GCéchange plus tard au cours du présent exercice!</b>
+Le Carrefour carrière continuera d’être accessible sur GCconnex jusqu’à ce qu’il soit lancé sur GCéchange <b>plus tard au cours du présent exercice.</b>
+Une fois que le nouveau Carrefour carrière sera lancé sur GCéchange, cette page vous y redirigera. 
+Entre-temps, vous pouvez continuer d’explorer les possibilités de perfectionnement professionnel, de communiquer avec des mentors et de parcourir les affichages à l’échelle du GC.
 <br>
 <br>
 Merci de prendre part à cette transition prometteuse. Pour toute question, écrivez-nous à <b><a href='support-soutien@gcx-gce.gc.ca'>support-soutien@gcx-gce.gc.ca</a></b>",
