@@ -675,7 +675,7 @@ Should you no longer be available to participate in this opportunity, please wit
 "missions:cannot_cancel_mission_with_participants" => "Please remove all active participants and all applicants to whom you have sent an offer before deactivating this opportunity.",
 "missions:required" =>    "(required)",
 "missions:placeholder_a" =>   "<b>The Career Marketplace is moving to GCXchange later this fiscal year!</b> The Career Marketplace is moving to GCXchange, the new government-wide collaboration platform. 
-The Career Marketplace will continue to be available on GCConnex until it launches on GCXchange in <b>later this fiscal year</b>. 
+The Career Marketplace will continue to be available on GCConnex until it launches on GCXchange <b>later this fiscal year</b>. 
 Once the new Career Marketplace launches on GCXchange, this page will redirect you there. 
 In the meantime, you can continue to explore career development opportunities, connect with mentors, and browse postings from across the GC.
 <br>
