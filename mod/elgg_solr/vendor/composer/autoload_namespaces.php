@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Solarium\\' => array($vendorDir . '/solarium/solarium/library'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
+    '' => array($baseDir . '/classes'),
 );

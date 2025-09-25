@@ -168,7 +168,9 @@ function get_list_of_deleted_records() {
 
 
 function get_user_list($offset) {
+	// @TODO check if the site url is either localhost or local ip address, replace with elgg if it is
 	$site_url = elgg_get_site_url();
+	$platform = explode('.', $site_url);
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$query = "	SELECT e.guid, ue.name, ue.username, ue.email, e.type, e.time_created, e.enabled
@@ -188,7 +190,8 @@ function get_user_list($offset) {
 			'type' => $user->type,
 			'date_created' => date("Y-m-d\TH:m:s\Z", $user->time_created),
 			'date_modified' => date("Y-m-d\TH:m:s\Z", $user->time_created),
-			'url' => "{$site_url}profile/{$user->username}"
+			'url' => "{$site_url}profile/{$user->username}",
+			'platform' => $platform[0]
 		);
 	}
     return $arr;
@@ -197,6 +200,9 @@ function get_user_list($offset) {
 
 function get_group_list($offset) {
 	// @TODO use SQL query syntax instead of using function elgg_get_entities()
+	$site_url = elgg_get_site_url();
+	$platform = explode('.', $site_url);
+
 	$groups = elgg_get_entities(array(
 		'type' => 'group',
 		'limit' => 10,
@@ -231,7 +237,8 @@ function get_group_list($offset) {
 			'access_id' => $group->access_id,
 			'date_created' => date("Y-m-d\TH:m:s\Z", $group->time_created),
 			'date_modified' => date("Y-m-d\TH:m:s\Z", $group->time_updated),
-			'url' => $group->getURL()
+			'url' => $group->getURL(),
+			'platform' => $platform[0]
 		);
 	}
     return $arr;
@@ -239,6 +246,8 @@ function get_group_list($offset) {
 
 
 function get_entity_list($type, $subtype, $offset) {
+	$site_url = elgg_get_site_url();
+	$platform = explode('.', $site_url);
 	$entities = elgg_get_entities(array(
 		'type' => $type,
 		'subtype' => $subtype,
@@ -247,32 +256,18 @@ function get_entity_list($type, $subtype, $offset) {
 	));
 
 	foreach ($entities as $entity) {
-
-
+		
 		if (is_Json($entity->title)) {
-			$title_array = json_decode($entity->title, true);
-			if (!isset($title_array['en']) || !isset($title_array['fr'])) {
-				$title_array['en'] = str_replace('"', '\"', $title_array);
-				$title_array['fr'] = str_replace('"', '\"', $title_array);
-			} else {
-				$title_array['en'] = str_replace('"', '\"', gc_explode_translation($entity->title, 'en'));
-				$title_array['fr'] = str_replace('"', '\"', gc_explode_translation($entity->title, 'fr'));
-			}
-
+			$title_array['en'] = str_replace('"', '\"', gc_explode_translation($entity->title, 'en'));
+			$title_array['fr'] = str_replace('"', '\"', gc_explode_translation($entity->title, 'fr'));
 		} else {
 			$title_array['en'] = $entity->title;
 			$title_array['fr'] = $entity->title;
 		}
 
 		if (is_Json($entity->description)) {
-			$description_array = json_decode($entity->description, true);
-			if (!isset($description_array['en']) || !isset($description_array['fr'])) {
-				$description_array['en'] = str_replace('"', '\"', $description_array);
-				$description_array['fr'] = str_replace('"', '\"', $description_array);
-			} else {
-				$description_array['en'] = str_replace('"', '\"', gc_explode_translation($entity->description, 'en'));
-				$description_array['fr'] = str_replace('"', '\"', gc_explode_translation($entity->description, 'fr'));
-			}
+			$description_array['en'] = str_replace('"', '\"', gc_explode_translation($entity->description, 'en'));
+			$description_array['fr'] = str_replace('"', '\"', gc_explode_translation($entity->description, 'fr'));
 		} else {
 			$description_array['en'] = $entity->description;
 			$description_array['fr'] = $entity->description;
@@ -287,7 +282,8 @@ function get_entity_list($type, $subtype, $offset) {
 			'access_id' => $entity->access_id,
 			'date_created' => date("Y-m-d\TH:m:s\Z", $entity->time_created),
 			'date_modified' => date("Y-m-d\TH:m:s\Z", $entity->time_updated),
-			'url' => $entity->getURL()
+			'url' => $entity->getURL(),
+			'platform' => $platform[0]
 		);
 	}
 
