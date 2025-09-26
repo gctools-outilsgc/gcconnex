@@ -9,7 +9,7 @@ return array(
         'readonly:message:4' => 'If the GCXchange link doesn’t work, you might not have a GCXchange account yet. <a href="https://www.gcx-gce.gc.ca" target="_blank">Register for an account today.</a>',
         "missions:placeholder_a" =>   "The Career Marketplace has moved to GCXchange! This page is now read-only. <br />
 <a href='https://gcxgce.sharepoint.com/sites/CareerMarketplace/SitePages/Find-an-Opportunity---Career-Marketplace.aspx'>Visit the new Career Marketplace on GCXchange</a>. <br />
-Make sure to <b>save or export</b> any information you want to keep before GCConnex is fully decommissioned on <b>October 14, 2025</b>. <a href='https://gcconnex.gc.ca/gcconnex_is_moving'>Learn how to export your GCConnex content</a>. <br />
+Make sure to <b>save or export</b> any information you want to keep before GCConnex is fully decommissioned on <b>October 14, 2025</b>.<br /> <a href='https://gcconnex.gc.ca/gcconnex_is_moving'>Learn how to export your GCConnex content</a>. <br />
 <br>
 <br>
 Thank you for being part of this exciting transition. If you have questions, reach out to us at <b><a href='support-soutien@gcx-gce.gc.ca'>support-soutien@gcx-gce.gc.ca</a></b>",
