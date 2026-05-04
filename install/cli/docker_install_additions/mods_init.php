@@ -37,7 +37,7 @@ function init_elgg_solr($solr_host){
 function init_file_tools(){
     // this is the list of allowed extentions in prod
     // the setting is empty by default on install and will prevent any file uploads until it's set to something
-    $allowed_extensions = "txt, jpg, jpeg, png, bmp, gif, pdf, doc, docx, xls, xlsx, ppt, pptx, odt, ods, odp, accdb, mdb, m4a, mp4, grd, map, rar, gdb, dwg, zip, mp3, ppsx, mid, mov, xlsm, ai, xd, svg, indd, vsd, vsdx, mpp, mppx, potx, dotx, .dotx, sas7bdat, dta, oft";
+    $allowed_extensions = "txt, jpg, jpeg, png, bmp, gif, pdf, doc, docx, xls, xlsx, ppt, pptx, odt, ods, odp, accdb, mdb, m4a, mp4, grd, map, rar, gdb, dwg, zip, mp3, ppsx, mid, mov, xlsm, ai, xd, svg, indd, vsd, vsdx, mpp, mppx, potx, dotx, .dotx, sas7bdat, dta, oft, gpkg";
     elgg_set_plugin_setting("allowed_extensions", $allowed_extensions, "file_tools");
 }
 
