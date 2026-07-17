@@ -392,14 +392,14 @@ switch ($msg_type) {
 			$cp_topic_description_fr = substr($cp_topic_description, 0, strrpos($cp_topic_description, ' ')).'... '.elgg_echo('cp_notify:readmore',array($vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'fr');
 		}
 		if ($vars['cp_topic']->getSubtype() === 'groupforumtopic' /*|| $vars['cp_topic']->getContainerEntity() instanceof ElggGroup*/) {
-			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:description_discussion',array("<i>{$cp_topic_description_discussion_en}</i><br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'en');
-			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:description_discussion',array("<i>{$cp_topic_description_discussion_fr}</i><br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'fr');
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:description_discussion',array("{$cp_topic_description_discussion_en}<br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'en');
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:description_discussion',array("{$cp_topic_description_discussion_fr}<br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'fr');
 		} else if (!$cp_topic_description) {
 			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'en');
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'fr');
 		} else {
-			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:description',array("<i>{$cp_topic_description_en}</i><br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'en');
-			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:description',array("<i>{$cp_topic_description_fr}</i><br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'fr');
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:description',array("{$cp_topic_description_en}<br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'en');
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:description',array("{$cp_topic_description_fr}<br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site'),'fr');
 		}
 
 		break;
