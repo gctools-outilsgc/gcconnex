@@ -104,13 +104,13 @@ function members_nav_popular($hook, $type, $returnvalue, $params) {
  * @param array  $params      unused
  * @return array
  */
-function members_nav_newest($hook, $type, $returnvalue, $params) {
-	$returnvalue['newest'] = array(
-		'title' => elgg_echo('sort:newest'),
-		'url' => "members/newest",
-	);
-	return $returnvalue;
-}
+// function members_nav_newest($hook, $type, $returnvalue, $params) {
+// 	$returnvalue['newest'] = array(
+// 		'title' => elgg_echo('sort:newest'),
+// 		'url' => "members/newest",
+// 	);
+// 	return $returnvalue;
+// }
 
 /**
  * Appends "online" tab to the navigation
@@ -121,13 +121,13 @@ function members_nav_newest($hook, $type, $returnvalue, $params) {
  * @param array  $params      unused
  * @return array
  */
-function members_nav_online($hook, $type, $returnvalue, $params) {
-	$returnvalue['online'] = array(
-		'title' => elgg_echo('members:label:online'),
-		'url' => "members/online",
-	);
-	return $returnvalue;
-}
+// function members_nav_online($hook, $type, $returnvalue, $params) {
+// 	$returnvalue['online'] = array(
+// 		'title' => elgg_echo('members:label:online'),
+// 		'url' => "members/online",
+// 	);
+// 	return $returnvalue;
+// }
 
 
 /**
@@ -140,7 +140,7 @@ function members_page_handler($page) {
 	$base = elgg_get_plugins_path() . 'members/pages/members';
 
 	if (empty($page[0])) {
-		$page[0] = 'newest';
+		$page[0] = 'popular';
 	}
 
 	$vars = array();
