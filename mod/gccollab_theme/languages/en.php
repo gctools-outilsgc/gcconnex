@@ -39,6 +39,8 @@ return array(
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCcollab_User_Help/See_All',
   'wet:gccollabLink' => "https://gccollab.ca/",
   'wet:gcconnexLink' => "https://gcconnex.gc.ca/",
+  'wet:gcxLink' => "https://gcxgce.sharepoint.com/",
+  'wet:barGCX' => "xchange",
   'wet:groupLoading'=>'Loading content',
   'wet:cover_photo_remove'=>'Remove current group cover image',
   'wet:cover_photo_input'=>'Add a Cover Image to your group',
@@ -67,7 +69,7 @@ return array(
   'wet4:homenotice' => 'Welcome to GCcollab, the Government of Canada&#39;s professional social networking platform. ',
   'wet_mygroups:my_groups' => "My Groups",
   'wet_mygroups:my_groups_nolog' => "New Groups",
-  
+
   /**
    * Notice
    */
@@ -127,10 +129,10 @@ return array(
   'invitefriends:emails' => "Email addresses:",
   'invitefriends:message' => 'Message:',
   'invitefriends:introduction' => "To invite new people to join GCcollab, paste or enter your email addresses below:",
-  'invitefriends:message:default' => "Hello, 
-  
-I'm inviting you to join my network on %s. Join us to contribute to discussions on the future of government, upcoming programs, policies and more! 
-  
+  'invitefriends:message:default' => "Hello,
+
+I'm inviting you to join my network on %s. Join us to contribute to discussions on the future of government, upcoming programs, policies and more!
+
 Hope to chat more soon!",
 
   /**
@@ -176,7 +178,7 @@ Hope to chat more soon!",
   'cp_notify:body_group_invite_email:description' => "<a href='%s'>Register now</a> and be automatically added to the group.<br/><br/>
 
   If you would like to register at a later time using the <a href='".elgg_get_site_url()."register'>Registration form</a> on GCcollab, you can join the group by using the following code on your <a href='%s'>group invitations</a> page: %s .<br/><br/>
- 
+
   Already on GCcollab? Your email address may be out of date. <a href='".elgg_get_site_url()."login'>Login</a> and update your account settings.<br/> ",
   'cp_notify:footer:no_user' => 'Need help? <a href="'.elgg_get_site_url().'help/knowledgebase/?utm_source=notification&utm_medium=email">Contact us</a>.',
   'cp_personalized_message' => "<div style='border: 1px solid #46246A; padding:5px; margin-bottom:10px;'>Personalized message from %s:<br/><i>%s</i></div>",
@@ -212,9 +214,9 @@ Hope to chat more soon!",
   'cp_notify:footer' => "",
   'cp_notify:footer2' => "Need help? <a href='".elgg_get_site_url()."help/knowledgebase/?utm_source=notification&utm_medium=email'>Contact us</a>.<br/>To unsubscribe from these notifications, login to GCcollab and edit your <a href='%s'>notifications' settings</a>.",
   'cp_notify:visitTutorials'=>'',
-  'cp_notify:body:contentshare:description' => "<p>%s shared your content on the wire.</p> 
+  'cp_notify:body:contentshare:description' => "<p>%s shared your content on the wire.</p>
                           <p><i>%s</i></p> <br/>
-                          <p><strong>Source:</strong> %s</p> 
+                          <p><strong>Source:</strong> %s</p>
                           <p><a href='%s'>View or reply</a> on GCcollab.</p>",
 
   /**
