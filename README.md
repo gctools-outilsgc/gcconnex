@@ -29,6 +29,7 @@ use docker compose to start/create your containers.
 and add an entry for ```<host ip> gcconnex.local``` in your hosts file.
 Then visit [http://gcconnex.local](http://gcconnex.local) which should by now be a fully set up dev environment.
 An admin account is created: Username: "admin"  Password: "adminpassword".
+If E2E_TEST_INIT is set to true (it is by default in docker-compose.yml), a non-admin user is also created: Username: "Haibun"  Password: "Haibun".
 
 ### GCcollab / GCconnex
 Since GCconnex has been decommissioned, by default the docker-compose.yml is now configured to initialize a gccollab instance, this is controlled by the INIT environment variable used in the [docker_installer script](https://github.com/gctools-outilsgc/gcconnex/blob/README-cleanup-update/install/cli/docker_installer.php). Changing this after installation will not do anything, to initialize the other site type the persisted DB data in ./data/ will need to be cleared.
