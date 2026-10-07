@@ -74,7 +74,7 @@ $feedbackText= elgg_echo('wet:feedbackText');
                   </li>
                   <?php /*if(elgg_is_active_plugin('gc_onboard')){ echo '<li><a href="'.elgg_get_site_url().'tutorials">'.elgg_echo('onboard:footTutorials').'</a></li>'; }*/?>
                   <li><a href="<?php echo $faq; ?>"> <?php echo elgg_echo('contactform:help_menu_item'); ?> </a></li>
-                   
+
                 </ul>
             </section>
 
@@ -97,9 +97,8 @@ $feedbackText= elgg_echo('wet:feedbackText');
                     <h3><?php echo elgg_echo('wet:footGCtools');?></h3>
                     <ul class="list-unstyled">
                         <li><a href="<?php echo elgg_echo('wet:gcpediaLink');?>">GC<?php echo elgg_echo('wet:barGCpedia');?></a></li>
-                        <li><a href="<?php echo elgg_echo('wet:gcintranetLink-toolsFoot');?>">GCintranet</a></li>
+                        <li><a href="<?php echo elgg_echo('wet:gcxLink');?>">GC<?php echo elgg_echo('wet:barGCX');?></a></li>
                         <li><a href="<?php echo elgg_echo('wet:gcdirectoryLink');?>">GC<?php echo elgg_echo('wet:barDirectory');?></a></li>
-                        <li><a href="<?php echo elgg_echo('wet:gcconnexLink');?>">GCconnex</a></li>
                     </ul>
                 <?php endif; ?>
             </section>
@@ -116,18 +115,18 @@ $feedbackText= elgg_echo('wet:feedbackText');
             <!-- <div class="col-xs-6 visible-sm visible-xs tofpg">
                 <a href="#wb-cont"><?php echo elgg_echo('top:of:page');?><span class="glyphicon glyphicon-chevron-up"></span></a>
             </div> -->
-            <div class="hidden-sm hidden-xs col-sm-7 col-md-6 col-lg-6"> 
+            <div class="hidden-sm hidden-xs col-sm-7 col-md-6 col-lg-6">
                 <div class="pull-left list-unstyled mrgn-lft-0 hover-underline-animation" style="font-weight:bold;">
                     <a href="https://account-compte.gccollab.ca" style="color:#6b5088; font-size:15px;">
                         <img style="width:30px; height: 30px; display:inline-block; margin-right:3px; margin-top:10px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt=""></span><?php echo $account_text; ?>
-                    </a> 
-                </div> 
+                    </a>
+                </div>
                 <div class="pull-left list-unstyled mrgn-lft-md hover-underline-animation" style="font-weight:bold;">
                     <a href="https://wiki.gccollab.ca" style="color:#6b5088; font-size:15px;">
                         <img style="width:30px; height:30px; display:inline-block; margin-right:3px; margin-top:10px;" src="<?php echo $site_url ?>/mod/gccollab_theme/graphics/mini_wiki_icon.png" alt="mini-wiki-logo"></span>GCwiki
                     </a>
-                </div>  
-            </div> 
+                </div>
+            </div>
             <div class="text-right">
                 <object type="image/svg+xml" tabindex="-1" role="img" data="<?php echo $site_url; ?>/mod/gccollab_theme/graphics/wmms-blk.svg" aria-label="<?php echo elgg_echo('canada:symbol');?>"></object>
             </div>

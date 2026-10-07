@@ -39,6 +39,8 @@ return array(
   'wet:tutorialLink'=>'https://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout',
   'wet:gccollabLink' => "https://gccollab.ca/",
   'wet:gcconnexLink' => "https://gcconnex.gc.ca/",
+  'wet:gcxLink' => "https://gcxgce.sharepoint.com/",
+  'wet:barGCX' => "échange",
   'wet:groupLoading'=>'Loading content(translate)',
   'wet:cover_photo_remove'=>'Supprimer la photo de couverture',
   'wet:cover_photo_input'=>'Ajouter une photo de couverture',
@@ -147,7 +149,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
 
   'expages:partners' => "Partners",
   'expages:partenaires' => "Partenaires",
-  
+
   /**
    * Notifications
    */
