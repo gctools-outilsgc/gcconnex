@@ -28,11 +28,11 @@ use docker compose to start/create your containers.
 
 and add an entry for ```<host ip> gcconnex.local``` in your hosts file.
 Then visit [http://gcconnex.local](http://gcconnex.local) which should by now be a fully set up dev environment.
-An admin account is created: Username: "admin"  Password: "adminpassword".
-If E2E_TEST_INIT is set to true (it is by default in docker-compose.yml), a non-admin user is also created: Username: "Haibun"  Password: "Haibun".
+An admin account is created: Username: `admin`  Password: `adminpassword`.
+If `E2E_TEST_INIT` is set to true (it is by default in docker-compose.yml), a non-admin user is also created: Username: `Haibun`  Password: `Haibun`.
 
 ### GCcollab / GCconnex
-Since GCconnex has been decommissioned, by default the docker-compose.yml is now configured to initialize a gccollab instance, this is controlled by the INIT environment variable used in the [docker_installer script](https://github.com/gctools-outilsgc/gcconnex/blob/README-cleanup-update/install/cli/docker_installer.php). Changing this after installation will not do anything, to initialize the other site type the persisted DB data in ./data/ will need to be cleared.
+Since GCconnex has been decommissioned, by default the docker-compose.yml is now configured to initialize a gccollab instance, this is controlled by the `INIT` environment variable used in the [docker_installer script](https://github.com/gctools-outilsgc/gcconnex/blob/README-cleanup-update/install/cli/docker_installer.php). Changing this after installation will not do anything, to initialize the other site type the persisted DB data in `./data/` will need to be cleared.
 
 ## Contributing
 
@@ -76,9 +76,16 @@ utilisez `docker compose` pour démarrer et/ou créer vos conteneurs Docker.
     docker compose up
 
 et ajouter un ligne ```<host ip> gcconnex.local``` a votre ficher "hosts".
-Ensuite, visitez [http://gcconnex.local](http://gcconnex.local).
+Ensuite, visitez [http://gcconnex.local](http://gcconnex.local), où vous devriez maintenant trouver un environnement de développement entièrement configuré.
+
+Un compte administrateur est créé avec les identifiants suivants : nom d’utilisateur : `admin`  mot de passe : `adminpassword`.
+
+Si `E2E_TEST_INIT` est défini à `true` — ce qui est le cas par défaut dans `docker-compose.yml` — un compte non administrateur est également créé : nom d’utilisateur : `Haibun`  mot de passe : `Haibun`.
 
 ### GCcollab / GCconnex
+Comme GCconnex a été mis hors service, le fichier docker-compose.yml est maintenant configuré par défaut pour initialiser une instance de GCcollab. Cette configuration est contrôlée par la variable d’environnement `INIT`, utilisée dans le [script docker_installer](https://github.com/gctools-outilsgc/gcconnex/blob/README-cleanup-update/install/cli/docker_installer.php).
+
+La modification de cette variable après l’installation n’aura aucun effet. Pour initialiser l’autre type de site, vous devrez supprimer les données persistantes de la base de données dans `./data/`.
 
 ## Contribuer
 
