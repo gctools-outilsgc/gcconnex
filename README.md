@@ -1,6 +1,6 @@
 
 # GCconnex and GCcollab
-GCconnex (GC only, now decommissioned) and [GCcollab](https://gccollab.ca/) are a professional networking and collaborative workspaces for all Canadian public servants, academics and post-secondary students, as well as partners by invitation. They allow people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
+GCconnex (GC only, decommissioned) and [GCcollab](https://gccollab.ca/) are a professional networking and collaborative workspaces for all Canadian public servants, academics and post-secondary students, as well as partners by invitation. They allow people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
 
 It features dynamic online communities where public servants can collaborate on projects, blog, carry on discussions, ask and answer each other's questions about anything from learning to technology. It acts as a professional platform to create your professional C.V., share ideas and connect you with people and information that you need.
 
@@ -48,7 +48,7 @@ Elgg Copyright (c) 2008-2016, see COPYRIGHT.txt
 
 # GCconnex et GCcollab
 
-GCconnex (GC seulement) and [GCcollab](https://gccollab.ca/) sont des espaces de travail collaboratif pour tous les fonctionnaires, universitaires et étudiants de niveau postsecondaire canadiens, ainsi que des partenaires sur invitation. Ils permettent aux personnes de se connecter et de partager des informations et tirer profit du pouvoir de réseautage pour accroître l'efficacité et la productivité de la fonction publique.
+GCconnex (GC seulement, mis hors service) et [GCcollab](https://gccollab.ca/) sont des espaces de travail collaboratif pour tous les fonctionnaires, universitaires et étudiants de niveau postsecondaire canadiens, ainsi que des partenaires sur invitation. Ils permettent aux personnes de se connecter et de partager des informations et tirer profit du pouvoir de réseautage pour accroître l'efficacité et la productivité de la fonction publique.
 
 On y retrouve plusieurs communautés en ligne où les employés peuvent collaborer à des projets, tenir des blogues, tenir des discussions, poser des questions et obtenir des réponses sur des sujets aussi variés que l’apprentissage et la technologie. C'est une plateforme professionnel ou vous pouvez créer votre C.V, échanger des idées et vous connecter avec des gens et les information dont vous avez besoin.
 
