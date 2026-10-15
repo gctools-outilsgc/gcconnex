@@ -1,4 +1,3 @@
-version: '2'
 services:
   # ###########################################################################
   # Uncomment if you want to use a custom host such as http://gcconnex.local
@@ -48,8 +47,6 @@ services:
       - DATAROOT=/data/
       - WWWROOT=http://gcconnex.local/
       - MEMCACHE_HOST=localhost
-      - SOLR_CRAWLER=solr-crawler-thing
-#	  - SOLR_CRAWLER_USER=1
       - E2E_TEST_INIT=true # if true, generates some content and use account for use in running tests, but may be useful for general dev too
       - DEV_SOLR_HOST=gcconnex-solr
 
