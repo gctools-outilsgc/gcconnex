@@ -37,8 +37,8 @@ DirectoryIndex index.php
 ############################
 # PHP SETTINGS
 <IfModule mod_php5.c>
-	# limit the maximum memory consumed by the php script to 64 MB
-	php_value memory_limit 64M
+	# memory limits will be handled by container resource definitions
+	php_value memory_limit -1
 	# register_globals is deprecated as of PHP 5.3.0 - disable it for security reasons.
 	php_value register_globals 0
 	# post_max_size is the maximum size of ALL the data that is POST'ed to php at a time (8 MB)
