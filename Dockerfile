@@ -1,68 +1,42 @@
-# First stage, install composer and its dependencies and fetch vendor files
-FROM alpine:3.7
-RUN apk --no-cache add \
-  php5 \
-  php5-dom \
-  php5-phar \
-  php5-gd \
-  php5-iconv \
-  php5-json \
-  php5-mysql \
-  php5-openssl \
-  php5-xml \
-  php5-zlib \
-  php5-curl \
-  curl
-RUN mkdir /app && mkdir /app/pleio && mkdir /app/paas_integration && curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
-RUN ln -s /usr/bin/php5 /usr/bin/php
-WORKDIR /app
-COPY composer.json composer.json /app/
-COPY mod/pleio/composer.json /app/pleio/
-COPY mod/paas_integration/composer.json /app/paas_integration/
+# Reuse only immutable dependency artifacts; never resolve the unlocked Pleio
+# dependencies or copy application sources from this older production image.
+FROM phanoix/gcconnex@sha256:fcea945fe594bd71a04f23c35b379064de89a038f492d3e05ed4b231cb536a1a AS dependencies
 
-ARG COMPOSER_ALLOW_SUPERUSER=1
-ARG COMPOSER_NO_INTERACTION=1
-RUN composer config --no-plugins allow-plugins.composer/installers true
-RUN composer install
-
-WORKDIR /app/pleio
-RUN composer install
-
-
-
-# Second stage, build usable container
-FROM ubuntu:22.04
+FROM ubuntu:22.04@sha256:0a9887931b0e38af2e3487ed39e29436b0535c4f3f52e57745baaf79d1898956
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		software-properties-common gpg-agent \
-	&& apt-get clean \
-	&& rm -fr /var/lib/apt/lists/*
+LABEL org.gcconnex.runtime.php-source="https://launchpad.net/~ondrej/+archive/ubuntu/php/+sourcepub/18893905" \
+      org.gcconnex.runtime.dependency-image="phanoix/gcconnex@sha256:fcea945fe594bd71a04f23c35b379064de89a038f492d3e05ed4b231cb536a1a"
 
-RUN add-apt-repository ppa:ondrej/php
-
+COPY docker/runtime-packages.env /usr/local/share/gcconnex-runtime/runtime-packages.env
 RUN apt-get update && apt-get install -y --no-install-recommends \
-            apache2 \
-            curl \
-            memcached \
-            libapache2-mod-php5.6 \
-            php5.6 \
-            php5.6-gd \
-            php5.6-mbstring \
-            php5.6-json \
-            php5.6-mysql \
-            php5.6-zip \
-            php5.6-xml \
-            php5.6-curl \
-            php5.6-opcache \
-            php5.6-memcache \
-        && apt-get clean \
-        && rm -fr /var/lib/apt/lists/* \
-        && mkdir -p /var/www/html/vendor \
-        && mkdir -p /data \
-        && chown www-data /data \
-        && ln -sf /dev/stderr /var/log/apache2/error.log \
-        && ln -sf /dev/stdout /var/log/apache2/access.log
+        ca-certificates software-properties-common gpg-agent \
+    && add-apt-repository --yes ppa:ondrej/php \
+    && apt-get update \
+    && . /usr/local/share/gcconnex-runtime/runtime-packages.env \
+    && apt-get install -y --no-install-recommends \
+        apache2 curl memcached \
+        "libapache2-mod-php5.6=$PHP56_VERSION" \
+        "php5.6=$PHP56_VERSION" \
+        "php5.6-cli=$PHP56_VERSION" \
+        "php5.6-common=$PHP56_VERSION" \
+        "php5.6-gd=$PHP56_VERSION" \
+        "php5.6-mbstring=$PHP56_VERSION" \
+        "php5.6-json=$PHP56_VERSION" \
+        "php5.6-mysql=$PHP56_VERSION" \
+        "php5.6-zip=$PHP56_VERSION" \
+        "php5.6-xml=$PHP56_VERSION" \
+        "php5.6-curl=$PHP56_VERSION" \
+        "php5.6-opcache=$PHP56_VERSION" \
+        "php5.6-memcache=$PHP56_MEMCACHE_VERSION" \
+    && dpkg-query -W -f='${Package}\t${Version}\t${Architecture}\n' \
+        > /usr/local/share/gcconnex-runtime/packages.tsv \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /var/www/html/vendor /data \
+    && chown www-data /data \
+    && ln -sf /dev/stderr /var/log/apache2/error.log \
+    && ln -sf /dev/stdout /var/log/apache2/access.log
 
 RUN a2enmod rewrite headers
 
@@ -76,20 +50,29 @@ RUN { \
   echo 'opcache.enable_file_override=1'; \
   } > /etc/php/5.6/apache2/conf.d/opcache-recommended.ini
 
-COPY ./docker/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY --from=0 /app/vendor/ /var/www/html/vendor/
+# Startup mitigation from PHP's 2026-10-23 follow-up, for both SAPIs.
+COPY docker/99-gcconnex-security.ini /etc/php/5.6/mods-available/gcconnex-security.ini
+RUN phpenmod -v 5.6 -s ALL gcconnex-security
+COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/check-runtime.sh /usr/local/bin/gcconnex-check-runtime
+COPY docker/runtime-entrypoint.sh /usr/local/bin/gcconnex-runtime-entrypoint
+
+# Application sources always come from this checkout. Only the two vendor trees
+# come from the dependency donor, whose OS and PHP runtime are never used.
 COPY . /var/www/html
-COPY --from=0 /app/pleio/vendor/ /var/www/html/mod/pleio/vendor/
-COPY ./docker/settings.env.php /var/www/html/engine/settings.php
-RUN chown www-data:www-data /var/www/html
+COPY --from=dependencies /var/www/html/vendor/ /var/www/html/vendor/
+COPY --from=dependencies /var/www/html/mod/pleio/vendor/ /var/www/html/mod/pleio/vendor/
+COPY docker/settings.env.php /var/www/html/engine/settings.php
+RUN chown www-data:www-data /var/www/html \
+    && chmod +x /usr/local/bin/gcconnex-check-runtime \
+        /usr/local/bin/gcconnex-runtime-entrypoint /var/www/html/docker/start.sh \
+    && test ! -e /var/www/html/docs/security-investigation-2026-10-23.md \
+    && gcconnex-check-runtime
 
 WORKDIR /var/www/html
-EXPOSE 80
-EXPOSE 443
-
-RUN chmod +x docker/start.sh
+EXPOSE 80 443
 
 # Start Apache in foreground mode
 RUN rm -f /run/apache2/httpd.pid
-ENTRYPOINT [ "docker/start.sh" ]
+ENTRYPOINT ["/usr/local/bin/gcconnex-runtime-entrypoint"]
 CMD  ["apache2ctl -D FOREGROUND"]

@@ -8,3 +8,6 @@ docker-compose.yml
 .dockerignore
 Dockerfile.cron
 
+# Private investigation material must never enter the build context/image.
+docs/security-investigation*.md
+
