@@ -1,0 +1,39 @@
+FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		software-properties-common \
+	&& apt-get clean \
+	&& rm -fr /var/lib/apt/lists/*
+
+RUN add-apt-repository ppa:ondrej/php
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+            curl \
+            php5.6 \
+            php5.6-gd \
+            php5.6-mbstring \
+            php5.6-json \
+            php5.6-mysql \
+            php5.6-zip \
+            php5.6-xml \
+            php5.6-curl \
+            php5.6-opcache \
+            php5.6-memcache \
+        && apt-get clean \
+        && rm -fr /var/lib/apt/lists/* 
+
+RUN mkdir /app && mkdir /app/pleio && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /app
+COPY composer.json composer.json /app/
+COPY mod/pleio/composer.json /app/pleio/
+
+ARG COMPOSER_ALLOW_SUPERUSER=1
+ARG COMPOSER_NO_INTERACTION=1
+RUN composer config --no-plugins allow-plugins.composer/installers true
+RUN composer install
+
+WORKDIR /app/pleio
+RUN composer install
+
