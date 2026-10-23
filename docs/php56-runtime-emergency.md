@@ -6,6 +6,10 @@ source package, adding the two upstream OpenSSL hostname-verification fixes. No 
 or database migration is included. The alternate Alpine/FPM Dockerfiles are not
 covered by this patch.
 
+Deployment developers should start with the
+[deployment handoff](php56-deployment-handoff.md), including Azure rollout,
+per-replica verification, integration acceptance and recovery instructions.
+
 ## Fixed inputs and dependency preservation
 
 - Ubuntu 22.04 base index:
