@@ -1,7 +1,8 @@
 # Emergency PHP 5.6 runtime, 23 October 2026
 
 The main `Dockerfile` retains this checkout's application sources and replaces
-the PHP runtime with the verified Ondřej Surý Ubuntu 22.04 packages. No application
+the PHP runtime with a local rebuild of the verified Ondřej Surý Ubuntu 22.04
+source package, adding the two upstream OpenSSL hostname-verification fixes. No application
 or database migration is included. The alternate Alpine/FPM Dockerfiles are not
 covered by this patch.
 
@@ -12,7 +13,10 @@ covered by this patch.
 - PHP source-package revision:
   `5.6.40-105+ubuntu22.04.1+deb.sury.org+1`, required exactly for the Apache
   module, CLI, common package, PHP metapackage and installed core extensions.
-  `docker/runtime-packages.env` separately pins the PECL memcache extension.
+  The installed local rebuild adds the suffix `+gcconnex1`; the runtime gate
+  requires this distinct full revision. `docker/runtime-packages.env` separately
+  pins the PECL memcache extension. See
+  [the OpenSSL follow-up](php56-openssl-followup.md) for source/build provenance.
 - Dependency donor:
   `phanoix/gcconnex@sha256:fcea945fe594bd71a04f23c35b379064de89a038f492d3e05ed4b231cb536a1a`.
   Only `/var/www/html/vendor` and `/var/www/html/mod/pleio/vendor` are copied.
@@ -43,8 +47,11 @@ identifies revision 105 for Jammy. Its Debian source archive has SHA-256
 The changelog records both CVE-2026-109618 and CVE-2026-109619 in revision 104;
 `debian/patches/0261-Avoid-state-corruption-via-bailout.patch` names both and is
 enabled in `debian/patches/series`. Revision 105 also backports CVE-2023-0662.
-APT installs through the authenticated supplier repository, with exact-version
-requirements; unavailable revisions fail the build instead of falling back.
+The local rebuild retains all supplier patches through 0264 and adds patch 0265
+for CVE-2026-91767 and CVE-2026-91769. Source archives and the local patch are
+hash-pinned; build dependencies and runtime dependencies use authenticated APT.
+Unavailable inputs fail the build instead of falling back. Local rebuilt packages
+are distinct from supplier binaries and are not supplier-endorsed releases.
 
 PHP's [23 October follow-up](https://www.php.net/archive/2026.php#2026-10-23-1)
 recommends disabling session upload progress pending a further fix for an
@@ -61,7 +68,7 @@ Build the candidate from this checkout:
 
 ```sh
 docker buildx build --platform linux/amd64 --load \
-  -t gcconnex:emergency-20261023 .
+  -t gcconnex:openssl-20261023 .
 ```
 
 The build and entrypoint run `/usr/local/bin/gcconnex-check-runtime`. It requires
@@ -75,7 +82,7 @@ Run the same gate independently without application initialization:
 
 ```sh
 docker run --rm --entrypoint /usr/local/bin/gcconnex-check-runtime \
-  gcconnex:emergency-20261023
+  gcconnex:openssl-20261023
 ```
 
 Before deployment, acceptance must establish the effective Apache PHP setting,
@@ -114,7 +121,8 @@ remain untracked. Never include them in the image or pull request.
 
 ## Local acceptance evidence, 23 October 2026
 
-The Linux amd64 candidate was built and tested with synthetic data, MySQL 5.6.51
+The original revision-105 emergency candidate (before the OpenSSL local rebuild)
+was built and tested with synthetic data, MySQL 5.6.51
 and Solr 6.6.6. No production environment or production data was used.
 
 - Installed PHP packages matched the exact revision-105 requirements. Apache's

@@ -2,13 +2,37 @@
 # dependencies or copy application sources from this older production image.
 FROM phanoix/gcconnex@sha256:fcea945fe594bd71a04f23c35b379064de89a038f492d3e05ed4b231cb536a1a AS dependencies
 
+# OpenSSL is built into PHP's CLI and Apache SAPIs. Rebuild the complete pinned
+# supplier source package, retaining its October patches and Debian hardening.
+FROM ubuntu:22.04@sha256:0a9887931b0e38af2e3487ed39e29436b0535c4f3f52e57745baaf79d1898956 AS php-build
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates software-properties-common gpg-agent \
+    && add-apt-repository --yes --enable-source ppa:ondrej/php \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends build-essential devscripts equivs fakeroot quilt \
+    && apt-get build-dep -y --no-install-recommends 'php5.6=5.6.40-105+ubuntu22.04.1+deb.sury.org+1' \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends curl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+COPY docker/runtime-packages.env docker/php56-source.sha256 docker/build-php56.sh /recipe/
+COPY docker/patches/0265-openssl-stream-hostname-verification.patch /recipe/
+RUN sh /recipe/build-php56.sh
+
+# Optional export target for the rebuilt packages and exact local source package.
+FROM scratch AS php-artifacts
+COPY --from=php-build /out/ /
+
 FROM ubuntu:22.04@sha256:0a9887931b0e38af2e3487ed39e29436b0535c4f3f52e57745baaf79d1898956
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL org.gcconnex.runtime.php-source="https://launchpad.net/~ondrej/+archive/ubuntu/php/+sourcepub/18893905" \
+      org.gcconnex.runtime.local-backports="CVE-2026-91767,CVE-2026-91769" \
       org.gcconnex.runtime.dependency-image="phanoix/gcconnex@sha256:fcea945fe594bd71a04f23c35b379064de89a038f492d3e05ed4b231cb536a1a"
 
 COPY docker/runtime-packages.env /usr/local/share/gcconnex-runtime/runtime-packages.env
+COPY --from=php-build /out/debs/ /tmp/php-debs/
+COPY --from=php-build /out/provenance/ /usr/local/share/gcconnex-runtime/source-build/
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates software-properties-common gpg-agent \
     && add-apt-repository --yes ppa:ondrej/php \
@@ -16,23 +40,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && . /usr/local/share/gcconnex-runtime/runtime-packages.env \
     && apt-get install -y --no-install-recommends \
         apache2 curl memcached \
-        "libapache2-mod-php5.6=$PHP56_VERSION" \
-        "php5.6=$PHP56_VERSION" \
-        "php5.6-cli=$PHP56_VERSION" \
-        "php5.6-common=$PHP56_VERSION" \
-        "php5.6-gd=$PHP56_VERSION" \
-        "php5.6-mbstring=$PHP56_VERSION" \
-        "php5.6-json=$PHP56_VERSION" \
-        "php5.6-mysql=$PHP56_VERSION" \
-        "php5.6-zip=$PHP56_VERSION" \
-        "php5.6-xml=$PHP56_VERSION" \
-        "php5.6-curl=$PHP56_VERSION" \
-        "php5.6-opcache=$PHP56_VERSION" \
+        /tmp/php-debs/*.deb \
         "php5.6-memcache=$PHP56_MEMCACHE_VERSION" \
     && dpkg-query -W -f='${Package}\t${Version}\t${Architecture}\n' \
         > /usr/local/share/gcconnex-runtime/packages.tsv \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/* /tmp/php-debs \
     && mkdir -p /var/www/html/vendor /data \
     && chown www-data /data \
     && ln -sf /dev/stderr /var/log/apache2/error.log \

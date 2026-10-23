@@ -20,7 +20,7 @@ verify_package() {
 
 for package in libapache2-mod-php5.6 php5.6 php5.6-cli php5.6-common \
     php5.6-gd php5.6-mbstring php5.6-json php5.6-mysql php5.6-zip \
-    php5.6-xml php5.6-curl php5.6-opcache; do
+    php5.6-xml php5.6-curl php5.6-opcache php5.6-readline; do
     verify_package "$package" "$PHP56_VERSION"
 done
 verify_package php5.6-memcache "$PHP56_MEMCACHE_VERSION"
