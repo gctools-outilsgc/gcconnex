@@ -80,7 +80,7 @@ function wet4_theme_init()
 	//register a page handler for friends
 	elgg_unregister_page_handler('friends'); //unregister core page handler
 	elgg_unregister_page_handler('dashboard'); //unregister dashboard handler to make our own
-	elgg_register_page_handler('dashboard', 'wet4_dashboard_page_handler');
+	//elgg_register_page_handler('dashboard', 'wet4_dashboard_page_handler');
 	elgg_register_page_handler('friends', '_wet4_friends_page_handler'); //register new page handler for data tables
 	elgg_register_page_handler('friendsof', '_wet4_friends_page_handler');
 	elgg_register_page_handler('activity', 'activity_page_handler');
