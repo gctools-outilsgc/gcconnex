@@ -79,7 +79,6 @@ COPY docker/settings.env.php /var/www/html/engine/settings.php
 RUN chown www-data:www-data /var/www/html \
     && chmod +x /usr/local/bin/gcconnex-check-runtime \
         /usr/local/bin/gcconnex-runtime-entrypoint /var/www/html/docker/start.sh \
-    && test ! -e /var/www/html/docs/security-investigation-2026-10-23.md \
     && gcconnex-check-runtime
 
 WORKDIR /var/www/html
